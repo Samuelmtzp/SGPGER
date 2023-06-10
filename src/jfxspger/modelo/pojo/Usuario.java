@@ -17,13 +17,13 @@ public class Usuario {
     private String apellidoMaterno;
     private String telefono;
     private String fechaCreacion;
-    
+    private boolean esAdministrador;
     private int codigoRespuesta;
     
     public Usuario() {
     }
 
-    public Usuario(int idUsuario, String username, String password, String correo, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String fechaCreacion, int codigoRespuesta) {
+    public Usuario(int idUsuario, String username, String password, String correo, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String fechaCreacion, boolean esAdministrador, int codigoRespuesta) {
         this.idUsuario = idUsuario;
         this.username = username;
         this.password = password;
@@ -33,6 +33,7 @@ public class Usuario {
         this.apellidoMaterno = apellidoMaterno;
         this.telefono = telefono;
         this.fechaCreacion = fechaCreacion;
+        this.esAdministrador = esAdministrador;
         this.codigoRespuesta = codigoRespuesta;
     }
 
@@ -114,6 +115,14 @@ public class Usuario {
 
     public void setFechaCreacion(String fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
+    }
+
+    public boolean isEsAdministrador() {
+        return esAdministrador;
+    }
+
+    public void setEsAdministrador(boolean esAdministrador) {
+        this.esAdministrador = esAdministrador;
     }
     
     @Override

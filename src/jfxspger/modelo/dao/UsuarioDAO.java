@@ -26,7 +26,8 @@ public class UsuarioDAO {
         if (conexionBD != null) {
             try {
                 String consulta = "SELECT idUsuario, username, password, correo, nombre, " +
-                        "apellidoPaterno, apellidoMaterno, telefono, fechaCreacion " +
+                        "apellidoPaterno, apellidoMaterno, telefono, " + 
+                        "fechaCreacion, esAdministrador " +
                         "FROM Usuario";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
@@ -43,6 +44,7 @@ public class UsuarioDAO {
                     usuario.setApellidoMaterno(resultado.getString("apellidoMaterno"));
                     usuario.setTelefono(resultado.getString("telefono"));
                     usuario.setFechaCreacion(resultado.getString("fechaCreacion"));
+                    usuario.setEsAdministrador(resultado.getBoolean("esAdministrador"));
                     usuariosConsulta.add(usuario);
                 }
                 respuesta.setUsuarios(usuariosConsulta);
@@ -62,8 +64,9 @@ public class UsuarioDAO {
         if (conexionBD != null) {
             try {
                 String sentencia = "INSERT INTO Usuario (username, password, correo, nombre, " + 
-                        "apellidoPaterno, apellidoMaterno, telefono, fechaCreacion " + 
-                        "VALUES (?,?,?,?,?,?,?,?)";
+                        "apellidoPaterno, apellidoMaterno, telefono, " + 
+                        "fechaCreacion, esAdministrador " + 
+                        "VALUES (?,?,?,?,?,?,?,?,?)";
                 PreparedStatement prepararSentencia =  conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setString(1, usuarioNuevo.getUsername());
                 prepararSentencia.setString(2, usuarioNuevo.getPassword());
@@ -73,6 +76,7 @@ public class UsuarioDAO {
                 prepararSentencia.setString(6, usuarioNuevo.getApellidoMaterno());
                 prepararSentencia.setString(7, usuarioNuevo.getTelefono());
                 prepararSentencia.setString(8, usuarioNuevo.getFechaCreacion());
+                prepararSentencia.setBoolean(9, usuarioNuevo.isEsAdministrador());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;
@@ -93,7 +97,8 @@ public class UsuarioDAO {
             try {
                 String sentencia = "UPDATE Usuario SET username = ?, " +
                         "password = ?, correo = ?, nombre = ?, apellidoPaterno = ?, " +
-                        "apellidoMaterno = ?, telefono = ?, fechaCreacion = ? " + 
+                        "apellidoMaterno = ?, telefono = ?, " + 
+                        "fechaCreacion = ?, esAdministrador = ? " + 
                         "WHERE idUsuario = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setString(1, usuarioEdicion.getUsername());
@@ -104,7 +109,8 @@ public class UsuarioDAO {
                 prepararSentencia.setString(6, usuarioEdicion.getApellidoMaterno());
                 prepararSentencia.setString(7, usuarioEdicion.getTelefono());
                 prepararSentencia.setString(8, usuarioEdicion.getFechaCreacion());
-                prepararSentencia.setInt(9, usuarioEdicion.getIdUsuario());
+                prepararSentencia.setBoolean(9, usuarioEdicion.isEsAdministrador());
+                prepararSentencia.setInt(10, usuarioEdicion.getIdUsuario());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;

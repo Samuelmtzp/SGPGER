@@ -41,6 +41,7 @@ public class SesionDAO
                     usuarioVerificado.setApellidoMaterno(resultado.getString("apellidoMaterno"));
                     usuarioVerificado.setTelefono(resultado.getString("telefono"));
                     usuarioVerificado.setFechaCreacion(resultado.getString("fechaCreacion"));
+                    usuarioVerificado.setEsAdministrador(resultado.getBoolean("esAdministrador"));
                 }
                 conexion.close();
             } catch (SQLException ex) {
