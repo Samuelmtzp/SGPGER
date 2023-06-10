@@ -9,49 +9,56 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLInicioSesionController">
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLInicioSesionController">
    <children>
-      <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../recursos/fondo_login.jpg" />
+            <Image url="@../recursos/fondo_login.png" />
          </image>
          <effect>
             <ColorAdjust brightness="-0.27" />
          </effect>
       </ImageView>
-      <Pane layoutX="324.0" layoutY="118.0" prefHeight="485.0" prefWidth="505.0" style="-fx-background-color: #252525;">
+      <Pane layoutX="519.0" layoutY="218.0" prefHeight="591.0" prefWidth="880.0" style="-fx-background-color: #02779e;" />
+      <Pane layoutX="526.0" layoutY="224.0" prefHeight="579.0" prefWidth="868.0" style="-fx-background-color: #FFFFFF;">
          <children>
-            <Label layoutX="81.0" layoutY="35.0" text="Inicio de Sesión" textFill="WHITE">
+            <Label layoutX="204.0" layoutY="54.0" text="Inicio de Sesión">
                <font>
-                  <Font name="Berlin Sans FB Demi Bold" size="52.0" />
+                  <Font name="Berlin Sans FB Demi Bold" size="70.0" />
                </font></Label>
-            <Label layoutX="61.0" layoutY="127.0" text="Usuario" textFill="WHITE">
-               <font>
-                  <Font name="Berlin Sans FB" size="25.0" />
-               </font>
-            </Label>
-            <Label layoutX="61.0" layoutY="252.0" text="Contraseña" textFill="WHITE">
-               <font>
-                  <Font name="Berlin Sans FB" size="25.0" />
-               </font>
-            </Label>
-            <TextField fx:id="tfUsuario" layoutX="61.0" layoutY="161.0" prefHeight="39.0" prefWidth="383.0" promptText="Ej. Samuel" />
-            <Label fx:id="lbErrorUsuario" layoutX="62.0" layoutY="205.0" prefHeight="20.0" prefWidth="383.0" textFill="RED">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="lbErrorPassword" layoutX="62.0" layoutY="354.0" prefHeight="20.0" prefWidth="383.0" textFill="RED">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Button layoutX="141.0" layoutY="388.0" mnemonicParsing="false" onAction="#clicIniciarSesion" style="-fx-background-color: #02779e;" text="Iniciar sesión" textFill="WHITE">
+            <Label layoutX="170.0" layoutY="146.0" text="Usuario">
                <font>
                   <Font name="Berlin Sans FB" size="35.0" />
                </font>
+            </Label>
+            <Label layoutX="170.0" layoutY="288.0" text="Contraseña">
+               <font>
+                  <Font name="Berlin Sans FB" size="35.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfUsuario" layoutX="173.0" layoutY="193.0" prefHeight="39.0" prefWidth="515.0" promptText="Ej. Samuel">
+               <font>
+                  <Font size="20.0" />
+               </font></TextField>
+            <Label fx:id="lbErrorUsuario" layoutX="174.0" layoutY="237.0" prefHeight="20.0" prefWidth="514.0" textFill="RED">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbErrorPassword" layoutX="171.0" layoutY="390.0" prefHeight="20.0" prefWidth="515.0" textFill="RED">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Button layoutX="275.0" layoutY="438.0" mnemonicParsing="false" onAction="#clicIniciarSesion" style="-fx-background-color: #02779e;" text="Iniciar sesión" textFill="WHITE">
+               <font>
+                  <Font name="Berlin Sans FB" size="50.0" />
+               </font>
             </Button>
-            <PasswordField fx:id="tfPassword" layoutX="61.0" layoutY="285.0" prefHeight="39.0" prefWidth="383.0" promptText="EJ. 12345" />
+            <PasswordField fx:id="tfPassword" layoutX="171.0" layoutY="335.0" prefHeight="39.0" prefWidth="515.0" promptText="EJ. 12345">
+               <font>
+                  <Font size="20.0" />
+               </font></PasswordField>
          </children>
       </Pane>
    </children>
