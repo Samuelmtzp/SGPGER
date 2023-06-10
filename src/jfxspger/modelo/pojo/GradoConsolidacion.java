@@ -1,0 +1,37 @@
+package jfxspger.modelo.pojo;
+
+public class GradoConsolidacion {
+    
+    private int idGradoConsolidacion;
+    private String grado;
+
+    public GradoConsolidacion() {
+    }
+
+    public GradoConsolidacion(int idGradoConsolidacion, String grado) {
+        this.idGradoConsolidacion = idGradoConsolidacion;
+        this.grado = grado;
+    }
+
+    public int getIdGradoConsolidacion() {
+        return idGradoConsolidacion;
+    }
+
+    public void setIdGradoConsolidacion(int idGradoConsolidacion) {
+        this.idGradoConsolidacion = idGradoConsolidacion;
+    }
+
+    public String getGrado() {
+        return grado;
+    }
+
+    public void setGrado(String grado) {
+        this.grado = grado;
+    }
+
+    @Override
+    public String toString() {
+        return "GradoConsolidacion{" + "idGradoConsolidacion=" + idGradoConsolidacion + ", grado=" + grado + '}';
+    }
+    
+}

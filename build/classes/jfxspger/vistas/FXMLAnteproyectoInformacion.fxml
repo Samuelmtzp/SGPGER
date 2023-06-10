@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #252525;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLAnteproyectoInformacionController">
+   <children>
+      <Pane prefHeight="82.0" prefWidth="1280.0" style="-fx-background-color: #af0404;">
+         <children>
+            <Label layoutX="96.0" layoutY="23.0" text="Informacion de Anteproyecto" textFill="WHITE">
+               <font>
+                  <Font name="Berlin Sans FB" size="35.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="55.0" fitWidth="67.0" layoutX="26.0" layoutY="16.0" onDragDetected="#clicBtnRegresar" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recursos/regreso.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Label layoutX="13.0" layoutY="124.0" text="ANTEPROYECTO" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB" size="30.0" />
+         </font>
+      </Label>
+      <Label fx:id="lTituloAnteproyecto" layoutX="13.0" layoutY="161.0" text="TITULO DEL ANTEPROYECTO" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Label layoutX="13.0" layoutY="218.0" text="DETALLES" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB" size="30.0" />
+         </font>
+      </Label>
+      <Label fx:id="lDetallesAnteproyecto" layoutX="13.0" layoutY="250.0" text="DETALLES DEL ANTEPROYECTO" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Button layoutX="30.0" layoutY="680.0" mnemonicParsing="false" onAction="#clicBtnVerCronograma" style="-fx-background-color: #ff0000;" text="Cronograma" textFill="WHITE" />
+      <TableView fx:id="tvAvanceActividades" layoutY="350.0" prefHeight="320.0" prefWidth="1280.0">
+        <columns>
+            <TableColumn fx:id="cNomAct" prefWidth="665.0" text="Nombre de la actividad" />
+          <TableColumn fx:id="cEstado" prefWidth="169.0" text="Estado" />
+            <TableColumn fx:id="cFechaInicio" prefWidth="159.0" text="Fecha de inicio" />
+            <TableColumn fx:id="cFechaFin" prefWidth="155.0" text="Fecha de fin" />
+            <TableColumn fx:id="cFechaCreacion" prefWidth="131.0" text="Fecha de creacion" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #252525;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLAlumnoFormularioController">
+   <children>
+      <Pane prefHeight="82.0" prefWidth="1080.0" style="-fx-background-color: #af0404;">
+         <children>
+            <Label layoutX="87.0" layoutY="25.0" text="Alumno" textFill="WHITE">
+               <font>
+                  <Font name="Berlin Sans FB" size="35.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="73.0" fitWidth="69.0" layoutX="7.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recursos/regreso.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Label layoutX="59.0" layoutY="147.0" text="Matrícula" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB" size="20.0" />
+         </font></Label>
+      <TextField layoutX="56.0" layoutY="183.0" prefHeight="31.0" prefWidth="262.0" promptText="Ej. S21013902" />
+      <Label layoutX="56.0" layoutY="254.0" text="Nombre" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB" size="20.0" />
+         </font></Label>
+      <TextField layoutX="56.0" layoutY="290.0" prefHeight="31.0" prefWidth="262.0" promptText="Samuel" />
+      <TextField layoutX="399.0" layoutY="290.0" prefHeight="31.0" prefWidth="262.0" promptText="Martínez" />
+      <Label layoutX="399.0" layoutY="254.0" text="Apellido Paterno" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB" size="20.0" />
+         </font></Label>
+      <Label layoutX="746.0" layoutY="251.0" text="Apellido Materno" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB" size="20.0" />
+         </font></Label>
+      <TextField layoutX="746.0" layoutY="287.0" prefHeight="31.0" prefWidth="262.0" promptText="Pazos" />
+      <TextField layoutX="56.0" layoutY="541.0" prefHeight="31.0" prefWidth="262.0" promptText="Martínez" />
+      <Label layoutX="56.0" layoutY="505.0" text="Correo electrónico" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB" size="20.0" />
+         </font></Label>
+      <Label layoutX="742.0" layoutY="385.0" text="Carrera" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB" size="20.0" />
+         </font></Label>
+      <ComboBox layoutX="742.0" layoutY="418.0" prefHeight="31.0" prefWidth="262.0" />
+      <ComboBox layoutX="399.0" layoutY="417.0" prefHeight="31.0" prefWidth="262.0" />
+      <Label layoutX="402.0" layoutY="380.0" text="Facultad" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB" size="20.0" />
+         </font></Label>
+      <Label layoutX="56.0" layoutY="385.0" text="Fecha de nacimiento" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB" size="20.0" />
+         </font></Label>
+      <TextField layoutX="56.0" layoutY="421.0" prefHeight="31.0" prefWidth="262.0" promptText="dd/mm/yyyy" />
+      <Button layoutX="402.0" layoutY="180.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="158.0" style="-fx-background-color: #ff0000;" text="Seleccionar foto" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font></Button>
+      <ImageView fitHeight="150.0" fitWidth="149.0" layoutX="799.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" />
+      <Button layoutX="877.0" layoutY="643.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="123.0" style="-fx-background-color: #ff0000;" text="Guardar" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font></Button>
+      <Button layoutX="705.0" layoutY="643.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="123.0" style="-fx-background-color: #ff0000;" text="Cancelar" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font></Button>
+   </children>
+</AnchorPane>
