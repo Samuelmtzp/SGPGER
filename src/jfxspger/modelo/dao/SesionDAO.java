@@ -33,6 +33,7 @@ public class SesionDAO
                 if (resultado.next()) 
                 {
                     usuarioVerificado.setIdUsuario(resultado.getInt("idUsuario"));
+                    usuarioVerificado.setIdTipoUsuario(resultado.getInt("idTipoUsuario"));
                     usuarioVerificado.setUsername(resultado.getString("username"));
                     usuarioVerificado.setPassword(resultado.getString("password"));
                     usuarioVerificado.setCorreo(resultado.getString("correo"));
@@ -41,7 +42,6 @@ public class SesionDAO
                     usuarioVerificado.setApellidoMaterno(resultado.getString("apellidoMaterno"));
                     usuarioVerificado.setTelefono(resultado.getString("telefono"));
                     usuarioVerificado.setFechaCreacion(resultado.getString("fechaCreacion"));
-                    usuarioVerificado.setEsAdministrador(resultado.getBoolean("esAdministrador"));
                 }
                 conexion.close();
             } catch (SQLException ex) {

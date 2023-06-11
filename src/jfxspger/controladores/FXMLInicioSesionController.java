@@ -7,6 +7,7 @@
 package jfxspger.controladores;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +18,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import jfxspger.modelo.dao.SesionDAO;
+import jfxspger.modelo.dao.TipoUsuarioDAO;
+import jfxspger.modelo.pojo.TipoUsuarioRespuesta;
+import jfxspger.modelo.pojo.TipoUsuario;
 import jfxspger.modelo.pojo.Usuario;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
@@ -34,12 +38,10 @@ public class FXMLInicioSesionController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }    
 
     @FXML
     private void clicIniciarSesion(ActionEvent event) {
-        // Notificacion de clic
         lbErrorUsuario.setText("");
         lbErrorPassword.setText("");
         validarCampos();
@@ -64,7 +66,6 @@ public class FXMLInicioSesionController implements Initializable {
     
     private void validarCredencialesUsuario(String usuario, String password) {
         Usuario usuarioRespuesta = SesionDAO.verificarUsuarioSesion(usuario, password);
-//        System.out.println("Codigo: " + usuarioRespuesta.getCodigoRespuesta());
         switch (usuarioRespuesta.getCodigoRespuesta())
         {
             case Constantes.ERROR_CONEXION:
@@ -82,12 +83,32 @@ public class FXMLInicioSesionController implements Initializable {
             case Constantes.OPERACION_EXITOSA:
                 if (usuarioRespuesta.getIdUsuario() > 0) {
                     Utilidades.mostrarDialogoSimple("Bienvenido(a)", 
-                        "Bienvenido(a) "+usuarioRespuesta.toString()+"al sistema...", 
+                        "Bienvenido(a) "+usuarioRespuesta.toString()+" al sistema...", 
                         Alert.AlertType.INFORMATION);
-                    irPantallaPrincipal();
+                    
+                    final int TIPO_USUARIO_ADMINISTRADOR = 1;
+                    final int TIPO_USUARIO_ESTUDIANTE = 2;
+                    final int TIPO_USUARIO_ACADEMICO = 3;
+                
+                    switch (usuarioRespuesta.getIdTipoUsuario()) {
+                        case TIPO_USUARIO_ADMINISTRADOR :
+                            irPantallaPrincipalAdministrador();
+                            break;
+                        case TIPO_USUARIO_ESTUDIANTE :
+                            irPantallaPrincipalEstudiante();
+                            break;
+                        case TIPO_USUARIO_ACADEMICO :
+                            irPantallaPrincipalAcademico();
+                            break;
+                        default :
+                            Utilidades.mostrarDialogoSimple("Error al mostrar menú principal", 
+                                    "El tipo de usuario es incorrecto", 
+                                    Alert.AlertType.ERROR);
+                    }
                 } else {
                     Utilidades.mostrarDialogoSimple("Credenciales incorrectas", 
-                            "El usuario y/o contraseña no son correctos, por favor verifica la información", 
+                            "El usuario y/o contraseña no son correctos, " + 
+                                    "por favor verifica la información", 
                             Alert.AlertType.WARNING);
                 }
                 break;
@@ -99,11 +120,30 @@ public class FXMLInicioSesionController implements Initializable {
         }
     }
     
-    private void irPantallaPrincipal() {
-        // Para obtener el escenario se utiliza getWindow()
+    private void irPantallaPrincipalAdministrador() {
         Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLPrincipal.fxml"));
+        escenarioBase.setScene(
+                Utilidades.inicializarEscena("vistas/FXMLPrincipalAdministrador.fxml"));
+        configurarEscena(escenarioBase);
+    }
+    
+    private void irPantallaPrincipalEstudiante() {
+        Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
+        escenarioBase.setScene(
+                Utilidades.inicializarEscena("vistas/FXMLPrincipalEstudiante.fxml"));
+        configurarEscena(escenarioBase);
+    }
+    
+    private void irPantallaPrincipalAcademico() {
+        Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
+        escenarioBase.setScene(
+                Utilidades.inicializarEscena("vistas/FXMLPrincipalAcademico.fxml"));
+        configurarEscena(escenarioBase);
+    }
+    
+    private void configurarEscena(Stage escenarioBase) {
         escenarioBase.setTitle("Home");
         escenarioBase.show();
     }
+    
 }

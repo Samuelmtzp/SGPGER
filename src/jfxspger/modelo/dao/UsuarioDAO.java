@@ -25,9 +25,9 @@ public class UsuarioDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT idUsuario, username, password, correo, nombre, " +
-                        "apellidoPaterno, apellidoMaterno, telefono, " + 
-                        "fechaCreacion, esAdministrador " +
+                String consulta = "SELECT idUsuario, idTipoUsuario, username, password, " + 
+                        "correo, nombre, apellidoPaterno, apellidoMaterno, telefono, " + 
+                        "fechaCreacion " +
                         "FROM Usuario";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
@@ -36,6 +36,7 @@ public class UsuarioDAO {
                 {
                     Usuario usuario = new Usuario();
                     usuario.setIdUsuario(resultado.getInt("idUsuario"));
+                    usuario.setIdTipoUsuario(resultado.getInt("idTipoUsuario"));
                     usuario.setUsername(resultado.getString("username"));
                     usuario.setPassword(resultado.getString("password"));
                     usuario.setCorreo(resultado.getString("correo"));
@@ -44,7 +45,6 @@ public class UsuarioDAO {
                     usuario.setApellidoMaterno(resultado.getString("apellidoMaterno"));
                     usuario.setTelefono(resultado.getString("telefono"));
                     usuario.setFechaCreacion(resultado.getString("fechaCreacion"));
-                    usuario.setEsAdministrador(resultado.getBoolean("esAdministrador"));
                     usuariosConsulta.add(usuario);
                 }
                 respuesta.setUsuarios(usuariosConsulta);
@@ -63,20 +63,20 @@ public class UsuarioDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
-                String sentencia = "INSERT INTO Usuario (username, password, correo, nombre, " + 
-                        "apellidoPaterno, apellidoMaterno, telefono, " + 
-                        "fechaCreacion, esAdministrador " + 
+                String sentencia = "INSERT INTO Usuario (idTipoUsuario, username, " + 
+                        "password, correo, nombre, apellidoPaterno, apellidoMaterno, telefono, " + 
+                        "fechaCreacion " + 
                         "VALUES (?,?,?,?,?,?,?,?,?)";
                 PreparedStatement prepararSentencia =  conexionBD.prepareStatement(sentencia);
-                prepararSentencia.setString(1, usuarioNuevo.getUsername());
-                prepararSentencia.setString(2, usuarioNuevo.getPassword());
-                prepararSentencia.setString(3, usuarioNuevo.getCorreo());
-                prepararSentencia.setString(4, usuarioNuevo.getNombre());                
-                prepararSentencia.setString(5, usuarioNuevo.getApellidoPaterno());
-                prepararSentencia.setString(6, usuarioNuevo.getApellidoMaterno());
-                prepararSentencia.setString(7, usuarioNuevo.getTelefono());
-                prepararSentencia.setString(8, usuarioNuevo.getFechaCreacion());
-                prepararSentencia.setBoolean(9, usuarioNuevo.isEsAdministrador());
+                prepararSentencia.setInt(1, usuarioNuevo.getIdTipoUsuario());
+                prepararSentencia.setString(2, usuarioNuevo.getUsername());
+                prepararSentencia.setString(3, usuarioNuevo.getPassword());
+                prepararSentencia.setString(4, usuarioNuevo.getCorreo());
+                prepararSentencia.setString(5, usuarioNuevo.getNombre());                
+                prepararSentencia.setString(6, usuarioNuevo.getApellidoPaterno());
+                prepararSentencia.setString(7, usuarioNuevo.getApellidoMaterno());
+                prepararSentencia.setString(8, usuarioNuevo.getTelefono());
+                prepararSentencia.setString(9, usuarioNuevo.getFechaCreacion());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;
@@ -95,21 +95,20 @@ public class UsuarioDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
-                String sentencia = "UPDATE Usuario SET username = ?, " +
+                String sentencia = "UPDATE Usuario SET idTipoUsuario = ?, username = ?, " +
                         "password = ?, correo = ?, nombre = ?, apellidoPaterno = ?, " +
-                        "apellidoMaterno = ?, telefono = ?, " + 
-                        "fechaCreacion = ?, esAdministrador = ? " + 
+                        "apellidoMaterno = ?, telefono = ?, fechaCreacion = ? " + 
                         "WHERE idUsuario = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
-                prepararSentencia.setString(1, usuarioEdicion.getUsername());
-                prepararSentencia.setString(2, usuarioEdicion.getPassword());
-                prepararSentencia.setString(3, usuarioEdicion.getCorreo());
-                prepararSentencia.setString(4, usuarioEdicion.getNombre());
-                prepararSentencia.setString(5, usuarioEdicion.getApellidoPaterno());
-                prepararSentencia.setString(6, usuarioEdicion.getApellidoMaterno());
-                prepararSentencia.setString(7, usuarioEdicion.getTelefono());
-                prepararSentencia.setString(8, usuarioEdicion.getFechaCreacion());
-                prepararSentencia.setBoolean(9, usuarioEdicion.isEsAdministrador());
+                prepararSentencia.setInt(1, usuarioEdicion.getIdTipoUsuario());
+                prepararSentencia.setString(2, usuarioEdicion.getUsername());
+                prepararSentencia.setString(3, usuarioEdicion.getPassword());
+                prepararSentencia.setString(4, usuarioEdicion.getCorreo());
+                prepararSentencia.setString(5, usuarioEdicion.getNombre());
+                prepararSentencia.setString(6, usuarioEdicion.getApellidoPaterno());
+                prepararSentencia.setString(7, usuarioEdicion.getApellidoMaterno());
+                prepararSentencia.setString(8, usuarioEdicion.getTelefono());
+                prepararSentencia.setString(9, usuarioEdicion.getFechaCreacion());
                 prepararSentencia.setInt(10, usuarioEdicion.getIdUsuario());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 

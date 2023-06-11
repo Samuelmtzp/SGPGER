@@ -9,6 +9,7 @@ package jfxspger.modelo.pojo;
 public class Usuario {
     
     private int idUsuario;
+    private int idTipoUsuario;
     private String username;
     private String password;
     private String correo;
@@ -17,24 +18,9 @@ public class Usuario {
     private String apellidoMaterno;
     private String telefono;
     private String fechaCreacion;
-    private boolean esAdministrador;
     private int codigoRespuesta;
     
     public Usuario() {
-    }
-
-    public Usuario(int idUsuario, String username, String password, String correo, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String fechaCreacion, boolean esAdministrador, int codigoRespuesta) {
-        this.idUsuario = idUsuario;
-        this.username = username;
-        this.password = password;
-        this.correo = correo;
-        this.nombre = nombre;
-        this.apellidoPaterno = apellidoPaterno;
-        this.apellidoMaterno = apellidoMaterno;
-        this.telefono = telefono;
-        this.fechaCreacion = fechaCreacion;
-        this.esAdministrador = esAdministrador;
-        this.codigoRespuesta = codigoRespuesta;
     }
 
     public int getIdUsuario() {
@@ -43,6 +29,14 @@ public class Usuario {
 
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
+    }
+
+    public int getIdTipoUsuario() {
+        return idTipoUsuario;
+    }
+
+    public void setIdTipoUsuario(int idTipoUsuario) {
+        this.idTipoUsuario = idTipoUsuario;
     }
 
     public String getUsername() {
@@ -117,14 +111,6 @@ public class Usuario {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public boolean isEsAdministrador() {
-        return esAdministrador;
-    }
-
-    public void setEsAdministrador(boolean esAdministrador) {
-        this.esAdministrador = esAdministrador;
-    }
-    
     @Override
     public String toString() {
         return nombre + " " + apellidoPaterno + " " + apellidoMaterno;
