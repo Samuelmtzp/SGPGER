@@ -50,7 +50,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button layoutX="275.0" layoutY="438.0" mnemonicParsing="false" onAction="#clicIniciarSesion" style="-fx-background-color: #02779e;" text="Iniciar sesión" textFill="WHITE">
+            <Button layoutX="275.0" layoutY="438.0" mnemonicParsing="false" onAction="#clicIniciarSesion" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" text="Iniciar sesión" textFill="WHITE">
                <font>
                   <Font name="Berlin Sans FB" size="50.0" />
                </font>
