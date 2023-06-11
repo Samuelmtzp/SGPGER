@@ -138,15 +138,6 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="40.0" layoutY="40.0" mnemonicParsing="false" onAction="#clicIrPrincipalAdministrador" prefHeight="55.0" prefWidth="74.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css">
-               <graphic>
-                  <ImageView fitHeight="53.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../recursos/back.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
          </children>
       </Pane>
    </children>
