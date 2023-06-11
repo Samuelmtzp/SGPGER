@@ -10,6 +10,7 @@ public class Usuario {
     
     private int idUsuario;
     private int idTipoUsuario;
+    private String tipoUsuario;
     private String username;
     private String password;
     private String correo;
@@ -21,6 +22,21 @@ public class Usuario {
     private int codigoRespuesta;
     
     public Usuario() {
+    }
+
+    public Usuario(int idUsuario, int idTipoUsuario, String tipoUsuario, String username, String password, String correo, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String fechaCreacion, int codigoRespuesta) {
+        this.idUsuario = idUsuario;
+        this.idTipoUsuario = idTipoUsuario;
+        this.tipoUsuario = tipoUsuario;
+        this.username = username;
+        this.password = password;
+        this.correo = correo;
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.telefono = telefono;
+        this.fechaCreacion = fechaCreacion;
+        this.codigoRespuesta = codigoRespuesta;
     }
 
     public int getIdUsuario() {
@@ -37,6 +53,14 @@ public class Usuario {
 
     public void setIdTipoUsuario(int idTipoUsuario) {
         this.idTipoUsuario = idTipoUsuario;
+    }
+
+    public String getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(String tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
     }
 
     public String getUsername() {

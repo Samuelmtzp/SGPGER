@@ -34,6 +34,7 @@ public class SesionDAO
                 {
                     usuarioVerificado.setIdUsuario(resultado.getInt("idUsuario"));
                     usuarioVerificado.setIdTipoUsuario(resultado.getInt("idTipoUsuario"));
+                    usuarioVerificado.setTipoUsuario(resultado.getString("tipoUsuario"));
                     usuarioVerificado.setUsername(resultado.getString("username"));
                     usuarioVerificado.setPassword(resultado.getString("password"));
                     usuarioVerificado.setCorreo(resultado.getString("correo"));

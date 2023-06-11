@@ -46,6 +46,22 @@
     -fx-text-fill: white;
 }
 
+.buttonRegistrar{
+    -fx-background-color: #33AB5B; 
+   -fx-text-fill: white;
+}
+
+.buttonRegistrar:hover{
+    -fx-background-color: #33c37c;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+.buttonRegistrar:pressed{
+    -fx-background-color: #33861a;
+    -fx-text-fill: white;
+}
+
 .textField{
     -fx-border-color: #cccccc;
     -fx-background-color:  #FFFFFF;
@@ -61,6 +77,7 @@
 .table-view .column-header .label{
     -fx-text-fill: white;
     -fx-alignment: CENTER;
+    -fx-font-size: 20px;
 }
 
 .combo-box-base .text{
