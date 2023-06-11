@@ -24,7 +24,9 @@ public class SesionDAO
         {
             try
             {
-                String consulta = "SELECT * FROM usuario WHERE username = ? AND password = ?";
+                String consulta = "SELECT * FROM Usuario INNER JOIN TipoUsuario " + 
+                        "ON Usuario.idTipoUsuario = TipoUsuario.idTipoUsuario " +
+                        "WHERE username = ? AND password = ?";
                 PreparedStatement prepararSentencia = conexion.prepareStatement(consulta);
                 prepararSentencia.setString(1, usuario);
                 prepararSentencia.setString(2, password);

@@ -23,7 +23,7 @@
          <children>
             <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#clicIrAnteproyectos" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Anteproyectos" textFill="WHITE">
                <font>
-                  <Font size="22.0" />
+                  <Font name="System Bold" size="22.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
@@ -35,7 +35,7 @@
             </Button>
             <Button layoutX="20.0" layoutY="145.0" mnemonicParsing="false" onAction="#clicIrCronograma" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Cronograma" textFill="WHITE">
                <font>
-                  <Font size="22.0" />
+                  <Font name="System Bold" size="22.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
@@ -47,7 +47,7 @@
             </Button>
             <Button layoutX="20.0" layoutY="270.0" mnemonicParsing="false" onAction="#clicIrCursos" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Cursos" textFill="WHITE">
                <font>
-                  <Font size="22.0" />
+                  <Font name="System Bold" size="22.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
@@ -59,7 +59,7 @@
             </Button>
             <Button layoutX="21.0" layoutY="822.0" mnemonicParsing="false" onAction="#clicCerrarSesion" prefHeight="70.0" prefWidth="260.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" text="Cerrar sesión" textFill="WHITE">
                <font>
-                  <Font size="22.0" />
+                  <Font name="System Bold" size="23.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="52.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">

@@ -8,11 +8,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLPrincipalAdministradorController">
+<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLAdminLgacController">
    <children>
       <Pane prefHeight="100.0" prefWidth="1920.0" style="-fx-background-color: #343838;">
          <children>
-            <Label fx:id="lbTitulo" layoutX="677.0" layoutY="17.0" text="Principal Administrador" textAlignment="CENTER" textFill="WHITE">
+            <Label fx:id="lbTitulo" layoutX="759.0" layoutY="17.0" text="Administración LGAC " textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="50.0" />
                </font>
@@ -90,11 +90,59 @@
       </Pane>
       <Pane layoutX="300.0" layoutY="100.0" prefHeight="980.0" prefWidth="1620.0">
          <children>
-            <ImageView fitHeight="1002.0" fitWidth="784.0" layoutX="1008.0" layoutY="70.0" opacity="0.88" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../recursos/UV_Logo.png" />
-               </image>
-            </ImageView>
+            <TableView layoutX="286.0" layoutY="239.0" prefHeight="565.0" prefWidth="1043.0" stylesheets="@../css/estilos.css">
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+               <columns>
+                  <TableColumn prefWidth="75.0" text="Nombre de Línea de Generación de Aplicación de Conocimiento" />
+               </columns>
+            </TableView>
+            <Button layoutX="1081.0" layoutY="140.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="248.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" text="Eliminar lgac">
+               <graphic>
+                  <ImageView fitHeight="51.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/eliminar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Button>
+            <Button layoutX="792.0" layoutY="140.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="275.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Modificar lgac">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="51.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/editar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="528.0" layoutY="141.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="248.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Agregar lgac">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="51.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/boton-agregar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="40.0" layoutY="40.0" mnemonicParsing="false" onAction="#clicIrPrincipalAdministrador" prefHeight="55.0" prefWidth="74.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/back.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </Pane>
    </children>

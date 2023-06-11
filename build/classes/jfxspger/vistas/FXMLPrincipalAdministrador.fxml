@@ -28,7 +28,7 @@
          <children>
             <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#clicIrCursos" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Cursos" textFill="WHITE">
                <font>
-                  <Font size="22.0" />
+                  <Font name="System Bold" size="22.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
@@ -40,19 +40,19 @@
             </Button>
             <Button layoutX="20.0" layoutY="145.0" mnemonicParsing="false" onAction="#clicIrLgac" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="LGAC" textFill="WHITE">
                <font>
-                  <Font size="22.0" />
+                  <Font name="System Bold" size="22.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../recursos/advertising.png" />
+                        <Image url="@../recursos/busqueda-de-conocimiento.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
             <Button layoutX="20.0" layoutY="270.0" mnemonicParsing="false" onAction="#clicIrUsuarios" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Usuarios" textFill="WHITE">
                <font>
-                  <Font size="22.0" />
+                  <Font name="System Bold" size="22.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
@@ -64,7 +64,7 @@
             </Button>
             <Button layoutX="21.0" layoutY="822.0" mnemonicParsing="false" onAction="#clicCerrarSesion" prefHeight="70.0" prefWidth="260.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" text="Cerrar sesión" textFill="WHITE">
                <font>
-                  <Font size="22.0" />
+                  <Font name="System Bold" size="22.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="52.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
@@ -76,12 +76,12 @@
             </Button>
             <Button layoutX="20.0" layoutY="396.0" mnemonicParsing="false" onAction="#clicIrCuerposAcademicos" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Cuerpos académicos" textFill="WHITE">
                <font>
-                  <Font size="17.0" />
+                  <Font name="System Bold" size="16.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../recursos/lista-de-tareas.png" />
+                        <Image url="@../recursos/birrete.png" />
                      </image>
                   </ImageView>
                </graphic>

@@ -12,7 +12,7 @@ import jfxspger.utilidades.Utilidades;
 public class FXMLPrincipalAdministradorController implements Initializable {
 
     @FXML
-    private Label lbTitulo;
+    protected Label lbTitulo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -20,7 +20,7 @@ public class FXMLPrincipalAdministradorController implements Initializable {
 
 
     @FXML
-    private void clicCerrarSesion(ActionEvent event) {
+    protected void clicCerrarSesion(ActionEvent event) {
         if (Utilidades.mostrarDialogoConfirmacion(
                 "Cerrar sesión", 
                 "¿Está seguro de que desea cerrar sesión?")) {
@@ -28,7 +28,7 @@ public class FXMLPrincipalAdministradorController implements Initializable {
         }
     }
     
-    private void irVentanaInicioSesion() {
+    protected void irVentanaInicioSesion() {
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.setScene(
                 Utilidades.inicializarEscena("vistas/FXMLInicioSesion.fxml"));
@@ -37,19 +37,39 @@ public class FXMLPrincipalAdministradorController implements Initializable {
     }
 
     @FXML
-    private void clicIrCursos(ActionEvent event) {
+    protected void clicIrCursos(ActionEvent event) {
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        escenarioBase.setScene(
+                Utilidades.inicializarEscena("vistas/FXMLAdminCursos.fxml"));
+        escenarioBase.setTitle("Administración cursos");
+        escenarioBase.show();
     }
 
     @FXML
-    private void clicIrLgac(ActionEvent event) {
+    protected void clicIrLgac(ActionEvent event) {
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        escenarioBase.setScene(
+                Utilidades.inicializarEscena("vistas/FXMLAdminLgac.fxml"));
+        escenarioBase.setTitle("Administración LGAC");
+        escenarioBase.show();
     }
 
     @FXML
-    private void clicIrUsuarios(ActionEvent event) {
+    protected void clicIrUsuarios(ActionEvent event) {
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        escenarioBase.setScene(
+                Utilidades.inicializarEscena("vistas/FXMLAdminUsuarios.fxml"));
+        escenarioBase.setTitle("Administración usuarios");
+        escenarioBase.show();
     }
 
     @FXML
-    private void clicIrCuerposAcademicos(ActionEvent event) {
+    protected void clicIrCuerposAcademicos(ActionEvent event) {
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        escenarioBase.setScene(
+                Utilidades.inicializarEscena("vistas/FXMLAdminCuerposAcademicos.fxml"));
+        escenarioBase.setTitle("Administración cuerpos académicos");
+        escenarioBase.show();
     }
     
 }
