@@ -104,7 +104,7 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <Button layoutX="1315.0" layoutY="140.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="248.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" text="Eliminar curso">
+            <Button disable="true" layoutX="1315.0" layoutY="140.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="248.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" text="Eliminar curso">
                <graphic>
                   <ImageView fitHeight="51.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -116,7 +116,7 @@
                   <Font name="System Bold" size="22.0" />
                </font>
             </Button>
-            <Button layoutX="1026.0" layoutY="140.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="275.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Modificar curso">
+            <Button disable="true" layoutX="1026.0" layoutY="140.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="275.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Modificar curso">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
@@ -128,7 +128,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="762.0" layoutY="141.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="248.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Agregar curso">
+            <Button layoutX="762.0" layoutY="141.0" mnemonicParsing="false" onAction="#clicIrFormularioCurso" prefHeight="62.0" prefWidth="248.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Agregar curso">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
