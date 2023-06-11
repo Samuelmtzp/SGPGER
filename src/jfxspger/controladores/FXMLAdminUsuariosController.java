@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Stage;
+import jfxspger.utilidades.Utilidades;
 
 public class FXMLAdminUsuariosController extends FXMLPrincipalAdministradorController {
 
@@ -39,6 +41,11 @@ public class FXMLAdminUsuariosController extends FXMLPrincipalAdministradorContr
 
     @FXML
     private void clicBtnAgregarUsuario(ActionEvent event) {
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        escenarioBase.setScene(
+                Utilidades.inicializarEscena("vistas/FXMLFormularioUsuario.fxml"));
+        escenarioBase.setTitle("Formulario de usuario");
+        escenarioBase.show();
     }
     
 }

@@ -6,86 +6,72 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import jfxspger.utilidades.Utilidades;
 
-public class FXMLFormularioCursoController extends FXMLAdminCursosController {
+public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorController {
 
     @FXML
     private Label lbTitulo;
     @FXML
-    private ComboBox<?> cbExperienciaEducativa;
+    private ComboBox<?> cbTipoUsuario;
     @FXML
-    private ComboBox<?> cbProfesor;
+    private TextField tfApellidoMaterno;
     @FXML
-    private ComboBox<?> cbPeriodoEscolar;
+    private TextField tfApellidoPaterno;
     @FXML
-    private TextField tfNrc;
+    private TextField tfNombre;
     @FXML
-    private TextField tfBloque;
+    private TextField tfCorreo;
     @FXML
-    private TextField tfSeccion;
+    private TextField tfTelefono;
     @FXML
-    private TextField tfCupo;
+    private TextField tfUsername;
     @FXML
-    private TableView<?> tvEstudiantes;
+    private PasswordField tfPassword;
     @FXML
-    private TableColumn<?, ?> tcNombre;
-    @FXML
-    private TableColumn<?, ?> tcApellidoPaterno;
-    @FXML
-    private TableColumn<?, ?> tcApellidoMaterno;
-    @FXML
-    private TableColumn<?, ?> tcCorreo;
-    @FXML
-    private TableColumn<?, ?> tcMatricula;
+    private TextField tfCampoAdicional;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }    
 
     @FXML
-    private void clicIrAdminCursos(ActionEvent event) {
+    private void clicIrAdminUsuarios(ActionEvent event) {
         if (Utilidades.mostrarDialogoConfirmacion(
                 "Confirmación de regreso", 
-                "¿Está seguro de que desea regresar a la ventana de administración de cursos? " + 
+                "¿Está seguro de que desea regresar a la ventana de administración de usuarios? " + 
                 "La información ingresada en el formulario se descartará")) {
-            irAdminCursos();
+            irAdminUsuarios();
         }
     }
     
-    private void irAdminCursos() {
+    private void irAdminUsuarios() {
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLAdminCursos.fxml"));
-        escenarioBase.setTitle("Administración cursos");
+                Utilidades.inicializarEscena("vistas/FXMLAdminUsuarios.fxml"));
+        escenarioBase.setTitle("Administración usuarios");
         escenarioBase.show();
     }
 
+    @FXML
+    private void clicBtnRegistrarUsuario(ActionEvent event) {
+    }
 
     @FXML
     private void clicBtnCancelar(ActionEvent event) {
         if (mostrarDialogoConfirmacionCancelacion()) {
-            irAdminCursos();
+            irAdminUsuarios();
         }
     }
     
     private boolean mostrarDialogoConfirmacionCancelacion() {
         return Utilidades.mostrarDialogoConfirmacion(
                 "Confirmación de cancelación", 
-                "¿Está seguro de que desea cancelar el registro del curso? " + 
+                "¿Está seguro de que desea cancelar el registro del usuario? " + 
                 "La información ingresada en el formulario se descartará");
-    }
-    
-    @FXML
-    private void clicBtnRegistrarCurso(ActionEvent event) {
-    }
-
-    @FXML
-    private void clicBtnAgregarEstudiante(ActionEvent event) {
     }
 
     @FXML
@@ -115,5 +101,6 @@ public class FXMLFormularioCursoController extends FXMLAdminCursosController {
             super.clicIrCuerposAcademicos(event);
         }
     }
+    
     
 }

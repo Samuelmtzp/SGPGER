@@ -90,15 +90,15 @@
       </Pane>
       <Pane layoutX="300.0" layoutY="100.0" prefHeight="980.0" prefWidth="1620.0">
          <children>
-            <TableView layoutX="38.0" layoutY="239.0" prefHeight="565.0" prefWidth="1525.0" stylesheets="@../css/estilos.css">
+            <TableView fx:id="tvCursos" layoutX="38.0" layoutY="239.0" prefHeight="565.0" prefWidth="1525.0" stylesheets="@../css/estilos.css">
               <columns>
-                <TableColumn prefWidth="164.33334350585938" text="Experiencia educativa" />
-                  <TableColumn prefWidth="75.0" text="Periodo" />
-                  <TableColumn prefWidth="167.0" text="Profesor" />
-                <TableColumn prefWidth="151.66668701171875" text="NRC" />
-                  <TableColumn prefWidth="157.0" text="Bloque" />
-                  <TableColumn prefWidth="147.333251953125" text="Sección" />
-                  <TableColumn prefWidth="75.0" text="Cupo" />
+                <TableColumn fx:id="tcExperienciaEducativa" prefWidth="164.33334350585938" text="Experiencia educativa" />
+                  <TableColumn fx:id="tcPeriodo" prefWidth="75.0" text="Periodo" />
+                  <TableColumn fx:id="tcProfesor" prefWidth="167.0" text="Profesor" />
+                <TableColumn fx:id="tcNrc" prefWidth="151.66668701171875" text="NRC" />
+                  <TableColumn fx:id="tcBloque" prefWidth="157.0" text="Bloque" />
+                  <TableColumn fx:id="tcSeccion" prefWidth="147.333251953125" text="Sección" />
+                  <TableColumn fx:id="tcCupo" prefWidth="75.0" text="Cupo" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -128,7 +128,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="762.0" layoutY="141.0" mnemonicParsing="false" onAction="#clicIrFormularioCurso" prefHeight="62.0" prefWidth="248.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Agregar curso">
+            <Button layoutX="762.0" layoutY="141.0" mnemonicParsing="false" onAction="#clicBtnAgregarCurso" prefHeight="62.0" prefWidth="248.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Agregar curso">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>

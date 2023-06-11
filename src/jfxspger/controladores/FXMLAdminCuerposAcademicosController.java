@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Stage;
+import jfxspger.utilidades.Utilidades;
 
 public class FXMLAdminCuerposAcademicosController extends FXMLPrincipalAdministradorController {
 
@@ -39,6 +41,11 @@ public class FXMLAdminCuerposAcademicosController extends FXMLPrincipalAdministr
 
     @FXML
     private void clicBtnAgregarCuerpoAcademico(ActionEvent event) {
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        escenarioBase.setScene(
+                Utilidades.inicializarEscena("vistas/FXMLFormularioCuerpoAcademico.fxml"));
+        escenarioBase.setTitle("Formulario de cuerpo académico");
+        escenarioBase.show();
     }
     
 }
