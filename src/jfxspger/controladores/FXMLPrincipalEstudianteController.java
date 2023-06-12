@@ -19,11 +19,6 @@ public class FXMLPrincipalEstudianteController implements Initializable {
     }    
 
     @FXML
-    private void clicIrAnteproyectos(ActionEvent event) {
-    }
-
-
-    @FXML
     private void clicCerrarSesion(ActionEvent event) {
         if (Utilidades.mostrarDialogoConfirmacion(
                 "Cerrar sesión", 
@@ -42,10 +37,22 @@ public class FXMLPrincipalEstudianteController implements Initializable {
 
     @FXML
     private void clicIrCronograma(ActionEvent event) {
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLCronogramaActividades.fxml"));
+        escenarioBase.setTitle("Cronograma de actividades");
+        escenarioBase.show();        
     }
 
     @FXML
     private void clicIrCursos(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicIrPropuestas(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicIrAnteproyecto(ActionEvent event) {
     }
     
 }
