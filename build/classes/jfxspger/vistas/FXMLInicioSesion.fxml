@@ -36,7 +36,7 @@
                   <Font name="Berlin Sans FB" size="35.0" />
                </font>
             </Label>
-            <TextField fx:id="tfUsuario" layoutX="173.0" layoutY="193.0" prefHeight="39.0" prefWidth="515.0" promptText="Ej. Samuel">
+            <TextField fx:id="tfUsuario" layoutX="173.0" layoutY="193.0" prefHeight="39.0" prefWidth="515.0">
                <font>
                   <Font size="20.0" />
                </font></TextField>
@@ -55,7 +55,7 @@
                   <Font name="Berlin Sans FB" size="50.0" />
                </font>
             </Button>
-            <PasswordField fx:id="tfPassword" layoutX="171.0" layoutY="335.0" prefHeight="39.0" prefWidth="515.0" promptText="EJ. 12345">
+            <PasswordField fx:id="tfPassword" layoutX="171.0" layoutY="335.0" prefHeight="39.0" prefWidth="515.0">
                <font>
                   <Font size="20.0" />
                </font></PasswordField>

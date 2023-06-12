@@ -5,18 +5,47 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.stage.Stage;
+import jfxspger.utilidades.Utilidades;
 
 public class FXMLAdminUsuariosController extends FXMLPrincipalAdministradorController {
 
     @FXML
     private Label lbTitulo;
+    @FXML
+    private TableView<?> tvUsuarios;
+    @FXML
+    private TableColumn<?, ?> tcNombre;
+    @FXML
+    private TableColumn<?, ?> tcApellidoPaterno;
+    @FXML
+    private TableColumn<?, ?> tcApellidoMaterno;
+    @FXML
+    private TableColumn<?, ?> tcCorreo;
+    @FXML
+    private TableColumn<?, ?> tcTipo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
 
     @FXML
-    private void clicIrPrincipalAdministrador(ActionEvent event) {
+    private void clicBtnEliminarUsuario(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicBtnModificarUsuario(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicBtnAgregarUsuario(ActionEvent event) {
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        escenarioBase.setScene(
+                Utilidades.inicializarEscena("vistas/FXMLFormularioUsuario.fxml"));
+        escenarioBase.setTitle("Formulario de usuario");
+        escenarioBase.show();
     }
     
 }

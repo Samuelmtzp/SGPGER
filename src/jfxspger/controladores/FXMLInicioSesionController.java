@@ -7,7 +7,6 @@
 package jfxspger.controladores;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,9 +17,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import jfxspger.modelo.dao.SesionDAO;
-import jfxspger.modelo.dao.TipoUsuarioDAO;
-import jfxspger.modelo.pojo.TipoUsuarioRespuesta;
-import jfxspger.modelo.pojo.TipoUsuario;
 import jfxspger.modelo.pojo.Usuario;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
