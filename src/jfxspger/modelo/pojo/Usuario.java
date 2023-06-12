@@ -9,6 +9,8 @@ package jfxspger.modelo.pojo;
 public class Usuario {
     
     private int idUsuario;
+    private int idTipoUsuario;
+    private String tipoUsuario;
     private String username;
     private String password;
     private String correo;
@@ -17,14 +19,15 @@ public class Usuario {
     private String apellidoMaterno;
     private String telefono;
     private String fechaCreacion;
-    
     private int codigoRespuesta;
     
     public Usuario() {
     }
 
-    public Usuario(int idUsuario, String username, String password, String correo, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String fechaCreacion, int codigoRespuesta) {
+    public Usuario(int idUsuario, int idTipoUsuario, String tipoUsuario, String username, String password, String correo, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String fechaCreacion, int codigoRespuesta) {
         this.idUsuario = idUsuario;
+        this.idTipoUsuario = idTipoUsuario;
+        this.tipoUsuario = tipoUsuario;
         this.username = username;
         this.password = password;
         this.correo = correo;
@@ -42,6 +45,22 @@ public class Usuario {
 
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
+    }
+
+    public int getIdTipoUsuario() {
+        return idTipoUsuario;
+    }
+
+    public void setIdTipoUsuario(int idTipoUsuario) {
+        this.idTipoUsuario = idTipoUsuario;
+    }
+
+    public String getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(String tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
     }
 
     public String getUsername() {
@@ -115,7 +134,7 @@ public class Usuario {
     public void setFechaCreacion(String fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
-    
+
     @Override
     public String toString() {
         return nombre + " " + apellidoPaterno + " " + apellidoMaterno;

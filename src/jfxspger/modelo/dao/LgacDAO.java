@@ -32,7 +32,7 @@ public class LgacDAO {
                 while (resultado.next())
                 {
                     Lgac lgac = new Lgac();
-                    lgac.setIdLgac(resultado.getInt("idPeriodo"));
+                    lgac.setIdLgac(resultado.getInt("idLgac"));
                     lgac.setNombre(resultado.getString("nombre"));
                     lgacConsulta.add(lgac);
                 }

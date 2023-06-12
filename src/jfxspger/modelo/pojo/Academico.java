@@ -11,17 +11,15 @@ public class Academico {
     private int idAcademico;
     private int idUsuario;
     private int numeroDePersonal;
-    private boolean esAdministrador;
     private int idCuerpoAcademico;
 
     public Academico() {
     }
 
-    public Academico(int idAcademico, int idUsuario, int numeroDePersonal, boolean esAdministrador, int idCuerpoAcademico) {
+    public Academico(int idAcademico, int idUsuario, int numeroDePersonal, int idCuerpoAcademico) {
         this.idAcademico = idAcademico;
         this.idUsuario = idUsuario;
         this.numeroDePersonal = numeroDePersonal;
-        this.esAdministrador = esAdministrador;
         this.idCuerpoAcademico = idCuerpoAcademico;
     }
 
@@ -49,14 +47,6 @@ public class Academico {
         this.numeroDePersonal = numeroDePersonal;
     }
 
-    public boolean isEsAdministrador() {
-        return esAdministrador;
-    }
-
-    public void setEsAdministrador(boolean esAdministrador) {
-        this.esAdministrador = esAdministrador;
-    }
-
     public int getIdCuerpoAcademico() {
         return idCuerpoAcademico;
     }
@@ -67,7 +57,7 @@ public class Academico {
 
     @Override
     public String toString() {
-        return "Academico{" + "idAcademico=" + idAcademico + ", idUsuario=" + idUsuario + ", numeroDePersonal=" + numeroDePersonal + ", esAdministrador=" + esAdministrador + ", idCuerpoAcademico=" + idCuerpoAcademico + '}';
+        return "Academico{" + "idAcademico=" + idAcademico + ", idUsuario=" + idUsuario + ", numeroDePersonal=" + numeroDePersonal + ", idCuerpoAcademico=" + idCuerpoAcademico + '}';
     }
 
 }
