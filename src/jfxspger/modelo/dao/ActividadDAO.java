@@ -59,17 +59,17 @@ public class ActividadDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
-                String sentencia = "INSERT INTO Actividad (idAnteproyecto, idEstudiante, " + 
+                String sentencia = "INSERT INTO Actividad (idEstudiante, " + 
                         "titulo, fechaCreacion, fechaInicio, fechaFin, descripcion) " +
-                        "VALUES (?,?,?,?,?,?,?)";
+                        "VALUES (?,?,?,?,?,?)";
                 PreparedStatement prepararSentencia =  conexionBD.prepareStatement(sentencia);
-                prepararSentencia.setInt(1, nuevaActividad.getIdAnteproyecto());
-                prepararSentencia.setInt(2, nuevaActividad.getIdEstudiante());
-                prepararSentencia.setString(3, nuevaActividad.getTitulo());
-                prepararSentencia.setString(4, nuevaActividad.getFechaCreacion());
-                prepararSentencia.setString(5, nuevaActividad.getFechaInicio());
-                prepararSentencia.setString(6, nuevaActividad.getFechaFin());
-                prepararSentencia.setString(7, nuevaActividad.getDescripcion());
+                
+                prepararSentencia.setInt(1, nuevaActividad.getIdEstudiante());
+                prepararSentencia.setString(2, nuevaActividad.getTitulo());
+                prepararSentencia.setString(3, nuevaActividad.getFechaCreacion());
+                prepararSentencia.setString(4, nuevaActividad.getFechaInicio());
+                prepararSentencia.setString(5, nuevaActividad.getFechaFin());
+                prepararSentencia.setString(6, nuevaActividad.getDescripcion());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;

@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import jfxspger.interfaz.INotificacionOperacionActividad;
 import jfxspger.modelo.dao.ActividadDAO;
 import jfxspger.modelo.pojo.Actividad;
+import jfxspger.modelo.pojo.Estudiante;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
 
@@ -35,17 +36,20 @@ public class FXMLActividadFormularioController implements Initializable {
     @FXML
     private DatePicker dpFechaFin;
     private Actividad actividadEdicion;
+    private Estudiante estudiante;
     private boolean esEdicion;
     private INotificacionOperacionActividad interfazNotificacion;
     
     String estiloError = "-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 2;";
     String estiloNormal = "-fx-border-width: 0;";
+    
     @FXML
-    private Label lTituloActividad;
+    private Label lbTitulo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        dpFechaInicio.setEditable(false);
+        dpFechaFin.setEditable(false);
     }
 
     public void inicializarInformacionFormulario(boolean esEdicion, Actividad actividadEdicion, INotificacionOperacionActividad interfazNotificacion){
@@ -54,10 +58,10 @@ public class FXMLActividadFormularioController implements Initializable {
         this.interfazNotificacion = interfazNotificacion;
         
         if(esEdicion){
-            lTituloActividad.setText("Editanto actividad: " + actividadEdicion.getTitulo());
+            lbTitulo.setText("Editanto actividad: " + actividadEdicion.getTitulo());
             cargarInformacionEdicion();
         } else {
-            lTituloActividad.setText("Programar nueva actividad");
+            lbTitulo.setText("Programar nueva actividad");
         }
     }
     
@@ -65,7 +69,7 @@ public class FXMLActividadFormularioController implements Initializable {
         tfNombreActividad.setText(actividadEdicion.getTitulo());
         tfDescripcionActividad.setText(actividadEdicion.getDescripcion());
         dpFechaInicio.setValue(LocalDate.parse(actividadEdicion.getFechaInicio()));
-        dpFechaFin.setValue(LocalDate.parse(actividadEdicion.getFechaFin()));        
+        dpFechaFin.setValue(LocalDate.parse(actividadEdicion.getFechaFin()));
     }
 
     @FXML
@@ -74,7 +78,7 @@ public class FXMLActividadFormularioController implements Initializable {
     }
     
     private void validarCampos(){
-        
+        establecerEstiloNormal();
         boolean datosValidos = true;
         
         String nomAct = tfNombreActividad.getText();
@@ -82,6 +86,7 @@ public class FXMLActividadFormularioController implements Initializable {
         LocalDate fechaInicio = dpFechaInicio.getValue();
         LocalDate fechaFin = dpFechaFin.getValue(); 
         LocalDate fechaCreacion = LocalDate.now();
+//        int idEstudiante = estudiante.getIdEstudiante();
         
         //VALIDACIONES
         if(nomAct.isEmpty()){
@@ -93,13 +98,7 @@ public class FXMLActividadFormularioController implements Initializable {
             tfDescripcionActividad.setStyle(estiloError);
             datosValidos = false;
         }
-        
-        if(fechaFin.isBefore(fechaInicio)){
-            dpFechaInicio.setStyle(estiloError);
-            dpFechaFin.setStyle(estiloError);
-            datosValidos = false;            
-        }
-        
+
         if(fechaFin == null){
             dpFechaFin.setStyle(estiloError);
             datosValidos = false;
@@ -108,7 +107,13 @@ public class FXMLActividadFormularioController implements Initializable {
         if(fechaInicio == null){
             dpFechaInicio.setStyle(estiloError);
             datosValidos = false;
-        }
+        }        
+        
+        if(fechaFin.isBefore(fechaInicio)){
+            dpFechaInicio.setStyle(estiloError);
+            dpFechaFin.setStyle(estiloError);
+            datosValidos = false;            
+        }        
         
         if(datosValidos){
             Actividad actividadValida = new Actividad();
@@ -117,6 +122,7 @@ public class FXMLActividadFormularioController implements Initializable {
             actividadValida.setFechaInicio(fechaInicio.toString());
             actividadValida.setFechaFin(fechaFin.toString());
             actividadValida.setFechaCreacion(fechaCreacion.toString());
+//            actividadValida.setIdEstudiante(idEstudiante);
             
             if(esEdicion){
                 actualizarActividad(actividadValida);
@@ -133,8 +139,8 @@ public class FXMLActividadFormularioController implements Initializable {
                 Utilidades.mostrarDialogoSimple("Sin conexión", "Lo sentimos, por el momento no hay conexión", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
-                        "Hubo un error al cargar la información. Por favor intente más tarde", Alert.AlertType.WARNING);
+                Utilidades.mostrarDialogoSimple("Error al registrar la actividad", 
+                        "Hubo un error al registrar la actividad. Por favor intente más tarde", Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
                 Utilidades.mostrarDialogoSimple("Actividad registrada", "Actividad registrada correctamente", 
@@ -175,11 +181,47 @@ public class FXMLActividadFormularioController implements Initializable {
         tfDescripcionActividad.setStyle(estiloNormal);
     }
 
+    private void clicBtnRegresar(MouseEvent event) {   
+    }
+
     @FXML
-    private void clicBtnRegresar(MouseEvent event) {
-        boolean cerrarVentana = Utilidades.mostrarDialogoConfirmacion("Regresar a ventana anterior", "¿Desea regresar a la ventana anterior? No se guardaran los datos ingresados.");
+    private void clicIrAnteproyecto(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicIrCronograma(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicIrCursos(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicCerrarSesion(ActionEvent event) {
+        if (Utilidades.mostrarDialogoConfirmacion(
+                "Cerrar sesión", 
+                "¿Está seguro de que desea cerrar sesión?")) {
+            irVentanaInicioSesion();
+        }        
+    }
+    
+        private void irVentanaInicioSesion() {
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        escenarioBase.setScene(
+                Utilidades.inicializarEscena("vistas/FXMLInicioSesion.fxml"));
+        escenarioBase.setTitle("Inicio de sesion");
+        escenarioBase.show();
+    }
+
+    @FXML
+    private void clicIrPropuestas(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicIrPrincipalEstudiante(ActionEvent event) {
+                boolean cerrarVentana = Utilidades.mostrarDialogoConfirmacion("Regresar a ventana anterior", "¿Desea regresar a la ventana anterior? No se guardaran los datos ingresados.");
         if(cerrarVentana){
             cerrarVentana();
-        }   
+        }
     }
 }
