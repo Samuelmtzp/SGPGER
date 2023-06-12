@@ -25,11 +25,12 @@ public class UsuarioDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT idUsuario, idTipoUsuario, username, password, " + 
-                        "correo, nombre, apellidoPaterno, apellidoMaterno, telefono, " + 
-                        "fechaCreacion " +
-                        "FROM Usuario INNER JOIN TipoUsuario " + 
-                        "ON Usuario.idTipoUsuario = TipoUsuario.idTipoUsuario";
+                String consulta = "SELECT idUsuario, Usuario.idTipoUsuario, "
+                        + "TipoUsuario.tipoUsuario, username, password, correo, "
+                        + "nombre, apellidoPaterno, apellidoMaterno, telefono, fechaCreacion "
+                        + "FROM Usuario "
+                        + "INNER JOIN TipoUsuario "
+                        + "ON Usuario.idTipoUsuario = TipoUsuario.idTipoUsuario";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Usuario> usuariosConsulta = new ArrayList();
@@ -37,8 +38,8 @@ public class UsuarioDAO {
                 {
                     Usuario usuario = new Usuario();
                     usuario.setIdUsuario(resultado.getInt("idUsuario"));
-                    usuario.setIdTipoUsuario(resultado.getInt("idTipoUsuario"));
-                    usuario.setTipoUsuario(resultado.getString("tipoUsuario"));
+                    usuario.setIdTipoUsuario(resultado.getInt("Usuario.idTipoUsuario"));
+                    usuario.setTipoUsuario(resultado.getString("TipoUsuario.tipoUsuario"));
                     usuario.setUsername(resultado.getString("username"));
                     usuario.setPassword(resultado.getString("password"));
                     usuario.setCorreo(resultado.getString("correo"));

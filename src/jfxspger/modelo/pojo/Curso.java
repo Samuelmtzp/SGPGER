@@ -9,8 +9,10 @@ public class Curso {
     
     private int idCurso;
     private int idExperienciaEducativa;
+    private String experienciaEducativa;
     private int idPeriodo;
     private int idProfesor;
+    private String nombreCompletoProfesor;
     private int nrc;
     private int bloque;
     private String seccion;
@@ -19,11 +21,13 @@ public class Curso {
     public Curso() {
     }
 
-    public Curso(int idCurso, int idExperienciaEducativa, int idPeriodo, int idProfesor, int nrc, int bloque, String seccion, int cupo) {
+    public Curso(int idCurso, int idExperienciaEducativa, String experienciaEducativa, int idPeriodo, int idProfesor, String nombreCompletoProfesor, int nrc, int bloque, String seccion, int cupo) {
         this.idCurso = idCurso;
         this.idExperienciaEducativa = idExperienciaEducativa;
+        this.experienciaEducativa = experienciaEducativa;
         this.idPeriodo = idPeriodo;
         this.idProfesor = idProfesor;
+        this.nombreCompletoProfesor = nombreCompletoProfesor;
         this.nrc = nrc;
         this.bloque = bloque;
         this.seccion = seccion;
@@ -46,6 +50,14 @@ public class Curso {
         this.idExperienciaEducativa = idExperienciaEducativa;
     }
 
+    public String getExperienciaEducativa() {
+        return experienciaEducativa;
+    }
+
+    public void setExperienciaEducativa(String experienciaEducativa) {
+        this.experienciaEducativa = experienciaEducativa;
+    }
+
     public int getIdPeriodo() {
         return idPeriodo;
     }
@@ -60,6 +72,14 @@ public class Curso {
 
     public void setIdProfesor(int idProfesor) {
         this.idProfesor = idProfesor;
+    }
+
+    public String getNombreCompletoProfesor() {
+        return nombreCompletoProfesor;
+    }
+
+    public void setNombreCompletoProfesor(String nombreCompletoProfesor) {
+        this.nombreCompletoProfesor = nombreCompletoProfesor;
     }
 
     public int getNrc() {
@@ -96,7 +116,7 @@ public class Curso {
 
     @Override
     public String toString() {
-        return "Curso{" + "idCurso=" + idCurso + ", idExperienciaEducativa=" + idExperienciaEducativa + ", idPeriodo=" + idPeriodo + ", idProfesor=" + idProfesor + ", nrc=" + nrc + ", bloque=" + bloque + ", seccion=" + seccion + ", cupo=" + cupo + '}';
+        return "Curso{" + "idCurso=" + idCurso + ", idExperienciaEducativa=" + idExperienciaEducativa + ", experienciaEducativa=" + experienciaEducativa + ", idPeriodo=" + idPeriodo + ", idProfesor=" + idProfesor + ", nombreCompletoProfesor=" + nombreCompletoProfesor + ", nrc=" + nrc + ", bloque=" + bloque + ", seccion=" + seccion + ", cupo=" + cupo + '}';
     }
-    
+
 }

@@ -25,7 +25,7 @@ public class LgacDAO {
         if (conexionBD != null) {
             try {
                 String consulta = "SELECT idLgac, nombre " +
-                        "FROM Lgac";
+                        " FROM Lgac";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Lgac> lgacConsulta = new ArrayList();
