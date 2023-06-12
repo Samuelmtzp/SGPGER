@@ -25,14 +25,14 @@ public class LgacDAO {
         if (conexionBD != null) {
             try {
                 String consulta = "SELECT idLgac, nombre " +
-                        "FROM Lgac";
+                        " FROM Lgac";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Lgac> lgacConsulta = new ArrayList();
                 while (resultado.next())
                 {
                     Lgac lgac = new Lgac();
-                    lgac.setIdLgac(resultado.getInt("idPeriodo"));
+                    lgac.setIdLgac(resultado.getInt("idLgac"));
                     lgac.setNombre(resultado.getString("nombre"));
                     lgacConsulta.add(lgac);
                 }
