@@ -12,19 +12,25 @@ public class CuerpoAcademico {
     private String nombre;
     private String clave;
     private int idResponsable;
+    private String nombreCompletoResponsable;
     private int idGradoConsolidacion;
+    private String gradoConsolidacion;
     private int idDependencia;
+    private String dependencia;
 
     public CuerpoAcademico() {
     }
 
-    public CuerpoAcademico(int idCuerpoAcademico, String nombre, String clave, int idResponsable, int idGradoConsolidacion, int idDependencia) {
+    public CuerpoAcademico(int idCuerpoAcademico, String nombre, String clave, int idResponsable, String nombreCompletoResponsable, int idGradoConsolidacion, String gradoConsolidacion, int idDependencia, String dependencia) {
         this.idCuerpoAcademico = idCuerpoAcademico;
         this.nombre = nombre;
         this.clave = clave;
         this.idResponsable = idResponsable;
+        this.nombreCompletoResponsable = nombreCompletoResponsable;
         this.idGradoConsolidacion = idGradoConsolidacion;
+        this.gradoConsolidacion = gradoConsolidacion;
         this.idDependencia = idDependencia;
+        this.dependencia = dependencia;
     }
 
     public int getIdCuerpoAcademico() {
@@ -59,12 +65,28 @@ public class CuerpoAcademico {
         this.idResponsable = idResponsable;
     }
 
+    public String getNombreCompletoResponsable() {
+        return nombreCompletoResponsable;
+    }
+
+    public void setNombreCompletoResponsable(String nombreCompletoResponsable) {
+        this.nombreCompletoResponsable = nombreCompletoResponsable;
+    }
+
     public int getIdGradoConsolidacion() {
         return idGradoConsolidacion;
     }
 
     public void setIdGradoConsolidacion(int idGradoConsolidacion) {
         this.idGradoConsolidacion = idGradoConsolidacion;
+    }
+
+    public String getGradoConsolidacion() {
+        return gradoConsolidacion;
+    }
+
+    public void setGradoConsolidacion(String gradoConsolidacion) {
+        this.gradoConsolidacion = gradoConsolidacion;
     }
 
     public int getIdDependencia() {
@@ -75,9 +97,17 @@ public class CuerpoAcademico {
         this.idDependencia = idDependencia;
     }
 
+    public String getDependencia() {
+        return dependencia;
+    }
+
+    public void setDependencia(String dependencia) {
+        this.dependencia = dependencia;
+    }
+
     @Override
     public String toString() {
-        return "CuerpoAcademico{" + "idCuerpoAcademico=" + idCuerpoAcademico + ", nombre=" + nombre + ", clave=" + clave + ", idResponsable=" + idResponsable + ", idGradoConsolidacion=" + idGradoConsolidacion + ", idDependencia=" + idDependencia + '}';
+        return "CuerpoAcademico{" + "idCuerpoAcademico=" + idCuerpoAcademico + ", nombre=" + nombre + ", clave=" + clave + ", idResponsable=" + idResponsable + ", nombreCompletoResponsable=" + nombreCompletoResponsable + ", idGradoConsolidacion=" + idGradoConsolidacion + ", gradoConsolidacion=" + gradoConsolidacion + ", idDependencia=" + idDependencia + ", dependencia=" + dependencia + '}';
     }
 
 }

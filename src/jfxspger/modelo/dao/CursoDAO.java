@@ -24,9 +24,16 @@ public class CursoDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT idCurso, idExperienciaEducativa, " +
-                        "idPeriodo, idPofesor, NRC, bloque, seccion, cupo " +
-                        "FROM Curso";
+                String consulta = "SELECT idCurso, Curso.idExperienciaEducativa, "
+                        + "ExperienciaEducativa.nombre, "
+                        + "idPeriodo, idProfesor, CONCAT(Usuario.nombre, ' ', "
+                        + "Usuario.apellidoPaterno, ' ', Usuario.apellidoMaterno) nombreCompleto, "
+                        + "NRC, bloque, seccion, cupo "
+                        + "FROM Curso INNER JOIN ExperienciaEducativa "
+                        + "ON Curso.idExperienciaEducativa = "
+                        + "ExperienciaEducativa.idExperienciaEducativa "
+                        + "INNER JOIN Usuario "
+                        + "ON Curso.idProfesor = Usuario.idUsuario";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Curso> cursoConsulta = new ArrayList();
@@ -36,8 +43,11 @@ public class CursoDAO {
                     curso.setIdCurso(resultado.getInt("idCurso"));
                     curso.setIdExperienciaEducativa(
                             resultado.getInt("idExperienciaEducativa"));
+                    curso.setExperienciaEducativa(
+                            resultado.getString("ExperienciaEducativa.nombre"));
                     curso.setIdPeriodo(resultado.getInt("idPeriodo"));
                     curso.setIdProfesor(resultado.getInt("idProfesor"));
+                    curso.setNombreCompletoProfesor(resultado.getString("nombrecompleto"));
                     curso.setNrc(resultado.getInt("NRC"));
                     curso.setBloque(resultado.getInt("bloque"));
                     curso.setSeccion(resultado.getString("seccion"));
