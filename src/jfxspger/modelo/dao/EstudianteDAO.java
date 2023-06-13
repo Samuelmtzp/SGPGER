@@ -18,24 +18,26 @@ import jfxspger.utilidades.Constantes;
 
 public class EstudianteDAO {
     
-    public static EstudianteRespuesta obtenerInformacionEstudiante() {
+    public static EstudianteRespuesta obtenerInformacionEstudiante(int idUsuario) {
         EstudianteRespuesta respuesta = new EstudianteRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT idEstudiante, idUsuario, idAnteproyecto, matricula " +
-                        "FROM Estudiante";
+                String consulta = "SELECT idEstudiante, idAnteproyecto, matricula " +
+                        "FROM Estudiante WHERE idUsuario = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, idUsuario);
                 ResultSet resultado = prepararSentencia.executeQuery();
+                
                 ArrayList<Estudiante> estudianteConsulta = new ArrayList();
                 while (resultado.next())
                 {
                     Estudiante estudiante = new Estudiante();
                     estudiante.setIdEstudiante(resultado.getInt("idEstudiante"));
-                    estudiante.setIdUsuario(resultado.getInt("idUsuario"));
                     estudiante.setIdAnteproyecto(resultado.getInt("idAnteproyecto"));
                     estudiante.setMatricula(resultado.getString("matricula"));
+                    estudiante.setIdUsuario(idUsuario);
                     estudianteConsulta.add(estudiante);
                 }
                 respuesta.setEstudiantes(estudianteConsulta);

@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -20,7 +21,9 @@ import jfxspger.modelo.dao.TipoUsuarioDAO;
 import jfxspger.modelo.dao.UsuarioDAO;
 import jfxspger.modelo.dao.AcademicoDAO;
 import jfxspger.modelo.pojo.Academico;
+import jfxspger.modelo.pojo.AcademicoRespuesta;
 import jfxspger.modelo.pojo.Estudiante;
+import jfxspger.modelo.pojo.EstudianteRespuesta;
 import jfxspger.modelo.pojo.TipoUsuario;
 import jfxspger.modelo.pojo.TipoUsuarioRespuesta;
 import jfxspger.modelo.pojo.Usuario;
@@ -60,6 +63,10 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
     private final int TIPO_USUARIO_ACADEMICO = 3;
     private boolean esEdicion;
     private Usuario usuarioEdicion;
+    @FXML
+    private Button btnRegistrarUsuario;
+    @FXML
+    private Button btnActualizarUsuario;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -73,10 +80,11 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
         
         if(esEdicion){
             lbTitulo.setText("Edición de usuario");
-            cargarInformacionEdicion();
-            
+            btnRegistrarUsuario.setVisible(false);
+            cargarInformacionEdicion();            
         }else{
             lbTitulo.setText("Formulario de usuario");
+            btnActualizarUsuario.setVisible(false);
         }
     }
     
@@ -93,21 +101,22 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
         tfUsername.setText(usuarioEdicion.getUsername());
         tfPassword.setText(usuarioEdicion.getPassword());
         
-//        switch (usuarioEdicion.getIdTipoUsuario()) {
-//            case TIPO_USUARIO_ACADEMICO:
-//                
-//                tfCampoAdicional.setText();
-//                tfCampoAdicional.setEditable(false);
-//            break;
-//            case TIPO_USUARIO_ESTUDIANTE:
-//                tfCampoAdicional.setText();
-//                tfCampoAdicional.setEditable(false);
-//                
-//            break;
-//            case TIPO_USUARIO_ADMINISTRADOR:
-//                
-//            break;
-//        }
+        tfCampoAdicional.setEditable(false);
+        cbTipoUsuario.setDisable(true);
+        switch (usuarioEdicion.getIdTipoUsuario()) {
+            case TIPO_USUARIO_ACADEMICO:
+                AcademicoRespuesta informacionAcademico = 
+                        AcademicoDAO.obtenerInformacionAcademico(usuarioEdicion.getIdUsuario());
+                Academico academicoEdicion = informacionAcademico.getAcademicos().get(0);
+                tfCampoAdicional.setText(String.valueOf(academicoEdicion.getNumeroDePersonal()));
+            break;
+            case TIPO_USUARIO_ESTUDIANTE:
+                EstudianteRespuesta informacionEstudiante = 
+                        EstudianteDAO.obtenerInformacionEstudiante(usuarioEdicion.getIdUsuario());
+                Estudiante estudianteEdicion = informacionEstudiante.getEstudiantes().get(0);
+                tfCampoAdicional.setText(estudianteEdicion.getMatricula());
+            break;
+        }
     }
     
     private int obtenerPosicionComboTipoUsuario(int idTipoUsuario){
@@ -140,8 +149,6 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
                                     
                     switch(cbTipoUsuario.getSelectionModel().getSelectedItem().getIdTipoUsuario()) {
                         case TIPO_USUARIO_ACADEMICO:
-                            habilitarCampoAdicional();
-                        break;
                         case TIPO_USUARIO_ESTUDIANTE:
                             habilitarCampoAdicional();
                         break;
@@ -232,26 +239,28 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
             cbTipoUsuario.setStyle(Constantes.estiloError);
             datosValidos = false;
         } else {
-            switch(cbTipoUsuario.getSelectionModel().getSelectedItem().getIdTipoUsuario()) {
-                case TIPO_USUARIO_ACADEMICO:
-                    try {
-                        Integer.parseInt(tfCampoAdicional.getText());
-                    } catch (NumberFormatException e) {
-                        tfCampoAdicional.setStyle(Constantes.estiloError);
-                        datosValidos = false;
-                    }
-                    
-                    if (campoAdicional.isEmpty()) {
-                        tfCampoAdicional.setStyle(Constantes.estiloError);
-                        datosValidos = false;
-                    }
-                break;
-                case TIPO_USUARIO_ESTUDIANTE:
-                    if (campoAdicional.isEmpty()) {
-                        tfCampoAdicional.setStyle(Constantes.estiloError);
-                        datosValidos = false;    
-                    }
-                break;
+            if (!esEdicion) {
+                switch(cbTipoUsuario.getSelectionModel().getSelectedItem().getIdTipoUsuario()) {
+                    case TIPO_USUARIO_ACADEMICO:
+                        try {
+                            Integer.parseInt(tfCampoAdicional.getText());
+                        } catch (NumberFormatException e) {
+                            tfCampoAdicional.setStyle(Constantes.estiloError);
+                            datosValidos = false;
+                        }
+
+                        if (campoAdicional.isEmpty()) {
+                            tfCampoAdicional.setStyle(Constantes.estiloError);
+                            datosValidos = false;
+                        }
+                    break;
+                    case TIPO_USUARIO_ESTUDIANTE:
+                        if (campoAdicional.isEmpty()) {
+                            tfCampoAdicional.setStyle(Constantes.estiloError);
+                            datosValidos = false;    
+                        }
+                    break;
+                }
             }
         }
         
@@ -266,7 +275,6 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
         }     
         
         if (datosValidos) {
-            System.out.println("DatosValidos = " + datosValidos);
             int idTipoUsuario = tiposUsuario.get(posicionTipoUsuario).getIdTipoUsuario();
             Usuario usuarioValidado = new Usuario();
             usuarioValidado.setNombre(nombre);
@@ -277,10 +285,41 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
             usuarioValidado.setIdTipoUsuario(idTipoUsuario);
             usuarioValidado.setUsername(username);
             usuarioValidado.setPassword(password);
-            
-            registrarUsuario(usuarioValidado, campoAdicional);
+            if (esEdicion) {
+                usuarioValidado.setIdUsuario(usuarioEdicion.getIdUsuario());
+                actualizarUsuario(usuarioValidado);
+            } else {
+                registrarUsuario(usuarioValidado, campoAdicional);
+            }
+        }   
+    }
+    
+    @FXML
+    private void clicBtnActualizarUsuario(ActionEvent event) {
+        validarCamposRegistro();
+    }
+    
+    private void actualizarUsuario(Usuario usuarioEdicion){
+        int respuesta = UsuarioDAO.modificarUsuario(usuarioEdicion);
+        switch(respuesta){
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Error de conexion", "El usuario " + 
+                        "no pudo ser modificado debido a un error de conexión.", 
+                        Alert.AlertType.ERROR);
+            break;
+            case Constantes.ERROR_CONSULTA:
+                Utilidades.mostrarDialogoSimple("Error en la información",
+                        "La información del estudiante no puede ser modificada, "
+                       + "por favor verifique que sea correcta" ,
+                        Alert.AlertType.WARNING);
+            break;
+            case Constantes.OPERACION_EXITOSA:
+                Utilidades.mostrarDialogoSimple("Usuario actualizado", 
+                        "La información del estudiante fue actualizada correctamente", 
+                        Alert.AlertType.INFORMATION);
+                irAdminUsuarios();
+            break;
         }
-        
     }
     
     private void registrarUsuario(Usuario usuarioRegistro, String campoAdicional){
@@ -319,13 +358,11 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
                     break;
                 }
                 irAdminUsuarios();
-                
             break;
         }
     }
     
     private void registrarEstudiante(Estudiante estudianteRegistro){
-        System.out.println("idUsuario = " + estudianteRegistro.getIdUsuario());
         int respuesta = EstudianteDAO.guardarEstudiante(estudianteRegistro);
         
         switch(respuesta){
@@ -436,6 +473,4 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
         if (!".0123456789".contains(entrada)) 
             event.consume();
     }
-    
-
 }

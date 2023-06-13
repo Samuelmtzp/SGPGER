@@ -111,7 +111,7 @@
                   <Font size="22.0" />
                </font>
             </Label>
-            <Button layoutX="961.0" layoutY="821.0" mnemonicParsing="false" onAction="#clicBtnRegistrarUsuario" prefHeight="53.0" prefWidth="262.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Registrar usuario">
+            <Button fx:id="btnRegistrarUsuario" layoutX="961.0" layoutY="821.0" mnemonicParsing="false" onAction="#clicBtnRegistrarUsuario" prefHeight="53.0" prefWidth="262.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Registrar usuario">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
@@ -168,6 +168,11 @@
                   <Font size="19.0" />
                </font>
             </Label>
+            <Button fx:id="btnActualizarUsuario" layoutX="961.0" layoutY="821.0" mnemonicParsing="false" onAction="#clicBtnActualizarUsuario" prefHeight="53.0" prefWidth="262.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Actualizar usuario">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
    </children>

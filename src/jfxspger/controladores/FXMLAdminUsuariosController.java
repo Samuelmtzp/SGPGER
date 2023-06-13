@@ -8,13 +8,16 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import jfxspger.modelo.dao.UsuarioDAO;
 import jfxspger.modelo.pojo.Usuario;
@@ -147,6 +150,42 @@ public class FXMLAdminUsuariosController extends FXMLPrincipalAdministradorContr
     @FXML
     private void clicBtnAgregarUsuario(ActionEvent event) {
         irFormularioUsuario(false, null);
+    }
+
+    @FXML
+    private void clicConsultarUsuario(MouseEvent event) {
+        if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+            Node node = ((Node) event.getTarget()).getParent();
+            TableRow row;
+            if (node instanceof TableRow) {
+                row = (TableRow) node;
+                Usuario usuarioSeleccionado = tvUsuarios.getSelectionModel().getSelectedItem();
+                irInformacionUsuario(usuarioSeleccionado);
+            } 
+            else {
+                row = (TableRow) node.getParent();
+            }
+            System.out.println(row.getItem());
+        }
+    }
+    
+    private void irInformacionUsuario(Usuario usuario){
+        try{
+            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.
+                    JFXSPGER.class.getResource("/jfxspger/vistas/FXMLInfoUsuario.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLInfoUsuarioController formulario = accesoControlador.getController();
+            Scene sceneFormulario = new Scene(vista);
+            Stage escenarioPrincipal = (Stage) lbTitulo.getScene().getWindow();
+            escenarioPrincipal.setTitle("Informacion de usuario");
+            escenarioPrincipal.setScene(sceneFormulario);
+            formulario.inicializarInformacion(usuario);
+        }catch(IOException e){
+            Utilidades.mostrarDialogoSimple("Error", 
+                    "No se puede mostrar la pantalla de informacion de usuario", 
+                    Alert.AlertType.ERROR);  
+        }
+        
     }
     
 }
