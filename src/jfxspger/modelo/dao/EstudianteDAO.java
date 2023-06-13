@@ -54,13 +54,11 @@ public class EstudianteDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
-                String sentencia = "INSERT INTO Estudiante (idUsuario, idAnteproyecto, " + 
-                        "matricula) " +
-                        "VALUES (?,?,?)";
+                String sentencia = "INSERT INTO Estudiante (idUsuario, matricula) " +
+                        "VALUES (?,?)";
                 PreparedStatement prepararSentencia =  conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setInt(1, nuevoEstudiante.getIdUsuario());
-                prepararSentencia.setInt(2, nuevoEstudiante.getIdAnteproyecto());
-                prepararSentencia.setString(3, nuevoEstudiante.getMatricula());
+                prepararSentencia.setString(2, nuevoEstudiante.getMatricula());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;
@@ -79,14 +77,13 @@ public class EstudianteDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
-                String sentencia = "UPDATE Estudiante SET idUsuario = ?, " + 
-                        "idAnteproyecto = ?, matricula = ? " +
+                String sentencia = "UPDATE Estudiante SET matricula = ?, idAnteproyecto = ?" +
                         "WHERE idEstudiante = ?";
-                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
-                prepararSentencia.setInt(1, estudianteEdicion.getIdUsuario());
+                
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);                                
+                prepararSentencia.setString(1, estudianteEdicion.getMatricula());
                 prepararSentencia.setInt(2, estudianteEdicion.getIdAnteproyecto());
-                prepararSentencia.setString(3, estudianteEdicion.getMatricula());
-                prepararSentencia.setInt(4, estudianteEdicion.getIdEstudiante());
+                prepararSentencia.setInt(3, estudianteEdicion.getIdEstudiante());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;

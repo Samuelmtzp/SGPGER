@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import jfxspger.modelo.ConexionBD;
 import jfxspger.modelo.pojo.Usuario;
@@ -61,16 +62,17 @@ public class UsuarioDAO {
         return respuesta;
     }
     
-    public static int guardarUsuario(Usuario usuarioNuevo) {
-        int respuesta;
+    public static UsuarioRespuesta guardarUsuario(Usuario usuarioNuevo) {
+        UsuarioRespuesta respuesta = new UsuarioRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
                 String sentencia = "INSERT INTO Usuario (idTipoUsuario, username, " + 
                         "password, correo, nombre, apellidoPaterno, apellidoMaterno, telefono, " + 
-                        "fechaCreacion " + 
-                        "VALUES (?,?,?,?,?,?,?,?,?)";
-                PreparedStatement prepararSentencia =  conexionBD.prepareStatement(sentencia);
+                        "fechaCreacion) " + 
+                        "VALUES (?,?,?,?,?,?,?,?, CURRENT_TIMESTAMP)";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia, 
+                                Statement.RETURN_GENERATED_KEYS);
                 prepararSentencia.setInt(1, usuarioNuevo.getIdTipoUsuario());
                 prepararSentencia.setString(2, usuarioNuevo.getUsername());
                 prepararSentencia.setString(3, usuarioNuevo.getPassword());
@@ -79,16 +81,23 @@ public class UsuarioDAO {
                 prepararSentencia.setString(6, usuarioNuevo.getApellidoPaterno());
                 prepararSentencia.setString(7, usuarioNuevo.getApellidoMaterno());
                 prepararSentencia.setString(8, usuarioNuevo.getTelefono());
-                prepararSentencia.setString(9, usuarioNuevo.getFechaCreacion());
+                
                 int filasAfectadas = prepararSentencia.executeUpdate();
-                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
-                        Constantes.ERROR_CONSULTA;
+                if (filasAfectadas == 1) {
+                    respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+                    ResultSet resultadoLlave = prepararSentencia.getGeneratedKeys();
+                    if (resultadoLlave.next()) {
+                        respuesta.setIdUsuarioRegistrado(resultadoLlave.getInt(1));
+                    }
+                }
+                else
+                    respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
                 conexionBD.close();
             } catch (SQLException e) {
-                respuesta = Constantes.ERROR_CONSULTA;
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
             }
         } else {
-            respuesta = Constantes.ERROR_CONEXION;
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
         }
         return respuesta;
     }
@@ -98,21 +107,19 @@ public class UsuarioDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
-                String sentencia = "UPDATE Usuario SET idTipoUsuario = ?, username = ?, " +
+                String sentencia = "UPDATE Usuario SET username = ?, " +
                         "password = ?, correo = ?, nombre = ?, apellidoPaterno = ?, " +
-                        "apellidoMaterno = ?, telefono = ?, fechaCreacion = ? " + 
+                        "apellidoMaterno = ?, telefono = ? " + 
                         "WHERE idUsuario = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
-                prepararSentencia.setInt(1, usuarioEdicion.getIdTipoUsuario());
-                prepararSentencia.setString(2, usuarioEdicion.getUsername());
-                prepararSentencia.setString(3, usuarioEdicion.getPassword());
-                prepararSentencia.setString(4, usuarioEdicion.getCorreo());
-                prepararSentencia.setString(5, usuarioEdicion.getNombre());
-                prepararSentencia.setString(6, usuarioEdicion.getApellidoPaterno());
-                prepararSentencia.setString(7, usuarioEdicion.getApellidoMaterno());
-                prepararSentencia.setString(8, usuarioEdicion.getTelefono());
-                prepararSentencia.setString(9, usuarioEdicion.getFechaCreacion());
-                prepararSentencia.setInt(10, usuarioEdicion.getIdUsuario());
+                prepararSentencia.setString(1, usuarioEdicion.getUsername());
+                prepararSentencia.setString(2, usuarioEdicion.getPassword());
+                prepararSentencia.setString(3, usuarioEdicion.getCorreo());
+                prepararSentencia.setString(4, usuarioEdicion.getNombre());
+                prepararSentencia.setString(5, usuarioEdicion.getApellidoPaterno());
+                prepararSentencia.setString(6, usuarioEdicion.getApellidoMaterno());
+                prepararSentencia.setString(7, usuarioEdicion.getTelefono());
+                prepararSentencia.setInt(8, usuarioEdicion.getIdUsuario());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;

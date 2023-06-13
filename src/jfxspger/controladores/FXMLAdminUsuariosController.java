@@ -1,11 +1,15 @@
 package jfxspger.controladores;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -36,6 +40,9 @@ public class FXMLAdminUsuariosController extends FXMLPrincipalAdministradorContr
     private TableColumn tcTipo;
     
     ObservableList<Usuario> usuarios;
+    private final int TIPO_USUARIO_ADMINISTRADOR = 1;
+    private final int TIPO_USUARIO_ESTUDIANTE = 2;
+    private final int TIPO_USUARIO_ACADEMICO = 3;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -75,19 +82,71 @@ public class FXMLAdminUsuariosController extends FXMLPrincipalAdministradorContr
 
     @FXML
     private void clicBtnEliminarUsuario(ActionEvent event) {
+        int posicion = tvUsuarios.getSelectionModel().getSelectedIndex();
+        if (posicion != -1) {
+            if (Utilidades.mostrarDialogoConfirmacion("Confirmación de cancelación", 
+                    "¿Está seguro de que desea eliminar al usuario?")) {
+                int respuesta = UsuarioDAO.eliminarUsuario(
+                        tvUsuarios.getSelectionModel().getSelectedItem().getIdUsuario());
+                switch(respuesta) {
+                    case Constantes.ERROR_CONEXION:
+                        Utilidades.mostrarDialogoSimple("Error de conexion", "El usuario " + 
+                                "no pudo ser eliminado debido a un error de conexión.", 
+                                Alert.AlertType.ERROR);
+                    break;
+                    case Constantes.ERROR_CONSULTA:
+                        Utilidades.mostrarDialogoSimple("Error al eliminar",
+                                "No se ha podido eliminar al usuario, "
+                               + "por favor inténtelo más tarde." ,
+                                Alert.AlertType.WARNING);
+                    break;
+                    case Constantes.OPERACION_EXITOSA:
+                        cargarDatosTabla();
+                        Utilidades.mostrarDialogoSimple("Usuario eliminado", 
+                                "El usuario fue eliminado correctamente", 
+                                Alert.AlertType.INFORMATION);
+                    break;
+                }
+            }
+        } else
+            Utilidades.mostrarDialogoSimple("Selección necesaria", 
+                    "Para eliminar un usuario, debe seleccionarlo previamente", 
+                    Alert.AlertType.WARNING);
     }
 
     @FXML
     private void clicBtnModificarUsuario(ActionEvent event) {
+        Usuario usuarioSeleccionado = tvUsuarios.getSelectionModel().getSelectedItem();
+        if(usuarioSeleccionado != null){
+            irFormularioUsuario(true, usuarioSeleccionado);
+        }else{
+            Utilidades.mostrarDialogoSimple("Atención", "Selecciona el registro "
+                    + "en la tabla para poder editarlo", Alert.AlertType.WARNING);
+        }
+    }
+    
+    private void irFormularioUsuario(boolean esEdicion, Usuario usuario){
+        try{
+            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.
+                    JFXSPGER.class.getResource("/jfxspger/vistas/FXMLFormularioUsuario.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLFormularioUsuarioController formulario = accesoControlador.getController();
+            Scene sceneFormulario = new Scene(vista);
+            Stage escenarioPrincipal = (Stage) lbTitulo.getScene().getWindow();
+            escenarioPrincipal.setTitle("Formulario de usuario");
+            escenarioPrincipal.setScene(sceneFormulario);
+            formulario.inicializarInformacionFormulario(esEdicion, usuario);
+        }catch(IOException e){
+            Utilidades.mostrarDialogoSimple("Error", 
+                    "No se puede mostrar la pantalla de formulario", 
+                    Alert.AlertType.ERROR);  
+        }
+        
     }
 
     @FXML
     private void clicBtnAgregarUsuario(ActionEvent event) {
-        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
-        escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLFormularioUsuario.fxml"));
-        escenarioBase.setTitle("Formulario de usuario");
-        escenarioBase.show();
+        irFormularioUsuario(false, null);
     }
     
 }

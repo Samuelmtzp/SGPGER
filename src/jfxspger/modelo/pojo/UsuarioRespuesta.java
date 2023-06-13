@@ -9,16 +9,26 @@ package jfxspger.modelo.pojo;
 import java.util.ArrayList;
 
 public class UsuarioRespuesta {
-
+    private int idUsuarioRegistrado;
     private int codigoRespuesta;
     private ArrayList<Usuario> usuarios;
     
     public UsuarioRespuesta() {
     }
-    
-    public UsuarioRespuesta(int codigoRespuesta, ArrayList<Usuario> usuarios) {
+
+    public UsuarioRespuesta(int idUsuarioRegistrado, int codigoRespuesta, 
+            ArrayList<Usuario> usuarios) {
+        this.idUsuarioRegistrado = idUsuarioRegistrado;
         this.codigoRespuesta = codigoRespuesta;
         this.usuarios = usuarios;
+    }
+
+    public int getIdUsuarioRegistrado() {
+        return idUsuarioRegistrado;
+    }
+
+    public void setIdUsuarioRegistrado(int idUsuarioRegistrado) {
+        this.idUsuarioRegistrado = idUsuarioRegistrado;
     }
 
     public int getCodigoRespuesta() {
