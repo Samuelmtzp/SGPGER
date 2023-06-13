@@ -90,7 +90,7 @@
       </Pane>
       <Pane layoutX="300.0" layoutY="100.0" prefHeight="980.0" prefWidth="1620.0">
          <children>
-            <TableView fx:id="tvUsuarios" layoutX="126.0" layoutY="239.0" prefHeight="565.0" prefWidth="1383.0" stylesheets="@../css/estilos.css">
+            <TableView fx:id="tvUsuarios" layoutX="126.0" layoutY="239.0" onMousePressed="#clicConsultarUsuario" prefHeight="565.0" prefWidth="1383.0" stylesheets="@../css/estilos.css">
               <columns>
                 <TableColumn fx:id="tcNombre" prefWidth="164.33334350585938" text="Nombre" />
                 <TableColumn fx:id="tcApellidoPaterno" prefWidth="151.66668701171875" text="Apellido Paterno" />

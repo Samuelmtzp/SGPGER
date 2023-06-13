@@ -18,23 +18,24 @@ import jfxspger.utilidades.Constantes;
 
 public class AcademicoDAO {
     
-    public static AcademicoRespuesta obtenerInformacionAcademico() {
+    public static AcademicoRespuesta obtenerInformacionAcademico(int idUsuario) {
         AcademicoRespuesta respuesta = new AcademicoRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT idAcademico, idUsuario, " +
+                String consulta = "SELECT idAcademico, " +
                         "numeroDePersonal, idCuerpoAcademico " +
-                        "FROM Academico";
+                        "FROM Academico WHERE idUsuario = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, idUsuario);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Academico> academicoConsulta = new ArrayList();
                 while (resultado.next())
                 {
                     Academico academico = new Academico();
                     academico.setIdAcademico(resultado.getInt("idAcademico"));
-                    academico.setIdUsuario(resultado.getInt("idUsuario"));
+                    academico.setIdUsuario(idUsuario);
                     academico.setNumeroDePersonal(resultado.getInt("numeroDePersonal"));
                     academico.setIdCuerpoAcademico(resultado.getInt("idCuerpoAcademico"));
                     academicoConsulta.add(academico);
@@ -56,12 +57,11 @@ public class AcademicoDAO {
         if (conexionBD != null) {
             try {
                 String sentencia = "INSERT INTO Academico (idUsuario, " + 
-                        "numeroDePersonal, idCuerpoAcademico) " +
-                        "VALUES (?,?,?)";
+                        "numeroDePersonal) " +
+                        "VALUES (?,?)";
                 PreparedStatement prepararSentencia =  conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setInt(1, nuevoAcademico.getIdUsuario());
                 prepararSentencia.setInt(2, nuevoAcademico.getNumeroDePersonal());
-                prepararSentencia.setInt(3, nuevoAcademico.getIdCuerpoAcademico());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;
@@ -80,14 +80,13 @@ public class AcademicoDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
-                String sentencia = "UPDATE Academico SET idUsuario = ?, " + 
-                        "numeroDePersonal = ?, idCuerpoAcademico = ? " +
-                        "WHERE idAcademico = ?";
+                String sentencia = "UPDATE Academico SET numeroDePersonal = ?, "
+                        + "idCuerpoAcademico = ? "
+                        + "WHERE idAcademico = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
-                prepararSentencia.setInt(1, academicoEdicion.getIdUsuario());
-                prepararSentencia.setInt(2, academicoEdicion.getNumeroDePersonal());
-                prepararSentencia.setInt(3, academicoEdicion.getIdCuerpoAcademico());
-                prepararSentencia.setInt(4, academicoEdicion.getIdAcademico());
+                prepararSentencia.setInt(1, academicoEdicion.getNumeroDePersonal());
+                prepararSentencia.setInt(2, academicoEdicion.getIdCuerpoAcademico());
+                prepararSentencia.setInt(3, academicoEdicion.getIdAcademico());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;
