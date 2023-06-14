@@ -12,6 +12,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import jfxspger.modelo.dao.CursoDAO;
 import jfxspger.modelo.dao.UsuarioDAO;
 import jfxspger.modelo.dao.Estudiante_CursoDAO;
 import jfxspger.modelo.pojo.Curso;
@@ -144,7 +145,7 @@ public class FXMLEstudiantesCursoController extends FXMLPrincipalAdministradorCo
                 estudianteEnCursoRegistro.setIdCurso(curso.getIdCurso());
                 estudianteEnCursoRegistro.setIdEstudiante(tvEstudiantesDisponibles.
                     getSelectionModel().getSelectedItem().getIdEstudiante());
-                // modificar cupo de curso
+                curso.setCupo(curso.getCupo() - 1);
                 agregarEstudianteACurso(estudianteEnCursoRegistro);
             } else {
                 Utilidades.mostrarDialogoSimple("Selección necesaria", 
@@ -158,11 +159,34 @@ public class FXMLEstudiantesCursoController extends FXMLPrincipalAdministradorCo
                     + "cupo límite se ha llenado", 
                     Alert.AlertType.WARNING);
         }
-            
+    }
+    
+    private void actualizarCurso(Estudiante_Curso estudianteEnCurso) {
+        int respuesta = CursoDAO.modificarCurso(curso);
+        switch (respuesta) {
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Sin conexión", 
+                    "Lo sentimos, por el momento no hay conexión para poder "
+                    + "actualizar el cupo del curso", 
+                    Alert.AlertType.ERROR);
+            break;
+            case Constantes.ERROR_CONSULTA:
+                Utilidades.mostrarDialogoSimple("Error al modificar los datos", 
+                    "Hubo un error al tratar de actualizar la información del cupo, "
+                    + "por favor inténtelo más tarde", 
+                    Alert.AlertType.WARNING);
+                Estudiante_CursoDAO.eliminarEstudiante_Curso(
+                        estudianteEnCurso.getIdEstudiante(), curso.getIdCurso());
+            break;
+            case Constantes.OPERACION_EXITOSA:
+                Utilidades.mostrarDialogoSimple("Estudiante agregado", 
+                    "El estudiante fue agregado al curso correctamente", 
+                    Alert.AlertType.INFORMATION);
+            break;
+        }
     }
     
     private void agregarEstudianteACurso(Estudiante_Curso estudianteEnCurso) {
-        
         int respuesta = Estudiante_CursoDAO.guardarEstudiante_Curso(estudianteEnCurso);
         
         switch(respuesta) {
@@ -178,11 +202,9 @@ public class FXMLEstudiantesCursoController extends FXMLPrincipalAdministradorCo
                         Alert.AlertType.WARNING);
             break;
             case Constantes.OPERACION_EXITOSA:
-                Utilidades.mostrarDialogoSimple("Estudiante agregado", 
-                    "El estudiante fue agregado al curso correctamente", 
-                    Alert.AlertType.INFORMATION);
                 cargarDatosTablaEstudiantesAsignados();
                 cargarDatosTablaEstudiantesDisponibles();
+                actualizarCurso(estudianteEnCurso);
             break;
         }
     }
