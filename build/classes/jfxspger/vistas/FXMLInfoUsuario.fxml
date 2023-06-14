@@ -8,11 +8,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLFormularioUsuarioController">
+<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLInfoUsuarioController">
    <children>
       <Pane prefHeight="100.0" prefWidth="1920.0" style="-fx-background-color: #343838;">
          <children>
-            <Label fx:id="lbTitulo" layoutX="736.0" layoutY="13.0" text="Formulario usuario" textAlignment="CENTER" textFill="WHITE">
+            <Label fx:id="lbTitulo" layoutX="686.0" layoutY="14.0" text="Información de usuario" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="50.0" />
                </font>
@@ -99,80 +99,76 @@
                   </ImageView>
                </graphic>
             </Button>
-            <ComboBox fx:id="cbTipoUsuario" layoutX="1071.0" layoutY="432.0" prefHeight="37.0" prefWidth="381.0" />
             <Label layoutX="1072.0" layoutY="388.0" text="Tipo de usuario">
                <font>
-                  <Font size="22.0" />
+                  <Font name="System Bold" size="22.0" />
                </font>
             </Label>
-            <TextField fx:id="tfApellidoMaterno" layoutX="1071.0" layoutY="274.0" prefHeight="37.0" prefWidth="377.0" />
             <Label layoutX="1071.0" layoutY="233.0" text="Apellido Materno">
                <font>
-                  <Font size="22.0" />
+                  <Font name="System Bold" size="22.0" />
                </font>
             </Label>
-            <Button fx:id="btnRegistrarUsuario" layoutX="961.0" layoutY="821.0" mnemonicParsing="false" onAction="#clicBtnRegistrarUsuario" prefHeight="53.0" prefWidth="262.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Registrar usuario">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
-            </Button>
-            <Button layoutX="1262.0" layoutY="821.0" mnemonicParsing="false" onAction="#clicBtnCancelar" prefHeight="53.0" prefWidth="189.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" text="Cancelar">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
-            </Button>
             <Label layoutX="624.0" layoutY="233.0" text="Apellido Paterno">
                <font>
-                  <Font size="22.0" />
+                  <Font name="System Bold" size="22.0" />
                </font>
             </Label>
-            <TextField fx:id="tfApellidoPaterno" layoutX="624.0" layoutY="274.0" prefHeight="37.0" prefWidth="374.0" />
             <Label layoutX="171.0" layoutY="233.0" text="Nombre">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
-            <TextField fx:id="tfNombre" layoutX="171.0" layoutY="274.0" prefHeight="37.0" prefWidth="374.0" />
-            <Label layoutX="627.0" layoutY="391.0" text="Correo ">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
-            <TextField fx:id="tfCorreo" layoutX="627.0" layoutY="432.0" prefHeight="37.0" prefWidth="374.0" />
-            <Label layoutX="174.0" layoutY="391.0" text="Telefono">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
-            <TextField fx:id="tfTelefono" layoutX="174.0" layoutY="432.0" onKeyTyped="#permitirInputSoloNumeros" prefHeight="37.0" prefWidth="374.0" />
-            <Label layoutX="626.0" layoutY="547.0" text="Contraseña">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
-            <Label layoutX="173.0" layoutY="547.0" text="Nombre de usuario">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
-            <TextField fx:id="tfUsername" layoutX="173.0" layoutY="588.0" prefHeight="37.0" prefWidth="374.0" />
-            <PasswordField fx:id="tfPassword" layoutX="626.0" layoutY="588.0" prefHeight="37.0" prefWidth="376.0" />
-            <Label fx:id="lbCampoAdicional" disable="true" layoutX="1071.0" layoutY="546.0" text="Matrícula o número de personal">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
-            <TextField fx:id="tfCampoAdicional" disable="true" layoutX="1071.0" layoutY="587.0" prefHeight="37.0" prefWidth="378.0" />
-            <Label fx:id="lbTelefonoError" layoutX="174.0" layoutY="480.0" prefHeight="21.0" prefWidth="374.0" textFill="RED">
-               <font>
-                  <Font size="19.0" />
-               </font>
-            </Label>
-            <Button fx:id="btnActualizarUsuario" layoutX="961.0" layoutY="821.0" mnemonicParsing="false" onAction="#clicBtnActualizarUsuario" prefHeight="53.0" prefWidth="262.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Actualizar usuario">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
-            </Button>
+            </Label>
+            <Label layoutX="627.0" layoutY="391.0" text="Correo ">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="174.0" layoutY="391.0" text="Telefono">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbTituloCampoAdicional" layoutX="173.0" layoutY="547.0" text="CampoAdicional">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbNombre" layoutX="173.0" layoutY="278.0" prefHeight="30.0" prefWidth="374.0" text="Label">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbApellidoPaterno" layoutX="624.0" layoutY="278.0" prefHeight="30.0" prefWidth="374.0" text="Label">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbApellidoMaterno" layoutX="1071.0" layoutY="278.0" prefHeight="30.0" prefWidth="374.0" text="Label">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbTipoUsuario" layoutX="1072.0" layoutY="436.0" prefHeight="30.0" prefWidth="374.0" text="Label">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbCorreo" layoutX="625.0" layoutY="436.0" prefHeight="30.0" prefWidth="374.0" text="Label">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbTelefono" layoutX="174.0" layoutY="436.0" prefHeight="30.0" prefWidth="374.0" text="Label">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbCampoAdicional" layoutX="171.0" layoutY="592.0" prefHeight="30.0" prefWidth="374.0" text="Label">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>

@@ -37,9 +37,7 @@ public class FXMLCronogramaActividadesController implements Initializable, INoti
     @FXML
     private TableView<Actividad> tvActividades;
     @FXML
-    private TableColumn cNombreActividad;
-    @FXML
-    private TableColumn cEstado;
+    private TableColumn cNombreActividad;    
     @FXML
     private TableColumn cFechaIncio;
     @FXML
@@ -47,6 +45,8 @@ public class FXMLCronogramaActividadesController implements Initializable, INoti
     private ObservableList<Actividad> actividades;
     @FXML
     private Label lTitulo;
+    @FXML
+    private TableColumn cFechaCreacion;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -55,8 +55,8 @@ public class FXMLCronogramaActividadesController implements Initializable, INoti
     }
     
     private void configurarTabla(){
-        cNombreActividad.setCellValueFactory(new PropertyValueFactory("Nombre"));
-        cEstado.setCellValueFactory(new PropertyValueFactory("Estado"));
+        cNombreActividad.setCellValueFactory(new PropertyValueFactory("Titulo de la actividad"));
+        cFechaCreacion.setCellValueFactory(new PropertyValueFactory("Fecha de creación"));
         cFechaIncio.setCellValueFactory(new PropertyValueFactory("Fecha de inicio"));
         cFechaFin.setCellValueFactory(new PropertyValueFactory("Fecha de fin"));
     }
@@ -155,11 +155,46 @@ public class FXMLCronogramaActividadesController implements Initializable, INoti
     @Override
     public void notificarOperacionActualizar(String nombreActividad) {
         cargarInformacionCronograma();  
+    }    
+
+    @FXML
+    private void clicIrAnteproyecto(ActionEvent event) {
     }
 
     @FXML
-    private void clicBtnRegresar(MouseEvent event) {
-        Stage escenarioPrincipal = (Stage) lTitulo.getScene().getWindow();
-        escenarioPrincipal.close();        
-    }    
+    private void clicIrCronograma(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicIrCursos(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicCerrarSesion(ActionEvent event) {
+        if (Utilidades.mostrarDialogoConfirmacion(
+                "Cerrar sesión", 
+                "¿Está seguro de que desea cerrar sesión?")) {
+            irVentanaInicioSesion();
+        }        
+    }
+    
+        private void irVentanaInicioSesion() {
+        Stage escenarioBase = (Stage) lTitulo.getScene().getWindow();
+        escenarioBase.setScene(
+                Utilidades.inicializarEscena("vistas/FXMLInicioSesion.fxml"));
+        escenarioBase.setTitle("Inicio de sesion");
+        escenarioBase.show();
+    }
+
+    @FXML
+    private void clicIrPropuestas(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicIrPrincipalEstudiante(ActionEvent event) {
+        Stage escenarioBase = (Stage) lTitulo.getScene().getWindow();
+        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLPrincipalEstudiante.fxml"));
+        escenarioBase.setTitle("Ventana Principal");
+        escenarioBase.show();       
+    }
 }

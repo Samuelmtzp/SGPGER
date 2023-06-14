@@ -15,26 +15,26 @@ public class ConexionBD {
     private static String nombreBase = "sgpger";
     private static String hostname = "localhost";
     private static String puerto = "3306";
-    
+
     private static String usuario = "root";
-    private static String password = "Xhantusz17@";
-    
+    private static String password = "-12ABc12122";
+
     private static String urlConexion = "jdbc:mysql://"+hostname+":"+puerto+
             "/"+nombreBase+"?allowPublicKeyRetrieval=true&useSSL=false";
-    
-    public static Connection abrirConexionBD() 
+
+    public static Connection abrirConexionBD()
     {
         Connection conexion = null;
         try
         {
-            Class.forName(driver);  
+            Class.forName(driver);
             conexion = DriverManager.getConnection(urlConexion, usuario, password);
-            
-        } catch (ClassNotFoundException  | SQLException ex) 
+
+        } catch (ClassNotFoundException  | SQLException ex)
         {
             System.err.println("Error de conexion con BD: " + ex.getMessage());
             ex.printStackTrace();
         }
-        return conexion;    
+        return conexion;
     }
 }

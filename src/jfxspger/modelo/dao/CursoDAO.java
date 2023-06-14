@@ -24,9 +24,21 @@ public class CursoDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT idCurso, idExperienciaEducativa, " +
-                        "idPeriodo, idPofesor, NRC, bloque, seccion, cupo " +
-                        "FROM Curso";
+                String consulta = "SELECT idCurso, Curso.idExperienciaEducativa, "
+                        + "ExperienciaEducativa.nombre, "
+                        + "curso.idPeriodo, PeriodoEscolar.nombre, idProfesor, CONCAT(Usuario.nombre, ' ', "
+                        + "Usuario.apellidoPaterno, ' ', Usuario.apellidoMaterno) nombreCompleto, "
+                        + "NRC, bloque, seccion, cupo "
+                        + "FROM Curso "
+                        + "INNER JOIN ExperienciaEducativa "
+                        + "ON Curso.idExperienciaEducativa = "
+                        + "ExperienciaEducativa.idExperienciaEducativa "
+                        + "INNER JOIN Academico "
+                        + "ON Curso.idProfesor = Academico.idAcademico "
+                        + "INNER JOIN Usuario "
+                        + "ON Academico.idUsuario = Usuario.idUsuario "
+                        + "INNER JOIN PeriodoEscolar "
+                        + "ON Curso.idPeriodo = PeriodoEscolar.idPeriodoEscolar";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Curso> cursoConsulta = new ArrayList();
@@ -35,9 +47,13 @@ public class CursoDAO {
                     Curso curso = new Curso();
                     curso.setIdCurso(resultado.getInt("idCurso"));
                     curso.setIdExperienciaEducativa(
-                            resultado.getInt("idExperienciaEducativa"));
-                    curso.setIdPeriodo(resultado.getInt("idPeriodo"));
+                            resultado.getInt("Curso.idExperienciaEducativa"));
+                    curso.setExperienciaEducativa(
+                            resultado.getString("ExperienciaEducativa.nombre"));
+                    curso.setIdPeriodo(resultado.getInt("Curso.idPeriodo"));
+                    curso.setPeriodo(resultado.getString("PeriodoEscolar.nombre"));
                     curso.setIdProfesor(resultado.getInt("idProfesor"));
+                    curso.setNombreCompletoProfesor(resultado.getString("nombrecompleto"));
                     curso.setNrc(resultado.getInt("NRC"));
                     curso.setBloque(resultado.getInt("bloque"));
                     curso.setSeccion(resultado.getString("seccion"));

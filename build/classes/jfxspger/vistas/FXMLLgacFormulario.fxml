@@ -8,11 +8,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLAdminCursosController">
+<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLLgacFormularioController">
    <children>
       <Pane prefHeight="100.0" prefWidth="1920.0" style="-fx-background-color: #343838;">
          <children>
-            <Label fx:id="lbTitulo" layoutX="699.0" layoutY="16.0" text="Administración cursos" textAlignment="CENTER" textFill="WHITE">
+            <Label fx:id="lbTitulo" layoutX="753.0" layoutY="13.0" text="Formulario LGAC" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="50.0" />
                </font>
@@ -90,40 +90,29 @@
       </Pane>
       <Pane layoutX="300.0" layoutY="100.0" prefHeight="980.0" prefWidth="1620.0">
          <children>
-            <TableView fx:id="tvCursos" layoutX="38.0" layoutY="239.0" prefHeight="565.0" prefWidth="1525.0" stylesheets="@../css/estilos.css">
-              <columns>
-                <TableColumn fx:id="tcExperienciaEducativa" prefWidth="164.33334350585938" text="Experiencia educativa" />
-                  <TableColumn fx:id="tcPeriodo" prefWidth="75.0" text="Periodo" />
-                  <TableColumn fx:id="tcProfesor" prefWidth="167.0" text="Profesor" />
-                <TableColumn fx:id="tcNrc" prefWidth="151.66668701171875" text="NRC" />
-                  <TableColumn fx:id="tcBloque" prefWidth="157.0" text="Bloque" />
-                  <TableColumn fx:id="tcSeccion" prefWidth="147.333251953125" text="Sección" />
-                  <TableColumn fx:id="tcCupo" prefWidth="75.0" text="Cupo" />
-              </columns>
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
-            </TableView>
-            <Button layoutX="1316.0" layoutY="141.0" mnemonicParsing="false" onAction="#clicBtnAgregarCurso" prefHeight="62.0" prefWidth="246.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Agregar curso">
+            <TextField fx:id="tfNombre" layoutX="75.0" layoutY="333.0" prefHeight="70.0" prefWidth="859.0" styleClass="textField" stylesheets="@../css/estilos.css" />
+            <Label layoutX="75.0" layoutY="225.0" text="Nombre de LGAC">
                <font>
-                  <Font name="System Bold" size="22.0" />
+                  <Font name="System Bold" size="50.0" />
                </font>
+            </Label>
+            <Button layoutX="1307.0" layoutY="804.0" mnemonicParsing="false" onAction="#clicBtnGuardar" prefHeight="68.0" prefWidth="260.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Guardar LGAC">
                <graphic>
-                  <ImageView fitHeight="51.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="52.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../recursos/boton-agregar.png" />
                      </image>
                   </ImageView>
                </graphic>
-            </Button>
-            <Button layoutX="983.0" layoutY="141.0" mnemonicParsing="false" onAction="#clicBtnAgregarEstudiantes" prefHeight="62.0" prefWidth="308.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Agregar estudiantes">
                <font>
-                  <Font name="System Bold" size="22.0" />
+                  <Font name="System Bold Italic" size="22.0" />
                </font>
+            </Button>
+            <Button layoutX="56.0" layoutY="48.0" mnemonicParsing="false" onAction="#clicBtnRegresar" prefHeight="55.0" prefWidth="74.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css">
                <graphic>
-                  <ImageView fitHeight="51.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../recursos/boton-agregar.png" />
+                        <Image url="@../recursos/back.png" />
                      </image>
                   </ImageView>
                </graphic>

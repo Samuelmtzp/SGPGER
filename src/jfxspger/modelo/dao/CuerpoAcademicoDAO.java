@@ -23,22 +23,43 @@ public class CuerpoAcademicoDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT idCuerpoAcademico, nombre, clave, idResponsable, " +
-                        "idGradoConsolidacion, idDependencia " +
-                        "FROM CuerpoAcademico";
+                String consulta = "SELECT CuerpoAcademico.idCuerpoAcademico, "
+                        + "CuerpoAcademico.nombre, clave, idResponsable, "
+                        + "CONCAT(Usuario.nombre, ' ', Usuario.apellidoPaterno, ' ', "
+                        + "Usuario.apellidoMaterno) nombreCompletoResponsable, "
+                        + "CuerpoAcademico.idGradoConsolidacion, GradoConsolidacion.grado, "
+                        + "CuerpoAcademico.idDependencia, Dependencia.dependencia "
+                        + "FROM CuerpoAcademico "
+                        + "INNER JOIN Academico "
+                        + "ON CuerpoAcademico.idResponsable = Academico.idAcademico "
+                        + "INNER JOIN Usuario "
+                        + "ON Academico.idUsuario = Usuario.idUsuario "
+                        + "INNER JOIN GradoConsolidacion "
+                        + "ON CuerpoAcademico.idGradoConsolidacion = "
+                        + "GradoConsolidacion.idGradoConsolidacion "
+                        + "INNER JOIN Dependencia "
+                        + "ON CuerpoAcademico.idDependencia = Dependencia.idDependencia";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<CuerpoAcademico> cuerpoAcademicoConsulta = new ArrayList();
                 while (resultado.next())
                 {
                     CuerpoAcademico cuerpoAcademico = new CuerpoAcademico();
-                    cuerpoAcademico.setIdCuerpoAcademico(resultado.getInt("idCuerpoAcademico"));
-                    cuerpoAcademico.setNombre(resultado.getString("nombre"));
+                    cuerpoAcademico.setIdCuerpoAcademico(
+                            resultado.getInt("CuerpoAcademico.idCuerpoAcademico"));
+                    cuerpoAcademico.setNombre(resultado.getString("CuerpoAcademico.nombre"));
                     cuerpoAcademico.setClave(resultado.getString("clave"));
                     cuerpoAcademico.setIdResponsable(resultado.getInt("idResponsable"));
+                    cuerpoAcademico.setNombreCompletoResponsable(
+                            resultado.getString("nombreCompletoResponsable"));
                     cuerpoAcademico.setIdGradoConsolidacion(
-                            resultado.getInt("idGradoConsolidacion"));
-                    cuerpoAcademico.setIdDependencia(resultado.getInt("idDependencia"));
+                            resultado.getInt("CuerpoAcademico.idGradoConsolidacion"));
+                    cuerpoAcademico.setGradoConsolidacion(
+                            resultado.getString("GradoConsolidacion.grado"));
+                    cuerpoAcademico.setIdDependencia(
+                            resultado.getInt("CuerpoAcademico.idDependencia"));
+                    cuerpoAcademico.setDependencia(
+                            resultado.getString("Dependencia.dependencia"));
                     cuerpoAcademicoConsulta.add(cuerpoAcademico);
                 }
                 respuesta.setCuerposAcademicos(cuerpoAcademicoConsulta);

@@ -118,27 +118,24 @@ public class FXMLInicioSesionController implements Initializable {
     
     private void irPantallaPrincipalAdministrador() {
         Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
-        escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLPrincipalAdministrador.fxml"));
+        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLPrincipalAdministrador.fxml"));
         configurarEscena(escenarioBase);
     }
     
-    private void irPantallaPrincipalEstudiante() {
+    private void irPantallaPrincipalEstudiante() {                
         Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
-        escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLPrincipalEstudiante.fxml"));
+        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLPrincipalEstudiante.fxml"));
         configurarEscena(escenarioBase);
     }
     
     private void irPantallaPrincipalAcademico() {
         Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
-        escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLPrincipalAcademico.fxml"));
+        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLPrincipalAcademico.fxml"));
         configurarEscena(escenarioBase);
     }
     
     private void configurarEscena(Stage escenarioBase) {
-        escenarioBase.setTitle("Home");
+        escenarioBase.setTitle("Ventana Principal");
         escenarioBase.show();
     }
     
