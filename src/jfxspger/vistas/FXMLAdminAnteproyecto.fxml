@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLAdminAnteproyectoController">
+   <children>
+      <Pane prefHeight="100.0" prefWidth="1920.0" style="-fx-background-color: #343838;">
+         <children>
+            <Label fx:id="lbTitulo" layoutX="677.0" layoutY="17.0" text="Administración Anteproyecto" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="50.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="102.0" fitWidth="74.0" layoutX="1820.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recursos/UV_Logo.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane layoutX="300.0" layoutY="100.0" prefHeight="980.0" prefWidth="1620.0">
+         <children>
+            <ScrollPane prefHeight="900.0" prefWidth="1620.0" vbarPolicy="ALWAYS">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="980.0" prefWidth="1615.0">
+                     <children>
+                        <ComboBox fx:id="cbCuerpoAcademico" layoutX="82.0" layoutY="110.0" prefHeight="31.0" prefWidth="238.0" stylesheets="@../css/estilos.css" />
+                        <Label layoutX="84.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Cuerpo Academico">
+                           <font>
+                              <Font name="System Bold Italic" size="27.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="cbDirector" layoutX="476.0" layoutY="110.0" prefHeight="31.0" prefWidth="238.0" stylesheets="@../css/estilos.css" />
+                        <Label layoutX="476.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Director">
+                           <font>
+                              <Font name="System Bold Italic" size="27.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="cbEstado" layoutX="862.0" layoutY="110.0" prefHeight="31.0" prefWidth="238.0" stylesheets="@../css/estilos.css" />
+                        <Label layoutX="870.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Estado">
+                           <font>
+                              <Font name="System Bold Italic" size="27.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="cbModalidad" layoutX="1239.0" layoutY="110.0" prefHeight="31.0" prefWidth="238.0" stylesheets="@../css/estilos.css" />
+                        <Label layoutX="1239.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Modalidad">
+                           <font>
+                              <Font name="System Bold Italic" size="27.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="cbLGAC" layoutX="82.0" layoutY="274.0" prefHeight="31.0" prefWidth="238.0" stylesheets="@../css/estilos.css" />
+                        <Label layoutX="82.0" layoutY="213.0" stylesheets="@../css/estilos.css" text="LGAC">
+                           <font>
+                              <Font name="System Bold Italic" size="27.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tfProyectoInvestigacion" layoutX="476.0" layoutY="274.0" prefHeight="54.0" prefWidth="345.0" styleClass="textField" stylesheets="@../css/estilos.css" />
+                        <Label layoutX="476.0" layoutY="213.0" stylesheets="@../css/estilos.css" text="Proyecto de investigación">
+                           <font>
+                              <Font name="System Bold Italic" size="27.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tfLineaInvestigacion" layoutX="912.0" layoutY="274.0" prefHeight="54.0" prefWidth="345.0" styleClass="textField" stylesheets="@../css/estilos.css" />
+                        <Label layoutX="912.0" layoutY="213.0" stylesheets="@../css/estilos.css" text="Línea de investigación">
+                           <font>
+                              <Font name="System Bold Italic" size="27.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="77.0" layoutY="361.0" stylesheets="@../css/estilos.css" text="Nombre del trabajo">
+                           <font>
+                              <Font name="System Bold Italic" size="27.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tfNombreTrabajo" layoutX="74.0" layoutY="423.0" prefHeight="54.0" prefWidth="345.0" styleClass="textField" stylesheets="@../css/estilos.css" />
+                        <TextArea fx:id="taRequisitos" layoutX="476.0" layoutY="425.0" prefHeight="131.0" prefWidth="421.0" />
+                        <Label layoutX="476.0" layoutY="361.0" stylesheets="@../css/estilos.css" text="Requisitos">
+                           <font>
+                              <Font name="System Bold Italic" size="27.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="954.0" layoutY="361.0" stylesheets="@../css/estilos.css" text="Cantidad de alumnos participantes">
+                           <font>
+                              <Font name="System Bold Italic" size="27.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tfCantidadAlumnos" layoutX="957.0" layoutY="423.0" prefHeight="54.0" prefWidth="192.0" styleClass="textField" stylesheets="@../css/estilos.css" />
+                        <TextArea fx:id="taDescripcionProyecto" layoutX="74.0" layoutY="627.0" prefHeight="131.0" prefWidth="421.0" />
+                        <Label layoutX="74.0" layoutY="565.0" prefHeight="60.0" prefWidth="535.0" stylesheets="@../css/estilos.css" text="Descripcion del proyecto de investigacion">
+                           <font>
+                              <Font name="System Bold Italic" size="27.0" />
+                           </font>
+                        </Label>
+                        <TextArea fx:id="taDescripcionTrabajo" layoutX="652.0" layoutY="627.0" prefHeight="131.0" prefWidth="421.0" />
+                        <Label layoutX="650.0" layoutY="576.0" stylesheets="@../css/estilos.css" text="Decripcion de trabajo recepcional">
+                           <font>
+                              <Font name="System Bold Italic" size="27.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="1134.0" layoutY="576.0" stylesheets="@../css/estilos.css" text="Resultados esperados">
+                           <font>
+                              <Font name="System Bold Italic" size="27.0" />
+                           </font>
+                        </Label>
+                        <TextArea fx:id="taResultadosEsperados" layoutX="1125.0" layoutY="625.0" prefHeight="100.0" prefWidth="366.0" />
+                        <TextArea fx:id="taBibliografia" layoutX="74.0" layoutY="835.0" prefHeight="131.0" prefWidth="421.0" />
+                        <Label layoutX="74.0" layoutY="767.0" prefHeight="60.0" prefWidth="535.0" stylesheets="@../css/estilos.css" text="Bibliografía recomendada">
+                           <font>
+                              <Font name="System Bold Italic" size="27.0" />
+                           </font>
+                        </Label>
+                        <TextArea fx:id="taComentarios" layoutX="540.0" layoutY="835.0" prefHeight="131.0" prefWidth="421.0" />
+                        <Label layoutX="540.0" layoutY="767.0" prefHeight="60.0" prefWidth="535.0" stylesheets="@../css/estilos.css" text="Comentarios">
+                           <font>
+                              <Font name="System Bold Italic" size="27.0" />
+                           </font>
+                        </Label>
+                        <Button layoutX="1251.0" layoutY="877.0" mnemonicParsing="false" onAction="#clicBtnPostular" prefHeight="62.0" prefWidth="330.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Postular anteproyecto">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="51.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../recursos/advertising.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </ScrollPane>
+         </children>
+      </Pane>
+      <Pane layoutY="100.0" prefHeight="980.0" prefWidth="300.0" style="-fx-background-color: #33AB5B;">
+         <children>
+            <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#clicIrAnteproyectos" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Anteproyectos" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/contract.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="20.0" layoutY="145.0" mnemonicParsing="false" onAction="#clicIrPropuestas" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Propuestas" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/advertising.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="20.0" layoutY="270.0" mnemonicParsing="false" onAction="#clicIrEstudiantes" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Estudiantes" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/usuario.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="21.0" layoutY="822.0" mnemonicParsing="false" onAction="#clicCerrarSesion" prefHeight="70.0" prefWidth="260.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" text="Cerrar sesión" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="52.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/cerrar-sesion.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="20.0" layoutY="396.0" mnemonicParsing="false" onAction="#clicIrEntregables" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Entregables" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/lista-de-tareas.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="20.0" layoutY="526.0" mnemonicParsing="false" onAction="#clicIrRevisiones" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Revisiones" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/lupa.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
