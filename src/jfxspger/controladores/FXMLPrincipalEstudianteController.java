@@ -7,15 +7,19 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import jfxspger.modelo.pojo.Estudiante;
 import jfxspger.utilidades.Utilidades;
+
 
 public class FXMLPrincipalEstudianteController implements Initializable {
 
     @FXML
     private Label lbTitulo;
+    private Estudiante estudiante;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
     }    
 
     @FXML
@@ -44,7 +48,7 @@ public class FXMLPrincipalEstudianteController implements Initializable {
     }
 
     @FXML
-    private void clicIrCursos(ActionEvent event) {
+    private void clicIrCursos(ActionEvent event) {      
     }
 
     @FXML
@@ -53,6 +57,10 @@ public class FXMLPrincipalEstudianteController implements Initializable {
 
     @FXML
     private void clicIrAnteproyecto(ActionEvent event) {
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLAnteproyectoInformacion.fxml"));
+        escenarioBase.setTitle("Informacion de anteproyecto");
+        escenarioBase.show();        
     }
     
 }

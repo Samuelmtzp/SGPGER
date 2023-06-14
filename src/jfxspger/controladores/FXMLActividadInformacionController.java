@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
@@ -33,30 +36,27 @@ import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
 
 public class FXMLActividadInformacionController implements Initializable, INotificacionOperacionActividad {
-
-    @FXML
-    private Label lFechaInicioActividad;
-    @FXML
-    private Label lFechaFinActividad;
-    @FXML
-    private Label lNombreActividad;
-    @FXML
-    private Label lDescripcionActividad;
+  
     private Documento archivoActividad;
-    private File entregaActividad;
-    @FXML
-    private Label lTitulo;
+    private File entregaActividad;    
     private Actividad actividadInformacion;    
-    private INotificacionOperacionActividad interfazNotificacion;
+    private INotificacionOperacionActividad interfazNotificacion;   
     @FXML
-    private Label lFechaCreacion;
+    private Label lbTituloActividad;
+    @FXML
+    private Label lbTitulo;
+    @FXML
+    private Label lbDescActividad;    
+    @FXML
+    private Label lbFechaInicio;
+    @FXML
+    private Label lbFechaFin;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {        
         cargarInformacionActividad();
     }    
 
-    @FXML
     private void clicBtnModificarActividad(ActionEvent event) {        
         
         irFormulario(true, actividadInformacion);
@@ -64,7 +64,7 @@ public class FXMLActividadInformacionController implements Initializable, INotif
     
     private void irFormulario(boolean esEdicion, Actividad actividadEdicion){
         try {
-            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.getResource("vistas/FXMLActividadFormulario.fxml"));        
+            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.getResource("vistas/FXMLActividadFormu.fxml"));        
             Parent vista = accesoControlador.load();
             
             FXMLActividadFormularioController formulario = accesoControlador.getController();
@@ -77,18 +77,18 @@ public class FXMLActividadInformacionController implements Initializable, INotif
             escenarioFormulario.showAndWait();
         } catch (IOException ex) {
             ex.printStackTrace();
-        }
+        }                
     }
 
     @FXML
     private void clicBtnCargarArchivo(ActionEvent event) {
-        LocalDate fechaFin = LocalDate.parse(actividadInformacion.getFechaFin());
-        LocalDate fechaActual = LocalDate.now();
+        LocalDateTime fechaFin = LocalDateTime.parse(actividadInformacion.getFechaFin());
+        LocalDateTime fechaActual = LocalDateTime.now();
         if(fechaActual.isBefore(fechaFin)){
             FileChooser dialogoEntrega = new FileChooser();
             dialogoEntrega.setTitle("Seleccione un archivo");
 
-            Stage escenarioBase = (Stage) lNombreActividad.getScene().getWindow();
+            Stage escenarioBase = (Stage) lbTituloActividad.getScene().getWindow();
             entregaActividad = dialogoEntrega.showOpenDialog(escenarioBase);
         } else{
             Utilidades.mostrarDialogoSimple("ACTIVIDAD FINALIZADA", "La actividad ha finalizado. No se puede realizar entrega.", Alert.AlertType.WARNING);
@@ -112,18 +112,18 @@ public class FXMLActividadInformacionController implements Initializable, INotif
     }
     
     private void cargarInformacionActividad(){
-        lNombreActividad.setText(actividadInformacion.getTitulo());
-        lDescripcionActividad.setText(actividadInformacion.getDescripcion());
-        lFechaInicioActividad.setText("Fecha inicio: " + actividadInformacion.getFechaInicio());
-        lFechaFinActividad.setText("Fecha fin: " + actividadInformacion.getFechaFin());
-        lFechaCreacion.setText("Fecha de creación: " + actividadInformacion.getFechaCreacion());
+//        lbTituloActividad.setText(actividadInformacion.getTitulo());
+//        lbDescActividad.setText(actividadInformacion.getDescripcion());
+//        lbFechaInicio.setText(actividadInformacion.getFechaInicio().toString());
+//        lbFechaFin.setText(actividadInformacion.getFechaFin().toString());
+        
     }
     
     public void inicializarInformacionActividad(Actividad actividadInformacion, INotificacionOperacionActividad interfazNotificacion){        
         this.actividadInformacion = actividadInformacion;
         this.interfazNotificacion = interfazNotificacion;
                 
-            lTitulo.setText("Detalles de actividad: " + actividadInformacion.getTitulo());
+            lbTitulo.setText("Detalles de actividad: " + actividadInformacion.getTitulo());
             cargarInformacionActividad();        
     }    
     
@@ -156,15 +156,56 @@ public class FXMLActividadInformacionController implements Initializable, INotif
         }
     
         private void cerrarVentana(){
-        Stage escenarioBase = (Stage) lNombreActividad.getScene().getWindow();
+        Stage escenarioBase = (Stage) lbTituloActividad.getScene().getWindow();
         escenarioBase.close();
     }
 
     @FXML
-    private void clicBtnRegresar(MouseEvent event) {
+    private void clicIrAnteproyecto(ActionEvent event) {
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLAnteproyectoInformacion.fxml"));
+        escenarioBase.setTitle("Informacion de anteproyecto");
+        escenarioBase.show();
+    }
+
+    @FXML
+    private void clicIrCronograma(ActionEvent event) {
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLCronogramaActividades.fxml"));
+        escenarioBase.setTitle("Cronograma de actividades");
+        escenarioBase.show();
+    }
+
+    @FXML
+    private void clicIrCursos(ActionEvent event) {     
+    }
+
+    @FXML
+    private void clicCerrarSesion(ActionEvent event) {
+        if (Utilidades.mostrarDialogoConfirmacion(
+                "Cerrar sesión", 
+                "¿Está seguro de que desea cerrar sesión?")) {
+            irVentanaInicioSesion();
+        }          
+    }
+    
+    private void irVentanaInicioSesion() {
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        escenarioBase.setScene(
+                Utilidades.inicializarEscena("vistas/FXMLInicioSesion.fxml"));
+        escenarioBase.setTitle("Inicio de sesion");
+        escenarioBase.show();
+    }
+
+    @FXML
+    private void clicIrPropuestas(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicBtnRegresar(ActionEvent event) {
         boolean cerrarVentana = Utilidades.mostrarDialogoConfirmacion("Regresar a ventana anterior", "¿Desea regresar a la ventana anterior? No se guardaran los datos ingresados.");
         if(cerrarVentana){
             cerrarVentana();
-        }
+        }        
     }
 }

@@ -9,7 +9,6 @@ package jfxspger.modelo.pojo;
 public class Actividad {
     
     private int idActividad;
-    private int idAnteproyecto;
     private int idEstudiante;
     private String titulo;
     private String fechaCreacion;
@@ -20,9 +19,8 @@ public class Actividad {
     public Actividad() {
     }
 
-    public Actividad(int idActividad, int idAnteproyecto, int idEstudiante, String titulo, String fechaCreacion, String fechaInicio, String fechaFin, String descripcion) {
+    public Actividad(int idActividad, int idEstudiante, String titulo, String fechaCreacion, String fechaInicio, String fechaFin, String descripcion) {
         this.idActividad = idActividad;
-        this.idAnteproyecto = idAnteproyecto;
         this.idEstudiante = idEstudiante;
         this.titulo = titulo;
         this.fechaCreacion = fechaCreacion;
@@ -37,14 +35,6 @@ public class Actividad {
 
     public void setIdActividad(int idActividad) {
         this.idActividad = idActividad;
-    }
-
-    public int getIdAnteproyecto() {
-        return idAnteproyecto;
-    }
-
-    public void setIdAnteproyecto(int idAnteproyecto) {
-        this.idAnteproyecto = idAnteproyecto;
     }
 
     public String getTitulo() {
@@ -97,7 +87,7 @@ public class Actividad {
 
     @Override
     public String toString() {
-        return "Actividad{" + "idActividad=" + idActividad + ", idAnteproyecto=" + idAnteproyecto + ", idEstudiante=" + idEstudiante + ", titulo=" + titulo + ", fechaCreacion=" + fechaCreacion + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", descripcion=" + descripcion + '}';
+        return "Actividad{" + "idActividad=" + idActividad + ", idAnteproyecto=" + ", idEstudiante=" + idEstudiante + ", titulo=" + titulo + ", fechaCreacion=" + fechaCreacion + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", descripcion=" + descripcion + '}';
     }
     
 }
