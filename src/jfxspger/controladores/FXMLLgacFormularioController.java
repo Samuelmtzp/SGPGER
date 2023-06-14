@@ -36,9 +36,6 @@ public class FXMLLgacFormularioController extends FXMLPrincipalAdministradorCont
     @FXML
     private TextField tfNombre;
     
-    String estiloError="-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 2;";
-    String estiloNormal="-fx-border-width: 0;";
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
@@ -68,11 +65,12 @@ public class FXMLLgacFormularioController extends FXMLPrincipalAdministradorCont
     }
     
     private void validarInformacion(){
-        tfNombre.setStyle(estiloNormal);
+        tfNombre.setStyle(Constantes.estiloNormal);
         boolean datosValidos=true;
         String nombre=tfNombre.getText();
+        
         if(nombre.isEmpty()){
-            tfNombre.setStyle(estiloError);
+            tfNombre.setStyle(Constantes.estiloError);
             datosValidos=false;
         }
         

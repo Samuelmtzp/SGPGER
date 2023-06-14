@@ -30,14 +30,14 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="980.0" prefWidth="1615.0">
                      <children>
-                        <ComboBox fx:id="cbCuerpoAcademico" layoutX="82.0" layoutY="110.0" prefHeight="31.0" prefWidth="238.0" stylesheets="@../css/estilos.css" />
-                        <Label layoutX="84.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Cuerpo Academico">
+                        <ComboBox fx:id="cbCuerpoAcademico" layoutX="167.0" layoutY="110.0" prefHeight="31.0" prefWidth="238.0" stylesheets="@../css/estilos.css" />
+                        <Label layoutX="167.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Cuerpo Academico">
                            <font>
                               <Font name="System Bold Italic" size="27.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="cbDirector" layoutX="444.0" layoutY="110.0" prefHeight="31.0" prefWidth="238.0" stylesheets="@../css/estilos.css" />
-                        <Label layoutX="444.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Director">
+                        <ComboBox fx:id="cbDirector" layoutX="462.0" layoutY="110.0" prefHeight="31.0" prefWidth="238.0" stylesheets="@../css/estilos.css" />
+                        <Label layoutX="462.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Director">
                            <font>
                               <Font name="System Bold Italic" size="27.0" />
                            </font>
@@ -132,6 +132,15 @@
                               <Font name="System Bold Italic" size="27.0" />
                            </font>
                         </Label>
+                        <Button layoutX="51.0" layoutY="31.0" mnemonicParsing="false" onAction="#clicRegresar" prefHeight="55.0" prefWidth="74.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css">
+                           <graphic>
+                              <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../recursos/back.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
                      </children>
                   </AnchorPane>
               </content>
