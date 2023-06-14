@@ -141,7 +141,6 @@ public class FXMLAdminUsuariosController extends FXMLPrincipalAdministradorContr
                     "No se puede mostrar la pantalla de formulario", 
                     Alert.AlertType.ERROR);  
         }
-        
     }
 
     @FXML

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -9,11 +8,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLPrincipalAcademicoController">
+<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLAdminAnteproyectosController">
    <children>
       <Pane prefHeight="100.0" prefWidth="1920.0" style="-fx-background-color: #343838;">
          <children>
-            <Label fx:id="lbTitulo" layoutX="739.0" layoutY="16.0" text="Principal Academico" textAlignment="CENTER" textFill="WHITE">
+            <Label fx:id="lbTitulo" layoutX="739.0" layoutY="16.0" text="Administración anteproyecto" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="50.0" />
                </font>
@@ -27,11 +26,62 @@
       </Pane>
       <Pane layoutX="300.0" layoutY="100.0" prefHeight="980.0" prefWidth="1620.0">
          <children>
-            <ImageView fitHeight="1002.0" fitWidth="784.0" layoutX="1008.0" layoutY="70.0" opacity="0.88" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../recursos/UV_Logo.png" />
-               </image>
-            </ImageView>
+            <TableView fx:id="tvAnteproyecto" layoutX="248.0" layoutY="228.0" prefHeight="636.0" prefWidth="1125.0" stylesheets="@../css/estilos.css">
+              <columns>
+                <TableColumn fx:id="columnNombre" prefWidth="337.0" text="Nombre " />
+                <TableColumn fx:id="columLGAC" prefWidth="461.0" text="Linea de generación y aplicación de conocimiento " />
+                  <TableColumn fx:id="columFechaInicio" prefWidth="163.0" text="Fecha Inicio" />
+                  <TableColumn fx:id="columFechaFin" prefWidth="163.0" text="Fecha Fin" />
+              </columns>
+            </TableView>
+            <Button layoutX="589.0" layoutY="143.0" mnemonicParsing="false" onAction="#clicCrearAnteproyecto" prefHeight="60.0" prefWidth="212.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Crear anteproyecto">
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/boton-agregar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold Italic" size="15.0" />
+               </font>
+            </Button>
+            <Button layoutX="1114.0" layoutY="143.0" mnemonicParsing="false" onAction="#clicEliminarAnteproyecto" prefHeight="60.0" prefWidth="245.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" text="Eliminar anteproyecto">
+               <font>
+                  <Font name="System Bold Italic" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/eliminar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="832.0" layoutY="143.0" mnemonicParsing="false" onAction="#clicModificarAnteproyecto" prefHeight="60.0" prefWidth="245.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Modificar anteproyecto">
+               <font>
+                  <Font name="System Bold Italic" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/editar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="1391.0" layoutY="296.0" mnemonicParsing="false" onAction="#clicVerDetalles" prefHeight="60.0" prefWidth="212.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Ver detalles">
+               <font>
+                  <Font name="System Bold Italic" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/view.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </Pane>
       <Pane layoutY="100.0" prefHeight="980.0" prefWidth="300.0" style="-fx-background-color: #33AB5B;">
