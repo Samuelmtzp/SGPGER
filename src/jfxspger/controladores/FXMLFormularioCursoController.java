@@ -146,10 +146,8 @@ public class FXMLFormularioCursoController extends FXMLAdminCursosController {
                 getSelectionModel().getSelectedIndex();
         int posicionPeriodo = cbPeriodoEscolar.getSelectionModel().getSelectedIndex();
         int posicionProfesor = cbProfesor.getSelectionModel().getSelectedIndex();
-        int nrc = Integer.parseInt(tfNrc.getText());
-        int bloque = Integer.parseInt(tfBloque.getText());
         String seccion = tfSeccion.getText();
-        int cupo  = Integer.parseInt(tfCupo.getText());
+
         
         if (tfNrc.getLength() == 0) {
             tfNrc.setStyle(Constantes.estiloError);
@@ -187,6 +185,9 @@ public class FXMLFormularioCursoController extends FXMLAdminCursosController {
         }
         
         if (datosValidos) {
+            int nrc = Integer.parseInt(tfNrc.getText());
+            int bloque = Integer.parseInt(tfBloque.getText());
+            int cupo  = Integer.parseInt(tfCupo.getText());
             int idExperienciaEducativa = experienciasEducativas.get(
                     posicionExperienciaEducativa).getIdExperienciaEducativa();
             int idPeriodo = periodosEscolares.get(
