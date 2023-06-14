@@ -37,7 +37,7 @@ public class Lgac {
 
     @Override
     public String toString() {
-        return "Lgac{" + "idLgac=" + idLgac + ", nombre=" + nombre + '}';
+        return nombre;
     }
     
 }

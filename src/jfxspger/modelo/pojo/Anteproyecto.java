@@ -15,7 +15,8 @@ public class Anteproyecto {
     private int idLgac;
     private String proyectoInvestigacion;
     private String lineaInvestigacion;
-    private String duracionAproximada;
+    private String fechaInicio;
+    private String fechaFin;
     private String nombreTrabajo;
     private String requisitos;
     private int cantidadAlumnosParticipantes;
@@ -28,7 +29,7 @@ public class Anteproyecto {
     public Anteproyecto() {
     }
 
-    public Anteproyecto(int idAnteproyecto, int idCuerpoAcademico, int idDirector, int idEstado, int idModalidad, int idLgac, String proyectoInvestigacion, String lineaInvestigacion, String duracionAproximada, String nombreTrabajo, String requisitos, int cantidadAlumnosParticipantes, String descripcionProyectoInvestigacion, String descripcionTrabajoRecepcional, String resultadosEsperados, String bibliografiaRecomendada, String comentarios) {
+    public Anteproyecto(int idAnteproyecto, int idCuerpoAcademico, int idDirector, int idEstado, int idModalidad, int idLgac, String proyectoInvestigacion, String lineaInvestigacion, String fechaInicio, String fechaFin, String nombreTrabajo, String requisitos, int cantidadAlumnosParticipantes, String descripcionProyectoInvestigacion, String descripcionTrabajoRecepcional, String resultadosEsperados, String bibliografiaRecomendada, String comentarios) {
         this.idAnteproyecto = idAnteproyecto;
         this.idCuerpoAcademico = idCuerpoAcademico;
         this.idDirector = idDirector;
@@ -37,7 +38,8 @@ public class Anteproyecto {
         this.idLgac = idLgac;
         this.proyectoInvestigacion = proyectoInvestigacion;
         this.lineaInvestigacion = lineaInvestigacion;
-        this.duracionAproximada = duracionAproximada;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
         this.nombreTrabajo = nombreTrabajo;
         this.requisitos = requisitos;
         this.cantidadAlumnosParticipantes = cantidadAlumnosParticipantes;
@@ -112,12 +114,20 @@ public class Anteproyecto {
         this.lineaInvestigacion = lineaInvestigacion;
     }
 
-    public String getDuracionAproximada() {
-        return duracionAproximada;
+    public String getFechaInicio() {
+        return fechaInicio;
     }
 
-    public void setDuracionAproximada(String duracionAproximada) {
-        this.duracionAproximada = duracionAproximada;
+    public void setFechaInicio(String fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public String getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(String fechaFin) {
+        this.fechaFin = fechaFin;
     }
 
     public String getNombreTrabajo() {
@@ -186,7 +196,7 @@ public class Anteproyecto {
 
     @Override
     public String toString() {
-        return "Anteproyecto{" + "idAnteproyecto=" + idAnteproyecto + ", idCuerpoAcademico=" + idCuerpoAcademico + ", idDirector=" + idDirector + ", idEstado=" + idEstado + ", idModalidad=" + idModalidad + ", idLgac=" + idLgac + ", proyectoInvestigacion=" + proyectoInvestigacion + ", lineaInvestigacion=" + lineaInvestigacion + ", duracionAproximada=" + duracionAproximada + ", nombreTrabajo=" + nombreTrabajo + ", requisitos=" + requisitos + ", cantidadAlumnosParticipantes=" + cantidadAlumnosParticipantes + ", descripcionProyectoInvestigacion=" + descripcionProyectoInvestigacion + ", descripcionTrabajoRecepcional=" + descripcionTrabajoRecepcional + ", resultadosEsperados=" + resultadosEsperados + ", bibliografiaRecomendada=" + bibliografiaRecomendada + ", comentarios=" + comentarios + '}';
+        return "Anteproyecto{" + "idAnteproyecto=" + idAnteproyecto + ", idCuerpoAcademico=" + idCuerpoAcademico + ", idDirector=" + idDirector + ", idEstado=" + idEstado + ", idModalidad=" + idModalidad + ", idLgac=" + idLgac + ", proyectoInvestigacion=" + proyectoInvestigacion + ", lineaInvestigacion=" + lineaInvestigacion + ", fechaIncio=" + fechaInicio + ", fechaFin=" + fechaFin + ", nombreTrabajo=" + nombreTrabajo + ", requisitos=" + requisitos + ", cantidadAlumnosParticipantes=" + cantidadAlumnosParticipantes + ", descripcionProyectoInvestigacion=" + descripcionProyectoInvestigacion + ", descripcionTrabajoRecepcional=" + descripcionTrabajoRecepcional + ", resultadosEsperados=" + resultadosEsperados + ", bibliografiaRecomendada=" + bibliografiaRecomendada + ", comentarios=" + comentarios + '}';
     }
     
 }

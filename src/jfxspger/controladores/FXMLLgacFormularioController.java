@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import jfxspger.modelo.dao.LgacDAO;
 import jfxspger.modelo.pojo.Lgac;
 import jfxspger.utilidades.Constantes;
@@ -58,7 +59,7 @@ public class FXMLLgacFormularioController extends FXMLPrincipalAdministradorCont
 
     @FXML
     private void clicBtnRegresar(ActionEvent event) {
-        
+        regresar();
     }
 
     @FXML
@@ -102,6 +103,7 @@ public class FXMLLgacFormularioController extends FXMLPrincipalAdministradorCont
                  Utilidades.mostrarDialogoSimple("LGAC actualizado", "La informacion de la LGAC fue actualizada correctamente", 
                         Alert.AlertType.INFORMATION);
                  //TO DO Regresar
+                 regresar();
                 break;
         }
     }
@@ -121,7 +123,17 @@ public class FXMLLgacFormularioController extends FXMLPrincipalAdministradorCont
                 Utilidades.mostrarDialogoSimple("LGAC registrada", "La información de la LGAC fue guardada correctamente", 
                         Alert.AlertType.INFORMATION);
                 //TO DO confirmacion
+                regresar();
                 break;
         }
-    }   
+    }
+    
+    private void regresar(){
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        escenarioBase.setScene(
+                Utilidades.inicializarEscena("vistas/FXMLAdminLgac.fxml"));
+        escenarioBase.setTitle("Administración LGAC");
+        escenarioBase.show();
+    }
+    
 }

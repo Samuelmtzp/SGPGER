@@ -25,6 +25,15 @@
             </ImageView>
          </children>
       </Pane>
+      <Pane layoutX="300.0" layoutY="100.0" prefHeight="980.0" prefWidth="1620.0">
+         <children>
+            <ImageView fitHeight="1002.0" fitWidth="784.0" layoutX="1008.0" layoutY="70.0" opacity="0.88" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recursos/UV_Logo.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
       <Pane layoutY="100.0" prefHeight="980.0" prefWidth="300.0" style="-fx-background-color: #33AB5B;">
          <children>
             <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#clicIrAnteproyectos" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Anteproyectos" textFill="WHITE">
@@ -99,15 +108,6 @@
                   </ImageView>
                </graphic>
             </Button>
-         </children>
-      </Pane>
-      <Pane layoutX="300.0" layoutY="100.0" prefHeight="980.0" prefWidth="1620.0">
-         <children>
-            <ImageView fitHeight="1002.0" fitWidth="784.0" layoutX="1008.0" layoutY="70.0" opacity="0.88" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../recursos/UV_Logo.png" />
-               </image>
-            </ImageView>
          </children>
       </Pane>
    </children>

@@ -26,7 +26,7 @@ public class AnteproyectoDAO {
             try {
                 String consulta = "SELECT idAnteproyecto, idCuerpoAcademico, " +
                         "idDirector, idEstado, idModalidad, idLgac, proyectoInvestigacion, " + 
-                        "lineaInvestigacion, duracionAproximada, nombreTrabajo, requisitos, " + 
+                        "lineaInvestigacion, fechaInicio, fechaFin, nombreTrabajo, requisitos, " + 
                         "cantidadAlumnosParticipantes, descripcionProyectoInvestigacion, " + 
                         "descripcionTrabajoRecepcional, resultadosEsperados,  " + 
                         "bibliografiaRecomendada, comentarios " +
@@ -46,7 +46,8 @@ public class AnteproyectoDAO {
                     anteproyecto.setProyectoInvestigacion(
                             resultado.getString("proyectoInvestigacion"));
                     anteproyecto.setLineaInvestigacion(resultado.getString("lineaInvestigacion"));
-                    anteproyecto.setDuracionAproximada(resultado.getString("duracionAproximada"));
+                    anteproyecto.setFechaInicio(resultado.getString("fechaInicio"));
+                    anteproyecto.setFechaFin(resultado.getString("fechaFin"));
                     anteproyecto.setNombreTrabajo(resultado.getString("nombreTrabajo"));
                     anteproyecto.setRequisitos(resultado.getString("requisitos"));
                     anteproyecto.setCantidadAlumnosParticipantes(
@@ -79,7 +80,7 @@ public class AnteproyectoDAO {
             try {
                 String sentencia = "INSERT INTO Anteproyecto (idCuerpoAcademico, " + 
                         "idDirector, idEstado, idModalidad, idLgac, proyectoInvestigacion, " + 
-                        "lineaInvestigacion, duracionAproximada, nombreTrabajo, " + 
+                        "lineaInvestigacion, fechaInicio, fechaFin, nombreTrabajo, " + 
                         "requisitos, cantidadAlumnosParticipantes, " + 
                         "descripcionProyectoInvestigacion, descripcionTrabajoRecepcional, "+ 
                         "resultadosEsperados, bibliografiaRecomendada, comentarios) " +
@@ -93,17 +94,18 @@ public class AnteproyectoDAO {
                 prepararSentencia.setInt(5, nuevoAnteproyecto.getIdLgac());
                 prepararSentencia.setString(6, nuevoAnteproyecto.getProyectoInvestigacion());
                 prepararSentencia.setString(7, nuevoAnteproyecto.getLineaInvestigacion());
-                prepararSentencia.setString(8, nuevoAnteproyecto.getDuracionAproximada());
-                prepararSentencia.setString(9, nuevoAnteproyecto.getNombreTrabajo());
-                prepararSentencia.setString(10, nuevoAnteproyecto.getRequisitos());
-                prepararSentencia.setInt(11, nuevoAnteproyecto.getCantidadAlumnosParticipantes());
-                prepararSentencia.setString(12, 
-                        nuevoAnteproyecto.getDescripcionProyectoInvestigacion());
+                prepararSentencia.setString(8, nuevoAnteproyecto.getFechaInicio());
+                prepararSentencia.setString(9, nuevoAnteproyecto.getFechaFin());
+                prepararSentencia.setString(10, nuevoAnteproyecto.getNombreTrabajo());
+                prepararSentencia.setString(11, nuevoAnteproyecto.getRequisitos());
+                prepararSentencia.setInt(12, nuevoAnteproyecto.getCantidadAlumnosParticipantes());
                 prepararSentencia.setString(13, 
+                        nuevoAnteproyecto.getDescripcionProyectoInvestigacion());
+                prepararSentencia.setString(14, 
                         nuevoAnteproyecto.getDescripcionTrabajoRecepcional());
-                prepararSentencia.setString(14, nuevoAnteproyecto.getResultadosEsperados());
-                prepararSentencia.setString(15, nuevoAnteproyecto.getBibliografiaRecomendada());
-                prepararSentencia.setString(16, nuevoAnteproyecto.getComentarios());
+                prepararSentencia.setString(15, nuevoAnteproyecto.getResultadosEsperados());
+                prepararSentencia.setString(16, nuevoAnteproyecto.getBibliografiaRecomendada());
+                prepararSentencia.setString(17, nuevoAnteproyecto.getComentarios());
 
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
@@ -126,7 +128,7 @@ public class AnteproyectoDAO {
                 String sentencia = "UPDATE Anteproyecto SET idCuerpoAcademico = ?, " + 
                         "idDirector = ?, idEstado = ?, idModalidad = ?, idLgac = ?, " + 
                         "proyectoInvestigacion = ?, lineaInvestigacion = ?, " + 
-                        "duracionAproximada = ?, nombreTrabajo = ?, requisitos = ?, " + 
+                        "fechaInicio = ?, fechaFin = ?, nombreTrabajo = ?, requisitos = ?, " + 
                         "cantidadAlumnosParticipantes = ?, descripcionProyectoInvestigacion = ?, " + 
                         "descripcionTrabajoRecepcional = ?, resultadosEsperados = ?, " + 
                         "bibliografiaRecomendada = ?, comentarios = ? " +
@@ -140,16 +142,17 @@ public class AnteproyectoDAO {
                 prepararSentencia.setInt(5, anteproyectoEdicion.getIdLgac());
                 prepararSentencia.setString(6, anteproyectoEdicion.getProyectoInvestigacion());
                 prepararSentencia.setString(7, anteproyectoEdicion.getLineaInvestigacion());
-                prepararSentencia.setString(8, anteproyectoEdicion.getDuracionAproximada());
-                prepararSentencia.setString(9, anteproyectoEdicion.getNombreTrabajo());
-                prepararSentencia.setString(10, anteproyectoEdicion.getRequisitos());
-                prepararSentencia.setInt(11, anteproyectoEdicion.getCantidadAlumnosParticipantes());
-                prepararSentencia.setString(12, anteproyectoEdicion.getDescripcionProyectoInvestigacion());
-                prepararSentencia.setString(13, anteproyectoEdicion.getDescripcionTrabajoRecepcional());
-                prepararSentencia.setString(14, anteproyectoEdicion.getResultadosEsperados());
-                prepararSentencia.setString(15, anteproyectoEdicion.getBibliografiaRecomendada());
-                prepararSentencia.setString(16, anteproyectoEdicion.getComentarios());
-                prepararSentencia.setInt(17, anteproyectoEdicion.getIdAnteproyecto());
+                prepararSentencia.setString(8, anteproyectoEdicion.getFechaInicio());
+                prepararSentencia.setString(9, anteproyectoEdicion.getFechaFin());
+                prepararSentencia.setString(10, anteproyectoEdicion.getNombreTrabajo());
+                prepararSentencia.setString(11, anteproyectoEdicion.getRequisitos());
+                prepararSentencia.setInt(12, anteproyectoEdicion.getCantidadAlumnosParticipantes());
+                prepararSentencia.setString(13, anteproyectoEdicion.getDescripcionProyectoInvestigacion());
+                prepararSentencia.setString(14, anteproyectoEdicion.getDescripcionTrabajoRecepcional());
+                prepararSentencia.setString(15, anteproyectoEdicion.getResultadosEsperados());
+                prepararSentencia.setString(16, anteproyectoEdicion.getBibliografiaRecomendada());
+                prepararSentencia.setString(17, anteproyectoEdicion.getComentarios());
+                prepararSentencia.setInt(18, anteproyectoEdicion.getIdAnteproyecto());
                 
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
