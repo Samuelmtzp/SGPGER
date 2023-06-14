@@ -1,11 +1,15 @@
 package jfxspger.controladores;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -35,7 +39,7 @@ public class FXMLAdminCuerposAcademicosController extends FXMLPrincipalAdministr
     @FXML
     private TableColumn tcDependencia;
     
-    ObservableList<CuerpoAcademico> cuerposAcademicos;
+    private ObservableList<CuerpoAcademico> cuerposAcademicos;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -83,15 +87,39 @@ public class FXMLAdminCuerposAcademicosController extends FXMLPrincipalAdministr
 
     @FXML
     private void clicBtnModificarCuerpoAcademico(ActionEvent event) {
+        CuerpoAcademico cuerpoAcademicoSeleccionado = 
+                tvCuerposAcademicos.getSelectionModel().getSelectedItem();
+        if(cuerpoAcademicoSeleccionado != null){
+            irFormularioCuerpoAcademico(true, cuerpoAcademicoSeleccionado);
+        }else{
+            Utilidades.mostrarDialogoSimple("Atención", "Selecciona el registro "
+                    + "en la tabla para poder editarlo", Alert.AlertType.WARNING);
+        }
     }
 
     @FXML
     private void clicBtnAgregarCuerpoAcademico(ActionEvent event) {
-        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
-        escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLFormularioCuerpoAcademico.fxml"));
-        escenarioBase.setTitle("Formulario de cuerpo académico");
-        escenarioBase.show();
+        irFormularioCuerpoAcademico(false, null);
+    }
+    
+    private void irFormularioCuerpoAcademico(boolean esEdicion, CuerpoAcademico cuerpoAcademico){
+        try{
+            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.
+                    JFXSPGER.class.getResource(
+                    "/jfxspger/vistas/FXMLFormularioCuerpoAcademico.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLFormularioCuerpoAcademicoController formulario = accesoControlador.getController();
+            Scene sceneFormulario = new Scene(vista);
+            Stage escenarioPrincipal = (Stage) lbTitulo.getScene().getWindow();
+            escenarioPrincipal.setTitle("Formulario de cuerpo académico");
+            escenarioPrincipal.setScene(sceneFormulario);
+            formulario.inicializarInformacionFormulario(esEdicion, cuerpoAcademico);
+        }catch(IOException e){
+            Utilidades.mostrarDialogoSimple("Error", 
+                    "No se puede mostrar la pantalla de formulario", 
+                    Alert.AlertType.ERROR);  
+        }
+        
     }
     
 }

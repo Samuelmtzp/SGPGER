@@ -31,7 +31,7 @@ public class GradoConsolidacion {
 
     @Override
     public String toString() {
-        return "GradoConsolidacion{" + "idGradoConsolidacion=" + idGradoConsolidacion + ", grado=" + grado + '}';
+        return grado;
     }
     
 }

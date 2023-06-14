@@ -110,6 +110,106 @@ public class UsuarioDAO {
         return respuesta;
     }
     
+    public static UsuarioRespuesta obtenerInformacionAcademicoEnCuerpoAcademico(int idCuerpoAcademico) {
+        UsuarioRespuesta respuesta = new UsuarioRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+        if (conexionBD != null) {
+            try {
+                String consulta = "SELECT Usuario.idUsuario, Usuario.idTipoUsuario, "
+                        + "Academico.idAcademico, TipoUsuario.tipoUsuario, username, password, "
+                        + "correo, Usuario.nombre, apellidoPaterno, apellidoMaterno, "
+                        + "telefono, fechaCreacion "
+                        + "FROM Usuario "
+                        + "INNER JOIN TipoUsuario "
+                        + "ON Usuario.idTipoUsuario = TipoUsuario.idTipoUsuario "
+                        + "INNER JOIN Academico "
+                        + "ON Academico.idUsuario = Usuario.idUsuario "
+                        + "INNER JOIN CuerpoAcademico "
+                        + "ON CuerpoAcademico.idResponsable = Academico.idAcademico "
+                        + "WHERE Usuario.idTipoUsuario = 3 "
+                        + "AND CuerpoAcademico.idCuerpoAcademico = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, idCuerpoAcademico);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList<Usuario> usuariosConsulta = new ArrayList();
+                if (resultado.next())
+                {
+                    Usuario usuario = new Usuario();
+                    usuario.setIdUsuario(resultado.getInt("idUsuario"));
+                    usuario.setIdTipoUsuario(resultado.getInt("Usuario.idTipoUsuario"));
+                    usuario.setIdAcademico(resultado.getInt("Academico.idAcademico"));
+                    usuario.setTipoUsuario(resultado.getString("TipoUsuario.tipoUsuario"));
+                    usuario.setUsername(resultado.getString("username"));
+                    usuario.setPassword(resultado.getString("password"));
+                    usuario.setCorreo(resultado.getString("correo"));
+                    usuario.setNombre(resultado.getString("nombre"));
+                    usuario.setApellidoPaterno(resultado.getString("apellidoPaterno"));
+                    usuario.setApellidoMaterno(resultado.getString("apellidoMaterno"));
+                    usuario.setTelefono(resultado.getString("telefono"));
+                    usuario.setFechaCreacion(resultado.getString("fechaCreacion"));
+                    usuariosConsulta.add(usuario);
+                }
+                respuesta.setUsuarios(usuariosConsulta);
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+            }
+        } else {
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
+    }
+    
+    public static UsuarioRespuesta obtenerInformacionAcademicosDisponibles() {
+        UsuarioRespuesta respuesta = new UsuarioRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+        if (conexionBD != null) {
+            try {
+                String consulta = "SELECT Usuario.idUsuario, Usuario.idTipoUsuario, "
+                        + "Academico.idAcademico, TipoUsuario.tipoUsuario, username, password, "
+                        + "correo, nombre, apellidoPaterno, apellidoMaterno, "
+                        + "telefono, fechaCreacion "
+                        + "FROM Usuario "
+                        + "INNER JOIN TipoUsuario "
+                        + "ON Usuario.idTipoUsuario = TipoUsuario.idTipoUsuario "
+                        + "INNER JOIN Academico "
+                        + "ON Academico.idUsuario = Usuario.idUsuario "
+                        + "WHERE Usuario.idTipoUsuario = 3 "
+                        + "AND Academico.idAcademico "
+                        + "NOT IN (SELECT idResponsable FROM cuerpoacademico)";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList<Usuario> usuariosConsulta = new ArrayList();
+                while (resultado.next())
+                {
+                    Usuario usuario = new Usuario();
+                    usuario.setIdUsuario(resultado.getInt("idUsuario"));
+                    usuario.setIdTipoUsuario(resultado.getInt("Usuario.idTipoUsuario"));
+                    usuario.setIdAcademico(resultado.getInt("Academico.idAcademico"));
+                    usuario.setTipoUsuario(resultado.getString("TipoUsuario.tipoUsuario"));
+                    usuario.setUsername(resultado.getString("username"));
+                    usuario.setPassword(resultado.getString("password"));
+                    usuario.setCorreo(resultado.getString("correo"));
+                    usuario.setNombre(resultado.getString("nombre"));
+                    usuario.setApellidoPaterno(resultado.getString("apellidoPaterno"));
+                    usuario.setApellidoMaterno(resultado.getString("apellidoMaterno"));
+                    usuario.setTelefono(resultado.getString("telefono"));
+                    usuario.setFechaCreacion(resultado.getString("fechaCreacion"));
+                    usuariosConsulta.add(usuario);
+                }
+                respuesta.setUsuarios(usuariosConsulta);
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+            }
+        } else {
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
+    }
+    
     public static UsuarioRespuesta obtenerInformacionEstudiantesEnCurso(int idCurso) {
         UsuarioRespuesta respuesta = new UsuarioRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
