@@ -24,7 +24,7 @@ public class PeriodoEscolarDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT idPeriodoEscolar, fechaInicio, fechaFin, nombre" +
+                String consulta = "SELECT idPeriodoEscolar, fechaInicio, fechaFin, nombre " +
                         "FROM PeriodoEscolar";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();

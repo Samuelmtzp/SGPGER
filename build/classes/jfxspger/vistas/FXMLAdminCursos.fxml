@@ -104,31 +104,19 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <Button disable="true" layoutX="1315.0" layoutY="140.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="248.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" text="Eliminar curso">
-               <graphic>
-                  <ImageView fitHeight="51.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../recursos/eliminar.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
-            </Button>
-            <Button disable="true" layoutX="1026.0" layoutY="140.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="275.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Modificar curso">
+            <Button layoutX="1316.0" layoutY="141.0" mnemonicParsing="false" onAction="#clicBtnAgregarCurso" prefHeight="62.0" prefWidth="246.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Agregar curso">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="51.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../recursos/editar.png" />
+                        <Image url="@../recursos/boton-agregar.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="762.0" layoutY="141.0" mnemonicParsing="false" onAction="#clicBtnAgregarCurso" prefHeight="62.0" prefWidth="248.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Agregar curso">
+            <Button layoutX="983.0" layoutY="141.0" mnemonicParsing="false" onAction="#clicBtnAgregarEstudiantes" prefHeight="62.0" prefWidth="308.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Agregar estudiantes">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>

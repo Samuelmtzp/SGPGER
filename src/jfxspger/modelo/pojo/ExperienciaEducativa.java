@@ -37,7 +37,7 @@ public class ExperienciaEducativa {
 
     @Override
     public String toString() {
-        return "ExperienciaEducativa{" + "idExperienciaEducativa=" + idExperienciaEducativa + ", nombre=" + nombre + '}';
+        return nombre;
     }
     
 }

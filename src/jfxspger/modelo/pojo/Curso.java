@@ -11,6 +11,7 @@ public class Curso {
     private int idExperienciaEducativa;
     private String experienciaEducativa;
     private int idPeriodo;
+    private String periodo;
     private int idProfesor;
     private String nombreCompletoProfesor;
     private int nrc;
@@ -21,11 +22,12 @@ public class Curso {
     public Curso() {
     }
 
-    public Curso(int idCurso, int idExperienciaEducativa, String experienciaEducativa, int idPeriodo, int idProfesor, String nombreCompletoProfesor, int nrc, int bloque, String seccion, int cupo) {
+    public Curso(int idCurso, int idExperienciaEducativa, String experienciaEducativa, int idPeriodo, String periodo, int idProfesor, String nombreCompletoProfesor, int nrc, int bloque, String seccion, int cupo) {
         this.idCurso = idCurso;
         this.idExperienciaEducativa = idExperienciaEducativa;
         this.experienciaEducativa = experienciaEducativa;
         this.idPeriodo = idPeriodo;
+        this.periodo = periodo;
         this.idProfesor = idProfesor;
         this.nombreCompletoProfesor = nombreCompletoProfesor;
         this.nrc = nrc;
@@ -64,6 +66,14 @@ public class Curso {
 
     public void setIdPeriodo(int idPeriodo) {
         this.idPeriodo = idPeriodo;
+    }
+
+    public String getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(String periodo) {
+        this.periodo = periodo;
     }
 
     public int getIdProfesor() {
@@ -116,7 +126,7 @@ public class Curso {
 
     @Override
     public String toString() {
-        return "Curso{" + "idCurso=" + idCurso + ", idExperienciaEducativa=" + idExperienciaEducativa + ", experienciaEducativa=" + experienciaEducativa + ", idPeriodo=" + idPeriodo + ", idProfesor=" + idProfesor + ", nombreCompletoProfesor=" + nombreCompletoProfesor + ", nrc=" + nrc + ", bloque=" + bloque + ", seccion=" + seccion + ", cupo=" + cupo + '}';
+        return "Curso{" + "idCurso=" + idCurso + ", idExperienciaEducativa=" + idExperienciaEducativa + ", experienciaEducativa=" + experienciaEducativa + ", idPeriodo=" + idPeriodo + ", periodo=" + periodo + ", idProfesor=" + idProfesor + ", nombreCompletoProfesor=" + nombreCompletoProfesor + ", nrc=" + nrc + ", bloque=" + bloque + ", seccion=" + seccion + ", cupo=" + cupo + '}';
     }
 
 }

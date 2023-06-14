@@ -1,11 +1,15 @@
 package jfxspger.controladores;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -85,6 +89,38 @@ public class FXMLAdminCursosController extends FXMLPrincipalAdministradorControl
                 Utilidades.inicializarEscena("vistas/FXMLFormularioCurso1.fxml"));
         escenarioBase.setTitle("Formulario de curso");
         escenarioBase.show();
+    }
+
+    @FXML
+    private void clicBtnAgregarEstudiantes(ActionEvent event) {
+        Curso cursoSeleccionado = tvCursos.getSelectionModel().getSelectedItem();
+        if(cursoSeleccionado != null){
+            irEstudiantesCurso(cursoSeleccionado);
+        }else{
+            Utilidades.mostrarDialogoSimple("Selección necesaria", 
+                    "Selecciona el curso en la tabla para poder agregar estudiantes", 
+                    Alert.AlertType.WARNING);
+        }
+        
+    }
+    
+    private void irEstudiantesCurso(Curso curso){
+        try{
+            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.
+                    JFXSPGER.class.getResource("/jfxspger/vistas/FXMLEstudiantesCurso.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLEstudiantesCursoController formulario = accesoControlador.getController();
+            Scene sceneFormulario = new Scene(vista);
+            Stage escenarioPrincipal = (Stage) lbTitulo.getScene().getWindow();
+            escenarioPrincipal.setTitle("Agregar estudiantes a curso");
+            escenarioPrincipal.setScene(sceneFormulario);
+            formulario.inicializarInformacion(curso);
+        }catch(IOException e){
+            Utilidades.mostrarDialogoSimple("Error", 
+                    "No se puede mostrar la pantalla de agregar estudiantes", 
+                    Alert.AlertType.ERROR);  
+        }
+        
     }
     
 }
