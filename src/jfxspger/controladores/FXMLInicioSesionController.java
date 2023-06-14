@@ -6,17 +6,25 @@
 
 package jfxspger.controladores;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import jfxspger.modelo.dao.EstudianteDAO;
 import jfxspger.modelo.dao.SesionDAO;
+import jfxspger.modelo.pojo.Estudiante;
+import jfxspger.modelo.pojo.EstudianteRespuesta;
 import jfxspger.modelo.pojo.Usuario;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
@@ -30,7 +38,7 @@ public class FXMLInicioSesionController implements Initializable {
     @FXML
     private Label lbErrorUsuario;
     @FXML
-    private Label lbErrorPassword;
+    private Label lbErrorPassword;    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -88,11 +96,16 @@ public class FXMLInicioSesionController implements Initializable {
                 
                     switch (usuarioRespuesta.getIdTipoUsuario()) {
                         case TIPO_USUARIO_ADMINISTRADOR :
+                            
                             irPantallaPrincipalAdministrador();
                             break;
                         case TIPO_USUARIO_ESTUDIANTE :
+                            EstudianteRespuesta estudianteRespuesta = EstudianteDAO.obtenerInformacionEstudiante(usuarioRespuesta.getIdUsuario());
+                            Estudiante estudiante = estudianteRespuesta.getEstudiantes().get(0);
+                            enviarEstudiante(estudiante);
                             irPantallaPrincipalEstudiante();
                             break;
+
                         case TIPO_USUARIO_ACADEMICO :
                             irPantallaPrincipalAcademico();
                             break;
@@ -119,13 +132,27 @@ public class FXMLInicioSesionController implements Initializable {
     private void irPantallaPrincipalAdministrador() {
         Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
         escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLPrincipalAdministrador.fxml"));
-        configurarEscena(escenarioBase);
+        configurarEscena(escenarioBase);        
     }
     
     private void irPantallaPrincipalEstudiante() {                
         Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
         escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLPrincipalEstudiante.fxml"));
         configurarEscena(escenarioBase);
+    }
+    
+    private void enviarEstudiante(Estudiante estudiante){
+        
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.getResource("vistas/FXMLActividadFormu.fxml"));
+            Parent vista = accesoControlador.load();
+            
+            FXMLActividadFormularioController formulario = accesoControlador.getController();
+            formulario.setIdEstudiante(estudiante.getIdEstudiante());
+        
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
     private void irPantallaPrincipalAcademico() {

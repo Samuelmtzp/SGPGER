@@ -24,8 +24,7 @@ public class ActividadDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT idActividad, idAnteproyecto, idEstudiante " +
-                        "titulo, fechaCreacion, fechaInicio, fechaFin, descripcion " +
+                String consulta = "SELECT titulo, fechaCreacion, fechaInicio, fechaFin, descripcion " +
                         "FROM Actividad";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
@@ -33,9 +32,7 @@ public class ActividadDAO {
                 while (resultado.next())
                 {
                     Actividad actividad = new Actividad();
-                    actividad.setIdActividad(resultado.getInt("idActividad"));
-                    actividad.setIdAnteproyecto(resultado.getInt("idAnteproyecto"));
-                    actividad.setIdEstudiante(resultado.getInt("idEstudiante"));
+                                      
                     actividad.setTitulo(resultado.getString("titulo"));
                     actividad.setFechaCreacion(resultado.getString("fechaCreacion"));
                     actividad.setFechaInicio(resultado.getString("fechaInicio"));
@@ -47,6 +44,7 @@ public class ActividadDAO {
                 conexionBD.close();
             } catch (SQLException e) {
                 respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+                e.printStackTrace();
             }
         } else {
             respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
@@ -76,6 +74,7 @@ public class ActividadDAO {
                 conexionBD.close();
             } catch (SQLException e) {
                 respuesta = Constantes.ERROR_CONSULTA;
+                e.printStackTrace();
             }
         } else {
             respuesta = Constantes.ERROR_CONEXION;
@@ -88,19 +87,15 @@ public class ActividadDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
-                String sentencia = "UPDATE Actividad SET idAnteproyecto = ?, idEstudiante = ?, " + 
-                        "titulo = ?, fechaCreacion = ?, fechaInicio = ?, " + 
+                String sentencia = "UPDATE Actividad SET titulo = ?, fechaInicio = ?, " + 
                         "fechaFin = ?, descripcion = ? " +
                         "WHERE idActividad = ?";
-                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
-                prepararSentencia.setInt(1, actividadEdicion.getIdAnteproyecto());
-                prepararSentencia.setInt(2, actividadEdicion.getIdEstudiante());
-                prepararSentencia.setString(3, actividadEdicion.getTitulo());
-                prepararSentencia.setString(4, actividadEdicion.getFechaCreacion());
-                prepararSentencia.setString(5, actividadEdicion.getFechaInicio());
-                prepararSentencia.setString(6, actividadEdicion.getFechaFin());
-                prepararSentencia.setString(7, actividadEdicion.getDescripcion());
-                prepararSentencia.setInt(8, actividadEdicion.getIdActividad());
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);                                
+                prepararSentencia.setString(1, actividadEdicion.getTitulo());                
+                prepararSentencia.setString(2, actividadEdicion.getFechaInicio());
+                prepararSentencia.setString(3, actividadEdicion.getFechaFin());
+                prepararSentencia.setString(4, actividadEdicion.getDescripcion());
+                prepararSentencia.setInt(5, actividadEdicion.getIdActividad());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;
