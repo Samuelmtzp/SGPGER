@@ -22,7 +22,7 @@ public class FXMLPrincipalAcademicoController implements Initializable {
     private void clicIrAnteproyectos(ActionEvent event) {
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyecto.fxml"));
+                Utilidades.inicializarEscena("vistas/FXMLFormularioAnteproyecto.fxml"));
         escenarioBase.setTitle("Administracion anteproyecto");
         escenarioBase.show();
     }

@@ -8,11 +8,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLAdminAnteproyectoController">
+<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLFormularioAnteproyectoController">
    <children>
       <Pane prefHeight="100.0" prefWidth="1920.0" style="-fx-background-color: #343838;">
          <children>
-            <Label fx:id="lbTitulo" layoutX="677.0" layoutY="17.0" text="Administración Anteproyecto" textAlignment="CENTER" textFill="WHITE">
+            <Label fx:id="lbTitulo" layoutX="677.0" layoutY="17.0" text="Formulario de  Anteproyecto" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="50.0" />
                </font>
@@ -36,14 +36,8 @@
                               <Font name="System Bold Italic" size="27.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="cbDirector" layoutX="476.0" layoutY="110.0" prefHeight="31.0" prefWidth="238.0" stylesheets="@../css/estilos.css" />
-                        <Label layoutX="476.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Director">
-                           <font>
-                              <Font name="System Bold Italic" size="27.0" />
-                           </font>
-                        </Label>
-                        <ComboBox fx:id="cbEstado" layoutX="862.0" layoutY="110.0" prefHeight="31.0" prefWidth="238.0" stylesheets="@../css/estilos.css" />
-                        <Label layoutX="870.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Estado">
+                        <ComboBox fx:id="cbDirector" layoutX="444.0" layoutY="110.0" prefHeight="31.0" prefWidth="238.0" stylesheets="@../css/estilos.css" />
+                        <Label layoutX="444.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Director">
                            <font>
                               <Font name="System Bold Italic" size="27.0" />
                            </font>
@@ -60,14 +54,14 @@
                               <Font name="System Bold Italic" size="27.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="tfProyectoInvestigacion" layoutX="476.0" layoutY="274.0" prefHeight="54.0" prefWidth="345.0" styleClass="textField" stylesheets="@../css/estilos.css" />
-                        <Label layoutX="476.0" layoutY="213.0" stylesheets="@../css/estilos.css" text="Proyecto de investigación">
+                        <TextField fx:id="tfProyectoInvestigacion" layoutX="444.0" layoutY="263.0" prefHeight="54.0" prefWidth="345.0" styleClass="textField" stylesheets="@../css/estilos.css" />
+                        <Label layoutX="444.0" layoutY="213.0" stylesheets="@../css/estilos.css" text="Proyecto de investigación">
                            <font>
                               <Font name="System Bold Italic" size="27.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="tfLineaInvestigacion" layoutX="912.0" layoutY="274.0" prefHeight="54.0" prefWidth="345.0" styleClass="textField" stylesheets="@../css/estilos.css" />
-                        <Label layoutX="912.0" layoutY="213.0" stylesheets="@../css/estilos.css" text="Línea de investigación">
+                        <TextField fx:id="tfLineaInvestigacion" layoutX="890.0" layoutY="263.0" prefHeight="54.0" prefWidth="345.0" styleClass="textField" stylesheets="@../css/estilos.css" />
+                        <Label layoutX="890.0" layoutY="213.0" stylesheets="@../css/estilos.css" text="Línea de investigación">
                            <font>
                               <Font name="System Bold Italic" size="27.0" />
                            </font>
@@ -114,12 +108,6 @@
                               <Font name="System Bold Italic" size="27.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="taComentarios" layoutX="540.0" layoutY="835.0" prefHeight="131.0" prefWidth="421.0" />
-                        <Label layoutX="540.0" layoutY="767.0" prefHeight="60.0" prefWidth="535.0" stylesheets="@../css/estilos.css" text="Comentarios">
-                           <font>
-                              <Font name="System Bold Italic" size="27.0" />
-                           </font>
-                        </Label>
                         <Button layoutX="1251.0" layoutY="877.0" mnemonicParsing="false" onAction="#clicBtnPostular" prefHeight="62.0" prefWidth="330.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Postular anteproyecto">
                            <font>
                               <Font name="System Bold" size="22.0" />
@@ -132,6 +120,18 @@
                               </ImageView>
                            </graphic>
                         </Button>
+                        <DatePicker fx:id="dpFechaInicio" layoutX="739.0" layoutY="110.0" />
+                        <DatePicker fx:id="dpFechaFin" layoutX="985.0" layoutY="110.0" />
+                        <Label layoutX="739.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Fecha Inicio">
+                           <font>
+                              <Font name="System Bold Italic" size="27.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="985.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Fecha Fin">
+                           <font>
+                              <Font name="System Bold Italic" size="27.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
               </content>
