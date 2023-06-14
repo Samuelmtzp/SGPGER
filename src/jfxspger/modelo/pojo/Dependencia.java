@@ -31,7 +31,7 @@ public class Dependencia {
 
     @Override
     public String toString() {
-        return "Dependencia{" + "idDependencia=" + idDependencia + ", dependencia=" + dependencia + '}';
+        return dependencia;
     }
     
 }
