@@ -20,6 +20,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import jfxspger.modelo.dao.AcademicoDAO;
 import jfxspger.modelo.dao.CuerpoAcademicoDAO;
 import jfxspger.modelo.dao.LgacDAO;
@@ -27,6 +28,7 @@ import jfxspger.modelo.dao.ModalidadDAO;
 import jfxspger.modelo.dao.UsuarioDAO;
 import jfxspger.modelo.pojo.Academico;
 import jfxspger.modelo.pojo.AcademicoRespuesta;
+import jfxspger.modelo.pojo.Anteproyecto;
 import jfxspger.modelo.pojo.CuerpoAcademico;
 import jfxspger.modelo.pojo.CuerpoAcademicoRespuesta;
 import jfxspger.modelo.pojo.EstadoAnteproyecto;
@@ -85,6 +87,9 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
     private ObservableList<CuerpoAcademico> cuerpoAcademico;
     private ObservableList<Usuario> usuarios;
    
+    
+    private Anteproyecto anteproyectoEdicion;
+    private boolean esEdicion;
     /**
      * Initializes the controller class.
      */
@@ -103,6 +108,8 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
                      tfCantidadAlumnos.setText(newValue.replaceAll("[^\\d]", ""));
                  }
             }});
+        dpFechaInicio.setEditable(false);
+        dpFechaFin.setEditable(false);
     }    
 
     @FXML
@@ -223,6 +230,15 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
         
     }
     
+    public void inicializarInformacionFormulario(boolean esEdicion, Anteproyecto anteproyectoEdicion){
+        this.esEdicion=esEdicion;
+        this.anteproyectoEdicion=anteproyectoEdicion;
+        // TO DO  
+        if(esEdicion){
+            lbTitulo.setText("Editar informacion de LGAC");
+            //cargarInformacionEdicion();
+        }
+    }
     
     private void cargarInformacionLGAC(){
         lgac = FXCollections.observableArrayList();
@@ -302,7 +318,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
 
     @FXML
     private void clicIrAnteproyectos(ActionEvent event) {
-        Utilidades.mostrarDialogoConfirmacion("Confirmacion", "Seguro que deseas salir?");
+        regresar();
     }
     
     private void establecerEstiloNormal(){
@@ -321,6 +337,20 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
         cbDirector.setStyle(Constantes.estiloNormal);
         cbLGAC.setStyle(Constantes.estiloNormal);
         cbModalidad.setStyle(Constantes.estiloNormal);
+    }
+
+    @FXML
+    private void clicRegresar(ActionEvent event) {
+        regresar();
+    }
+    
+    private void regresar(){
+        Utilidades.mostrarDialogoConfirmacion("Confirmacion", "Seguro que deseas salir?");
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        escenarioBase.setScene(
+                Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos.fxml"));
+        escenarioBase.setTitle("Administración LGAC");
+        escenarioBase.show();
     }
 
 }
