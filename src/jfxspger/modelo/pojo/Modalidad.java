@@ -31,7 +31,7 @@ public class Modalidad {
 
     @Override
     public String toString() {
-        return "Modalidad{" + "idModalidad=" + idModalidad + ", modalidad=" + modalidad + '}';
+        return modalidad;
     }
     
 }
