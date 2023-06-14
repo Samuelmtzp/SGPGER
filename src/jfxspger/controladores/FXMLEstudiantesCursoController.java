@@ -136,21 +136,29 @@ public class FXMLEstudiantesCursoController extends FXMLPrincipalAdministradorCo
     
     @FXML
     private void clicBtnAgregarEstudiante(ActionEvent event) {
-        int posicionEstudianteDisponible = tvEstudiantesDisponibles.
-                getSelectionModel().getSelectedIndex();
-        if (posicionEstudianteDisponible != -1) {
-            Estudiante_Curso estudianteEnCursoRegistro = new Estudiante_Curso();
-            estudianteEnCursoRegistro.setIdCurso(curso.getIdCurso());
-            estudianteEnCursoRegistro.setIdEstudiante(tvEstudiantesDisponibles.
-                getSelectionModel().getSelectedItem().getIdEstudiante());
-            
-            agregarEstudianteACurso(estudianteEnCursoRegistro);
+        if (curso.getCupo() > 0) {
+            int posicionEstudianteDisponible = tvEstudiantesDisponibles.
+                    getSelectionModel().getSelectedIndex();
+            if (posicionEstudianteDisponible != -1) {
+                Estudiante_Curso estudianteEnCursoRegistro = new Estudiante_Curso();
+                estudianteEnCursoRegistro.setIdCurso(curso.getIdCurso());
+                estudianteEnCursoRegistro.setIdEstudiante(tvEstudiantesDisponibles.
+                    getSelectionModel().getSelectedItem().getIdEstudiante());
+                // modificar cupo de curso
+                agregarEstudianteACurso(estudianteEnCursoRegistro);
+            } else {
+                Utilidades.mostrarDialogoSimple("Selección necesaria", 
+                        "Para agregar un estudiante al curso, debe seleccionarlo "
+                        + "previamente de la tabla de estudiantes disponibles", 
+                        Alert.AlertType.WARNING);
+            }
         } else {
-            Utilidades.mostrarDialogoSimple("Selección necesaria", 
-                    "Para agregar un estudiante al curso, debe seleccionarlo "
-                    + "previamente de la tabla de estudiantes disponibles", 
+            Utilidades.mostrarDialogoSimple("Cupo lleno", 
+                    "No es posible agregar más estudiantes debido a que se ha alcanzado el "
+                    + "cupo límite se ha llenado", 
                     Alert.AlertType.WARNING);
         }
+            
     }
     
     private void agregarEstudianteACurso(Estudiante_Curso estudianteEnCurso) {
