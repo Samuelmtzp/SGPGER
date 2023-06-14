@@ -22,6 +22,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import jfxspger.modelo.dao.AcademicoDAO;
+import jfxspger.modelo.dao.AnteproyectoDAO;
 import jfxspger.modelo.dao.CuerpoAcademicoDAO;
 import jfxspger.modelo.dao.LgacDAO;
 import jfxspger.modelo.dao.ModalidadDAO;
@@ -53,7 +54,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
     @FXML
     private ComboBox<CuerpoAcademico> cbCuerpoAcademico;
     @FXML
-    private ComboBox<Usuario> cbDirector; //academico como director(no estoy seguro xd)
+    private ComboBox<Usuario> cbDirector; 
     @FXML
     private ComboBox<Modalidad> cbModalidad;
     @FXML
@@ -226,8 +227,75 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
                 }
             }
         }
-       
         
+        if(sonValidos==true){
+            Anteproyecto anteproyectoValido = new Anteproyecto();
+            anteproyectoValido.setIdDirector(cbDirector.getSelectionModel().getSelectedItem().getIdAcademico());
+            anteproyectoValido.setIdCuerpoAcademico(cbCuerpoAcademico.getSelectionModel().getSelectedItem().getIdCuerpoAcademico());
+            anteproyectoValido.setFechaInicio(dpFechaInicio.toString());
+            anteproyectoValido.setFechaFin(dpFechaFin.toString());
+            anteproyectoValido.setIdModalidad(cbModalidad.getSelectionModel().getSelectedItem().getIdModalidad());
+            anteproyectoValido.setIdLgac(cbLGAC.getSelectionModel().getSelectedItem().getIdLgac());
+            anteproyectoValido.setProyectoInvestigacion(proyectoInvestigacion);
+            anteproyectoValido.setLineaInvestigacion(lineaInvestigacion);
+            anteproyectoValido.setNombreTrabajo(nombreTrabajo);
+            anteproyectoValido.setRequisitos(requisitos);
+            int cantidad = Integer.parseInt(cantidadAlumnos);
+            anteproyectoValido.setCantidadAlumnosParticipantes(cantidad);
+            anteproyectoValido.setDescripcionProyectoInvestigacion(descripcionProyecto);
+            anteproyectoValido.setDescripcionTrabajoRecepcional(descripcionTrabajo);
+            anteproyectoValido.setResultadosEsperados(resultadosEsperados);
+            if(!bibliografiaRecomendada.isEmpty()){
+                anteproyectoValido.setBibliografiaRecomendada(bibliografiaRecomendada);
+            }
+            if(esEdicion){
+                anteproyectoValido.setIdAnteproyecto(anteproyectoEdicion.getIdAnteproyecto());
+                actualizarAnteproyecto(anteproyectoValido);
+            }else{
+                registrarAnteproyecto(anteproyectoValido);
+            }
+        }
+        
+    }
+    
+    private void registrarAnteproyecto(Anteproyecto anteproyectoRegistro){
+        int codigoRespuesta = AnteproyectoDAO.guardarAnteproyecto(anteproyectoRegistro);
+        switch(codigoRespuesta){
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Error de conexion", "El anteproyecto no pudo ser guardado debido a un error en su conexión...", 
+                        Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                Utilidades.mostrarDialogoSimple("Error en la información", "La información del anteproyecto no puede ser guardada, por favor verifique su información", 
+                        Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                Utilidades.mostrarDialogoSimple("Anteproyecto registrado", "La información del anteproyecto fue guardada correctamente", 
+                        Alert.AlertType.INFORMATION);
+                //TO DO confirmacion
+                regresar();
+                break;
+        }
+    }
+    
+     private void actualizarAnteproyecto(Anteproyecto anteproyectoActualizar){
+        int codigoRespuesta = AnteproyectoDAO.modificarAnteproyecto(anteproyectoActualizar);
+         switch(codigoRespuesta){
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Error de conexion", "El anteproyecto no pudo ser actualizado debido a un error en su conexion...", 
+                        Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                Utilidades.mostrarDialogoSimple("Error en la informacion", "La informacion del anteproyecto no puede ser actualizada, por favor verifica la informacion", 
+                        Alert.AlertType.ERROR);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                 Utilidades.mostrarDialogoSimple("LGAC actualizado", "La informacion del anteproyecto fue actualizada correctamente", 
+                        Alert.AlertType.INFORMATION);
+                 //TO DO Regresar
+                regresar();
+                break;
+        }
     }
     
     public void inicializarInformacionFormulario(boolean esEdicion, Anteproyecto anteproyectoEdicion){
