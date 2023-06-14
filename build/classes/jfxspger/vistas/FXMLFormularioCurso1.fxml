@@ -99,77 +99,54 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Label layoutX="175.0" layoutY="128.0" text="Experiencia Educativa">
+            <Label layoutX="171.0" layoutY="323.0" text="Experiencia Educativa">
                <font>
                   <Font size="22.0" />
                </font>
             </Label>
-            <ComboBox fx:id="cbExperienciaEducativa" layoutX="174.0" layoutY="172.0" prefHeight="37.0" prefWidth="379.0" />
-            <ComboBox fx:id="cbProfesor" layoutX="175.0" layoutY="295.0" prefHeight="37.0" prefWidth="381.0" />
-            <Label layoutX="176.0" layoutY="251.0" text="Profesor">
+            <ComboBox fx:id="cbExperienciaEducativa" layoutX="170.0" layoutY="367.0" prefHeight="37.0" prefWidth="379.0" />
+            <ComboBox fx:id="cbProfesor" layoutX="172.0" layoutY="568.0" prefHeight="37.0" prefWidth="381.0" />
+            <Label layoutX="173.0" layoutY="524.0" text="Profesor">
                <font>
                   <Font size="22.0" />
                </font>
             </Label>
-            <Label layoutX="620.0" layoutY="132.0" text="Periodo escolar">
+            <Label layoutX="616.0" layoutY="327.0" text="Periodo escolar">
                <font>
                   <Font size="22.0" />
                </font>
             </Label>
-            <ComboBox fx:id="cbPeriodoEscolar" layoutX="620.0" layoutY="172.0" prefHeight="37.0" prefWidth="374.0" />
-            <Label layoutX="951.0" layoutY="252.0" prefHeight="32.0" prefWidth="51.0" text="NRC">
+            <ComboBox fx:id="cbPeriodoEscolar" layoutX="616.0" layoutY="367.0" prefHeight="37.0" prefWidth="374.0" />
+            <Label layoutX="948.0" layoutY="525.0" prefHeight="32.0" prefWidth="51.0" text="NRC">
                <font>
                   <Font size="22.0" />
                </font>
             </Label>
-            <TextField fx:id="tfNrc" layoutX="951.0" layoutY="294.0" prefHeight="37.0" prefWidth="242.0" />
-            <TextField fx:id="tfBloque" layoutX="1076.0" layoutY="173.0" prefHeight="37.0" prefWidth="374.0" />
-            <Label layoutX="1076.0" layoutY="132.0" text="Bloque">
+            <TextField fx:id="tfNrc" layoutX="948.0" layoutY="567.0" onKeyTyped="#permitirInputSoloNumeros" prefHeight="37.0" prefWidth="242.0" />
+            <TextField fx:id="tfBloque" layoutX="1072.0" layoutY="368.0" onKeyTyped="#permitirInputSoloNumeros" prefHeight="37.0" prefWidth="374.0" />
+            <Label layoutX="1072.0" layoutY="327.0" text="Bloque">
                <font>
                   <Font size="22.0" />
                </font>
             </Label>
-            <Label layoutX="626.0" layoutY="253.0" text="Sección">
+            <Label layoutX="623.0" layoutY="526.0" text="Sección">
                <font>
                   <Font size="22.0" />
                </font>
             </Label>
-            <TextField fx:id="tfSeccion" layoutX="626.0" layoutY="294.0" prefHeight="37.0" prefWidth="261.0" />
-            <TextField fx:id="tfCupo" layoutX="1252.0" layoutY="293.0" prefHeight="37.0" prefWidth="196.0" />
-            <Label layoutX="1252.0" layoutY="252.0" text="Cupo">
+            <TextField fx:id="tfSeccion" layoutX="623.0" layoutY="567.0" prefHeight="37.0" prefWidth="261.0" />
+            <TextField fx:id="tfCupo" layoutX="1249.0" layoutY="566.0" onKeyTyped="#permitirInputSoloNumeros" prefHeight="37.0" prefWidth="196.0" />
+            <Label layoutX="1249.0" layoutY="525.0" text="Cupo">
                <font>
                   <Font size="22.0" />
                </font>
             </Label>
-            <TableView fx:id="tvEstudiantes" layoutX="171.0" layoutY="457.0" prefHeight="335.0" prefWidth="1278.0" stylesheets="@../css/estilos.css">
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
-               <columns>
-                  <TableColumn fx:id="tcNombre" prefWidth="164.33334350585938" text="Nombre" />
-                  <TableColumn fx:id="tcApellidoPaterno" prefWidth="151.66668701171875" text="Apellido Paterno" />
-                  <TableColumn fx:id="tcApellidoMaterno" prefWidth="167.0" text="Apellido Materno" />
-                  <TableColumn fx:id="tcCorreo" prefWidth="157.0" text="Correo" />
-                  <TableColumn fx:id="tcMatricula" prefWidth="147.333251953125" text="Matrícula" />
-               </columns>
-            </TableView>
-            <Separator layoutX="2.0" layoutY="374.0" prefHeight="15.0" prefWidth="1621.0" />
-            <Label layoutX="533.0" layoutY="398.0" text="Estudiantes asignados al curso" textAlignment="CENTER">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </Label>
-            <Button layoutX="771.0" layoutY="825.0" mnemonicParsing="false" onAction="#clicBtnRegistrarCurso" prefHeight="53.0" prefWidth="189.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Registrar curso">
+            <Button layoutX="986.0" layoutY="825.0" mnemonicParsing="false" onAction="#clicBtnRegistrarCurso" prefHeight="53.0" prefWidth="251.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Registrar curso">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
             </Button>
             <Button layoutX="1260.0" layoutY="825.0" mnemonicParsing="false" onAction="#clicBtnCancelar" prefHeight="53.0" prefWidth="189.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" text="Cancelar">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
-            </Button>
-            <Button layoutX="987.0" layoutY="825.0" mnemonicParsing="false" onAction="#clicBtnAgregarEstudiante" prefHeight="53.0" prefWidth="250.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Agregar estudiante">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>

@@ -10,6 +10,8 @@ public class Usuario {
     
     private int idUsuario;
     private int idTipoUsuario;
+    private int idEstudiante;
+    private int idAcademico;
     private String tipoUsuario;
     private String username;
     private String password;
@@ -19,14 +21,17 @@ public class Usuario {
     private String apellidoMaterno;
     private String telefono;
     private String fechaCreacion;
+    private String matricula;
     private int codigoRespuesta;
     
     public Usuario() {
     }
 
-    public Usuario(int idUsuario, int idTipoUsuario, String tipoUsuario, String username, String password, String correo, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String fechaCreacion, int codigoRespuesta) {
+    public Usuario(int idUsuario, int idTipoUsuario, int idEstudiante, int idAcademico, String tipoUsuario, String username, String password, String correo, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String fechaCreacion, String matricula, int codigoRespuesta) {
         this.idUsuario = idUsuario;
         this.idTipoUsuario = idTipoUsuario;
+        this.idEstudiante = idEstudiante;
+        this.idAcademico = idAcademico;
         this.tipoUsuario = tipoUsuario;
         this.username = username;
         this.password = password;
@@ -36,6 +41,7 @@ public class Usuario {
         this.apellidoMaterno = apellidoMaterno;
         this.telefono = telefono;
         this.fechaCreacion = fechaCreacion;
+        this.matricula = matricula;
         this.codigoRespuesta = codigoRespuesta;
     }
 
@@ -55,6 +61,22 @@ public class Usuario {
         this.idTipoUsuario = idTipoUsuario;
     }
 
+    public int getIdEstudiante() {
+        return idEstudiante;
+    }
+
+    public void setIdEstudiante(int idEstudiante) {
+        this.idEstudiante = idEstudiante;
+    }
+
+    public int getIdAcademico() {
+        return idAcademico;
+    }
+
+    public void setIdAcademico(int idAcademico) {
+        this.idAcademico = idAcademico;
+    }
+    
     public String getTipoUsuario() {
         return tipoUsuario;
     }
@@ -119,20 +141,28 @@ public class Usuario {
         this.telefono = telefono;
     }
 
-    public int getCodigoRespuesta() {
-        return codigoRespuesta;
-    }
-
-    public void setCodigoRespuesta(int codigoRespuesta) {
-        this.codigoRespuesta = codigoRespuesta;
-    }
-
     public String getFechaCreacion() {
         return fechaCreacion;
     }
 
     public void setFechaCreacion(String fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
+    }
+
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
+
+    public int getCodigoRespuesta() {
+        return codigoRespuesta;
+    }
+
+    public void setCodigoRespuesta(int codigoRespuesta) {
+        this.codigoRespuesta = codigoRespuesta;
     }
 
     @Override
