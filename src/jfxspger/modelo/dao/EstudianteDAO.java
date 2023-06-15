@@ -51,6 +51,28 @@ public class EstudianteDAO {
         return respuesta;
     }
     
+    public static int verificarDisponibilidadMatricula(String matricula) {
+        int respuesta = 1;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null) {
+            try {
+                String sentencia = "SELECT COUNT(*) AS coincidencias "
+                        + "FROM Estudiante WHERE matricula = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setString(1, matricula);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                if (resultado.next())
+                    respuesta = resultado.getInt("coincidencias");
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta = Constantes.ERROR_CONSULTA;
+            }
+        } else {
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
     public static int guardarEstudiante(Estudiante nuevoEstudiante) {
         int respuesta;
         Connection conexionBD = ConexionBD.abrirConexionBD();

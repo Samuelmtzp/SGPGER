@@ -35,29 +35,26 @@ import jfxspger.utilidades.Utilidades;
 
 public class FXMLAnteproyectoInformacionController implements Initializable {
 
-    @FXML
     private Label lTituloAnteproyecto;
-    @FXML
-    private Label lDetallesAnteproyecto;
     private Anteproyecto anteproyecto;    
-    @FXML
     private TableColumn cNomAct;
-    @FXML
     private TableColumn cEstado;
-    @FXML
     private TableColumn cFechaInicio;
-    @FXML
     private TableColumn cFechaFin;
-    @FXML
     private TableColumn cFechaCreacion;
     private ObservableList<Actividad> actividades;  
-    @FXML
     private TableView<Actividad> tvAvanceActividades;
+    @FXML
+    private Label lbTitulo;
+    @FXML
+    private Label lbDescAnteproyecto;
+    @FXML
+    private Label lbTituloAnteproyecto;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cargarInformacionAnteproyecto();
-        configurarTabla();
+//        cargarInformacionAnteproyecto();
+//        configurarTabla();
     }
     
     private void cargarInformacionAnteproyecto(){
@@ -92,7 +89,6 @@ public class FXMLAnteproyectoInformacionController implements Initializable {
         cFechaCreacion.setCellValueFactory(new PropertyValueFactory("Fecha de creación"));
     }
 
-    @FXML
     private void clicBtnVerCronograma(ActionEvent event) {
         irCronograma();
     }
@@ -115,10 +111,58 @@ public class FXMLAnteproyectoInformacionController implements Initializable {
         }
     }    
 
-    @FXML
     private void clicBtnRegresar(MouseEvent event) {
         Stage escenarioPrincipal = (Stage) lTituloAnteproyecto.getScene().getWindow();
         escenarioPrincipal.close();
+    }
+
+    @FXML
+    private void clicIrPrincipalEstudiante(ActionEvent event) {
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLPrincipalEstudiante.fxml"));
+        escenarioBase.setTitle("Ventana Principal");
+        escenarioBase.show();           
+    }
+
+    @FXML
+    private void clicIrAnteproyecto(ActionEvent event) {
+    }
+    
+    @FXML
+    private void clicCerrarSesion(ActionEvent event) {
+        if (Utilidades.mostrarDialogoConfirmacion(
+                "Cerrar sesión", 
+                "¿Está seguro de que desea cerrar sesión?")) {
+            irVentanaInicioSesion();
+        }
+    }
+    
+    private void irVentanaInicioSesion() {
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        escenarioBase.setScene(
+                Utilidades.inicializarEscena("vistas/FXMLInicioSesion.fxml"));
+        escenarioBase.setTitle("Inicio de sesion");
+        escenarioBase.show();
+    }
+
+    @FXML
+    private void clicIrCronograma(ActionEvent event) {
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLCronogramaActividades.fxml"));
+        escenarioBase.setTitle("Cronograma de actividades");
+        escenarioBase.show();        
+    }
+
+    @FXML
+    private void clicIrCursos(ActionEvent event) {      
+    }    
+
+    @FXML
+    private void clicIrPropuestas(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicBtnGuardar(ActionEvent event) {
     }
     
     
