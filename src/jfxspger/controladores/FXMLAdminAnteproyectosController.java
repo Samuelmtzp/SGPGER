@@ -1,7 +1,8 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
+* Autor: Luis Angel ElizaLde Arroyo
+* Fecha de creación: 13/06/2023
+* Descripción: Clse encargada de administrar los anteproyectos
+*/
 package jfxspger.controladores;
 
 import java.io.IOException;
@@ -15,21 +16,21 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import jfxspger.interfaz.INotificacionOperacionActividad;
 import jfxspger.modelo.dao.AnteproyectoDAO;
-import jfxspger.modelo.pojo.Actividad;
 import jfxspger.modelo.pojo.Anteproyecto;
 import jfxspger.modelo.pojo.AnteproyectoRespuesta;
-import jfxspger.modelo.pojo.Lgac;
+import jfxspger.modelo.pojo.Usuario;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
 
@@ -38,7 +39,7 @@ import jfxspger.utilidades.Utilidades;
  *
  * @author king_
  */
-public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoController implements INotificacionOperacionActividad {
+public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoController {
 
     @FXML
     private Label lbTitulo;
@@ -47,92 +48,37 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     @FXML
     private TableColumn columnNombre;
     @FXML
-    private TableColumn columLGAC;
+    private TableColumn columNombreProyecto;
     @FXML
     private TableColumn columFechaInicio;
     @FXML
     private TableColumn columFechaFin;
-
+    
     private ObservableList<Anteproyecto> anteproyectos;
+    @FXML
+    private TableColumn columDirector;
+    @FXML
+    private TableColumn columEstado;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        cargarInformacion();
+        configurarTabla();
     }    
 
-    @FXML
-    private void clicCrearAnteproyecto(ActionEvent event) {
-        irFormulario(false, null);
-    }
-
-    @FXML
-    private void clicEliminarAnteproyecto(ActionEvent event) {
-    }
-
-    @FXML
-    private void clicModificarAnteproyecto(ActionEvent event) {
-        Anteproyecto anteproyectoSeleccionado = tvAnteproyecto.getSelectionModel().getSelectedItem();
-        if(anteproyectoSeleccionado!= null){
-            irFormulario(true, anteproyectoSeleccionado);
-        }else{
-            Utilidades.mostrarDialogoSimple("Selecciona un anteproyecto", "Selecciona el registro en la tabla de anteproyecto para su edicion", 
-                    Alert.AlertType.WARNING);
-            }
-    }
-
-    @FXML
-    private void clicVerDetalles(ActionEvent event) {
-        Anteproyecto anteproyectoInformacion = tvAnteproyecto.getSelectionModel().getSelectedItem();
-        if(anteproyectoInformacion != null){
-            irDetalles(anteproyectoInformacion);
-        }else{
-            Utilidades.mostrarDialogoSimple("Selecciona un anteproyecto", "Debes selecionar un anteproyecto para poder"
-                    + " ver los detalles.", Alert.AlertType.WARNING);
-        }        
-    }
-    
-    private void irDetalles(Anteproyecto anteproyectoInformacion){
-        try {
-            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.getResource("vistas/FXMLAnteproyectoInformacionAcademico.fxml"));        
-            Parent vista = accesoControlador.load();
-            
-            FXMLAnteproyectoInformacionAcademicoController informacion = accesoControlador.getController();
-            informacion.inicializarInformacionAnteproyecto(anteproyectoInformacion, this);
-        
-            Stage escenarioDetalles = new Stage();
-            escenarioDetalles.setScene(new Scene(vista));
-            escenarioDetalles.setTitle("Detalles Activdad");
-            escenarioDetalles.initModality(Modality.APPLICATION_MODAL);       
-            escenarioDetalles.showAndWait();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-    private void irFormulario(boolean esEdicion, Anteproyecto anteproyectoEdicion){
-         try{
-            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.getResource("vistas/FXMLFormularioAnteproyecto.fxml"));
-            Parent vista = accesoControlador.load();
-            FXMLFormularioAnteproyectoController formulario = accesoControlador.getController();
-            Scene sceneFormulario = new Scene(vista);
-            Stage escenarioPrincipal = (Stage)lbTitulo.getScene().getWindow();
-            escenarioPrincipal.setScene(sceneFormulario);
-            formulario.inicializarInformacionFormulario(esEdicion, anteproyectoEdicion);
-         }catch(IOException ex){
-             Logger.getLogger(FXMLLgacFormularioController.class.getName()).log(Level.SEVERE, null, ex);
-         }
-    }
-    
-     private void configurarTabla() {
+    private void configurarTabla(){
         columnNombre.setCellValueFactory(new PropertyValueFactory("nombreTrabajo"));
-        columLGAC.setCellValueFactory(new PropertyValueFactory("idLgac"));
+        columNombreProyecto.setCellValueFactory(new PropertyValueFactory("proyectoInvestigacion"));
         columFechaInicio.setCellValueFactory(new PropertyValueFactory("fechaInicio"));
         columFechaFin.setCellValueFactory(new PropertyValueFactory("fechaFin"));
-    }
+        columDirector.setCellValueFactory(new PropertyValueFactory("Director"));
+        columEstado.setCellValueFactory(new PropertyValueFactory("Estado"));
+    }    
     
-    private void cargarInformacionTabla() {
+    private void cargarInformacion(){
         anteproyectos = FXCollections.observableArrayList();
         AnteproyectoRespuesta respuestaBD = AnteproyectoDAO.obtenerInformacionAnteproyecto();
         switch (respuestaBD.getCodigoRespuesta()) {
@@ -148,19 +94,89 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
                 break;
             case Constantes.OPERACION_EXITOSA:
                     anteproyectos.addAll(respuestaBD.getAnteproyectos());
-                    tvAnteproyecto.setItems(anteproyectos); 
+                    tvAnteproyecto.setItems(anteproyectos);
                 break;
         }
     }
     
-    @Override
-    public void notificarOperacionGuardar(String nombreActividad) {
-        
+    private void irFormulario(boolean esEdicion, Anteproyecto anteproyectoEdicion){
+           try{
+            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.getResource("vistas/FXMLFormularioAnteproyecto.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLFormularioAnteproyectoController formulario = accesoControlador.getController();
+            Scene sceneFormulario = new Scene(vista);
+            Stage escenarioPrincipal = (Stage)lbTitulo.getScene().getWindow();
+            escenarioPrincipal.setScene(sceneFormulario);
+            formulario.inicializarInformacionFormulario(esEdicion, anteproyectoEdicion);
+            
+         }catch(IOException ex){
+             Logger.getLogger(FXMLLgacFormularioController.class.getName()).log(Level.SEVERE, null, ex);
+         }
     }
 
-    @Override
-    public void notificarOperacionActualizar(String nombreActividad) {
-        
-    }     
+    @FXML
+    private void clicCrearAnteproyecto(ActionEvent event) {
+        irFormulario(false, null);
+    }
+
+    @FXML
+    private void clicEliminarAnteproyecto(ActionEvent event) {
+        Anteproyecto anteproyectoSeleccionado = tvAnteproyecto.getSelectionModel().getSelectedItem();
+        if(anteproyectoSeleccionado != null){
+            boolean borrarRegistro = Utilidades.mostrarDialogoConfirmacion("Eliminar registro del anteproyecto", 
+                    "¿Estás seguro de que deseas eliminar el anteproyecto?");
+            if(borrarRegistro==true){
+                int codigoRespuesta = AnteproyectoDAO.eliminarAnteproyecto(anteproyectoSeleccionado.getIdAnteproyecto());
+                switch(codigoRespuesta){
+                    case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Error de conexion", "El anteproyecto no pudo ser eliminado debido a un error en su conexion...", 
+                        Alert.AlertType.ERROR);
+                break;
+                    case Constantes.ERROR_CONSULTA:
+                Utilidades.mostrarDialogoSimple("Error al eliminiar", "La informacion del anteproyecto no puedo ser eliminada, por favor intentelo más tarde", 
+                        Alert.AlertType.WARNING);
+                break;
+                    case Constantes.OPERACION_EXITOSA:
+                         cargarInformacion();
+                break;
+                }
+            }
+        }else{
+             Utilidades.mostrarDialogoSimple("Selecciona un anteproyecto", "Selecciona el registro en la tabla del anteproyecto", 
+                    Alert.AlertType.WARNING);
+        }
+    }
+
+    @FXML
+    private void clicModificarAnteproyecto(ActionEvent event) {
+        Anteproyecto anteproyectoSeleccionado = tvAnteproyecto.getSelectionModel().getSelectedItem();
+        if(anteproyectoSeleccionado!= null){
+            irFormulario(true, anteproyectoSeleccionado);
+        }else{
+            Utilidades.mostrarDialogoSimple("Selecciona un anteproyecto", "Selecciona el registro en la tabla del anteproyecto para su edicion", 
+                    Alert.AlertType.WARNING);
+            }
+    }
+
+    @FXML
+    private void clicIrAnteproyectos(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicConsultarAnteproyecto(MouseEvent event) {
+        if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+            Node node = ((Node) event.getTarget()).getParent();
+            TableRow row;
+            if (node instanceof TableRow) {
+                row = (TableRow) node;
+                Anteproyecto anteproyectoSeleccionado = tvAnteproyecto.getSelectionModel().getSelectedItem();
+                //irInformacionUsuario(anteproyectoSeleccionado);
+            } 
+            else {
+                row = (TableRow) node.getParent();
+            }
+            System.out.println(row.getItem());
+        }
+    }
     
 }

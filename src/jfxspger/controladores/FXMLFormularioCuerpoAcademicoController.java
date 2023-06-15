@@ -67,7 +67,7 @@ public class FXMLFormularioCuerpoAcademicoController extends FXMLPrincipalAdmini
             btnRegistrarCuerpoAcademico.setVisible(false);
             cargarInformacionEdicion();            
         }else{
-            lbTitulo.setText("Formulario de usuario");
+            lbTitulo.setText("Formulario de cuerpo académico");
             btnActualizarCuerpoAcademico.setVisible(false);
         }
     }
@@ -272,7 +272,7 @@ public class FXMLFormularioCuerpoAcademicoController extends FXMLPrincipalAdmini
             case Constantes.ERROR_CONSULTA:
                 Utilidades.mostrarDialogoSimple("Error en la información",
                         "La información del cuerpo académico no puede ser guardada, "
-                       + "por favor verifique que sea correcta" ,
+                       + "por favor por favor inténtelo más tarde" ,
                         Alert.AlertType.WARNING);
             break;
             case Constantes.OPERACION_EXITOSA:
@@ -296,7 +296,7 @@ public class FXMLFormularioCuerpoAcademicoController extends FXMLPrincipalAdmini
             case Constantes.ERROR_CONSULTA:
                 Utilidades.mostrarDialogoSimple("Error en la información",
                         "La información del cuerpo académico no puede ser modificada, "
-                       + "por favor verifique que sea correcta" ,
+                       + "por favor inténtelo más tarde" ,
                         Alert.AlertType.WARNING);
             break;
             case Constantes.OPERACION_EXITOSA:
@@ -316,10 +316,19 @@ public class FXMLFormularioCuerpoAcademicoController extends FXMLPrincipalAdmini
     }
     
     private boolean mostrarDialogoConfirmacionCancelacion() {
-        return Utilidades.mostrarDialogoConfirmacion(
+        
+        if (esEdicion) {
+            return Utilidades.mostrarDialogoConfirmacion(
+                "Confirmación de cancelación", 
+                "¿Está seguro de que desea cancelar la actualización de "
+                + "información del cuerpo académico? " + 
+                "La información modificada se descartará");
+        } else {
+            return Utilidades.mostrarDialogoConfirmacion(
                 "Confirmación de cancelación", 
                 "¿Está seguro de que desea cancelar el registro del cuerpo académico? " + 
                 "La información ingresada en el formulario se descartará");
+        }
     }
 
     @FXML

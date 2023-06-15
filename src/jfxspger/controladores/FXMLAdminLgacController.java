@@ -1,3 +1,9 @@
+/*
+* Autor: Luis Angel Elizalde Arroyo
+* Fecha de creación: 14/06/2023
+* Descripción: Clase encargada de administrar las LGAC
+*/
+
 package jfxspger.controladores;
 
 import java.io.IOException;
@@ -127,5 +133,5 @@ public class FXMLAdminLgacController extends FXMLPrincipalAdministradorControlle
                     Alert.AlertType.WARNING);
         }
     }
-     
+  
 }

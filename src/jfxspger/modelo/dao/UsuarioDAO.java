@@ -315,6 +315,50 @@ public class UsuarioDAO {
         return respuesta;
     }
     
+    public static int verificarDisponibilidadUsername(String username) {
+        int respuesta = 1;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null) {
+            try {
+                String sentencia = "SELECT COUNT(*) AS coincidencias "
+                        + "FROM Usuario WHERE username = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setString(1, username);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                if (resultado.next()) 
+                    respuesta = resultado.getInt("coincidencias");
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta = Constantes.ERROR_CONSULTA;
+            }
+        } else {
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
+    public static int verificarDisponibilidadCorreo(String correo) {
+        int respuesta = 1;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null) {
+            try {
+                String sentencia = "SELECT COUNT(*) AS coincidencias "
+                        + "FROM Usuario WHERE correo = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setString(1, correo);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                if (resultado.next()) 
+                    respuesta = resultado.getInt("coincidencias");
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta = Constantes.ERROR_CONSULTA;
+            }
+        } else {
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
     public static UsuarioRespuesta guardarUsuario(Usuario usuarioNuevo) {
         UsuarioRespuesta respuesta = new UsuarioRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
@@ -334,7 +378,6 @@ public class UsuarioDAO {
                 prepararSentencia.setString(6, usuarioNuevo.getApellidoPaterno());
                 prepararSentencia.setString(7, usuarioNuevo.getApellidoMaterno());
                 prepararSentencia.setString(8, usuarioNuevo.getTelefono());
-                
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 if (filasAfectadas == 1) {
                     respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
