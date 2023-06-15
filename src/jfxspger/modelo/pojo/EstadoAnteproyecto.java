@@ -31,7 +31,7 @@ public class EstadoAnteproyecto {
 
     @Override
     public String toString() {
-        return "EstadoAnteproyecto{" + "idEstadoAnteproyecto=" + idEstadoAnteproyecto + ", estado=" + estado + '}';
+        return estado;
     }
     
 }
