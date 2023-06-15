@@ -164,5 +164,10 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </Button>
+      <Label fx:id="lbActividad" layoutX="352.0" layoutY="911.0" prefHeight="45.0" prefWidth="300.0" textAlignment="CENTER">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

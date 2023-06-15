@@ -38,7 +38,8 @@ public class FXMLInicioSesionController implements Initializable {
     @FXML
     private Label lbErrorUsuario;
     @FXML
-    private Label lbErrorPassword;    
+    private Label lbErrorPassword;
+    private Estudiante estudiante;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -102,7 +103,7 @@ public class FXMLInicioSesionController implements Initializable {
                         case TIPO_USUARIO_ESTUDIANTE :
                             EstudianteRespuesta estudianteRespuesta = EstudianteDAO.obtenerInformacionEstudiante(usuarioRespuesta.getIdUsuario());
                             Estudiante estudiante = estudianteRespuesta.getEstudiantes().get(0);
-                            enviarEstudiante(estudiante);
+                            guardarEstudiante(estudiante);
                             irPantallaPrincipalEstudiante();
                             break;
 
@@ -141,18 +142,13 @@ public class FXMLInicioSesionController implements Initializable {
         configurarEscena(escenarioBase);
     }
     
-    private void enviarEstudiante(Estudiante estudiante){
+    public void guardarEstudiante(Estudiante estudiante){
+        this.estudiante = estudiante;
+        enviarEstudiante();
         
-        try {
-            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.getResource("vistas/FXMLActividadFormu.fxml"));
-            Parent vista = accesoControlador.load();
-            
-            FXMLActividadFormularioController formulario = accesoControlador.getController();
-            formulario.setIdEstudiante(estudiante.getIdEstudiante());
-        
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+    }
+    public Estudiante enviarEstudiante(){
+        return estudiante;
     }
     
     private void irPantallaPrincipalAcademico() {

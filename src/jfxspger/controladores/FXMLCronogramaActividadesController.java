@@ -51,12 +51,13 @@ public class FXMLCronogramaActividadesController implements Initializable, INoti
     private Label lTitulo;
     @FXML
     private TableColumn cFechaCreacion;
+    private Estudiante estudianteLogin;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
-        cargarInformacionCronograma();
-    }
+        cargarInformacionCronograma(); 
+   }
     
     
     private void configurarTabla(){
@@ -120,6 +121,7 @@ public class FXMLCronogramaActividadesController implements Initializable, INoti
     }
      
      private void irDetalles(Actividad actividadInformacion){
+         
         try {
             FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.getResource("vistas/FXMLActividadInformacion.fxml"));        
             Parent vista = accesoControlador.load();
@@ -138,7 +140,7 @@ public class FXMLCronogramaActividadesController implements Initializable, INoti
     }
 
     @FXML
-    private void clicBtnModificarActividad(ActionEvent event) {
+    private void clicBtnModificarActividad(ActionEvent event) {        
         Actividad actividadSeleccionada = tvActividades.getSelectionModel().getSelectedItem();
         if(actividadSeleccionada != null){
             irFormulario(true,actividadSeleccionada);
