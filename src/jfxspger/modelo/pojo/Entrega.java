@@ -10,15 +10,17 @@ public class Entrega {
     
     private int idEntrega;
     private int idActividad;
+    private String tituloActividad;
     private String fechaEntrega;
     private String fechaCreacion;
 
     public Entrega() {
     }
 
-    public Entrega(int idEntrega, int idActividad, String fechaEntrega, String fechaCreacion) {
+    public Entrega(int idEntrega, int idActividad, String tituloActividad, String fechaEntrega, String fechaCreacion) {
         this.idEntrega = idEntrega;
         this.idActividad = idActividad;
+        this.tituloActividad = tituloActividad;
         this.fechaEntrega = fechaEntrega;
         this.fechaCreacion = fechaCreacion;
     }
@@ -55,9 +57,18 @@ public class Entrega {
         this.fechaCreacion = fechaCreacion;
     }
 
+    public String getTituloActividad() {
+        return tituloActividad;
+    }
+
+    public void setTituloActividad(String tituloActividad) {
+        this.tituloActividad = tituloActividad;
+    }
+
     @Override
     public String toString() {
-        return "Entrega{" + "idEntrega=" + idEntrega + ", idActividad=" + idActividad + ", fechaEntrega=" + fechaEntrega + ", fechaCreacion=" + fechaCreacion + '}';
+        return "Entrega{" + "idEntrega=" + idEntrega + ", idActividad=" + idActividad + ", tituloActividad=" + tituloActividad + ", fechaEntrega=" + fechaEntrega + ", fechaCreacion=" + fechaCreacion + '}';
     }
+
     
 }

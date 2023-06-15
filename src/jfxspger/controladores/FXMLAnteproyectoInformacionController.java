@@ -82,11 +82,7 @@ public class FXMLAnteproyectoInformacionController implements Initializable {
     }
     
     private void configurarTabla(){        
-        cNomAct.setCellValueFactory(new PropertyValueFactory("Nombre de la actividad"));
-        cEstado.setCellValueFactory(new PropertyValueFactory("Estado"));
-        cFechaInicio.setCellValueFactory(new PropertyValueFactory("Fecha de inicio"));
-        cFechaFin.setCellValueFactory(new PropertyValueFactory("Fecha de fin"));
-        cFechaCreacion.setCellValueFactory(new PropertyValueFactory("Fecha de creación"));
+        
     }
 
     private void clicBtnVerCronograma(ActionEvent event) {
@@ -160,10 +156,5 @@ public class FXMLAnteproyectoInformacionController implements Initializable {
     @FXML
     private void clicIrPropuestas(ActionEvent event) {
     }
-
-    @FXML
-    private void clicBtnGuardar(ActionEvent event) {
-    }
-    
-    
+        
 }
