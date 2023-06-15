@@ -1,7 +1,8 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
+* Autor: Luis Angel ElizaLde Arroyo
+* Fecha de creación: 13/06/2023
+* Descripción: Clse encargada de crear y modificar la informacion de los anteproyectos
+*/
 package jfxspger.controladores;
 
 import java.net.URL;
@@ -127,7 +128,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
 
     @FXML
     private void clicBtnPostular(ActionEvent event) {
-        validarInformacion();
+           validarInformacion();
     }
     
     private void boton (boolean esEdicion){
@@ -159,16 +160,31 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
        if(proyectoInvestigacion.isEmpty()){
            tfProyectoInvestigacion.setStyle(Constantes.estiloError);
            sonValidos=false;
+       }else{
+           if(proyectoInvestigacion.length()>255){
+               tfProyectoInvestigacion.setStyle(Constantes.estiloError);
+               sonValidos=false;
+           }
        }
        
        if(lineaInvestigacion.isEmpty()){
            tfLineaInvestigacion.setStyle(Constantes.estiloError);
            sonValidos=false;
+       }else{
+           if(lineaInvestigacion.length()>255){
+               tfLineaInvestigacion.setStyle(Constantes.estiloError);
+               sonValidos=false;
+           }
        }
        
        if(nombreTrabajo.isEmpty()){
            tfNombreTrabajo.setStyle(Constantes.estiloError);
            sonValidos=false;
+       }else{
+           if(nombreTrabajo.length()>255){
+               tfNombreTrabajo.setStyle(Constantes.estiloError);
+               sonValidos=false;
+           }
        }
        
        if(cantidadAlumnos.isEmpty()){
@@ -185,21 +201,41 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
        if(requisitos.isEmpty()){
            taRequisitos.setStyle(Constantes.estiloError);
            sonValidos=false;
+       }else{
+           if(requisitos.length()>255){
+               taRequisitos.setStyle(Constantes.estiloError);
+               sonValidos=false;
+           }
        }
        
        if(descripcionProyecto.isEmpty()){
            taDescripcionProyecto.setStyle(Constantes.estiloError);
            sonValidos=false;
+       }else{
+           if(descripcionProyecto.length()>3000){
+               taDescripcionProyecto.setStyle(Constantes.estiloError);
+               sonValidos=false;
+           }
        }
        
        if(descripcionTrabajo.isEmpty()){
            taDescripcionTrabajo.setStyle(Constantes.estiloError);
            sonValidos=false;
+       }else{
+           if(descripcionTrabajo.length()>3000){
+               taDescripcionTrabajo.setStyle(Constantes.estiloError);
+               sonValidos=false;
+           }
        }
        
        if(resultadosEsperados.isEmpty()){
            taResultadosEsperados.setStyle(Constantes.estiloError);
            sonValidos=false;
+       }else{
+           if(resultadosEsperados.length()>100){
+               taResultadosEsperados.setStyle(Constantes.estiloError);
+               sonValidos=false;
+           }
        }
        
        if(posicionCuerpoAcademico == -1){
@@ -230,6 +266,12 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
                 if(fechaInicio.isAfter(fechaFin)){
                     dpFechaInicio.setStyle(Constantes.estiloError);
                     sonValidos=false;
+                }else{
+                    if(fechaInicio.isEqual(fechaFin)){
+                        dpFechaInicio.setStyle(Constantes.estiloError);
+                        dpFechaFin.setStyle(Constantes.estiloError);
+                        sonValidos=false;
+                    }
                 }
            }
         }
@@ -244,6 +286,13 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
                     dpFechaFin.setStyle(Constantes.estiloError);
                     sonValidos=false;
                 }
+            }
+        }
+        
+        if(!bibliografiaRecomendada.isEmpty()){
+            if(bibliografiaRecomendada.length()>2000){
+                taBibliografia.setStyle(Constantes.estiloError);
+                sonValidos=false;
             }
         }
         
@@ -270,17 +319,17 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
             System.out.println("Anteproyecto = " + anteproyectoValido.getIdDirector());
             if(!bibliografiaRecomendada.isEmpty()){
                 anteproyectoValido.setBibliografiaRecomendada(bibliografiaRecomendada);
-            }else{
-                
             }
             if(esEdicion){
                 anteproyectoValido.setIdAnteproyecto(anteproyectoEdicion.getIdAnteproyecto());
                 actualizarAnteproyecto(anteproyectoValido);
             }else{
-                registrarAnteproyecto(anteproyectoValido);
+                boolean Postular = Utilidades.mostrarDialogoConfirmacion("Postular anteproyecto", "¿Está seguro de que desea postular el anteproyecto?");
+                if(Postular == true){
+                   registrarAnteproyecto(anteproyectoValido);
+                }
             }
         }
-        
     }
     
     private void registrarAnteproyecto(Anteproyecto anteproyectoRegistro){
@@ -315,7 +364,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                 Utilidades.mostrarDialogoSimple("LGAC actualizado", "La informacion del anteproyecto fue actualizada correctamente", 
+                 Utilidades.mostrarDialogoSimple("Anteproyecto actualizado", "La informacion del anteproyecto fue actualizada correctamente", 
                         Alert.AlertType.INFORMATION);
                  //TO DO Regresar
                 salir();
@@ -488,18 +537,20 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
     }
     
     private void regresar(){
-        Utilidades.mostrarDialogoConfirmacion("Confirmacion", "¿Seguro que deseas salir? No se guardaran los cambios");
-        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
-        escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLAnteproyectosVista.fxml"));
-        escenarioBase.setTitle("Administración LGAC");
-        escenarioBase.show();
+        boolean Salir = Utilidades.mostrarDialogoConfirmacion("Confirmacion", "¿Seguro que deseas salir? No se guardaran los cambios");
+        if(Salir == true){
+          Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+          escenarioBase.setScene(
+                Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos.fxml"));
+          escenarioBase.setTitle("Administración LGAC");
+          escenarioBase.show();
+        }
     }
     
     private void salir(){
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLAnteproyectosVista.fxml"));
+                Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos.fxml"));
         escenarioBase.setTitle("Administración LGAC");
         escenarioBase.show();
     }

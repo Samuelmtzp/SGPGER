@@ -1,7 +1,8 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
+* Autor: Luis Angel ElizaLde Arroyo
+* Fecha de creación: 13/06/2023
+* Descripción: Clse encargada de crear y modificar las LGAC
+*/
 package jfxspger.controladores;
 
 import java.net.URL;
@@ -72,6 +73,11 @@ public class FXMLLgacFormularioController extends FXMLPrincipalAdministradorCont
         if(nombre.isEmpty()){
             tfNombre.setStyle(Constantes.estiloError);
             datosValidos=false;
+        }else{
+            if(nombre.length()>200){
+                tfNombre.setStyle(Constantes.estiloError);
+                datosValidos=false;
+            }
         }
         
         if(datosValidos==true){
@@ -101,7 +107,7 @@ public class FXMLLgacFormularioController extends FXMLPrincipalAdministradorCont
                  Utilidades.mostrarDialogoSimple("LGAC actualizado", "La informacion de la LGAC fue actualizada correctamente", 
                         Alert.AlertType.INFORMATION);
                  //TO DO Regresar
-                 regresar();
+                salir();
                 break;
         }
     }
@@ -121,12 +127,23 @@ public class FXMLLgacFormularioController extends FXMLPrincipalAdministradorCont
                 Utilidades.mostrarDialogoSimple("LGAC registrada", "La información de la LGAC fue guardada correctamente", 
                         Alert.AlertType.INFORMATION);
                 //TO DO confirmacion
-                regresar();
+                salir();
                 break;
         }
     }
     
     private void regresar(){
+        boolean Salir =Utilidades.mostrarDialogoConfirmacion("Confirmacion", "¿Seguro que deseas salir? No se guardaran los cambios");
+        if(Salir == true){
+          Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+          escenarioBase.setScene(
+                Utilidades.inicializarEscena("vistas/FXMLAdminLgac.fxml"));
+          escenarioBase.setTitle("Administración LGAC");
+          escenarioBase.show();
+        }
+    }
+    
+    private void salir(){
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.setScene(
                 Utilidades.inicializarEscena("vistas/FXMLAdminLgac.fxml"));
