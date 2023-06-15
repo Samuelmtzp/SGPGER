@@ -1,7 +1,8 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
+* Autor: Luis Angel ElizaLde Arroyo
+* Fecha de creación: 13/06/2023
+* Descripción: Clse encargada de administrar los anteproyectos
+*/
 package jfxspger.controladores;
 
 import java.io.IOException;
