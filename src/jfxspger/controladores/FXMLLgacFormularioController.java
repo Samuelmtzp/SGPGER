@@ -36,9 +36,6 @@ public class FXMLLgacFormularioController extends FXMLPrincipalAdministradorCont
     @FXML
     private TextField tfNombre;
     
-    String estiloError="-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 2;";
-    String estiloNormal="-fx-border-width: 0;";
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
@@ -68,11 +65,12 @@ public class FXMLLgacFormularioController extends FXMLPrincipalAdministradorCont
     }
     
     private void validarInformacion(){
-        tfNombre.setStyle(estiloNormal);
+        tfNombre.setStyle(Constantes.estiloNormal);
         boolean datosValidos=true;
         String nombre=tfNombre.getText();
+        
         if(nombre.isEmpty()){
-            tfNombre.setStyle(estiloError);
+            tfNombre.setStyle(Constantes.estiloError);
             datosValidos=false;
         }
         
@@ -92,11 +90,11 @@ public class FXMLLgacFormularioController extends FXMLPrincipalAdministradorCont
         int codigoRespuesta = LgacDAO.modificarLgac(lgacActualizar);
          switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Error de conexion", "El alumno no pudo ser actualizado debido a un error en su conexion...", 
+                Utilidades.mostrarDialogoSimple("Error de conexion", "La LGAC no pudo ser actualizada debido a un error en su conexion...", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error en la informacion", "La informacion del alumno no puede ser actualizada, por favor verifica la informacion", 
+                Utilidades.mostrarDialogoSimple("Error en la informacion", "La informacion de la LGAC no puede ser actualizada, por favor verifica la informacion", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.OPERACION_EXITOSA:
@@ -112,11 +110,11 @@ public class FXMLLgacFormularioController extends FXMLPrincipalAdministradorCont
         int codigoRespuesta = LgacDAO.guardarLgac(lgacRegistro);
         switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Error de conexion", "El alumno no pudo ser guardadp debido a un error en su conexión...", 
+                Utilidades.mostrarDialogoSimple("Error de conexion", "La LGAC no pudo ser guardadp debido a un error en su conexión...", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error en la información", "La información del alumno no puede ser guardada, por favor verifique su información", 
+                Utilidades.mostrarDialogoSimple("Error en la información", "La información de la LGAC no puede ser guardada, por favor verifique su información", 
                         Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
