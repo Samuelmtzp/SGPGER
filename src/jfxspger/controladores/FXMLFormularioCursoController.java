@@ -229,7 +229,7 @@ public class FXMLFormularioCursoController extends FXMLAdminCursosController {
             case Constantes.ERROR_CONSULTA:
                 Utilidades.mostrarDialogoSimple("Error en la información",
                         "La información del curso no puede ser guardada, "
-                       + "por favor verifique que sea correcta" ,
+                       + "por favor inténtelo más tarde." ,
                         Alert.AlertType.WARNING);
             break;
             case Constantes.OPERACION_EXITOSA:

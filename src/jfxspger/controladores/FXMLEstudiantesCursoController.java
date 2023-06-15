@@ -156,7 +156,7 @@ public class FXMLEstudiantesCursoController extends FXMLPrincipalAdministradorCo
         } else {
             Utilidades.mostrarDialogoSimple("Cupo lleno", 
                     "No es posible agregar más estudiantes debido a que se ha alcanzado el "
-                    + "cupo límite se ha llenado", 
+                    + "cupo límite.", 
                     Alert.AlertType.WARNING);
         }
     }
