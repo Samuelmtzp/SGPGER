@@ -108,7 +108,7 @@
                               <Font name="System Bold Italic" size="27.0" />
                            </font>
                         </Label>
-                        <Button layoutX="1251.0" layoutY="877.0" mnemonicParsing="false" onAction="#clicBtnPostular" prefHeight="62.0" prefWidth="330.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Postular anteproyecto">
+                        <Button fx:id="btnPostularAnteproyecto" layoutX="1251.0" layoutY="877.0" mnemonicParsing="false" onAction="#clicBtnPostular" prefHeight="62.0" prefWidth="330.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Postular anteproyecto">
                            <font>
                               <Font name="System Bold" size="22.0" />
                            </font>
@@ -137,6 +137,18 @@
                               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../recursos/back.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnGuardarAnteproyecto1" layoutX="1251.0" layoutY="877.0" mnemonicParsing="false" onAction="#clicBtnPostular" prefHeight="62.0" prefWidth="330.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Guardar Anteproyecto">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="51.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../recursos/advertising.png" />
                                  </image>
                               </ImageView>
                            </graphic>

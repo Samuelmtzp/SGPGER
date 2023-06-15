@@ -15,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -24,6 +25,7 @@ import javafx.stage.Stage;
 import jfxspger.modelo.dao.AcademicoDAO;
 import jfxspger.modelo.dao.AnteproyectoDAO;
 import jfxspger.modelo.dao.CuerpoAcademicoDAO;
+import jfxspger.modelo.dao.EstadoAnteproyectoDAO;
 import jfxspger.modelo.dao.LgacDAO;
 import jfxspger.modelo.dao.ModalidadDAO;
 import jfxspger.modelo.dao.UsuarioDAO;
@@ -33,6 +35,7 @@ import jfxspger.modelo.pojo.Anteproyecto;
 import jfxspger.modelo.pojo.CuerpoAcademico;
 import jfxspger.modelo.pojo.CuerpoAcademicoRespuesta;
 import jfxspger.modelo.pojo.EstadoAnteproyecto;
+import jfxspger.modelo.pojo.EstadoAnteproyectoRespuesta;
 import jfxspger.modelo.pojo.Lgac;
 import jfxspger.modelo.pojo.LgacRespuesta;
 import jfxspger.modelo.pojo.Modalidad;
@@ -87,10 +90,16 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
     private ObservableList<Modalidad> modalidad;
     private ObservableList<CuerpoAcademico> cuerpoAcademico;
     private ObservableList<Usuario> usuarios;
+    //private ObservableList <Academico> academicos
+    private ObservableList<EstadoAnteproyecto> estado;
    
     
     private Anteproyecto anteproyectoEdicion;
     private boolean esEdicion;
+    @FXML
+    private Button btnPostularAnteproyecto;
+    @FXML
+    private Button btnGuardarAnteproyecto1;
     /**
      * Initializes the controller class.
      */
@@ -100,6 +109,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
         cargarInformacionModalidad();
         cargarInformacionAcademico();
         cargarInformacionCuerpoAcademico();
+        cargarInformacionEstado();
         
         tfCantidadAlumnos.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -111,11 +121,19 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
             }});
         dpFechaInicio.setEditable(false);
         dpFechaFin.setEditable(false);
+        
+        btnGuardarAnteproyecto1.setVisible(false);
     }    
 
     @FXML
     private void clicBtnPostular(ActionEvent event) {
         validarInformacion();
+    }
+    
+    private void boton (boolean esEdicion){
+        if(esEdicion==true){
+            btnPostularAnteproyecto.setVisible(false);
+        }
     }
     
     private void validarInformacion(){
@@ -158,8 +176,9 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
            sonValidos=false;
        }else{
            int cantidad = Integer.parseInt(cantidadAlumnos);
-           if(cantidad==0){
+           if(cantidad==0 || cantidad>2){
                tfCantidadAlumnos.setStyle(Constantes.estiloError);
+               sonValidos=false;
            }
        }
        
@@ -229,13 +248,14 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
         }
         
         if(sonValidos==true){
+            int posEstado=0;
             Anteproyecto anteproyectoValido = new Anteproyecto();
-            anteproyectoValido.setIdDirector(cbDirector.getSelectionModel().getSelectedItem().getIdAcademico());
-            anteproyectoValido.setIdCuerpoAcademico(cbCuerpoAcademico.getSelectionModel().getSelectedItem().getIdCuerpoAcademico());
-            anteproyectoValido.setFechaInicio(dpFechaInicio.toString());
-            anteproyectoValido.setFechaFin(dpFechaFin.toString());
-            anteproyectoValido.setIdModalidad(cbModalidad.getSelectionModel().getSelectedItem().getIdModalidad());
-            anteproyectoValido.setIdLgac(cbLGAC.getSelectionModel().getSelectedItem().getIdLgac());
+            anteproyectoValido.setIdDirector(usuarios.get(posicionDirector).getIdAcademico());
+            anteproyectoValido.setIdCuerpoAcademico(cuerpoAcademico.get(posicionCuerpoAcademico).getIdCuerpoAcademico());
+            anteproyectoValido.setFechaInicio(fechaInicio.toString());
+            anteproyectoValido.setFechaFin(fechaFin.toString());
+            anteproyectoValido.setIdModalidad(modalidad.get(posicionModalidad).getIdModalidad());
+            anteproyectoValido.setIdLgac(lgac.get(posicionLGAC).getIdLgac());
             anteproyectoValido.setProyectoInvestigacion(proyectoInvestigacion);
             anteproyectoValido.setLineaInvestigacion(lineaInvestigacion);
             anteproyectoValido.setNombreTrabajo(nombreTrabajo);
@@ -245,8 +265,13 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
             anteproyectoValido.setDescripcionProyectoInvestigacion(descripcionProyecto);
             anteproyectoValido.setDescripcionTrabajoRecepcional(descripcionTrabajo);
             anteproyectoValido.setResultadosEsperados(resultadosEsperados);
+            anteproyectoValido.setIdEstado(estado.get(posEstado).getIdEstadoAnteproyecto());
+            anteproyectoValido.setComentarios(requisitos);
+            System.out.println("Anteproyecto = " + anteproyectoValido.getIdDirector());
             if(!bibliografiaRecomendada.isEmpty()){
                 anteproyectoValido.setBibliografiaRecomendada(bibliografiaRecomendada);
+            }else{
+                
             }
             if(esEdicion){
                 anteproyectoValido.setIdAnteproyecto(anteproyectoEdicion.getIdAnteproyecto());
@@ -273,7 +298,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
                 Utilidades.mostrarDialogoSimple("Anteproyecto registrado", "La información del anteproyecto fue guardada correctamente", 
                         Alert.AlertType.INFORMATION);
                 //TO DO confirmacion
-                regresar();
+                salir();
                 break;
         }
     }
@@ -293,7 +318,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
                  Utilidades.mostrarDialogoSimple("LGAC actualizado", "La informacion del anteproyecto fue actualizada correctamente", 
                         Alert.AlertType.INFORMATION);
                  //TO DO Regresar
-                regresar();
+                salir();
                 break;
         }
     }
@@ -304,7 +329,9 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
         // TO DO  
         if(esEdicion){
             lbTitulo.setText("Editar informacion de LGAC");
-            //cargarInformacionEdicion();
+            cargarInformacionEdicion();
+            btnPostularAnteproyecto.setVisible(false);
+            btnGuardarAnteproyecto1.setVisible(true);
         }
     }
     
@@ -383,6 +410,54 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
                 break;
         }
     }
+    
+     private void cargarInformacionEstado(){
+        estado = FXCollections.observableArrayList();
+        EstadoAnteproyectoRespuesta EstadoBD=EstadoAnteproyectoDAO.obtenerInformacionEstadoAnteproyecto();
+        switch(EstadoBD.getCodigoRespuesta()){
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Error de conexion", "Error en la conexion con la base de datos", 
+                        Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                Utilidades.mostrarDialogoSimple("Error de consulta", "Por el momento no se pudo obtener la informacion", 
+                        Alert.AlertType.ERROR);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                estado.addAll(EstadoBD.getEstadosAnteproyecto());
+                break;
+        }
+    }
+     
+     private void cargarInformacionEdicion(){
+        int posDirector=obtenerPosicionComboDirector(anteproyectoEdicion.getIdDirector());
+        cbDirector.getSelectionModel().select(posDirector);
+        int posCuerpoAcademico = obtenerPosicionComboCuerpoAcademico(anteproyectoEdicion.getIdCuerpoAcademico());
+        cbCuerpoAcademico.getSelectionModel().select(posCuerpoAcademico);
+        int posModalidad = obtenerPosicionComboModalidad(anteproyectoEdicion.getIdModalidad());
+        cbModalidad.getSelectionModel().select(posModalidad);
+        int posLGAC = obtenerPosicionComboLGAC(anteproyectoEdicion.getIdLgac());
+        cbLGAC.getSelectionModel().select(posLGAC);
+        int cantAlum = anteproyectoEdicion.getCantidadAlumnosParticipantes();
+        String cantidadAlumnos = Integer.toString(cantAlum);
+        tfCantidadAlumnos.setText(cantidadAlumnos);
+        LocalDate fechaInicio = LocalDate.parse(anteproyectoEdicion.getFechaInicio());
+        dpFechaInicio.setValue(fechaInicio);
+        LocalDate fechaFin = LocalDate.parse(anteproyectoEdicion.getFechaFin());
+        dpFechaFin.setValue(fechaFin);
+        tfProyectoInvestigacion.setText(anteproyectoEdicion.getProyectoInvestigacion());
+        tfLineaInvestigacion.setText(anteproyectoEdicion.getLineaInvestigacion());
+        tfNombreTrabajo.setText(anteproyectoEdicion.getNombreTrabajo());
+        taDescripcionProyecto.setText(anteproyectoEdicion.getDescripcionProyectoInvestigacion());
+        taDescripcionTrabajo.setText(anteproyectoEdicion.getDescripcionTrabajoRecepcional());
+        taRequisitos.setText(anteproyectoEdicion.getRequisitos());
+        taResultadosEsperados.setText(anteproyectoEdicion.getResultadosEsperados());
+        if(anteproyectoEdicion.getBibliografiaRecomendada()==null){
+            taBibliografia.setText("");
+        }else{
+            taBibliografia.setText(anteproyectoEdicion.getBibliografiaRecomendada());
+        }
+    }  
 
     @FXML
     private void clicIrAnteproyectos(ActionEvent event) {
@@ -413,12 +488,55 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
     }
     
     private void regresar(){
-        Utilidades.mostrarDialogoConfirmacion("Confirmacion", "Seguro que deseas salir?");
+        Utilidades.mostrarDialogoConfirmacion("Confirmacion", "¿Seguro que deseas salir? No se guardaran los cambios");
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos.fxml"));
+                Utilidades.inicializarEscena("vistas/FXMLAnteproyectosVista.fxml"));
         escenarioBase.setTitle("Administración LGAC");
         escenarioBase.show();
     }
-
+    
+    private void salir(){
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        escenarioBase.setScene(
+                Utilidades.inicializarEscena("vistas/FXMLAnteproyectosVista.fxml"));
+        escenarioBase.setTitle("Administración LGAC");
+        escenarioBase.show();
+    }
+    
+    private int obtenerPosicionComboDirector(int idDirector){
+        for(int i=0; i <usuarios.size(); i++){
+            if(usuarios.get(i).getIdAcademico()== idDirector){
+                return i; 
+            }
+        }
+        return 0;
+    } 
+    
+    private int obtenerPosicionComboCuerpoAcademico(int idCuerpoAcademico){
+        for(int i=0; i <cuerpoAcademico.size(); i++){
+            if(cuerpoAcademico.get(i).getIdCuerpoAcademico()== idCuerpoAcademico){
+                return i; 
+            }
+        }
+        return 0;
+    }
+    
+    private int obtenerPosicionComboModalidad(int idModalidad){
+        for(int i=0; i <modalidad.size(); i++){
+            if(modalidad.get(i).getIdModalidad()== idModalidad){
+                return i; 
+            }
+        }
+        return 0;
+    }
+    
+    private int obtenerPosicionComboLGAC(int idLgac){
+        for(int i=0; i <lgac.size(); i++){
+            if(lgac.get(i).getIdLgac()== idLgac){
+                return i; 
+            }
+        }
+        return 0;
+    }
 }
