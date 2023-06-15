@@ -63,10 +63,17 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
     private final int TIPO_USUARIO_ACADEMICO = 3;
     private boolean esEdicion;
     private Usuario usuarioEdicion;
+    private Usuario copiaUsuarioEdicion;
     @FXML
     private Button btnRegistrarUsuario;
     @FXML
     private Button btnActualizarUsuario;
+    @FXML
+    private Label lbUsernameNoDisponible;
+    @FXML
+    private Label lbCampoAdicionalNoDisponible;
+    @FXML
+    private Label lbCorreoNoDisponible;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -81,11 +88,31 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
         if(esEdicion){
             lbTitulo.setText("Edición de usuario");
             btnRegistrarUsuario.setVisible(false);
-            cargarInformacionEdicion();            
+            cargarInformacionEdicion();   
+            inicializarCopiaDeUsuarioEdicion();
         }else{
             lbTitulo.setText("Formulario de usuario");
             btnActualizarUsuario.setVisible(false);
         }
+    }
+    
+    private void inicializarCopiaDeUsuarioEdicion() {
+        copiaUsuarioEdicion = new Usuario();
+        copiaUsuarioEdicion.setApellidoMaterno(usuarioEdicion.getApellidoMaterno());
+        copiaUsuarioEdicion.setApellidoPaterno(usuarioEdicion.getApellidoPaterno());
+        copiaUsuarioEdicion.setCodigoRespuesta(usuarioEdicion.getCodigoRespuesta());
+        copiaUsuarioEdicion.setCorreo(usuarioEdicion.getCorreo());
+        copiaUsuarioEdicion.setFechaCreacion(usuarioEdicion.getFechaCreacion());
+        copiaUsuarioEdicion.setIdAcademico(usuarioEdicion.getIdAcademico());
+        copiaUsuarioEdicion.setIdEstudiante(usuarioEdicion.getIdEstudiante());
+        copiaUsuarioEdicion.setIdTipoUsuario(usuarioEdicion.getIdTipoUsuario());
+        copiaUsuarioEdicion.setIdUsuario(usuarioEdicion.getIdUsuario());
+        copiaUsuarioEdicion.setMatricula(usuarioEdicion.getMatricula());
+        copiaUsuarioEdicion.setNombre(usuarioEdicion.getNombre());
+        copiaUsuarioEdicion.setPassword(usuarioEdicion.getPassword());
+        copiaUsuarioEdicion.setTelefono(usuarioEdicion.getTelefono());
+        copiaUsuarioEdicion.setTipoUsuario(usuarioEdicion.getTipoUsuario());
+        copiaUsuarioEdicion.setUsername(usuarioEdicion.getUsername());
     }
     
     private void cargarInformacionEdicion(){
@@ -233,6 +260,15 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
         if (!Utilidades.correoValido(correo)) {
             tfCorreo.setStyle(Constantes.estiloError);
             datosValidos = false;
+        } else {
+            if (!esEdicion || (esEdicion && !correo.equals(copiaUsuarioEdicion.getCorreo()))) {
+                if (!esCorreoDisponible(correo)) {
+                    lbCorreoNoDisponible.setText(
+                            "Correo no disponible");
+                    tfCorreo.setStyle(Constantes.estiloError);
+                    datosValidos = false;
+                }
+            }
         }
         
         if (posicionTipoUsuario == -1) {
@@ -242,22 +278,36 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
             if (!esEdicion) {
                 switch(cbTipoUsuario.getSelectionModel().getSelectedItem().getIdTipoUsuario()) {
                     case TIPO_USUARIO_ACADEMICO:
-                        try {
-                            Integer.parseInt(tfCampoAdicional.getText());
-                        } catch (NumberFormatException e) {
-                            tfCampoAdicional.setStyle(Constantes.estiloError);
-                            datosValidos = false;
-                        }
-
                         if (campoAdicional.isEmpty()) {
                             tfCampoAdicional.setStyle(Constantes.estiloError);
                             datosValidos = false;
+                        } else {
+                            try {
+                                int numeroDePersonal = Integer.parseInt(campoAdicional);
+                                if (!esNumeroDePersonalDisponible(numeroDePersonal)) {
+                                    lbCampoAdicionalNoDisponible.setText(
+                                            "Número de personal no disponible");
+                                    tfCampoAdicional.setStyle(Constantes.estiloError);
+                                    datosValidos = false;
+                                }
+                            } catch (NumberFormatException e) {
+                                tfCampoAdicional.setStyle(Constantes.estiloError);
+                                datosValidos = false;
+                            }
                         }
+
                     break;
                     case TIPO_USUARIO_ESTUDIANTE:
                         if (campoAdicional.isEmpty()) {
                             tfCampoAdicional.setStyle(Constantes.estiloError);
                             datosValidos = false;    
+                        } else {
+                            if (!esMatriculaDisponible(campoAdicional)) {
+                                lbCampoAdicionalNoDisponible.setText(
+                                        "Matrícula no disponible");
+                                tfCampoAdicional.setStyle(Constantes.estiloError);
+                                datosValidos = false;
+                            }
                         }
                     break;
                 }
@@ -267,12 +317,20 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
         if (username.isEmpty()) {
             tfUsername.setStyle(Constantes.estiloError);
             datosValidos = false;
+        } else {
+            if (!esEdicion || (esEdicion && !username.equals(copiaUsuarioEdicion.getUsername()))) {
+                if (!esUsernameDisponible(username)) {
+                    lbUsernameNoDisponible.setText("Nombre de usuario no disponible");
+                    tfUsername.setStyle(Constantes.estiloError);
+                    datosValidos = false;
+                }
+            }
         }
         
         if (password.isEmpty()) {
             tfPassword.setStyle(Constantes.estiloError);
             datosValidos = false;
-        }     
+        }
         
         if (datosValidos) {
             int idTipoUsuario = tiposUsuario.get(posicionTipoUsuario).getIdTipoUsuario();
@@ -291,7 +349,28 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
             } else {
                 registrarUsuario(usuarioValidado, campoAdicional);
             }
-        }   
+        }
+    }
+    
+    private boolean esUsernameDisponible(String usernameVerificacion) {
+        int coincidencias = UsuarioDAO.verificarDisponibilidadUsername(usernameVerificacion);
+        return coincidencias == 0;
+    }
+    
+    private boolean esCorreoDisponible(String correoVerificacion) {
+        int coincidencias = UsuarioDAO.verificarDisponibilidadCorreo(correoVerificacion);
+        return coincidencias == 0;
+    }
+    
+    private boolean esMatriculaDisponible(String matriculaVerificacion) {
+        int coincidencias = EstudianteDAO.verificarDisponibilidadMatricula(matriculaVerificacion);
+        return coincidencias == 0;
+    }
+    
+    private boolean esNumeroDePersonalDisponible(int numeroDePersonalVerificacion) {
+        int coincidencias = AcademicoDAO.
+                verificarDisponibilidadNumeroDePersonal(numeroDePersonalVerificacion);
+        return coincidencias == 0;
     }
     
     @FXML
@@ -310,7 +389,7 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
             case Constantes.ERROR_CONSULTA:
                 Utilidades.mostrarDialogoSimple("Error en la información",
                         "La información del estudiante no puede ser modificada, "
-                       + "por favor verifique que sea correcta" ,
+                       + "por favor inténtelo más tarde." ,
                         Alert.AlertType.WARNING);
             break;
             case Constantes.OPERACION_EXITOSA:
@@ -332,9 +411,10 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
                         Alert.AlertType.ERROR);
             break;
             case Constantes.ERROR_CONSULTA:
+                System.out.println("usuarioRegistro = " + usuarioRegistro);
                 Utilidades.mostrarDialogoSimple("Error en la información",
                         "La información del usuario no puede ser guardada,"
-                       + "por favor verifique que sea correcta" , 
+                       + "por favor inténtelo más tarde." , 
                         Alert.AlertType.WARNING);
             break;
             case Constantes.OPERACION_EXITOSA:
@@ -375,7 +455,7 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
             case Constantes.ERROR_CONSULTA:
                 Utilidades.mostrarDialogoSimple("Error en la información",
                         "La información del estudiante no puede ser guardada, "
-                       + "por favor verifique que sea correcta" ,
+                       + "por favor inténtelo más tarde." ,
                         Alert.AlertType.WARNING);
                 UsuarioDAO.eliminarUsuario(estudianteRegistro.getIdUsuario());
             break;
@@ -400,7 +480,7 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
             case Constantes.ERROR_CONSULTA:
                 Utilidades.mostrarDialogoSimple("Error en la información",
                         "La información del academico no puede ser guardada, "
-                       + "por favor verifique que sea correcta" ,
+                       + "por favor inténtelo más tarde." ,
                         Alert.AlertType.WARNING);
                 UsuarioDAO.eliminarUsuario(academicoRegistro.getIdUsuario());
             break;
@@ -421,6 +501,9 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
         tfCorreo.setStyle(Constantes.estiloNormal);
         tfTelefono.setStyle(Constantes.estiloNormal);
         lbTelefonoError.setText("");
+        lbCampoAdicionalNoDisponible.setText("");
+        lbUsernameNoDisponible.setText("");
+        lbCorreoNoDisponible.setText("");
         cbTipoUsuario.setStyle(Constantes.estiloNormal);
         tfCampoAdicional.setStyle(Constantes.estiloNormal);
     }
@@ -433,10 +516,19 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
     }
     
     private boolean mostrarDialogoConfirmacionCancelacion() {
-        return Utilidades.mostrarDialogoConfirmacion(
+        if (esEdicion) {
+            return Utilidades.mostrarDialogoConfirmacion(
+                "Confirmación de cancelación", 
+                "¿Está seguro de que desea cancelar la actualización de "
+                + "información del usuario? " + 
+                "La información modificada se descartará");
+        } else {
+            return Utilidades.mostrarDialogoConfirmacion(
                 "Confirmación de cancelación", 
                 "¿Está seguro de que desea cancelar el registro del usuario? " + 
                 "La información ingresada en el formulario se descartará");
+        }
+        
     }
 
     @FXML
