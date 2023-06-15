@@ -6,15 +6,19 @@
 
 package jfxspger.controladores;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -41,7 +45,7 @@ public class FXMLActividadFormularioController implements Initializable {
     @FXML
     private DatePicker dpFechaFin;
     private Actividad actividadEdicion;   
-    private int idEstudiante;
+    private int idEstudiante = 1;
     private boolean esEdicion;
     private INotificacionOperacionActividad interfazNotificacion;
     
@@ -59,11 +63,13 @@ public class FXMLActividadFormularioController implements Initializable {
     @FXML
     private Spinner<Integer> spHorasFin;
     
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         dpFechaInicio.setEditable(false);
         dpFechaFin.setEditable(false);        
-        configurarSeleccionHora();
+        configurarSeleccionHora();        
     }
     
     private void configurarSeleccionHora() {
@@ -91,13 +97,14 @@ public class FXMLActividadFormularioController implements Initializable {
     public void setIdEstudiante(int idEstudiante){
         this.idEstudiante = idEstudiante;
     }
+    
     public void inicializarInformacionFormulario(boolean esEdicion, Actividad actividadEdicion, INotificacionOperacionActividad interfazNotificacion){
         this.esEdicion = esEdicion;
         this.actividadEdicion = actividadEdicion;
         this.interfazNotificacion = interfazNotificacion;
         
         if(esEdicion){
-            lbTitulo.setText("Editando actividad: " + actividadEdicion.getTitulo());
+            lbTitulo.setText("Editando actividad: " + actividadEdicion.getTitulo());            
             cargarInformacionEdicion();
         } else {
             lbTitulo.setText("Programar nueva actividad");
@@ -107,8 +114,20 @@ public class FXMLActividadFormularioController implements Initializable {
     private void cargarInformacionEdicion(){
         tfNombreActividad.setText(actividadEdicion.getTitulo());
         tfDescripcionActividad.setText(actividadEdicion.getDescripcion());
-//        dpFechaInicio.setValue(LocalDate.parse(actividadEdicion.getFechaInicio()));
-//        dpFechaFin.setValue(LocalDate.parse(actividadEdicion.getFechaFin()));
+        LocalDateTime fechaInicio = LocalDateTime.parse(actividadEdicion.getFechaInicio(), formatter);
+        LocalDateTime fechaFin = LocalDateTime.parse(actividadEdicion.getFechaFin(), formatter);
+        int minutosInicio = fechaInicio.getMinute();
+        int minutosFin = fechaFin.getMinute();
+        int horasInicio = fechaInicio.getHour();
+        int horasFin = fechaFin.getHour();
+        LocalDate fInicio = fechaInicio.toLocalDate();
+        LocalDate fFin = fechaFin.toLocalDate();
+        spMinutosInicio.getValueFactory().setValue(minutosInicio);
+        spMinutosFin.getValueFactory().setValue(minutosFin);
+        spHorasInicio.getValueFactory().setValue(horasInicio);
+        spHorasFin.getValueFactory().setValue(horasFin);
+        dpFechaInicio.setValue(fInicio);
+        dpFechaFin.setValue(fFin);
     }
 
     @FXML
@@ -118,14 +137,11 @@ public class FXMLActividadFormularioController implements Initializable {
     
     private void validarCampos(){
         establecerEstiloNormal();
-        boolean datosValidos = true;
-        
+        boolean datosValidos = true;        
         String nomAct = tfNombreActividad.getText();
         String desc = tfDescripcionActividad.getText();
         LocalDate fechaInicio = dpFechaInicio.getValue();
         LocalDate fechaFin = dpFechaFin.getValue();
-        LocalDateTime fCreacion = LocalDateTime.now();
-        Timestamp fechaCreacion = Timestamp.valueOf(fCreacion);
         LocalTime tiempoInicio = LocalTime.of(spHorasInicio.getValue(), spMinutosInicio.getValue());
         LocalTime tiempoFin = LocalTime.of(spHorasFin.getValue(), spMinutosFin.getValue());        
         
@@ -158,16 +174,20 @@ public class FXMLActividadFormularioController implements Initializable {
         
         if(datosValidos){
             Actividad actividadValida = new Actividad();
+//            obtenerDatosEstudiante();
             actividadValida.setIdEstudiante(idEstudiante);
             actividadValida.setTitulo(nomAct);
-            actividadValida.setFechaCreacion(fechaCreacion.toString());
             actividadValida.setFechaInicio(fechaInicio.toString() + " " + tiempoInicio.toString());
             actividadValida.setFechaFin(fechaFin.toString() + " " + tiempoFin.toString());
             actividadValida.setDescripcion(desc);            
             
             if(esEdicion){
+                actividadValida.setIdActividad(actividadEdicion.getIdActividad());
                 actualizarActividad(actividadValida);
             } else {
+                LocalDateTime fCreacion = LocalDateTime.now();
+                Timestamp fechaCreacion = Timestamp.valueOf(fCreacion);        
+                actividadValida.setFechaCreacion(fechaCreacion.toString());                
                 registrarActividad(actividadValida);                
             }
         }
@@ -191,7 +211,7 @@ public class FXMLActividadFormularioController implements Initializable {
         }
     }
     
-    private void actualizarActividad(Actividad actividadActualizada){
+    private void actualizarActividad(Actividad actividadActualizada){        
         int codigoRespuesta = ActividadDAO.modificarActividad(actividadActualizada);
         switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
@@ -204,6 +224,7 @@ public class FXMLActividadFormularioController implements Initializable {
             case Constantes.OPERACION_EXITOSA:
                 Utilidades.mostrarDialogoSimple("Actividad modificada", "Actividad modificada correctamente", 
                         Alert.AlertType.INFORMATION);
+                interfazNotificacion.notificarOperacionActualizar(actividadActualizada.getTitulo());
                 cerrarVentana();
                 break;
         }
@@ -276,5 +297,18 @@ public class FXMLActividadFormularioController implements Initializable {
             if(cerrarVentana){
                 cerrarVentana();
             }
+    }
+    
+    private void obtenerDatosEstudiante(){
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.getResource("vistas/FXMLInicioSesion.fxml"));
+            Parent vista = accesoControlador.load();
+            
+            FXMLInicioSesionController inicioSesion = accesoControlador.getController();
+            idEstudiante = inicioSesion.enviarEstudiante().getIdEstudiante();            
+        
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }

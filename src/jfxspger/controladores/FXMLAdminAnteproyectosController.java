@@ -22,8 +22,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import jfxspger.interfaz.INotificacionOperacionActividad;
 import jfxspger.modelo.dao.AnteproyectoDAO;
+import jfxspger.modelo.pojo.Actividad;
 import jfxspger.modelo.pojo.Anteproyecto;
 import jfxspger.modelo.pojo.AnteproyectoRespuesta;
 import jfxspger.modelo.pojo.Lgac;
@@ -35,7 +38,7 @@ import jfxspger.utilidades.Utilidades;
  *
  * @author king_
  */
-public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoController {
+public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoController implements INotificacionOperacionActividad {
 
     @FXML
     private Label lbTitulo;
@@ -81,6 +84,31 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
 
     @FXML
     private void clicVerDetalles(ActionEvent event) {
+        Anteproyecto anteproyectoInformacion = tvAnteproyecto.getSelectionModel().getSelectedItem();
+        if(anteproyectoInformacion != null){
+            irDetalles(anteproyectoInformacion);
+        }else{
+            Utilidades.mostrarDialogoSimple("Selecciona un anteproyecto", "Debes selecionar un anteproyecto para poder"
+                    + " ver los detalles.", Alert.AlertType.WARNING);
+        }        
+    }
+    
+    private void irDetalles(Anteproyecto anteproyectoInformacion){
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.getResource("vistas/FXMLAnteproyectoInformacionAcademico.fxml"));        
+            Parent vista = accesoControlador.load();
+            
+            FXMLAnteproyectoInformacionAcademicoController informacion = accesoControlador.getController();
+            informacion.inicializarInformacionAnteproyecto(anteproyectoInformacion, this);
+        
+            Stage escenarioDetalles = new Stage();
+            escenarioDetalles.setScene(new Scene(vista));
+            escenarioDetalles.setTitle("Detalles Activdad");
+            escenarioDetalles.initModality(Modality.APPLICATION_MODAL);       
+            escenarioDetalles.showAndWait();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
     private void irFormulario(boolean esEdicion, Anteproyecto anteproyectoEdicion){
@@ -124,5 +152,15 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
                 break;
         }
     }
+    
+    @Override
+    public void notificarOperacionGuardar(String nombreActividad) {
+        
+    }
+
+    @Override
+    public void notificarOperacionActualizar(String nombreActividad) {
+        
+    }     
     
 }

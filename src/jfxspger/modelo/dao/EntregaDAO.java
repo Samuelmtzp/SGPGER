@@ -24,8 +24,9 @@ public class EntregaDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT idEntrega, idActividad, fechaEntrega, fechaCreacion " +
-                        "FROM Entrega";
+                String consulta = "SELECT e.fechaEntrega, e.fechaCreacion, a.titulo " +
+                    "FROM SGPGER.entrega e " +
+                    "JOIN SGPGER.actividad a ON e.idActividad = a.idActividad;";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Entrega> entregaConsulta = new ArrayList();
@@ -67,6 +68,7 @@ public class EntregaDAO {
                 conexionBD.close();
             } catch (SQLException e) {
                 respuesta = Constantes.ERROR_CONSULTA;
+                e.printStackTrace();
             }
         } else {
             respuesta = Constantes.ERROR_CONEXION;
