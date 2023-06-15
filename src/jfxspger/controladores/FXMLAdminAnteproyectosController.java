@@ -1,7 +1,7 @@
 /*
 * Autor: Luis Angel ElizaLde Arroyo
 * Fecha de creación: 13/06/2023
-* Descripción: Clse encargada de administrar los anteproyectos
+* Descripción: Clase encargada de administrar los anteproyectos
 */
 package jfxspger.controladores;
 
@@ -10,35 +10,35 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import jfxspger.modelo.dao.AnteproyectoDAO;
 import jfxspger.modelo.pojo.Anteproyecto;
 import jfxspger.modelo.pojo.AnteproyectoRespuesta;
-import jfxspger.modelo.pojo.Usuario;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
 
-/**
- * FXML Controller class
- *
- * @author king_
- */
 public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoController {
 
     @FXML
@@ -53,16 +53,20 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     private TableColumn columFechaInicio;
     @FXML
     private TableColumn columFechaFin;
-    
-    private ObservableList<Anteproyecto> anteproyectos;
     @FXML
     private TableColumn columDirector;
     @FXML
     private TableColumn columEstado;
+    @FXML
+    private TextField tfBusqueda;
+    @FXML
+    private ToggleGroup tgBusqueda;
+    private ObservableList<Anteproyecto> anteproyectos;
+    @FXML
+    private RadioButton rbDisponibles;
+    @FXML
+    private RadioButton rbValidacionPendiente;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cargarInformacion();
@@ -170,7 +174,7 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
             if (node instanceof TableRow) {
                 row = (TableRow) node;
                 Anteproyecto anteproyectoSeleccionado = tvAnteproyecto.getSelectionModel().getSelectedItem();
-                //irInformacionUsuario(anteproyectoSeleccionado);
+                irInformacionAnteproyecto(anteproyectoSeleccionado);
             } 
             else {
                 row = (TableRow) node.getParent();
@@ -179,4 +183,76 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
         }
     }
     
+    private void irInformacionAnteproyecto(Anteproyecto anteproyecto){
+        try{
+            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.
+                    JFXSPGER.class.getResource("/jfxspger/vistas/FXMLInfoAnteproyecto.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLInfoAnteproyectoController formulario = accesoControlador.getController();
+            Scene sceneFormulario = new Scene(vista);
+            Stage escenarioPrincipal = (Stage) lbTitulo.getScene().getWindow();
+            escenarioPrincipal.setTitle("Informacion de usuario");
+            escenarioPrincipal.setScene(sceneFormulario);
+            formulario.inicializarInformacion(anteproyecto);
+        }catch(IOException e){
+            Utilidades.mostrarDialogoSimple("Error", 
+                    "No se puede mostrar la pantalla de informacion de usuario", 
+                    Alert.AlertType.ERROR);  
+        }
+        
+    }
+    
+    private void configurarBusquedaTabla(){
+        if (!anteproyectos.isEmpty()) {
+            FilteredList<Anteproyecto> filtradoAnteproyecto = 
+                    new FilteredList<>(anteproyectos, p-> true);
+            tfBusqueda.textProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable, 
+                        String oldValue, String newValue) {
+                    filtradoAnteproyecto.setPredicate(anteproyectoFiltro -> {
+                        if (newValue == null || newValue.isEmpty()) {
+                            return true;
+                        }
+                        String lowerNewValue = newValue.toLowerCase();
+                        return anteproyectoFiltro.getDirector().toLowerCase().contains(newValue);
+                    });
+                }
+            });
+            SortedList<Anteproyecto> sortedListaAnteproyectos = 
+                    new SortedList<>(filtradoAnteproyecto);
+            sortedListaAnteproyectos.comparatorProperty().bind(tvAnteproyecto.comparatorProperty());
+            tvAnteproyecto.setItems(sortedListaAnteproyectos);
+        }
+    }
+    
+    private void activarFiltroDisponible() {
+        tvAnteproyecto.setItems(filtrarAnteproyectos("Disponibles"));
+    }
+    
+    private void activarFiltroValidacionPendiente() {
+        tvAnteproyecto.setItems(filtrarAnteproyectos("Validacion pendiente"));
+    }
+    
+    private ObservableList<Anteproyecto> filtrarAnteproyectos(String filtro) {
+        ObservableList<Anteproyecto> anteproyectosFiltrados = FXCollections.observableArrayList();
+
+        for (Anteproyecto anteproyecto : anteproyectos) {
+            if (anteproyecto.getEstado().contains(filtro)) {
+                anteproyectosFiltrados.add(anteproyecto);
+            }
+        }
+
+        return anteproyectosFiltrados;
+    }
+
+    @FXML
+    private void clicRbDisponibles(ActionEvent event) {
+        activarFiltroDisponible();
+    }
+
+    @FXML
+    private void clicRbValidacionPendiente(ActionEvent event) {
+        activarFiltroValidacionPendiente();
+    }
 }
