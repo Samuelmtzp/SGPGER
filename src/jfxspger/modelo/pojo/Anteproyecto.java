@@ -10,7 +10,9 @@ public class Anteproyecto {
     private int idAnteproyecto;
     private int idCuerpoAcademico;
     private int idDirector;
+    private String Director;
     private int idEstado;
+    private String Estado;
     private int idModalidad;
     private int idLgac;
     private String proyectoInvestigacion;
@@ -29,11 +31,13 @@ public class Anteproyecto {
     public Anteproyecto() {
     }
 
-    public Anteproyecto(int idAnteproyecto, int idCuerpoAcademico, int idDirector, int idEstado, int idModalidad, int idLgac, String proyectoInvestigacion, String lineaInvestigacion, String fechaInicio, String fechaFin, String nombreTrabajo, String requisitos, int cantidadAlumnosParticipantes, String descripcionProyectoInvestigacion, String descripcionTrabajoRecepcional, String resultadosEsperados, String bibliografiaRecomendada, String comentarios) {
+    public Anteproyecto(int idAnteproyecto, int idCuerpoAcademico, int idDirector, String Director, int idEstado, String Estado, int idModalidad, int idLgac, String proyectoInvestigacion, String lineaInvestigacion, String fechaInicio, String fechaFin, String nombreTrabajo, String requisitos, int cantidadAlumnosParticipantes, String descripcionProyectoInvestigacion, String descripcionTrabajoRecepcional, String resultadosEsperados, String bibliografiaRecomendada, String comentarios) {
         this.idAnteproyecto = idAnteproyecto;
         this.idCuerpoAcademico = idCuerpoAcademico;
         this.idDirector = idDirector;
+        this.Director = Director;
         this.idEstado = idEstado;
+        this.Estado = Estado;
         this.idModalidad = idModalidad;
         this.idLgac = idLgac;
         this.proyectoInvestigacion = proyectoInvestigacion;
@@ -50,6 +54,22 @@ public class Anteproyecto {
         this.comentarios = comentarios;
     }
 
+    public String getDirector() {
+        return Director;
+    }
+
+    public void setDirector(String Director) {
+        this.Director = Director;
+    }
+
+    public String getEstado() {
+        return Estado;
+    }
+
+    public void setEstado(String Estado) {
+        this.Estado = Estado;
+    }
+    
     public int getIdAnteproyecto() {
         return idAnteproyecto;
     }

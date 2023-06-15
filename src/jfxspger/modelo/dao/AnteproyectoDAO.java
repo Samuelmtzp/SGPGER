@@ -24,13 +24,12 @@ public class AnteproyectoDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT idAnteproyecto, idCuerpoAcademico, " +
-                        "idDirector, idEstado, idModalidad, idLgac, proyectoInvestigacion, " + 
-                        "lineaInvestigacion, fechaInicio, fechaFin, nombreTrabajo, requisitos, " + 
-                        "cantidadAlumnosParticipantes, descripcionProyectoInvestigacion, " + 
-                        "descripcionTrabajoRecepcional, resultadosEsperados,  " + 
-                        "bibliografiaRecomendada, comentarios " +
-                        "FROM Anteproyecto";
+                String consulta = "SELECT idAnteproyecto, idCuerpoAcademico, anteproyecto.idDirector, anteproyecto.idEstado, idModalidad, "
+                        + "idLgac, proyectoInvestigacion, lineaInvestigacion, fechaInicio, fechaFin, nombreTrabajo, requisitos, "
+                        + "cantidadAlumnosParticipantes, descripcionProyectoInvestigacion, estadoanteproyecto.estado AS estado, usuario.nombre AS directorNombre, "
+                        + "descripcionTrabajoRecepcional, resultadosEsperados, bibliografiaRecomendada, comentarios FROM Anteproyecto "
+                        + "INNER JOIN estadoanteproyecto ON anteproyecto.idEstado = estadoanteproyecto.idEstadoAnteproyecto "
+                        + "INNER JOIN usuario ON anteproyecto.idDirector = usuario.idUsuario";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Anteproyecto> anteproyectoConsulta = new ArrayList();
@@ -40,7 +39,9 @@ public class AnteproyectoDAO {
                     anteproyecto.setIdAnteproyecto(resultado.getInt("idAnteproyecto"));
                     anteproyecto.setIdCuerpoAcademico(resultado.getInt("idCuerpoAcademico"));
                     anteproyecto.setIdDirector(resultado.getInt("idDirector"));
+                    anteproyecto.setDirector(resultado.getString("directorNombre"));
                     anteproyecto.setIdEstado(resultado.getInt("idEstado"));
+                    anteproyecto.setEstado(resultado.getString("estado"));
                     anteproyecto.setIdModalidad(resultado.getInt("idModalidad"));
                     anteproyecto.setIdLgac(resultado.getInt("idLgac"));
                     anteproyecto.setProyectoInvestigacion(
@@ -84,7 +85,7 @@ public class AnteproyectoDAO {
                         "requisitos, cantidadAlumnosParticipantes, " + 
                         "descripcionProyectoInvestigacion, descripcionTrabajoRecepcional, "+ 
                         "resultadosEsperados, bibliografiaRecomendada, comentarios) " +
-                        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
                 PreparedStatement prepararSentencia =  conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setInt(1, nuevoAnteproyecto.getIdCuerpoAcademico());
