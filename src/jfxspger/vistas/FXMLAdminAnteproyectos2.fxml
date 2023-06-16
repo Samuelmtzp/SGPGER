@@ -37,8 +37,8 @@
                   <TableColumn fx:id="columNombreProyecto" prefWidth="381.0" text="Nombre del proyecto de investigacion" />
                   <TableColumn fx:id="columFechaInicio" prefWidth="124.0" text="Fecha Inicio" />
                   <TableColumn fx:id="columFechaFin" prefWidth="136.0" text="Fecha Fin" />
-                  <TableColumn fx:id="columDirector" prefWidth="264.0" text="Director" />
-                  <TableColumn fx:id="columEstado" prefWidth="141.0" text="Estado" />
+                  <TableColumn fx:id="columDirector" prefWidth="212.0" text="Director" />
+                  <TableColumn fx:id="columEstado" prefWidth="193.0" text="Estado" />
                </columns>
             </TableView>
             <Button layoutX="679.0" layoutY="143.0" mnemonicParsing="false" onAction="#clicCrearAnteproyecto" prefHeight="60.0" prefWidth="212.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Crear anteproyecto">

@@ -8,8 +8,12 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
+<<<<<<<< HEAD:build/classes/jfxspger/vistas/FXMLAsignarEstudiantes.fxml
+<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLAsignarEstudiantesController">
+========
 
 <AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="jfxspger.controladores.FXMLAnteproyectoInformacionAcademicoController">
+>>>>>>>> origin/main:build/classes/jfxspger/vistas/FXMLAnteproyectoInformacionAcademico.fxml
    <children>
       <Label fx:id="lbDescAnteproyecto" layoutX="404.0" layoutY="580.0" prefHeight="45.0" prefWidth="300.0" text="Descripcion ">
          <font>
@@ -42,7 +46,11 @@
       </Label>
       <Pane prefHeight="100.0" prefWidth="1920.0" style="-fx-background-color: #343838;">
          <children>
+<<<<<<<< HEAD:build/classes/jfxspger/vistas/FXMLAsignarEstudiantes.fxml
+            <Label fx:id="lbTitulo" layoutX="739.0" layoutY="16.0" text="Asignar estudiantes" textAlignment="CENTER" textFill="WHITE">
+========
             <Label fx:id="lbTitulo" layoutX="739.0" layoutY="16.0" text="Informacion Anteproyecto" textAlignment="CENTER" textFill="WHITE">
+>>>>>>>> origin/main:build/classes/jfxspger/vistas/FXMLAnteproyectoInformacionAcademico.fxml
                <font>
                   <Font name="System Bold" size="50.0" />
                </font>
@@ -54,6 +62,71 @@
             </ImageView>
          </children>
       </Pane>
+<<<<<<<< HEAD:build/classes/jfxspger/vistas/FXMLAsignarEstudiantes.fxml
+      <Pane layoutX="300.0" layoutY="100.0" prefHeight="980.0" prefWidth="1620.0">
+         <children>
+            <TableView fx:id="tvAlumnosDisponibles" layoutX="150.0" layoutY="251.0" prefHeight="507.0" prefWidth="789.0" stylesheets="@../css/estilos.css">
+              <columns>
+                <TableColumn fx:id="columnNombreDisponible" prefWidth="172.0" text="Nombre" />
+                <TableColumn fx:id="columApellidoPaternoDisponible" prefWidth="199.0" text="Apellido Paterno" />
+                  <TableColumn fx:id="columApellidoMaternoDisponible" prefWidth="194.0" text="Apellido Materno" />
+                  <TableColumn fx:id="columMatriculaDisponible" prefWidth="223.0" text="Matricula" />
+              </columns>
+            </TableView>
+            <TableView fx:id="tvAlumnosAsignados" layoutX="974.0" layoutY="251.0" prefHeight="248.0" prefWidth="622.0" stylesheets="@../css/estilos.css">
+              <columns>
+                <TableColumn fx:id="columnNombreEstudiante" prefWidth="161.0" text="Nombre" />
+                  <TableColumn fx:id="columApellidoPaterno" prefWidth="165.0" text="Apellido Paterno" />
+                  <TableColumn fx:id="columApellidoMaterno" prefWidth="180.0" text="Apellido Materno" />
+                  <TableColumn fx:id="columMatricula" prefWidth="115.0" text="Matricula" />
+              </columns>
+            </TableView>
+            <Button layoutX="1075.0" layoutY="549.0" mnemonicParsing="false" onAction="#clicBtnAsignarEstudiantes" prefHeight="53.0" prefWidth="202.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Asignar estudiante">
+               <font>
+                  <Font name="System Bold Italic" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="36.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/boton-agregar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="1289.0" layoutY="549.0" mnemonicParsing="false" onAction="#clicBtnQuitar" prefHeight="48.0" prefWidth="191.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" text="Quitar estudiante">
+               <font>
+                  <Font name="System Bold Italic" size="15.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="43.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/eliminar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="41.0" layoutY="59.0" mnemonicParsing="false" onAction="#clicRegresar" prefHeight="55.0" prefWidth="74.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/back.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label layoutX="357.0" layoutY="177.0" prefHeight="53.0" prefWidth="376.0" text="Estudiantes disponibles">
+               <font>
+                  <Font name="System Bold Italic" size="33.0" />
+               </font>
+            </Label>
+            <Label layoutX="1083.0" layoutY="177.0" prefHeight="53.0" prefWidth="405.0" text="Estudiante(s) asignado(s)">
+               <font>
+                  <Font name="System Bold Italic" size="33.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+========
       <Label layoutX="404.0" layoutY="525.0" text="DESCRIPCION">
          <font>
             <Font name="System Bold" size="30.0" />
@@ -64,6 +137,7 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
+>>>>>>>> origin/main:build/classes/jfxspger/vistas/FXMLAnteproyectoInformacionAcademico.fxml
       <Pane layoutY="100.0" prefHeight="980.0" prefWidth="300.0" style="-fx-background-color: #33AB5B;">
          <children>
             <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#clicIrAnteproyectos" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Anteproyectos" textFill="WHITE">

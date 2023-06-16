@@ -141,4 +141,53 @@ public class EstudianteDAO {
         }
         return respuesta;
     }
+    
+    public static int agregarEstudianteAnteproyecto(Estudiante estudianteEdicion) {
+        int respuesta;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null) {
+            try {
+                String sentencia = "UPDATE Estudiante SET idAnteproyecto=? " +
+                     "WHERE idEstudiante = ?";
+                System.out.println("estudianteEdicion_idEstudiante = " + estudianteEdicion.getIdEstudiante());
+                System.out.println("estudianteEdicion_idAnteproyecto = " + estudianteEdicion.getIdAnteproyecto());
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);                                
+                prepararSentencia.setInt(1, estudianteEdicion.getIdAnteproyecto());
+                prepararSentencia.setInt(2, estudianteEdicion.getIdEstudiante());
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
+                        Constantes.ERROR_CONSULTA;
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta = Constantes.ERROR_CONSULTA;
+            }
+        } else {
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
+    public static int eliminarEstudianteAnteproyecto(Estudiante estudianteEdicion) {
+        int respuesta;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null) {
+            try {
+                String sentencia = "UPDATE Estudiante SET idAnteproyecto= NULL " +
+                     "WHERE idEstudiante = ?";
+                System.out.println("estudianteEdicion_idEstudiante = " + estudianteEdicion.getIdEstudiante());
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);                                
+                prepararSentencia.setInt(1, estudianteEdicion.getIdEstudiante());
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
+                        Constantes.ERROR_CONSULTA;
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta = Constantes.ERROR_CONSULTA;
+            }
+        } else {
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
 }
