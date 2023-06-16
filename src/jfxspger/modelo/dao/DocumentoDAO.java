@@ -68,6 +68,7 @@ public class DocumentoDAO {
                 conexionBD.close();
             } catch (SQLException e) {
                 respuesta = Constantes.ERROR_CONSULTA;
+                e.printStackTrace();
             }
         } else {
             respuesta = Constantes.ERROR_CONEXION;

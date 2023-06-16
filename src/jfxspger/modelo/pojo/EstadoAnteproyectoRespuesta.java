@@ -1,3 +1,8 @@
+/*
+* Autor: Samuel Martínez Pazos
+* Fecha de creación: 09/05/2023
+* Descripción: Clase encargada de modelar la respuesta de consulta de estados de anteproyecto
+*/
 package jfxspger.modelo.pojo;
 
 import java.util.ArrayList;
@@ -33,7 +38,8 @@ public class EstadoAnteproyectoRespuesta {
 
     @Override
     public String toString() {
-        return "EstadoAnteproyectoRespuesta{" + "codigoRespuesta=" + codigoRespuesta + ", estadosAnteproyecto=" + estadosAnteproyecto + '}';
+        return "EstadoAnteproyectoRespuesta{" + "codigoRespuesta=" + codigoRespuesta + 
+                ", estadosAnteproyecto=" + estadosAnteproyecto + '}';
     }
     
 }

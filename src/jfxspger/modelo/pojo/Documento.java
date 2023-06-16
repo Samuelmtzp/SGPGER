@@ -16,7 +16,8 @@ public class Documento {
     public Documento() {
     }
 
-    public Documento(int idDocumento, byte[] archivoDocumento, String nombre, int entrega_idEntrega) {
+    public Documento(int idDocumento, byte[] archivoDocumento, 
+            String nombre, int entrega_idEntrega) {
         this.idDocumento = idDocumento;
         this.archivoDocumento = archivoDocumento;
         this.nombre = nombre;
@@ -57,7 +58,8 @@ public class Documento {
 
     @Override
     public String toString() {
-        return "Documento{" + "idDocumento=" + idDocumento + ", archivoDocumento=" + archivoDocumento + ", nombre=" + nombre + ", idEntrega=" + idEntrega + '}';
+        return "Documento{" + "idDocumento=" + idDocumento + ", archivoDocumento=" + 
+                archivoDocumento + ", nombre=" + nombre + ", idEntrega=" + idEntrega + '}';
     }
 
 }

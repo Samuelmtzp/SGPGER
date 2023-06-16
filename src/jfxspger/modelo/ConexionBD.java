@@ -3,7 +3,6 @@
 * Fecha de creación: 09/05/2023
 * Descripción: Clase encargada de abrir la conexión con la base de datos
 */
-
 package jfxspger.modelo;
 
 import java.sql.Connection;

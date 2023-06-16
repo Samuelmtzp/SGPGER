@@ -21,7 +21,9 @@ public class CuerpoAcademico {
     public CuerpoAcademico() {
     }
 
-    public CuerpoAcademico(int idCuerpoAcademico, String nombre, String clave, int idResponsable, String nombreCompletoResponsable, int idGradoConsolidacion, String gradoConsolidacion, int idDependencia, String dependencia) {
+    public CuerpoAcademico(int idCuerpoAcademico, String nombre, String clave, 
+            int idResponsable, String nombreCompletoResponsable, int idGradoConsolidacion, 
+            String gradoConsolidacion, int idDependencia, String dependencia) {
         this.idCuerpoAcademico = idCuerpoAcademico;
         this.nombre = nombre;
         this.clave = clave;
@@ -104,11 +106,6 @@ public class CuerpoAcademico {
     public void setDependencia(String dependencia) {
         this.dependencia = dependencia;
     }
-
-    /*@Override
-    public String toString() {
-        return "CuerpoAcademico{" + "idCuerpoAcademico=" + idCuerpoAcademico + ", nombre=" + nombre + ", clave=" + clave + ", idResponsable=" + idResponsable + ", nombreCompletoResponsable=" + nombreCompletoResponsable + ", idGradoConsolidacion=" + idGradoConsolidacion + ", gradoConsolidacion=" + gradoConsolidacion + ", idDependencia=" + idDependencia + ", dependencia=" + dependencia + '}';
-    }*/
     
     @Override
     public String toString(){

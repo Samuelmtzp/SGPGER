@@ -31,7 +31,14 @@ public class Anteproyecto {
     public Anteproyecto() {
     }
 
-    public Anteproyecto(int idAnteproyecto, int idCuerpoAcademico, int idDirector, String Director, int idEstado, String Estado, int idModalidad, int idLgac, String proyectoInvestigacion, String lineaInvestigacion, String fechaInicio, String fechaFin, String nombreTrabajo, String requisitos, int cantidadAlumnosParticipantes, String descripcionProyectoInvestigacion, String descripcionTrabajoRecepcional, String resultadosEsperados, String bibliografiaRecomendada, String comentarios) {
+    public Anteproyecto(int idAnteproyecto, int idCuerpoAcademico, 
+            int idDirector, String Director, int idEstado, 
+            String Estado, int idModalidad, int idLgac, 
+            String proyectoInvestigacion, String lineaInvestigacion, 
+            String fechaInicio, String fechaFin, String nombreTrabajo, 
+            String requisitos, int cantidadAlumnosParticipantes, 
+            String descripcionProyectoInvestigacion, String descripcionTrabajoRecepcional, 
+            String resultadosEsperados, String bibliografiaRecomendada, String comentarios) {
         this.idAnteproyecto = idAnteproyecto;
         this.idCuerpoAcademico = idCuerpoAcademico;
         this.idDirector = idDirector;
@@ -216,7 +223,17 @@ public class Anteproyecto {
 
     @Override
     public String toString() {
-        return "Anteproyecto{" + "idAnteproyecto=" + idAnteproyecto + ", idCuerpoAcademico=" + idCuerpoAcademico + ", idDirector=" + idDirector + ", idEstado=" + idEstado + ", idModalidad=" + idModalidad + ", idLgac=" + idLgac + ", proyectoInvestigacion=" + proyectoInvestigacion + ", lineaInvestigacion=" + lineaInvestigacion + ", fechaIncio=" + fechaInicio + ", fechaFin=" + fechaFin + ", nombreTrabajo=" + nombreTrabajo + ", requisitos=" + requisitos + ", cantidadAlumnosParticipantes=" + cantidadAlumnosParticipantes + ", descripcionProyectoInvestigacion=" + descripcionProyectoInvestigacion + ", descripcionTrabajoRecepcional=" + descripcionTrabajoRecepcional + ", resultadosEsperados=" + resultadosEsperados + ", bibliografiaRecomendada=" + bibliografiaRecomendada + ", comentarios=" + comentarios + '}';
+        return "Anteproyecto{" + "idAnteproyecto=" + idAnteproyecto + ", idCuerpoAcademico=" + 
+                idCuerpoAcademico + ", idDirector=" + idDirector + ", idEstado=" + idEstado + 
+                ", idModalidad=" + idModalidad + ", idLgac=" + idLgac + ", proyectoInvestigacion=" + 
+                proyectoInvestigacion + ", lineaInvestigacion=" + lineaInvestigacion + 
+                ", fechaIncio=" + fechaInicio + ", fechaFin=" + fechaFin + ", nombreTrabajo=" + 
+                nombreTrabajo + ", requisitos=" + requisitos + ", cantidadAlumnosParticipantes=" + 
+                cantidadAlumnosParticipantes + ", descripcionProyectoInvestigacion=" + 
+                descripcionProyectoInvestigacion + ", descripcionTrabajoRecepcional=" + 
+                descripcionTrabajoRecepcional + ", resultadosEsperados=" + resultadosEsperados + 
+                ", bibliografiaRecomendada=" + bibliografiaRecomendada + ", comentarios=" + 
+                comentarios + '}';
     }
     
 }

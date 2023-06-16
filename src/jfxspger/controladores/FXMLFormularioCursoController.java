@@ -1,3 +1,8 @@
+/*
+* Autor: Samuel Martínez Pazos
+* Fecha de creación: 13/06/2023
+* Descripción: Clase controladora de formulario de curso
+*/
 package jfxspger.controladores;
 
 import java.net.URL;

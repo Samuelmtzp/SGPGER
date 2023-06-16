@@ -1,8 +1,8 @@
 /*
 * Autor: Samuel Martínez Pazos
 * Fecha de creación: 09/05/2023
-* Descripción: Clase encargada de indicar los distintos códigos
-* de operaciones realizadas en la base de datos
+* Descripción: Clase que contiene constantes para consultas de base de datos y 
+* estilos para componentes
 */
 
 package jfxspger.utilidades;

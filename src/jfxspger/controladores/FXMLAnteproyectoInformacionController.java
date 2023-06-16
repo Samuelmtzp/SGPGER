@@ -1,7 +1,7 @@
 /*
 * Autor: Carlos Rodriguez Herrera
 * Fecha de creación: 18/05/2023
-* Descripción: 
+* Descripción: Clase controladora para la información del anteproyecto
 */
 
 package jfxspger.controladores;
@@ -21,7 +21,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -29,7 +28,6 @@ import jfxspger.modelo.dao.ActividadDAO;
 import jfxspger.modelo.pojo.Actividad;
 import jfxspger.modelo.pojo.ActividadRespuesta;
 import jfxspger.modelo.pojo.Anteproyecto;
-import jfxspger.modelo.pojo.Estudiante;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
 
@@ -68,11 +66,14 @@ public class FXMLAnteproyectoInformacionController implements Initializable {
         ActividadRespuesta respuestaBD = ActividadDAO.obtenerInformacionActividad();
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Sin conexión", "Lo sentimos, por el momento no hay conexión", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Sin conexión", 
+                        "Lo sentimos, por el momento no hay conexión", 
+                        Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
                 Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
-                        "Hubo un error al cargar la información. Por favor intente más tarde", Alert.AlertType.WARNING);
+                        "Hubo un error al cargar la información. Por favor intente más tarde", 
+                        Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
                 actividades.addAll(respuestaBD.getActividades());
@@ -82,11 +83,7 @@ public class FXMLAnteproyectoInformacionController implements Initializable {
     }
     
     private void configurarTabla(){        
-        cNomAct.setCellValueFactory(new PropertyValueFactory("Nombre de la actividad"));
-        cEstado.setCellValueFactory(new PropertyValueFactory("Estado"));
-        cFechaInicio.setCellValueFactory(new PropertyValueFactory("Fecha de inicio"));
-        cFechaFin.setCellValueFactory(new PropertyValueFactory("Fecha de fin"));
-        cFechaCreacion.setCellValueFactory(new PropertyValueFactory("Fecha de creación"));
+        
     }
 
     private void clicBtnVerCronograma(ActionEvent event) {
@@ -95,7 +92,8 @@ public class FXMLAnteproyectoInformacionController implements Initializable {
     
     private void irCronograma(){
         try {
-            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.getResource("vistas/FXMLCronogramaActividades.fxml"));        
+            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.
+                    getResource("vistas/FXMLCronogramaActividades.fxml"));        
             Parent vista = accesoControlador.load();
             
             FXMLCronogramaActividadesController cronograma = accesoControlador.getController();
@@ -148,7 +146,8 @@ public class FXMLAnteproyectoInformacionController implements Initializable {
     @FXML
     private void clicIrCronograma(ActionEvent event) {
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLCronogramaActividades.fxml"));
+        escenarioBase.setScene(Utilidades.inicializarEscena(
+                "vistas/FXMLCronogramaActividades.fxml"));
         escenarioBase.setTitle("Cronograma de actividades");
         escenarioBase.show();        
     }
@@ -160,10 +159,5 @@ public class FXMLAnteproyectoInformacionController implements Initializable {
     @FXML
     private void clicIrPropuestas(ActionEvent event) {
     }
-
-    @FXML
-    private void clicBtnGuardar(ActionEvent event) {
-    }
-    
-    
+        
 }

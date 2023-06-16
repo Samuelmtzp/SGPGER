@@ -1,3 +1,8 @@
+/*
+* Autor: Samuel Martínez Pazos
+* Fecha de creación: 11/06/2023
+* Descripción: Clase controladora para administración de usuarios
+*/
 package jfxspger.controladores;
 
 import java.io.IOException;

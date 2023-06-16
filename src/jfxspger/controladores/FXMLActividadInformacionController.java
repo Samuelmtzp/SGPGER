@@ -10,37 +10,36 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
-import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import jfxspger.JFXSPGER;
 import jfxspger.interfaz.INotificacionOperacionActividad;
+import jfxspger.modelo.dao.ActividadDAO;
 import jfxspger.modelo.dao.DocumentoDAO;
+import jfxspger.modelo.dao.EntregaDAO;
 import jfxspger.modelo.pojo.Actividad;
 import jfxspger.modelo.pojo.Documento;
+import jfxspger.modelo.pojo.Entrega;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
 
-public class FXMLActividadInformacionController implements Initializable, INotificacionOperacionActividad {
+public class FXMLActividadInformacionController implements Initializable, 
+        INotificacionOperacionActividad {
   
     private Documento archivoActividad;
+    private Entrega entregaAct;
     private File entregaActividad;    
-    private Actividad actividadInformacion;    
-    private INotificacionOperacionActividad interfazNotificacion;   
+    private Actividad actividadInformacion;   
+    private int idActividad;
+    private INotificacionOperacionActividad interfazNotificacion;
     @FXML
     private Label lbTituloActividad;
     @FXML
@@ -51,20 +50,23 @@ public class FXMLActividadInformacionController implements Initializable, INotif
     private Label lbFechaInicio;
     @FXML
     private Label lbFechaFin;
+    @FXML
+    private Label lbActividad;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {        
-        cargarInformacionActividad();
+        archivoActividad = new Documento();
     }    
 
-    private void clicBtnModificarActividad(ActionEvent event) {        
+/*    private void clicBtnModificarActividad(ActionEvent event) {        
         
         irFormulario(true, actividadInformacion);
     }
     
     private void irFormulario(boolean esEdicion, Actividad actividadEdicion){
         try {
-            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.getResource("vistas/FXMLActividadFormu.fxml"));        
+            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.
+               getResource("vistas/FXMLActividadFormu.fxml"));        
             Parent vista = accesoControlador.load();
             
             FXMLActividadFormularioController formulario = accesoControlador.getController();
@@ -79,10 +81,13 @@ public class FXMLActividadInformacionController implements Initializable, INotif
             ex.printStackTrace();
         }                
     }
-
+*/
     @FXML
     private void clicBtnCargarArchivo(ActionEvent event) {
-        LocalDateTime fechaFin = LocalDateTime.parse(actividadInformacion.getFechaFin());
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+        LocalDateTime fechaFin = LocalDateTime.parse(actividadInformacion.getFechaFin(), 
+                formatter);
         LocalDateTime fechaActual = LocalDateTime.now();
         if(fechaActual.isBefore(fechaFin)){
             FileChooser dialogoEntrega = new FileChooser();
@@ -90,36 +95,66 @@ public class FXMLActividadInformacionController implements Initializable, INotif
 
             Stage escenarioBase = (Stage) lbTituloActividad.getScene().getWindow();
             entregaActividad = dialogoEntrega.showOpenDialog(escenarioBase);
+            lbActividad.setText(entregaActividad.getName());
         } else{
-            Utilidades.mostrarDialogoSimple("ACTIVIDAD FINALIZADA", "La actividad ha finalizado. No se puede realizar entrega.", Alert.AlertType.WARNING);
+            Utilidades.mostrarDialogoSimple("ACTIVIDAD FINALIZADA", 
+                    "La actividad ha finalizado. No se puede realizar entrega.", 
+                    Alert.AlertType.WARNING);
         }
     }  
 
     @FXML
     private void clicBtnGuardar(ActionEvent event) {
-        
+                validarentrega();
         try{
             if(entregaActividad != null){
             archivoActividad.setArchivoDocumento(Files.readAllBytes(entregaActividad.toPath()));
-            Utilidades.mostrarDialogoSimple("ENTREGA COMPLETA", "La entrega ha sido registrada!", Alert.AlertType.INFORMATION);
-            registrarEntrega(archivoActividad);
-        }else {
-            Utilidades.mostrarDialogoSimple("ENTREGA VACIA", "Debes adjuntar un archivo de entrega para guardar los cambios.", Alert.AlertType.WARNING);
-        }
+            archivoActividad.setIdEntrega(entregaAct.getIdEntrega());
+            archivoActividad.setNombre(entregaActividad.getName().toString());
+            registrarEntrega(entregaAct, archivoActividad);
+            }else {
+                Utilidades.mostrarDialogoSimple("ENTREGA VACIA", 
+                        "Debes adjuntar un archivo de entrega para guardar los cambios.", 
+                        Alert.AlertType.WARNING);
+            }
         }catch(IOException ex){
-            
-        }
+          ex.printStackTrace();
+        }catch (RuntimeException ex) {
+            Throwable causaRaiz = ex.getCause();
+            if (causaRaiz != null) {
+                causaRaiz.printStackTrace();
+            } else {
+                ex.printStackTrace();
+            }
+        }    
     }
     
+    private void validarentrega() {
+        entregaAct = new Entrega();
+        entregaAct.setIdActividad(actividadInformacion.getIdActividad());
+        LocalDateTime fechaActual = LocalDateTime.now();        
+        entregaAct.setFechaEntrega(fechaActual.toString());
+        LocalDateTime fCreacion = LocalDateTime.now();
+        Timestamp fechaCreacion = Timestamp.valueOf(fCreacion);
+        entregaAct.setFechaCreacion(fechaCreacion.toString());
+    }
+
+    
     private void cargarInformacionActividad(){
-//        lbTituloActividad.setText(actividadInformacion.getTitulo());
-//        lbDescActividad.setText(actividadInformacion.getDescripcion());
-//        lbFechaInicio.setText(actividadInformacion.getFechaInicio().toString());
-//        lbFechaFin.setText(actividadInformacion.getFechaFin().toString());
+        lbTituloActividad.setText(actividadInformacion.getTitulo());
+        lbDescActividad.setText(actividadInformacion.getDescripcion());
+        lbFechaInicio.setText(actividadInformacion.getFechaInicio());
+        lbFechaFin.setText(actividadInformacion.getFechaFin());
+        idActividad = actividadInformacion.getIdActividad();
+        if(entregaActividad != null){
+        lbActividad.setText(entregaActividad.getName());    
+        }
+        
         
     }
     
-    public void inicializarInformacionActividad(Actividad actividadInformacion, INotificacionOperacionActividad interfazNotificacion){        
+    public void inicializarInformacionActividad(Actividad actividadInformacion, 
+            INotificacionOperacionActividad interfazNotificacion){        
         this.actividadInformacion = actividadInformacion;
         this.interfazNotificacion = interfazNotificacion;
                 
@@ -137,23 +172,48 @@ public class FXMLActividadInformacionController implements Initializable, INotif
         cargarInformacionActividad();  
     }
     
-    private void registrarEntrega(Documento archivoNuevo){
-        int codigoRespuesta = DocumentoDAO.guardarArchivo(archivoNuevo);
-        switch(codigoRespuesta){
-            case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Sin conexión", "Lo sentimos, por el momento no hay conexión", Alert.AlertType.ERROR);
-                break;
-            case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
-                        "Hubo un error al cargar la información. Por favor intente más tarde", Alert.AlertType.WARNING);
-                break;
-            case Constantes.OPERACION_EXITOSA:
-                Utilidades.mostrarDialogoSimple("Actividad registrada", "Actividad registrada correctamente", 
-                        Alert.AlertType.INFORMATION);
-                cerrarVentana();
-                break;     
-            }
-        }
+    private void registrarEntrega(Entrega entregaNueva, Documento archivoNuevo){
+        ActividadDAO.obtenerInformacionActividad();
+//        if(actividadInformacion.getIdEntrega() != null) {
+//            
+//        }
+            int entregaRespuesta = EntregaDAO.guardarEntrega(entregaNueva);
+            switch(entregaRespuesta){
+                case Constantes.ERROR_CONEXION:
+                    Utilidades.mostrarDialogoSimple("Sin conexión", 
+                            "Lo sentimos, por el momento no hay conexión", 
+                            Alert.AlertType.ERROR);
+                    break;
+                case Constantes.ERROR_CONSULTA:
+                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
+                            "Hubo un error al cargar la información. Por favor intente más tarde", 
+                            Alert.AlertType.WARNING);
+                    break;
+                case Constantes.OPERACION_EXITOSA:                
+                    int codigoRespuesta = DocumentoDAO.guardarArchivo(archivoNuevo);
+                    switch(codigoRespuesta){
+                        case Constantes.ERROR_CONEXION:
+                            Utilidades.mostrarDialogoSimple("Sin conexión", 
+                                    "Lo sentimos, por el momento no hay conexión", 
+                                    Alert.AlertType.ERROR);
+                            break;
+                        case Constantes.ERROR_CONSULTA:
+                            Utilidades.mostrarDialogoSimple("Error al cargar el archivo", 
+                                    "Hubo un error al cargar el archivo. Por favor "
+                                    + "intente más tarde", 
+                                    Alert.AlertType.WARNING);
+                            break;
+                        case Constantes.OPERACION_EXITOSA:
+                            Utilidades.mostrarDialogoSimple("Actividad registrada", 
+                                    "Actividad registrada correctamente", 
+                                    Alert.AlertType.INFORMATION);
+                            cerrarVentana();
+                            break;     
+                            }                
+                    break;     
+                }        
+        
+    }
     
         private void cerrarVentana(){
         Stage escenarioBase = (Stage) lbTituloActividad.getScene().getWindow();
@@ -163,7 +223,8 @@ public class FXMLActividadInformacionController implements Initializable, INotif
     @FXML
     private void clicIrAnteproyecto(ActionEvent event) {
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLAnteproyectoInformacion.fxml"));
+        escenarioBase.setScene(Utilidades.inicializarEscena(
+                "vistas/FXMLAnteproyectoInformacion.fxml"));
         escenarioBase.setTitle("Informacion de anteproyecto");
         escenarioBase.show();
     }
@@ -171,7 +232,8 @@ public class FXMLActividadInformacionController implements Initializable, INotif
     @FXML
     private void clicIrCronograma(ActionEvent event) {
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLCronogramaActividades.fxml"));
+        escenarioBase.setScene(Utilidades.inicializarEscena(
+                "vistas/FXMLCronogramaActividades.fxml"));
         escenarioBase.setTitle("Cronograma de actividades");
         escenarioBase.show();
     }
@@ -203,7 +265,9 @@ public class FXMLActividadInformacionController implements Initializable, INotif
 
     @FXML
     private void clicBtnRegresar(ActionEvent event) {
-        boolean cerrarVentana = Utilidades.mostrarDialogoConfirmacion("Regresar a ventana anterior", "¿Desea regresar a la ventana anterior? No se guardaran los datos ingresados.");
+        boolean cerrarVentana = Utilidades.mostrarDialogoConfirmacion(
+                "Regresar a ventana anterior", 
+                "¿Desea regresar a la ventana anterior? No se guardaran los datos ingresados.");
         if(cerrarVentana){
             cerrarVentana();
         }        

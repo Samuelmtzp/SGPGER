@@ -1,3 +1,8 @@
+/*
+* Autor: Samuel Martínez Pazos
+* Fecha de creación: 09/05/2023
+* Descripción: Clase encargada de modelar la relación de un anteproyecto y un codirector
+*/
 package jfxspger.modelo.pojo;
 
 public class Anteproyecto_Codirector {
@@ -31,7 +36,8 @@ public class Anteproyecto_Codirector {
 
     @Override
     public String toString() {
-        return "Anteproyecto_Codirector{" + "idCodirector=" + idCodirector + ", idAnteproyecto=" + idAnteproyecto + '}';
+        return "Anteproyecto_Codirector{" + "idCodirector=" + 
+                idCodirector + ", idAnteproyecto=" + idAnteproyecto + '}';
     }
     
 }

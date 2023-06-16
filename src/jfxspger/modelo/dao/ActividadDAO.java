@@ -24,20 +24,24 @@ public class ActividadDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT titulo, fechaCreacion, fechaInicio, fechaFin, descripcion " +
-                        "FROM Actividad";
+                String consulta = "SELECT a.idActividad, a.titulo, a.fechaCreacion, "
+                    + "a.fechaInicio, a.fechaFin, a.descripcion, " +
+                    "e.idEntrega, e.fechaEntrega, e.fechaCreacion " +
+                    "FROM SGPGER.actividad a " +
+                    "JOIN SGPGER.entrega e ON a.idActividad = e.idActividad";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Actividad> actividadConsulta = new ArrayList();
                 while (resultado.next())
                 {
                     Actividad actividad = new Actividad();
-                                      
+                    actividad.setIdActividad(resultado.getInt("idActividad"));
                     actividad.setTitulo(resultado.getString("titulo"));
                     actividad.setFechaCreacion(resultado.getString("fechaCreacion"));
                     actividad.setFechaInicio(resultado.getString("fechaInicio"));
                     actividad.setFechaFin(resultado.getString("fechaFin"));
                     actividad.setDescripcion(resultado.getString("descripcion"));
+                    actividad.setIdEntrega(resultado.getInt("idEntrega"));
                     actividadConsulta.add(actividad);
                 }
                 respuesta.setActividades(actividadConsulta);
@@ -102,6 +106,7 @@ public class ActividadDAO {
                 conexionBD.close();
             } catch (SQLException e) {
                 respuesta = Constantes.ERROR_CONSULTA;
+                e.printStackTrace();
             }
         } else {
             respuesta = Constantes.ERROR_CONEXION;

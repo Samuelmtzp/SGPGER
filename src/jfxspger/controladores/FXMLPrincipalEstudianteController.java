@@ -1,3 +1,8 @@
+/*
+* Autor: Samuel Martínez Pazos
+* Fecha de creación: 10/06/2023
+* Descripción: Clase controladora para el menú principal de estudiante
+*/
 package jfxspger.controladores;
 
 import java.net.URL;
@@ -42,7 +47,8 @@ public class FXMLPrincipalEstudianteController implements Initializable {
     @FXML
     private void clicIrCronograma(ActionEvent event) {
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLCronogramaActividades.fxml"));
+        escenarioBase.setScene(Utilidades.inicializarEscena(
+                "vistas/FXMLCronogramaActividades.fxml"));
         escenarioBase.setTitle("Cronograma de actividades");
         escenarioBase.show();        
     }
@@ -58,7 +64,8 @@ public class FXMLPrincipalEstudianteController implements Initializable {
     @FXML
     private void clicIrAnteproyecto(ActionEvent event) {
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLAnteproyectoInformacion.fxml"));
+        escenarioBase.setScene(Utilidades.inicializarEscena(
+                "vistas/FXMLAnteproyectoInformacion.fxml"));
         escenarioBase.setTitle("Informacion de anteproyecto");
         escenarioBase.show();        
     }

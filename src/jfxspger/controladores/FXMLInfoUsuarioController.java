@@ -1,3 +1,8 @@
+/*
+* Autor: Samuel Martínez Pazos
+* Fecha de creación: 13/06/2023
+* Descripción: Clase controladora para información de usuario
+*/
 package jfxspger.controladores;
 
 import java.net.URL;

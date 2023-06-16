@@ -110,7 +110,8 @@ public class UsuarioDAO {
         return respuesta;
     }
     
-    public static UsuarioRespuesta obtenerInformacionAcademicoEnCuerpoAcademico(int idCuerpoAcademico) {
+    public static UsuarioRespuesta obtenerInformacionAcademicoEnCuerpoAcademico(
+            int idCuerpoAcademico) {
         UsuarioRespuesta respuesta = new UsuarioRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);

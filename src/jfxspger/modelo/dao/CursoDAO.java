@@ -26,7 +26,8 @@ public class CursoDAO {
             try {
                 String consulta = "SELECT idCurso, Curso.idExperienciaEducativa, "
                         + "ExperienciaEducativa.nombre, "
-                        + "curso.idPeriodo, PeriodoEscolar.nombre, idProfesor, CONCAT(Usuario.nombre, ' ', "
+                        + "curso.idPeriodo, PeriodoEscolar.nombre, idProfesor, "
+                        + "CONCAT(Usuario.nombre, ' ', "
                         + "Usuario.apellidoPaterno, ' ', Usuario.apellidoMaterno) nombreCompleto, "
                         + "NRC, bloque, seccion, cupo "
                         + "FROM Curso "

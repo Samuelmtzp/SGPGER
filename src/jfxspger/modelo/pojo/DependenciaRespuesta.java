@@ -1,3 +1,8 @@
+/*
+* Autor: Samuel Martínez Pazos
+* Fecha de creación: 09/05/2023
+* Descripción: Clase encargada de obtener la respuesta de la consulta de dependencias
+*/
 package jfxspger.modelo.pojo;
 
 import java.util.ArrayList;
@@ -34,7 +39,8 @@ public class DependenciaRespuesta {
 
     @Override
     public String toString() {
-        return "DependenciaRespuesta{" + "codigoRespuesta=" + codigoRespuesta + ", dependencias=" + dependencias + '}';
+        return "DependenciaRespuesta{" + "codigoRespuesta=" + codigoRespuesta + 
+                ", dependencias=" + dependencias + '}';
     }
     
 }

@@ -1,7 +1,7 @@
 /*
 * Autor: Luis Angel ElizaLde Arroyo
 * Fecha de creación: 13/06/2023
-* Descripción: Clse encargada de asignar estudiantes a un anteproyecto
+* Descripción: Clase encargada de asignar estudiantes a un anteproyecto
 */
 package jfxspger.controladores;
 
@@ -9,9 +9,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -28,11 +26,6 @@ import jfxspger.modelo.dao.AnteproyectoDAO;
 import jfxspger.modelo.pojo.Anteproyecto;
 import jfxspger.modelo.pojo.Estudiante;
 
-/**
- * FXML Controller class
- *
- * @author king_
- */
 public class FXMLAsignarEstudiantesController extends FXMLPrincipalAcademicoController {
 
     @FXML
@@ -63,9 +56,6 @@ public class FXMLAsignarEstudiantesController extends FXMLPrincipalAcademicoCont
     @FXML
     private TableColumn columMatriculaDisponible;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         

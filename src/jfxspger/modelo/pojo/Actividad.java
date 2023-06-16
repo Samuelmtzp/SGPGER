@@ -10,6 +10,7 @@ public class Actividad {
     
     private int idActividad;
     private int idEstudiante;
+    private int idEntrega;
     private String titulo;
     private String fechaCreacion;
     private String fechaInicio;
@@ -19,14 +20,25 @@ public class Actividad {
     public Actividad() {
     }
 
-    public Actividad(int idActividad, int idEstudiante, String titulo, String fechaCreacion, String fechaInicio, String fechaFin, String descripcion) {
+    public Actividad(int idActividad, int idEstudiante, int idEntrega, 
+            String titulo, String fechaCreacion, String fechaInicio, 
+            String fechaFin, String descripcion) {
         this.idActividad = idActividad;
         this.idEstudiante = idEstudiante;
+        this.idEntrega = idEntrega;
         this.titulo = titulo;
         this.fechaCreacion = fechaCreacion;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.descripcion = descripcion;
+    }
+
+    public int getIdEntrega() {
+        return idEntrega;
+    }
+
+    public void setIdEntrega(int idEntrega) {
+        this.idEntrega = idEntrega;
     }
 
     public int getIdActividad() {
@@ -87,7 +99,11 @@ public class Actividad {
 
     @Override
     public String toString() {
-        return "Actividad{" + "idActividad=" + idActividad + ", idAnteproyecto=" + ", idEstudiante=" + idEstudiante + ", titulo=" + titulo + ", fechaCreacion=" + fechaCreacion + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", descripcion=" + descripcion + '}';
+        return "Actividad{" + "idActividad=" + idActividad + 
+                ", idAnteproyecto=" + ", idEstudiante=" + idEstudiante + 
+                ", titulo=" + titulo + ", fechaCreacion=" + fechaCreacion + 
+                ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + 
+                ", descripcion=" + descripcion + '}';
     }
     
 }
