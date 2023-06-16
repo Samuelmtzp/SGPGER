@@ -449,4 +449,73 @@ public class UsuarioDAO {
         }
         return respuesta;
     }
+    
+    public static UsuarioRespuesta consultarEstudiantesDisponibles(){
+        UsuarioRespuesta respuesta = new UsuarioRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+        if (conexionBD != null) {
+            try {
+                String consulta = "SELECT usuario.idUsuario, usuario.nombre, usuario.apellidoPaterno, usuario.apellidoMaterno , estudiante.matricula, estudiante.idEstudiante \n" +
+                                  " FROM usuario " +
+                                  " INNER JOIN estudiante ON estudiante.idUsuario = usuario.idUsuario WHERE estudiante.idAnteproyecto IS NULL";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList<Usuario> usuariosConsulta = new ArrayList();
+                while (resultado.next())
+                {
+                    Usuario usuario = new Usuario();
+                    usuario.setIdUsuario(resultado.getInt("idUsuario"));
+                    usuario.setNombre(resultado.getString("nombre"));
+                    usuario.setMatricula(resultado.getString("matricula"));
+                    usuario.setIdEstudiante(resultado.getInt("idEstudiante"));
+                    usuario.setApellidoPaterno(resultado.getString("apellidoPaterno"));
+                    usuario.setApellidoMaterno(resultado.getString("apellidoMaterno"));
+                    usuariosConsulta.add(usuario);
+                }
+                respuesta.setUsuarios(usuariosConsulta);
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+            }
+        } else {
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
+    }
+    
+    public static UsuarioRespuesta consultarEstudianteEnAnteproyecto(int idAnteproyecto){
+        UsuarioRespuesta respuesta = new UsuarioRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+        if (conexionBD != null) {
+            try {
+                String consulta = "SELECT usuario.idUsuario, usuario.nombre, usuario.apellidoPaterno, usuario.apellidoMaterno, estudiante.matricula, estudiante.idEstudiante "
+                        + "FROM usuario "
+                        + "INNER JOIN estudiante ON estudiante.idUsuario = usuario.idUsuario WHERE estudiante.idAnteproyecto = ?;";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, idAnteproyecto);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList<Usuario> usuariosConsulta = new ArrayList();
+                while (resultado.next())
+                {
+                    Usuario usuario = new Usuario();
+                    usuario.setIdUsuario(resultado.getInt("idUsuario"));
+                    usuario.setNombre(resultado.getString("nombre"));
+                    usuario.setMatricula(resultado.getString("matricula"));
+                    usuario.setIdEstudiante(resultado.getInt("idEstudiante"));
+                    usuario.setApellidoPaterno(resultado.getString("apellidoPaterno"));
+                    usuario.setApellidoMaterno(resultado.getString("apellidoMaterno"));
+                    usuariosConsulta.add(usuario);
+                }
+                respuesta.setUsuarios(usuariosConsulta);
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+            }
+        } else {
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
+    }
 }

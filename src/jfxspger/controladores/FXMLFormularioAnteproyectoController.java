@@ -299,7 +299,6 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
         if(sonValidos==true){
             int posEstado=0;
             Anteproyecto anteproyectoValido = new Anteproyecto();
-            anteproyectoValido.setIdDirector(usuarios.get(posicionDirector).getIdAcademico());
             anteproyectoValido.setIdCuerpoAcademico(cuerpoAcademico.get(posicionCuerpoAcademico).getIdCuerpoAcademico());
             anteproyectoValido.setFechaInicio(fechaInicio.toString());
             anteproyectoValido.setFechaFin(fechaFin.toString());
@@ -541,8 +540,8 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
         if(Salir == true){
           Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
           escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos.fxml"));
-          escenarioBase.setTitle("Administración LGAC");
+                Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos2.fxml"));
+          escenarioBase.setTitle("Administración Anteproyecto");
           escenarioBase.show();
         }
     }
@@ -550,8 +549,8 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
     private void salir(){
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos.fxml"));
-        escenarioBase.setTitle("Administración LGAC");
+                Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos2.fxml"));
+        escenarioBase.setTitle("Administración Anteproyecto");
         escenarioBase.show();
     }
     

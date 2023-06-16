@@ -29,7 +29,7 @@
             <TableView fx:id="tvAlumnosDisponibles" layoutX="150.0" layoutY="251.0" prefHeight="507.0" prefWidth="789.0" stylesheets="@../css/estilos.css">
               <columns>
                 <TableColumn fx:id="columnNombreEstudiante" prefWidth="549.0" text="Nombre del estudiante" />
-                <TableColumn fx:id="columEstado" prefWidth="228.0" text="Estado" />
+                <TableColumn fx:id="columMatricula" prefWidth="228.0" text="Matricula" />
               </columns>
             </TableView>
             <TableView fx:id="tvAlumnosAsignados" layoutX="1077.0" layoutY="251.0" prefHeight="248.0" prefWidth="330.0" stylesheets="@../css/estilos.css">
