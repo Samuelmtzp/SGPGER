@@ -1,3 +1,8 @@
+/*
+* Autor: Samuel Martínez Pazos
+* Fecha de creación: 09/05/2023
+* Descripción: Clase encargada de modelar las modalidades
+*/
 package jfxspger.modelo.pojo;
 
 public class Modalidad {

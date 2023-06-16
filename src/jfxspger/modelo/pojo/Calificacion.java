@@ -16,7 +16,8 @@ public class Calificacion {
     public Calificacion() {
     }
     
-    public Calificacion(int idCalificacion, int actividad_idActividad, double calificacion, String comentario) {
+    public Calificacion(int idCalificacion, int actividad_idActividad, 
+            double calificacion, String comentario) {
         this.idCalificacion = idCalificacion;
         this.idActividad = actividad_idActividad;
         this.calificacion = calificacion;
@@ -57,7 +58,8 @@ public class Calificacion {
 
     @Override
     public String toString() {
-        return "Calificacion{" + "idCalificacion=" + idCalificacion + ", idActividad=" + idActividad + ", calificacion=" + calificacion + ", comentario=" + comentario + '}';
+        return "Calificacion{" + "idCalificacion=" + idCalificacion + ", idActividad=" + 
+                idActividad + ", calificacion=" + calificacion + ", comentario=" + comentario + '}';
     }
     
 }

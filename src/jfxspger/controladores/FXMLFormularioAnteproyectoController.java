@@ -1,7 +1,7 @@
 /*
 * Autor: Luis Angel ElizaLde Arroyo
 * Fecha de creación: 13/06/2023
-* Descripción: Clse encargada de crear y modificar la informacion de los anteproyectos
+* Descripción: Clase encargada de crear y modificar la informacion de los anteproyectos
 */
 package jfxspger.controladores;
 
@@ -14,7 +14,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -23,15 +22,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import jfxspger.modelo.dao.AcademicoDAO;
 import jfxspger.modelo.dao.AnteproyectoDAO;
 import jfxspger.modelo.dao.CuerpoAcademicoDAO;
 import jfxspger.modelo.dao.EstadoAnteproyectoDAO;
 import jfxspger.modelo.dao.LgacDAO;
 import jfxspger.modelo.dao.ModalidadDAO;
 import jfxspger.modelo.dao.UsuarioDAO;
-import jfxspger.modelo.pojo.Academico;
-import jfxspger.modelo.pojo.AcademicoRespuesta;
 import jfxspger.modelo.pojo.Anteproyecto;
 import jfxspger.modelo.pojo.CuerpoAcademico;
 import jfxspger.modelo.pojo.CuerpoAcademicoRespuesta;
@@ -46,11 +42,6 @@ import jfxspger.modelo.pojo.UsuarioRespuesta;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
 
-/**
- * FXML Controller class
- *
- * @author king_
- */
 public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademicoController {
 
     @FXML
@@ -85,25 +76,18 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
     private DatePicker dpFechaInicio;
     @FXML
     private DatePicker dpFechaFin;
-    
-    //ObservableList
     private ObservableList<Lgac> lgac;
     private ObservableList<Modalidad> modalidad;
     private ObservableList<CuerpoAcademico> cuerpoAcademico;
     private ObservableList<Usuario> usuarios;
-    //private ObservableList <Academico> academicos
-    private ObservableList<EstadoAnteproyecto> estado;
-   
-    
+    private ObservableList<EstadoAnteproyecto> estado; 
     private Anteproyecto anteproyectoEdicion;
     private boolean esEdicion;
     @FXML
     private Button btnPostularAnteproyecto;
     @FXML
     private Button btnGuardarAnteproyecto1;
-    /**
-     * Initializes the controller class.
-     */
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cargarInformacionLGAC();
@@ -300,7 +284,8 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
             int posEstado=0;
             Anteproyecto anteproyectoValido = new Anteproyecto();
             anteproyectoValido.setIdDirector(usuarios.get(posicionDirector).getIdAcademico());
-            anteproyectoValido.setIdCuerpoAcademico(cuerpoAcademico.get(posicionCuerpoAcademico).getIdCuerpoAcademico());
+            anteproyectoValido.setIdCuerpoAcademico(cuerpoAcademico.
+                    get(posicionCuerpoAcademico).getIdCuerpoAcademico());
             anteproyectoValido.setFechaInicio(fechaInicio.toString());
             anteproyectoValido.setFechaFin(fechaFin.toString());
             anteproyectoValido.setIdModalidad(modalidad.get(posicionModalidad).getIdModalidad());
@@ -324,7 +309,8 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
                 anteproyectoValido.setIdAnteproyecto(anteproyectoEdicion.getIdAnteproyecto());
                 actualizarAnteproyecto(anteproyectoValido);
             }else{
-                boolean Postular = Utilidades.mostrarDialogoConfirmacion("Postular anteproyecto", "¿Está seguro de que desea postular el anteproyecto?");
+                boolean Postular = Utilidades.mostrarDialogoConfirmacion("Postular anteproyecto", 
+                        "¿Está seguro de que desea postular el anteproyecto?");
                 if(Postular == true){
                    registrarAnteproyecto(anteproyectoValido);
                 }
@@ -336,17 +322,20 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
         int codigoRespuesta = AnteproyectoDAO.guardarAnteproyecto(anteproyectoRegistro);
         switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Error de conexion", "El anteproyecto no pudo ser guardado debido a un error en su conexión...", 
+                Utilidades.mostrarDialogoSimple("Error de conexion", 
+                        "El anteproyecto no pudo ser guardado debido a un error en su conexión...", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error en la información", "La información del anteproyecto no puede ser guardada, por favor verifique su información", 
+                Utilidades.mostrarDialogoSimple("Error en la información", 
+                        "La información del anteproyecto no puede ser guardada, "
+                        + "por favor verifique su información", 
                         Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                Utilidades.mostrarDialogoSimple("Anteproyecto registrado", "La información del anteproyecto fue guardada correctamente", 
+                Utilidades.mostrarDialogoSimple("Anteproyecto registrado", 
+                        "La información del anteproyecto fue guardada correctamente", 
                         Alert.AlertType.INFORMATION);
-                //TO DO confirmacion
                 salir();
                 break;
         }
@@ -356,26 +345,31 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
         int codigoRespuesta = AnteproyectoDAO.modificarAnteproyecto(anteproyectoActualizar);
          switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Error de conexion", "El anteproyecto no pudo ser actualizado debido a un error en su conexion...", 
+                Utilidades.mostrarDialogoSimple("Error de conexion", 
+                        "El anteproyecto no pudo ser actualizado "
+                        + "debido a un error en su conexion...", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error en la informacion", "La informacion del anteproyecto no puede ser actualizada, por favor verifica la informacion", 
+                Utilidades.mostrarDialogoSimple("Error en la informacion", 
+                        "La informacion del anteproyecto no puede ser actualizada, "
+                        + "por favor verifica la informacion", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                 Utilidades.mostrarDialogoSimple("Anteproyecto actualizado", "La informacion del anteproyecto fue actualizada correctamente", 
+                 Utilidades.mostrarDialogoSimple("Anteproyecto actualizado", 
+                         "La informacion del anteproyecto fue actualizada correctamente", 
                         Alert.AlertType.INFORMATION);
-                 //TO DO Regresar
                 salir();
                 break;
         }
     }
     
-    public void inicializarInformacionFormulario(boolean esEdicion, Anteproyecto anteproyectoEdicion){
+    public void inicializarInformacionFormulario(boolean esEdicion, 
+            Anteproyecto anteproyectoEdicion){
         this.esEdicion=esEdicion;
         this.anteproyectoEdicion=anteproyectoEdicion;
-        // TO DO  
+
         if(esEdicion){
             lbTitulo.setText("Editar informacion de LGAC");
             cargarInformacionEdicion();
@@ -389,11 +383,13 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
         LgacRespuesta LgacBD=LgacDAO.obtenerInformacionLgac();
         switch(LgacBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Error de conexion", "Error en la conexion con la base de datos", 
+                Utilidades.mostrarDialogoSimple("Error de conexion", 
+                        "Error en la conexion con la base de datos", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error de consulta", "Por el momento no se pudo obtener la informacion", 
+                Utilidades.mostrarDialogoSimple("Error de consulta", 
+                        "Por el momento no se pudo obtener la informacion", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.OPERACION_EXITOSA:
@@ -405,14 +401,17 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
     
     private void cargarInformacionCuerpoAcademico(){
         cuerpoAcademico = FXCollections.observableArrayList();
-        CuerpoAcademicoRespuesta CuerpoAcademicoBD=CuerpoAcademicoDAO.obtenerInformacionCuerpoAcademico();
+        CuerpoAcademicoRespuesta CuerpoAcademicoBD=CuerpoAcademicoDAO.
+                obtenerInformacionCuerpoAcademico();
         switch(CuerpoAcademicoBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Error de conexion", "Error en la conexion con la base de datos", 
+                Utilidades.mostrarDialogoSimple("Error de conexion", 
+                        "Error en la conexion con la base de datos", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error de consulta", "Por el momento no se pudo obtener la informacion", 
+                Utilidades.mostrarDialogoSimple("Error de consulta", 
+                        "Por el momento no se pudo obtener la informacion", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.OPERACION_EXITOSA:
@@ -427,11 +426,13 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
         ModalidadRespuesta ModalidadBD=ModalidadDAO.obtenerInformacionModalidad();
         switch(ModalidadBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Error de conexion", "Error en la conexion con la base de datos", 
+                Utilidades.mostrarDialogoSimple("Error de conexion", 
+                        "Error en la conexion con la base de datos", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error de consulta", "Por el momento no se pudo obtener la informacion", 
+                Utilidades.mostrarDialogoSimple("Error de consulta", 
+                        "Por el momento no se pudo obtener la informacion", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.OPERACION_EXITOSA:
@@ -446,11 +447,13 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
         UsuarioRespuesta AcademicoBD=UsuarioDAO.obtenerInformacionAcademicos();
         switch(AcademicoBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Error de conexion", "Error en la conexion con la base de datos", 
+                Utilidades.mostrarDialogoSimple("Error de conexion", 
+                        "Error en la conexion con la base de datos", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error de consulta", "Por el momento no se pudo obtener la informacion", 
+                Utilidades.mostrarDialogoSimple("Error de consulta", 
+                        "Por el momento no se pudo obtener la informacion", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.OPERACION_EXITOSA:
@@ -465,11 +468,13 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
         EstadoAnteproyectoRespuesta EstadoBD=EstadoAnteproyectoDAO.obtenerInformacionEstadoAnteproyecto();
         switch(EstadoBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Error de conexion", "Error en la conexion con la base de datos", 
+                Utilidades.mostrarDialogoSimple("Error de conexion", 
+                        "Error en la conexion con la base de datos", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error de consulta", "Por el momento no se pudo obtener la informacion", 
+                Utilidades.mostrarDialogoSimple("Error de consulta", 
+                        "Por el momento no se pudo obtener la informacion", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.OPERACION_EXITOSA:
@@ -481,7 +486,8 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
      private void cargarInformacionEdicion(){
         int posDirector=obtenerPosicionComboDirector(anteproyectoEdicion.getIdDirector());
         cbDirector.getSelectionModel().select(posDirector);
-        int posCuerpoAcademico = obtenerPosicionComboCuerpoAcademico(anteproyectoEdicion.getIdCuerpoAcademico());
+        int posCuerpoAcademico = obtenerPosicionComboCuerpoAcademico(
+                anteproyectoEdicion.getIdCuerpoAcademico());
         cbCuerpoAcademico.getSelectionModel().select(posCuerpoAcademico);
         int posModalidad = obtenerPosicionComboModalidad(anteproyectoEdicion.getIdModalidad());
         cbModalidad.getSelectionModel().select(posModalidad);
@@ -537,12 +543,13 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
     }
     
     private void regresar(){
-        boolean Salir = Utilidades.mostrarDialogoConfirmacion("Confirmacion", "¿Seguro que deseas salir? No se guardaran los cambios");
+        boolean Salir = Utilidades.mostrarDialogoConfirmacion("Confirmacion", 
+                "¿Seguro que deseas salir? No se guardaran los cambios");
         if(Salir == true){
           Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
           escenarioBase.setScene(
                 Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos.fxml"));
-          escenarioBase.setTitle("Administración LGAC");
+          escenarioBase.setTitle("Administración anteproyectos");
           escenarioBase.show();
         }
     }
@@ -551,7 +558,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.setScene(
                 Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos.fxml"));
-        escenarioBase.setTitle("Administración LGAC");
+        escenarioBase.setTitle("Administración anteproyectos");
         escenarioBase.show();
     }
     

@@ -1,3 +1,8 @@
+/*
+* Autor: Samuel Martínez Pazos
+* Fecha de creación: 12/06/2023
+* Descripción: Clase controladora de administración de cursos
+*/
 package jfxspger.controladores;
 
 import java.io.IOException;
@@ -51,7 +56,8 @@ public class FXMLAdminCursosController extends FXMLPrincipalAdministradorControl
     }
     
     private void configurarTabla(){
-        tcExperienciaEducativa.setCellValueFactory(new PropertyValueFactory("experienciaEducativa"));
+        tcExperienciaEducativa.setCellValueFactory(
+                new PropertyValueFactory("experienciaEducativa"));
         tcPeriodo.setCellValueFactory(new PropertyValueFactory("periodo"));
         tcProfesor.setCellValueFactory(new PropertyValueFactory("nombreCompletoProfesor"));
         tcNrc.setCellValueFactory(new PropertyValueFactory("nrc"));

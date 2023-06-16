@@ -16,7 +16,8 @@ public class Estudiante_CursoRespuesta {
     public Estudiante_CursoRespuesta() {
     }
 
-    public Estudiante_CursoRespuesta(int codigoRespuesta, ArrayList<Estudiante_Curso> estudiantes_curso) {
+    public Estudiante_CursoRespuesta(int codigoRespuesta, 
+            ArrayList<Estudiante_Curso> estudiantes_curso) {
         this.codigoRespuesta = codigoRespuesta;
         this.estudiantes_curso = estudiantes_curso;
     }

@@ -32,7 +32,8 @@ public class ExperienciaEducativaDAO {
                 while (resultado.next())
                 {
                     ExperienciaEducativa experienciaEducativa = new ExperienciaEducativa();
-                    experienciaEducativa.setIdExperienciaEducativa(resultado.getInt("idExperienciaEducativa"));
+                    experienciaEducativa.setIdExperienciaEducativa(resultado.getInt(
+                            "idExperienciaEducativa"));
                     experienciaEducativa.setNombre(resultado.getString("nombre"));
                     experienciaEducativaConsulta.add(experienciaEducativa);
                 }
@@ -69,7 +70,8 @@ public class ExperienciaEducativaDAO {
         return respuesta;
     }
     
-    public static int modificarExperienciaEducativa(ExperienciaEducativa experienciaEducativaEdicion) {
+    public static int modificarExperienciaEducativa(
+            ExperienciaEducativa experienciaEducativaEdicion) {
         int respuesta;
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
@@ -78,7 +80,8 @@ public class ExperienciaEducativaDAO {
                         "WHERE idExperienciaEducativa = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setString(1, experienciaEducativaEdicion.getNombre());
-                prepararSentencia.setInt(2, experienciaEducativaEdicion.getIdExperienciaEducativa());
+                prepararSentencia.setInt(2, experienciaEducativaEdicion.
+                        getIdExperienciaEducativa());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;

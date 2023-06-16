@@ -25,12 +25,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import jfxspger.interfaz.INotificacionOperacionActividad;
 import jfxspger.modelo.dao.ActividadDAO;
 import jfxspger.modelo.pojo.Actividad;
-import jfxspger.modelo.pojo.Estudiante;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
 
@@ -77,19 +75,27 @@ public class FXMLActividadFormularioController implements Initializable {
         final int valorMaximoHoras = 23;
         final int valorMaximoMinutos = 59;
 
-        SpinnerValueFactory<Integer> horasInicioValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(valorInicial, valorMaximoHoras);
+        SpinnerValueFactory<Integer> horasInicioValueFactory = 
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(
+                valorInicial, valorMaximoHoras);
         horasInicioValueFactory.setValue(valorInicial);
         spHorasInicio.setValueFactory(horasInicioValueFactory);
 
-        SpinnerValueFactory<Integer> minutosInicioValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(valorInicial, valorMaximoMinutos);
+        SpinnerValueFactory<Integer> minutosInicioValueFactory = 
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(
+                valorInicial, valorMaximoMinutos);
         minutosInicioValueFactory.setValue(valorInicial);
         spMinutosInicio.setValueFactory(minutosInicioValueFactory);
 
-        SpinnerValueFactory<Integer> horasFinValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(valorInicial, valorMaximoHoras);
+        SpinnerValueFactory<Integer> horasFinValueFactory = 
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(
+                valorInicial, valorMaximoHoras);
         horasFinValueFactory.setValue(valorInicial);
         spHorasFin.setValueFactory(horasFinValueFactory);
 
-        SpinnerValueFactory<Integer> minutosFinValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(valorInicial, valorMaximoMinutos);
+        SpinnerValueFactory<Integer> minutosFinValueFactory = 
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(
+                valorInicial, valorMaximoMinutos);
         minutosFinValueFactory.setValue(valorInicial);
         spMinutosFin.setValueFactory(minutosFinValueFactory);
     }
@@ -98,7 +104,8 @@ public class FXMLActividadFormularioController implements Initializable {
         this.idEstudiante = idEstudiante;
     }
     
-    public void inicializarInformacionFormulario(boolean esEdicion, Actividad actividadEdicion, INotificacionOperacionActividad interfazNotificacion){
+    public void inicializarInformacionFormulario(boolean esEdicion, 
+            Actividad actividadEdicion, INotificacionOperacionActividad interfazNotificacion){
         this.esEdicion = esEdicion;
         this.actividadEdicion = actividadEdicion;
         this.interfazNotificacion = interfazNotificacion;
@@ -114,8 +121,10 @@ public class FXMLActividadFormularioController implements Initializable {
     private void cargarInformacionEdicion(){
         tfNombreActividad.setText(actividadEdicion.getTitulo());
         tfDescripcionActividad.setText(actividadEdicion.getDescripcion());
-        LocalDateTime fechaInicio = LocalDateTime.parse(actividadEdicion.getFechaInicio(), formatter);
-        LocalDateTime fechaFin = LocalDateTime.parse(actividadEdicion.getFechaFin(), formatter);
+        LocalDateTime fechaInicio = LocalDateTime.parse(
+                actividadEdicion.getFechaInicio(), formatter);
+        LocalDateTime fechaFin = LocalDateTime.parse(
+                actividadEdicion.getFechaFin(), formatter);
         int minutosInicio = fechaInicio.getMinute();
         int minutosFin = fechaFin.getMinute();
         int horasInicio = fechaInicio.getHour();
@@ -142,7 +151,8 @@ public class FXMLActividadFormularioController implements Initializable {
         String desc = tfDescripcionActividad.getText();
         LocalDate fechaInicio = dpFechaInicio.getValue();
         LocalDate fechaFin = dpFechaFin.getValue();
-        LocalTime tiempoInicio = LocalTime.of(spHorasInicio.getValue(), spMinutosInicio.getValue());
+        LocalTime tiempoInicio = LocalTime.of(spHorasInicio.getValue(), 
+                spMinutosInicio.getValue());
         LocalTime tiempoFin = LocalTime.of(spHorasFin.getValue(), spMinutosFin.getValue());        
         
         
@@ -197,14 +207,17 @@ public class FXMLActividadFormularioController implements Initializable {
         int codigoRespuesta = ActividadDAO.guardarActividad(actividadNueva);
         switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Sin conexión", "Lo sentimos, por el momento no hay conexión", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Sin conexión", 
+                        "Lo sentimos, por el momento no hay conexión", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
                 Utilidades.mostrarDialogoSimple("Error al registrar la actividad", 
-                        "Hubo un error al registrar la actividad. Por favor intente más tarde", Alert.AlertType.WARNING);
+                        "Hubo un error al registrar la actividad. Por favor intente más tarde", 
+                        Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                Utilidades.mostrarDialogoSimple("Actividad registrada", "Actividad registrada correctamente", 
+                Utilidades.mostrarDialogoSimple("Actividad registrada", 
+                        "Actividad registrada correctamente", 
                         Alert.AlertType.INFORMATION);
                 cerrarVentana();
                 break;
@@ -215,16 +228,21 @@ public class FXMLActividadFormularioController implements Initializable {
         int codigoRespuesta = ActividadDAO.modificarActividad(actividadActualizada);
         switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Sin conexión", "Lo sentimos, por el momento no hay conexión", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Sin conexión", 
+                        "Lo sentimos, por el momento no hay conexión", 
+                        Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
                 Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
-                        "Hubo un error al cargar la información. Por favor intente más tarde", Alert.AlertType.WARNING);
+                        "Hubo un error al cargar la información. Por favor intente más tarde", 
+                        Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                Utilidades.mostrarDialogoSimple("Actividad modificada", "Actividad modificada correctamente", 
+                Utilidades.mostrarDialogoSimple("Actividad modificada", 
+                        "Actividad modificada correctamente", 
                         Alert.AlertType.INFORMATION);
-                interfazNotificacion.notificarOperacionActualizar(actividadActualizada.getTitulo());
+                interfazNotificacion.notificarOperacionActualizar(
+                        actividadActualizada.getTitulo());
                 cerrarVentana();
                 break;
         }
@@ -245,11 +263,12 @@ public class FXMLActividadFormularioController implements Initializable {
 
     @FXML
     private void clicIrAnteproyecto(ActionEvent event) {
-        
-        boolean cerrarVentana = Utilidades.mostrarDialogoConfirmacion("Salir de la ventana", "¿Desea regresar salir de la ventana? No se guardaran los datos ingresados.");
+        boolean cerrarVentana = Utilidades.mostrarDialogoConfirmacion("Salir de la ventana", 
+                "¿Desea regresar salir de la ventana? No se guardaran los datos ingresados.");
             if(cerrarVentana){
                 Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
-                escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLAnteproyectoInformacion.fxml"));
+                escenarioBase.setScene(Utilidades.inicializarEscena(
+                        "vistas/FXMLAnteproyectoInformacion.fxml"));
                 escenarioBase.setTitle("Informacion de anteproyecto");
                 escenarioBase.show();         
             }
@@ -261,10 +280,12 @@ public class FXMLActividadFormularioController implements Initializable {
 
     @FXML
     private void clicIrCursos(ActionEvent event) {
-        boolean cerrarVentana = Utilidades.mostrarDialogoConfirmacion("Salir de la ventana", "¿Desea regresar salir de la ventana? No se guardaran los datos ingresados.");
+        boolean cerrarVentana = Utilidades.mostrarDialogoConfirmacion("Salir de la ventana", 
+                "¿Desea regresar salir de la ventana? No se guardaran los datos ingresados.");
             if(cerrarVentana){
                 Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
-                escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLEstudiantesCurso.fxml"));
+                escenarioBase.setScene(Utilidades.inicializarEscena(
+                        "vistas/FXMLEstudiantesCurso.fxml"));
                 escenarioBase.setTitle("Cursos");
                 escenarioBase.show();         
             }
@@ -293,7 +314,9 @@ public class FXMLActividadFormularioController implements Initializable {
 
     @FXML
     private void clicIrPrincipalEstudiante(ActionEvent event) {
-        boolean cerrarVentana = Utilidades.mostrarDialogoConfirmacion("Regresar a ventana anterior", "¿Desea regresar a la ventana anterior? No se guardaran los datos ingresados.");
+        boolean cerrarVentana = Utilidades.mostrarDialogoConfirmacion(
+                "Regresar a ventana anterior", 
+                "¿Desea regresar a la ventana anterior? No se guardaran los datos ingresados.");
             if(cerrarVentana){
                 cerrarVentana();
             }
@@ -301,7 +324,8 @@ public class FXMLActividadFormularioController implements Initializable {
     
     private void obtenerDatosEstudiante(){
         try {
-            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.getResource("vistas/FXMLInicioSesion.fxml"));
+            FXMLLoader accesoControlador = new FXMLLoader(
+                    jfxspger.JFXSPGER.class.getResource("vistas/FXMLInicioSesion.fxml"));
             Parent vista = accesoControlador.load();
             
             FXMLInicioSesionController inicioSesion = accesoControlador.getController();

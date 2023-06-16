@@ -1,3 +1,8 @@
+/*
+* Autor: Samuel Martínez Pazos
+* Fecha de creación: 12/06/2023
+* Descripción: Clase controladora para administrar los estudiantes en un curso
+*/
 package jfxspger.controladores;
 
 import java.net.URL;
@@ -60,13 +65,17 @@ public class FXMLEstudiantesCursoController extends FXMLPrincipalAdministradorCo
     }    
     
     private void configurarTablas(){
-        tcApellidoMaternoAsignados.setCellValueFactory(new PropertyValueFactory("apellidoMaterno"));
-        tcApellidoPaternoAsignados.setCellValueFactory(new PropertyValueFactory("apellidoPaterno"));
+        tcApellidoMaternoAsignados.setCellValueFactory(new PropertyValueFactory(
+                "apellidoMaterno"));
+        tcApellidoPaternoAsignados.setCellValueFactory(new PropertyValueFactory(
+                "apellidoPaterno"));
         tcCorreoAsignados.setCellValueFactory(new PropertyValueFactory("correo"));
         tcNombreAsignados.setCellValueFactory(new PropertyValueFactory("nombre"));
         tcMatriculaAsignados.setCellValueFactory(new PropertyValueFactory("matricula"));
-        tcApellidoMaternoDisponibles.setCellValueFactory(new PropertyValueFactory("apellidoMaterno"));
-        tcApellidoPaternoDisponibles.setCellValueFactory(new PropertyValueFactory("apellidoPaterno"));
+        tcApellidoMaternoDisponibles.setCellValueFactory(
+                new PropertyValueFactory("apellidoMaterno"));
+        tcApellidoPaternoDisponibles.setCellValueFactory(new PropertyValueFactory(
+                "apellidoPaterno"));
         tcCorreoDisponibles.setCellValueFactory(new PropertyValueFactory("correo"));
         tcNombreDisponibles.setCellValueFactory(new PropertyValueFactory("nombre"));
         tcMatriculaDisponibles.setCellValueFactory(new PropertyValueFactory("matricula"));

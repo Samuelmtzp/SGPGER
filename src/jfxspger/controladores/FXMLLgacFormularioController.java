@@ -9,7 +9,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -19,16 +18,7 @@ import jfxspger.modelo.pojo.Lgac;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
 
-/**
- * FXML Controller class
- *
- * @author king_
- */
 public class FXMLLgacFormularioController extends FXMLPrincipalAdministradorController {
-
-    /**
-     * Initializes the controller class.
-     */
     
     private Lgac lgacEdicion;
     private boolean esEdicion;
@@ -44,7 +34,7 @@ public class FXMLLgacFormularioController extends FXMLPrincipalAdministradorCont
       public void inicializarInformacionFormulario(boolean esEdicion, Lgac lgacEdicion){
         this.esEdicion=esEdicion;
         this.lgacEdicion=lgacEdicion;
-        // TO DO  
+
         if(esEdicion){
             lbTitulo.setText("Editar informacion de LGAC");
             cargarInformacionEdicion();
@@ -96,17 +86,20 @@ public class FXMLLgacFormularioController extends FXMLPrincipalAdministradorCont
         int codigoRespuesta = LgacDAO.modificarLgac(lgacActualizar);
          switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Error de conexion", "La LGAC no pudo ser actualizada debido a un error en su conexion...", 
+                Utilidades.mostrarDialogoSimple("Error de conexion", 
+                        "La LGAC no pudo ser actualizada debido a un error en su conexion...", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error en la informacion", "La informacion de la LGAC no puede ser actualizada, por favor verifica la informacion", 
+                Utilidades.mostrarDialogoSimple("Error en la informacion", 
+                        "La informacion de la LGAC no puede ser actualizada, "
+                        + "por favor verifica la informacion", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                 Utilidades.mostrarDialogoSimple("LGAC actualizado", "La informacion de la LGAC fue actualizada correctamente", 
+                 Utilidades.mostrarDialogoSimple("LGAC actualizado", 
+                         "La informacion de la LGAC fue actualizada correctamente", 
                         Alert.AlertType.INFORMATION);
-                 //TO DO Regresar
                 salir();
                 break;
         }
@@ -116,24 +109,28 @@ public class FXMLLgacFormularioController extends FXMLPrincipalAdministradorCont
         int codigoRespuesta = LgacDAO.guardarLgac(lgacRegistro);
         switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Error de conexion", "La LGAC no pudo ser guardadp debido a un error en su conexión...", 
+                Utilidades.mostrarDialogoSimple("Error de conexion", 
+                        "La LGAC no pudo ser guardadp debido a un error en su conexión...", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error en la información", "La información de la LGAC no puede ser guardada, por favor verifique su información", 
+                Utilidades.mostrarDialogoSimple("Error en la información", 
+                        "La información de la LGAC no puede ser guardada, "
+                        + "por favor verifique su información", 
                         Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                Utilidades.mostrarDialogoSimple("LGAC registrada", "La información de la LGAC fue guardada correctamente", 
+                Utilidades.mostrarDialogoSimple("LGAC registrada", 
+                        "La información de la LGAC fue guardada correctamente", 
                         Alert.AlertType.INFORMATION);
-                //TO DO confirmacion
                 salir();
                 break;
         }
     }
     
     private void regresar(){
-        boolean Salir =Utilidades.mostrarDialogoConfirmacion("Confirmacion", "¿Seguro que deseas salir? No se guardaran los cambios");
+        boolean Salir =Utilidades.mostrarDialogoConfirmacion("Confirmacion", 
+                "¿Seguro que deseas salir? No se guardaran los cambios");
         if(Salir == true){
           Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
           escenarioBase.setScene(

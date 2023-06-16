@@ -1,3 +1,9 @@
+/*
+* Autor: Samuel Martínez Pazos
+* Fecha de creación: 10/06/2023
+* Descripción: Clase encargada de administrar la 
+* información de los grados de consolidación en la base de datos
+*/
 package jfxspger.modelo.dao;
 
 import java.sql.Connection;
@@ -25,7 +31,8 @@ public class GradoConsolidacionDAO {
                 while (resultado.next())
                 {
                     GradoConsolidacion gradoConsolidacion = new GradoConsolidacion();
-                    gradoConsolidacion.setIdGradoConsolidacion(resultado.getInt("idGradoConsolidacion"));
+                    gradoConsolidacion.setIdGradoConsolidacion(
+                            resultado.getInt("idGradoConsolidacion"));
                     gradoConsolidacion.setGrado(resultado.getString("grado"));
                     gradoConsolidacionConsulta.add(gradoConsolidacion);
                 }

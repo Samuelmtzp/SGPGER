@@ -1,3 +1,8 @@
+/*
+* Autor: Samuel Martínez Pazos
+* Fecha de creación: 13/06/2023
+* Descripción: Clase controladora de formulario de usuario
+*/
 package jfxspger.controladores;
 
 import java.net.URL;
@@ -174,7 +179,7 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
                     TipoUsuario oldValue, TipoUsuario newValue) {
                 if(newValue != null){
                                     
-                    switch(cbTipoUsuario.getSelectionModel().getSelectedItem().getIdTipoUsuario()) {
+                    switch(cbTipoUsuario.getSelectionModel().getSelectedItem().getIdTipoUsuario()){
                         case TIPO_USUARIO_ACADEMICO:
                         case TIPO_USUARIO_ESTUDIANTE:
                             habilitarCampoAdicional();

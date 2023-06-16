@@ -57,7 +57,9 @@ public class Academico {
 
     @Override
     public String toString() {
-        return "Academico{" + "idAcademico=" + idAcademico + ", idUsuario=" + idUsuario + ", numeroDePersonal=" + numeroDePersonal + ", idCuerpoAcademico=" + idCuerpoAcademico + '}';
+        return "Academico{" + "idAcademico=" + idAcademico + ", idUsuario=" + 
+                idUsuario + ", numeroDePersonal=" + numeroDePersonal + 
+                ", idCuerpoAcademico=" + idCuerpoAcademico + '}';
     }
 
 }

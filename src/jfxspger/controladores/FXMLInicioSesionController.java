@@ -6,20 +6,15 @@
 
 package jfxspger.controladores;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import jfxspger.modelo.dao.EstudianteDAO;
 import jfxspger.modelo.dao.SesionDAO;
@@ -101,7 +96,9 @@ public class FXMLInicioSesionController implements Initializable {
                             irPantallaPrincipalAdministrador();
                             break;
                         case TIPO_USUARIO_ESTUDIANTE :
-                            EstudianteRespuesta estudianteRespuesta = EstudianteDAO.obtenerInformacionEstudiante(usuarioRespuesta.getIdUsuario());
+                            EstudianteRespuesta estudianteRespuesta = 
+                                    EstudianteDAO.obtenerInformacionEstudiante(
+                                            usuarioRespuesta.getIdUsuario());
                             Estudiante estudiante = estudianteRespuesta.getEstudiantes().get(0);
                             guardarEstudiante(estudiante);
                             irPantallaPrincipalEstudiante();
@@ -132,13 +129,15 @@ public class FXMLInicioSesionController implements Initializable {
     
     private void irPantallaPrincipalAdministrador() {
         Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLPrincipalAdministrador.fxml"));
+        escenarioBase.setScene(Utilidades.inicializarEscena(
+                "vistas/FXMLPrincipalAdministrador.fxml"));
         configurarEscena(escenarioBase);        
     }
     
     private void irPantallaPrincipalEstudiante() {                
         Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLPrincipalEstudiante.fxml"));
+        escenarioBase.setScene(Utilidades.inicializarEscena(
+                "vistas/FXMLPrincipalEstudiante.fxml"));
         configurarEscena(escenarioBase);
     }
     
@@ -153,7 +152,8 @@ public class FXMLInicioSesionController implements Initializable {
     
     private void irPantallaPrincipalAcademico() {
         Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLPrincipalAcademico.fxml"));
+        escenarioBase.setScene(Utilidades.inicializarEscena(
+                "vistas/FXMLPrincipalAcademico.fxml"));
         configurarEscena(escenarioBase);
     }
     

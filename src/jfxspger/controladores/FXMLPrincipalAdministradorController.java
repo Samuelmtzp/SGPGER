@@ -1,3 +1,8 @@
+/*
+* Autor: Samuel Martínez Pazos
+* Fecha de creación: 10/06/2023
+* Descripción: Clase controladora para el menú principal de administrador
+*/
 package jfxspger.controladores;
 
 import java.net.URL;

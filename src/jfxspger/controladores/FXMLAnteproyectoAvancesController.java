@@ -1,3 +1,8 @@
+/*
+* Autor: Luis Ángel Elizalde Arroyo
+* Fecha de creación: 13/06/2023
+* Descripción: Clase controladora para los avances del anteproyecto
+*/
 package jfxspger.controladores;
 
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
@@ -16,9 +21,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import jfxspger.modelo.dao.ActividadDAO;
 import jfxspger.modelo.dao.EntregaDAO;
-import jfxspger.modelo.pojo.ActividadRespuesta;
 import jfxspger.modelo.pojo.Entrega;
 import jfxspger.modelo.pojo.EntregaRespuesta;
 import jfxspger.utilidades.Constantes;
@@ -47,7 +50,8 @@ public class FXMLAnteproyectoAvancesController implements Initializable {
     @FXML
     private void clicIrPrincipalEstudiante(ActionEvent event) {
         Stage escenarioBase = (Stage) lbTituloAnteproyecto.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLPrincipalEstudiante.fxml"));
+        escenarioBase.setScene(Utilidades.inicializarEscena(
+                "vistas/FXMLPrincipalEstudiante.fxml"));
         escenarioBase.setTitle("Ventana Principal");
         escenarioBase.show();           
     }
@@ -58,11 +62,13 @@ public class FXMLAnteproyectoAvancesController implements Initializable {
         cFechaEntrega.setCellValueFactory(new PropertyValueFactory("fechaEntrega"));        
                 tvEntregas.widthProperty().addListener(new ChangeListener<Number>(){
             @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+            public void changed(ObservableValue<? extends Number> observable, 
+                    Number oldValue, Number newValue) {
                 TableHeaderRow header = (TableHeaderRow) tvEntregas.lookup("TableHeaderRow");
                 header.reorderingProperty().addListener(new ChangeListener<Boolean>(){
                     @Override
-                    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                    public void changed(ObservableValue<? extends Boolean> observable, 
+                            Boolean oldValue, Boolean newValue) {
                         header.setReordering(false);
                     }
                 });
@@ -75,11 +81,14 @@ public class FXMLAnteproyectoAvancesController implements Initializable {
         EntregaRespuesta respuestaBD = EntregaDAO.obtenerInformacionEntrega();
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Sin conexión", "Lo sentimos, por el momento no hay conexión", Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Sin conexión", 
+                        "Lo sentimos, por el momento no hay conexión", 
+                        Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
                 Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
-                        "Hubo un error al cargar la información. Por favor intente más tarde", Alert.AlertType.WARNING);
+                        "Hubo un error al cargar la información. Por favor intente más tarde", 
+                        Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
                 entregas.addAll(respuestaBD.getEntregas());
@@ -112,7 +121,8 @@ public class FXMLAnteproyectoAvancesController implements Initializable {
     @FXML
     private void clicIrCronograma(ActionEvent event) {
         Stage escenarioBase = (Stage) lbTituloAnteproyecto.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLCronogramaActividades.fxml"));
+        escenarioBase.setScene(Utilidades.inicializarEscena(
+                "vistas/FXMLCronogramaActividades.fxml"));
         escenarioBase.setTitle("Cronograma de actividades");
         escenarioBase.show();        
     }

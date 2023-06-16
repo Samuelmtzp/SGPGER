@@ -2,7 +2,6 @@
 * Autor: Samuel Martínez Pazos
 * Fecha de creación: 22/05/2023
 * Descripción: Clase encargada de obtener la respuesta de consulta de actividades
-* Descripción: Clase encargada de obtener la respuesta de consulta de cursos
 */
 package jfxspger.modelo.pojo;
 

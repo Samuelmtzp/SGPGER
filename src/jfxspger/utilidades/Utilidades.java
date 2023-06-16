@@ -1,7 +1,7 @@
 /*
 * Autor: Samuel Martínez Pazos
 * Fecha de creación: 09/05/2023
-* Descripción: Clase encargada de administrar los diálogos y la carga de escenas
+* Descripción: Clase encargada de administrar métodos reutilizables en diferentes clases
 */
 
 package jfxspger.utilidades;

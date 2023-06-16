@@ -38,7 +38,8 @@ public class CursoRespuesta {
 
     @Override
     public String toString() {
-        return "CursoRespuesta{" + "codigoRespuesta=" + codigoRespuesta + ", cursos=" + cursos + '}';
+        return "CursoRespuesta{" + "codigoRespuesta=" + codigoRespuesta + 
+                ", cursos=" + cursos + '}';
     }
 
 }
