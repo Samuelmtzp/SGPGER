@@ -23,7 +23,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import jfxspger.modelo.dao.LgacDAO;
 import jfxspger.modelo.pojo.Lgac;
@@ -72,7 +71,7 @@ public class FXMLAdminLgacController extends FXMLPrincipalAdministradorControlle
     }
      
      private void configurarTabla() {
-        columbNombre.setCellValueFactory(new PropertyValueFactory("nombre")); //nombre del atributo en el pojo
+        columbNombre.setCellValueFactory(new PropertyValueFactory("nombre"));
     }
      
     @FXML
@@ -86,14 +85,16 @@ public class FXMLAdminLgacController extends FXMLPrincipalAdministradorControlle
         if(lgacSelected != null){
            irFormulario(true, lgacSelected);
         }else{
-            Utilidades.mostrarDialogoSimple("Selecciona una LGAC", "Selecciona el registro en la tabla de las LGAC para su edicion", 
+            Utilidades.mostrarDialogoSimple("Selecciona una LGAC", 
+                    "Selecciona el registro en la tabla de las LGAC para su edicion", 
                     Alert.AlertType.WARNING);
             }
     }
     
      private void irFormulario(boolean esEdicion, Lgac lgacEdicion){
          try{
-            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.getResource("vistas/FXMLLgacFormulario.fxml"));
+            FXMLLoader accesoControlador = new FXMLLoader(
+                    jfxspger.JFXSPGER.class.getResource("vistas/FXMLLgacFormulario.fxml"));
             Parent vista = accesoControlador.load();
             FXMLLgacFormularioController formulario = accesoControlador.getController();
             Scene sceneFormulario = new Scene(vista);
@@ -102,7 +103,8 @@ public class FXMLAdminLgacController extends FXMLPrincipalAdministradorControlle
             formulario.inicializarInformacionFormulario(esEdicion, lgacEdicion);
             
          }catch(IOException ex){
-             Logger.getLogger(FXMLLgacFormularioController.class.getName()).log(Level.SEVERE, null, ex);
+             Logger.getLogger(FXMLLgacFormularioController.class.getName()).
+                     log(Level.SEVERE, null, ex);
          }
     }
 
@@ -110,17 +112,21 @@ public class FXMLAdminLgacController extends FXMLPrincipalAdministradorControlle
     private void clicBtnEliminar(ActionEvent event) {
          Lgac lgacSeleccionado = tvLGAC.getSelectionModel().getSelectedItem();
         if(lgacSeleccionado != null){
-            boolean borrarRegistro = Utilidades.mostrarDialogoConfirmacion("Eliminar registro de la LGAC", 
+            boolean borrarRegistro = Utilidades.mostrarDialogoConfirmacion(
+                    "Eliminar registro de la LGAC", 
                     "¿Estás seguro de que deseas eliminar la LGAC?");
             if(borrarRegistro==true){
                 int codigoRespuesta = LgacDAO.eliminarLgac(lgacSeleccionado.getIdLgac());
                 switch(codigoRespuesta){
                     case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Error de conexion", "La lgac no pudo ser eliminada debido a un error en su conexion...", 
+                Utilidades.mostrarDialogoSimple("Error de conexion", 
+                        "La lgac no pudo ser eliminada debido a un error en su conexion...", 
                         Alert.AlertType.ERROR);
                 break;
                     case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error al eliminiar", "La informacion de la LGAC no puedo ser eliminada, por favor intentelo más tarde", 
+                Utilidades.mostrarDialogoSimple("Error al eliminiar", 
+                        "La informacion de la LGAC no puedo ser eliminada, "
+                        + "por favor intentelo más tarde", 
                         Alert.AlertType.WARNING);
                 break;
                     case Constantes.OPERACION_EXITOSA:
@@ -129,7 +135,8 @@ public class FXMLAdminLgacController extends FXMLPrincipalAdministradorControlle
                 }
             }
         }else{
-             Utilidades.mostrarDialogoSimple("Selecciona una LGAC", "Selecciona el registro en la tabla de la LGAC", 
+             Utilidades.mostrarDialogoSimple("Selecciona una LGAC", 
+                     "Selecciona el registro en la tabla de la LGAC", 
                     Alert.AlertType.WARNING);
         }
     }

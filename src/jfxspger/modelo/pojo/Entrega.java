@@ -17,7 +17,8 @@ public class Entrega {
     public Entrega() {
     }
 
-    public Entrega(int idEntrega, int idActividad, String tituloActividad, String fechaEntrega, String fechaCreacion) {
+    public Entrega(int idEntrega, int idActividad, String tituloActividad, 
+            String fechaEntrega, String fechaCreacion) {
         this.idEntrega = idEntrega;
         this.idActividad = idActividad;
         this.tituloActividad = tituloActividad;
@@ -67,7 +68,9 @@ public class Entrega {
 
     @Override
     public String toString() {
-        return "Entrega{" + "idEntrega=" + idEntrega + ", idActividad=" + idActividad + ", tituloActividad=" + tituloActividad + ", fechaEntrega=" + fechaEntrega + ", fechaCreacion=" + fechaCreacion + '}';
+        return "Entrega{" + "idEntrega=" + idEntrega + ", idActividad=" + idActividad + 
+                ", tituloActividad=" + tituloActividad + ", fechaEntrega=" + fechaEntrega + 
+                ", fechaCreacion=" + fechaCreacion + '}';
     }
 
     

@@ -27,7 +27,10 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(int idUsuario, int idTipoUsuario, int idEstudiante, int idAcademico, String tipoUsuario, String username, String password, String correo, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String fechaCreacion, String matricula, int codigoRespuesta) {
+    public Usuario(int idUsuario, int idTipoUsuario, int idEstudiante, int idAcademico, 
+            String tipoUsuario, String username, String password, String correo, 
+            String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, 
+            String fechaCreacion, String matricula, int codigoRespuesta) {
         this.idUsuario = idUsuario;
         this.idTipoUsuario = idTipoUsuario;
         this.idEstudiante = idEstudiante;

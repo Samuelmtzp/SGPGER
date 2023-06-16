@@ -71,6 +71,7 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     public void initialize(URL url, ResourceBundle rb) {
         cargarInformacion();
         configurarTabla();
+        configurarBusquedaTabla();
     }    
 
     private void configurarTabla(){
@@ -105,7 +106,8 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     
     private void irFormulario(boolean esEdicion, Anteproyecto anteproyectoEdicion){
            try{
-            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.getResource("vistas/FXMLFormularioAnteproyecto.fxml"));
+            FXMLLoader accesoControlador = new FXMLLoader(
+                    jfxspger.JFXSPGER.class.getResource("vistas/FXMLFormularioAnteproyecto.fxml"));
             Parent vista = accesoControlador.load();
             FXMLFormularioAnteproyectoController formulario = accesoControlador.getController();
             Scene sceneFormulario = new Scene(vista);
@@ -114,7 +116,8 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
             formulario.inicializarInformacionFormulario(esEdicion, anteproyectoEdicion);
             
          }catch(IOException ex){
-             Logger.getLogger(FXMLLgacFormularioController.class.getName()).log(Level.SEVERE, null, ex);
+             Logger.getLogger(FXMLLgacFormularioController.class.getName()).
+                     log(Level.SEVERE, null, ex);
          }
     }
 
@@ -125,19 +128,25 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
 
     @FXML
     private void clicEliminarAnteproyecto(ActionEvent event) {
-        Anteproyecto anteproyectoSeleccionado = tvAnteproyecto.getSelectionModel().getSelectedItem();
+        Anteproyecto anteproyectoSeleccionado = tvAnteproyecto.
+                getSelectionModel().getSelectedItem();
         if(anteproyectoSeleccionado != null){
-            boolean borrarRegistro = Utilidades.mostrarDialogoConfirmacion("Eliminar registro del anteproyecto", 
+            boolean borrarRegistro = Utilidades.mostrarDialogoConfirmacion(
+                    "Eliminar registro del anteproyecto", 
                     "¿Estás seguro de que deseas eliminar el anteproyecto?");
-            if(borrarRegistro==true){
-                int codigoRespuesta = AnteproyectoDAO.eliminarAnteproyecto(anteproyectoSeleccionado.getIdAnteproyecto());
+            if (borrarRegistro==true) {
+                int codigoRespuesta = AnteproyectoDAO.
+                        eliminarAnteproyecto(anteproyectoSeleccionado.getIdAnteproyecto());
                 switch(codigoRespuesta){
                     case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Error de conexion", "El anteproyecto no pudo ser eliminado debido a un error en su conexion...", 
+                Utilidades.mostrarDialogoSimple("Error de conexion", 
+                        "El anteproyecto no pudo ser eliminado debido a un error en su conexion...", 
                         Alert.AlertType.ERROR);
                 break;
                     case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error al eliminiar", "La informacion del anteproyecto no puedo ser eliminada, por favor intentelo más tarde", 
+                Utilidades.mostrarDialogoSimple("Error al eliminiar", 
+                        "La informacion del anteproyecto no puedo ser eliminada, "
+                                + "por favor intentelo más tarde", 
                         Alert.AlertType.WARNING);
                 break;
                     case Constantes.OPERACION_EXITOSA:
@@ -146,18 +155,21 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
                 }
             }
         }else{
-             Utilidades.mostrarDialogoSimple("Selecciona un anteproyecto", "Selecciona el registro en la tabla del anteproyecto", 
+             Utilidades.mostrarDialogoSimple("Selecciona un anteproyecto", 
+                     "Selecciona el registro en la tabla del anteproyecto", 
                     Alert.AlertType.WARNING);
         }
     }
 
     @FXML
     private void clicModificarAnteproyecto(ActionEvent event) {
-        Anteproyecto anteproyectoSeleccionado = tvAnteproyecto.getSelectionModel().getSelectedItem();
+        Anteproyecto anteproyectoSeleccionado = 
+                tvAnteproyecto.getSelectionModel().getSelectedItem();
         if(anteproyectoSeleccionado!= null){
             irFormulario(true, anteproyectoSeleccionado);
         }else{
-            Utilidades.mostrarDialogoSimple("Selecciona un anteproyecto", "Selecciona el registro en la tabla del anteproyecto para su edicion", 
+            Utilidades.mostrarDialogoSimple("Selecciona un anteproyecto", 
+                    "Selecciona el registro en la tabla del anteproyecto para su edicion", 
                     Alert.AlertType.WARNING);
             }
     }
@@ -173,13 +185,13 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
             TableRow row;
             if (node instanceof TableRow) {
                 row = (TableRow) node;
-                Anteproyecto anteproyectoSeleccionado = tvAnteproyecto.getSelectionModel().getSelectedItem();
+                Anteproyecto anteproyectoSeleccionado = 
+                        tvAnteproyecto.getSelectionModel().getSelectedItem();
                 irInformacionAnteproyecto(anteproyectoSeleccionado);
             } 
             else {
                 row = (TableRow) node.getParent();
             }
-            System.out.println(row.getItem());
         }
     }
     
@@ -191,7 +203,7 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
             FXMLInfoAnteproyectoController formulario = accesoControlador.getController();
             Scene sceneFormulario = new Scene(vista);
             Stage escenarioPrincipal = (Stage) lbTitulo.getScene().getWindow();
-            escenarioPrincipal.setTitle("Informacion de usuario");
+            escenarioPrincipal.setTitle("Informacion de anteproyecto");
             escenarioPrincipal.setScene(sceneFormulario);
             formulario.inicializarInformacion(anteproyecto);
         }catch(IOException e){
@@ -210,6 +222,8 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
                 @Override
                 public void changed(ObservableValue<? extends String> observable, 
                         String oldValue, String newValue) {
+                    rbDisponibles.selectedProperty().set(false);
+                    rbValidacionPendiente.selectedProperty().set(false);                    
                     filtradoAnteproyecto.setPredicate(anteproyectoFiltro -> {
                         if (newValue == null || newValue.isEmpty()) {
                             return true;

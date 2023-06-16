@@ -1,7 +1,8 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
+* Autor: Luis Ángel Elizalde Arroyo
+* Fecha de creación: 13/06/2023
+* Descripción: Clase controladora para la información del anteproyecto
+*/
 package jfxspger.controladores;
 
 import java.net.URL;
@@ -12,11 +13,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import jfxspger.interfaz.INotificacionOperacionActividad;
-import jfxspger.modelo.pojo.Actividad;
 import jfxspger.modelo.pojo.Anteproyecto;
 import jfxspger.utilidades.Utilidades;
 
-public class FXMLAnteproyectoInformacionAcademicoController implements Initializable, INotificacionOperacionActividad {
+public class FXMLAnteproyectoInformacionAcademicoController implements Initializable, 
+        INotificacionOperacionActividad {
 
     @FXML
     private Label lbDescAnteproyecto;
@@ -29,10 +30,11 @@ public class FXMLAnteproyectoInformacionAcademicoController implements Initializ
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
     }
     
-    public void inicializarInformacionAnteproyecto(Anteproyecto anteproyectoInformacion, INotificacionOperacionActividad interfazNotificacion){        
+    public void inicializarInformacionAnteproyecto(Anteproyecto anteproyectoInformacion, 
+            INotificacionOperacionActividad interfazNotificacion){        
         this.anteproyectoInformacion = anteproyectoInformacion;
         this.interfazNotificacion = interfazNotificacion;
                 

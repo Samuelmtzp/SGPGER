@@ -28,7 +28,8 @@ public class Anteproyecto_CodirectorDAO {
                         "FROM Anteproyecto_Codirector";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
-                ArrayList<Anteproyecto_Codirector> academicos_anteproyectoConsulta = new ArrayList();
+                ArrayList<Anteproyecto_Codirector> academicos_anteproyectoConsulta = 
+                        new ArrayList();
                 while (resultado.next())
                 {
                     Anteproyecto_Codirector academico_anteproyecto = new Anteproyecto_Codirector();

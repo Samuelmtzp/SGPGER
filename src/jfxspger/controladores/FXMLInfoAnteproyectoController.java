@@ -1,3 +1,8 @@
+/*
+* Autor: Samuel Martínez Pazos
+* Fecha de creación: 13/06/2023
+* Descripción: Clase controladora para información de anteproyecto
+*/
 package jfxspger.controladores;
 
 import java.net.URL;
@@ -5,12 +10,14 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 import jfxspger.modelo.dao.CuerpoAcademicoDAO;
 import jfxspger.modelo.dao.EstadoAnteproyectoDAO;
 import jfxspger.modelo.dao.LgacDAO;
@@ -62,8 +69,8 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
     private ComboBox<Lgac> cbLGAC;
     @FXML
     private DatePicker dpFechaInicio;
-    @FXML
     private Anteproyecto anteproyecto;
+    @FXML
     private DatePicker dpFechaFin;
     private ObservableList<Lgac> lgac;
     private ObservableList<Modalidad> modalidad;
@@ -246,6 +253,39 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
                 estado.addAll(EstadoBD.getEstadosAnteproyecto());
                 break;
         }
+    }
+
+    @FXML
+    private void clicRegresar(ActionEvent event) {
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        escenarioBase.setScene(
+              Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos.fxml"));
+        escenarioBase.setTitle("Administración anteproyectos");
+        escenarioBase.show();
+    }
+
+    @FXML
+    private void clicIrAnteproyectos(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicIrPropuestas(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicIrEstudiantes(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicCerrarSesion(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicIrEntregables(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicIrRevisiones(ActionEvent event) {
     }
     
 }

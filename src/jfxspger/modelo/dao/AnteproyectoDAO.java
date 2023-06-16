@@ -24,12 +24,21 @@ public class AnteproyectoDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT idAnteproyecto, idCuerpoAcademico, anteproyecto.idDirector, anteproyecto.idEstado, idModalidad, "
-                        + "idLgac, proyectoInvestigacion, lineaInvestigacion, fechaInicio, fechaFin, nombreTrabajo, requisitos, "
-                        + "cantidadAlumnosParticipantes, descripcionProyectoInvestigacion, estadoanteproyecto.estado AS estado, usuario.nombre AS directorNombre, "
-                        + "descripcionTrabajoRecepcional, resultadosEsperados, bibliografiaRecomendada, comentarios FROM Anteproyecto "
-                        + "INNER JOIN estadoanteproyecto ON anteproyecto.idEstado = estadoanteproyecto.idEstadoAnteproyecto "
-                        + "INNER JOIN usuario ON anteproyecto.idDirector = usuario.idUsuario";
+                String consulta = "SELECT idAnteproyecto, Anteproyecto.idCuerpoAcademico, "
+                        + "anteproyecto.idDirector, anteproyecto.idEstado, idModalidad, "
+                        + "idLgac, proyectoInvestigacion, lineaInvestigacion, fechaInicio, "
+                        + "fechaFin, nombreTrabajo, requisitos, cantidadAlumnosParticipantes, "
+                        + "descripcionProyectoInvestigacion, estadoanteproyecto.estado AS estado, "
+                        + "CONCAT(usuario.nombre, ' ', usuario.apellidoPaterno, ' ', "
+                        + "apellidoMaterno) directorNombre, descripcionTrabajoRecepcional, "
+                        + "resultadosEsperados, bibliografiaRecomendada, comentarios "
+                        + "FROM Anteproyecto "
+                        + "INNER JOIN estadoanteproyecto "
+                        + "ON anteproyecto.idEstado = estadoanteproyecto.idEstadoAnteproyecto "
+                        + "INNER JOIN Academico "
+                        + "ON Academico.idAcademico = Anteproyecto.idDirector "
+                        + "INNER JOIN usuario "
+                        + "ON Academico.idUsuario = Usuario.idUsuario";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Anteproyecto> anteproyectoConsulta = new ArrayList();
@@ -147,9 +156,12 @@ public class AnteproyectoDAO {
                 prepararSentencia.setString(9, anteproyectoEdicion.getFechaFin());
                 prepararSentencia.setString(10, anteproyectoEdicion.getNombreTrabajo());
                 prepararSentencia.setString(11, anteproyectoEdicion.getRequisitos());
-                prepararSentencia.setInt(12, anteproyectoEdicion.getCantidadAlumnosParticipantes());
-                prepararSentencia.setString(13, anteproyectoEdicion.getDescripcionProyectoInvestigacion());
-                prepararSentencia.setString(14, anteproyectoEdicion.getDescripcionTrabajoRecepcional());
+                prepararSentencia.setInt(12, anteproyectoEdicion.
+                        getCantidadAlumnosParticipantes());
+                prepararSentencia.setString(13, anteproyectoEdicion.
+                        getDescripcionProyectoInvestigacion());
+                prepararSentencia.setString(14, anteproyectoEdicion.
+                        getDescripcionTrabajoRecepcional());
                 prepararSentencia.setString(15, anteproyectoEdicion.getResultadosEsperados());
                 prepararSentencia.setString(16, anteproyectoEdicion.getBibliografiaRecomendada());
                 prepararSentencia.setString(17, anteproyectoEdicion.getComentarios());

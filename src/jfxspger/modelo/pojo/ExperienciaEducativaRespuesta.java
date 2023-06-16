@@ -15,7 +15,8 @@ public class ExperienciaEducativaRespuesta {
     public ExperienciaEducativaRespuesta() {
     }
     
-    public ExperienciaEducativaRespuesta(int codigoRespuesta, ArrayList<ExperienciaEducativa> experienciasEducativas) {
+    public ExperienciaEducativaRespuesta(int codigoRespuesta, 
+            ArrayList<ExperienciaEducativa> experienciasEducativas) {
         this.codigoRespuesta = codigoRespuesta;
         this.experienciasEducativas = experienciasEducativas;
     }

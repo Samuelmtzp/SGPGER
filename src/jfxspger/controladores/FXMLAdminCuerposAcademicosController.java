@@ -1,3 +1,8 @@
+/*
+* Autor: Samuel Martínez Pazos
+* Fecha de creación: 12/06/2023
+* Descripción: Clase controladora de administración de cuerpos académicos
+*/
 package jfxspger.controladores;
 
 import java.io.IOException;

@@ -1,3 +1,8 @@
+/*
+* Autor: Samuel Martínez Pazos
+* Fecha de creación: 09/05/2023
+* Descripción: Clase encargada de modelar los tipos de usuario
+*/
 package jfxspger.modelo.pojo;
 
 public class TipoUsuario {

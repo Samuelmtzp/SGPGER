@@ -1,3 +1,8 @@
+/*
+* Autor: Samuel Martínez Pazos
+* Fecha de creación: 09/05/2023
+* Descripción: Clase encargada de modelar una revision para un anteproyecto
+*/
 package jfxspger.modelo.pojo;
 
 public class RevisionAnteproyecto {
@@ -10,7 +15,8 @@ public class RevisionAnteproyecto {
     public RevisionAnteproyecto() {
     }
 
-    public RevisionAnteproyecto(int idRevisionAnteproyecto, int idAnteproyecto, String fechaRevision, String comentarioRevision) {
+    public RevisionAnteproyecto(int idRevisionAnteproyecto, int idAnteproyecto, 
+            String fechaRevision, String comentarioRevision) {
         this.idRevisionAnteproyecto = idRevisionAnteproyecto;
         this.idAnteproyecto = idAnteproyecto;
         this.fechaRevision = fechaRevision;

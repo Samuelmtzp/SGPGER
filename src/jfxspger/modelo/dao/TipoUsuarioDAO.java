@@ -1,3 +1,9 @@
+/*
+* Autor: Samuel Martínez Pazos
+* Fecha de creación: 10/06/2023
+* Descripción: Clase encargada de administrar la 
+* información de los tipos de usuario en la base de datos
+*/
 package jfxspger.modelo.dao;
 
 import java.sql.Connection;

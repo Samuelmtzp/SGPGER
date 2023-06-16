@@ -24,7 +24,8 @@ public class ActividadDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT a.idActividad, a.titulo, a.fechaCreacion, a.fechaInicio, a.fechaFin, a.descripcion, " +
+                String consulta = "SELECT a.idActividad, a.titulo, a.fechaCreacion, "
+                    + "a.fechaInicio, a.fechaFin, a.descripcion, " +
                     "e.idEntrega, e.fechaEntrega, e.fechaCreacion " +
                     "FROM SGPGER.actividad a " +
                     "JOIN SGPGER.entrega e ON a.idActividad = e.idActividad";
