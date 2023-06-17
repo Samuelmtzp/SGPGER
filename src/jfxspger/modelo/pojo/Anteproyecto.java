@@ -61,7 +61,7 @@ public class Anteproyecto {
         this.comentarios = comentarios;
     }
 
-    public String getDirector() {
+        public String getDirector() {
         return Director;
     }
 
