@@ -88,6 +88,38 @@ public class FXMLAdminCuerposAcademicosController extends FXMLPrincipalAdministr
 
     @FXML
     private void clicBtnEliminarCuerpoAcademico(ActionEvent event) {
+        int posicion = tvCuerposAcademicos.getSelectionModel().getSelectedIndex();
+        if (posicion != -1) {
+            if (Utilidades.mostrarDialogoConfirmacion("Confirmación de cancelación", 
+                    "¿Está seguro de que desea eliminar al cuerpo académico?")) {
+                int respuesta = CuerpoAcademicoDAO.eliminarCuerpoAcademico(
+                        tvCuerposAcademicos.getSelectionModel().
+                        getSelectedItem().getIdCuerpoAcademico());
+                switch(respuesta) {
+                    case Constantes.ERROR_CONEXION:
+                        Utilidades.mostrarDialogoSimple("Error de conexion", 
+                                "El cuerpo académico no pudo ser eliminado debido "
+                                + "a un error de conexión.", 
+                                Alert.AlertType.ERROR);
+                    break;
+                    case Constantes.ERROR_CONSULTA:
+                        Utilidades.mostrarDialogoSimple("Error al eliminar",
+                                "No se ha podido eliminar al cuerpo académico, "
+                               + "por favor inténtelo más tarde." ,
+                                Alert.AlertType.WARNING);
+                    break;
+                    case Constantes.OPERACION_EXITOSA:
+                        cargarDatosTabla();
+                        Utilidades.mostrarDialogoSimple("Cuerpo académico eliminado", 
+                                "El cuerpo académico fue eliminado correctamente", 
+                                Alert.AlertType.INFORMATION);
+                    break;
+                }
+            }
+        } else
+            Utilidades.mostrarDialogoSimple("Selección necesaria", 
+                    "Para eliminar un cuerpo académico, debe seleccionarlo previamente", 
+                    Alert.AlertType.WARNING);
     }
 
     @FXML
