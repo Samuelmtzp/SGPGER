@@ -106,8 +106,7 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     
     private void irFormulario(boolean esEdicion, Anteproyecto anteproyectoEdicion){
            try{
-            FXMLLoader accesoControlador = new FXMLLoader(
-                    jfxspger.JFXSPGER.class.getResource("vistas/FXMLFormularioAnteproyecto.fxml"));
+            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.getResource("vistas/FXMLFormularioAnteproyecto1.fxml"));
             Parent vista = accesoControlador.load();
             FXMLFormularioAnteproyectoController formulario = accesoControlador.getController();
             Scene sceneFormulario = new Scene(vista);
@@ -179,6 +178,21 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     @FXML
     private void clicIrAnteproyectos(ActionEvent event) {
     }
+    
+    private void irAsignarEstudiantes(Anteproyecto anteproyecto){
+           try{
+            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.getResource("vistas/FXMLAsignarEstudiantes.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLAsignarEstudiantesController formulario = accesoControlador.getController();
+            Scene sceneFormulario = new Scene(vista);
+            Stage escenarioPrincipal = (Stage)lbTitulo.getScene().getWindow();
+            escenarioPrincipal.setScene(sceneFormulario);
+            formulario.inicializarInformacionFormulario(anteproyecto);
+            
+         }catch(IOException ex){
+             Logger.getLogger(FXMLLgacFormularioController.class.getName()).log(Level.SEVERE, null, ex);
+         }
+    }
 
     @FXML
     private void clicConsultarAnteproyecto(MouseEvent event) {
@@ -187,9 +201,11 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
             TableRow row;
             if (node instanceof TableRow) {
                 row = (TableRow) node;
-                Anteproyecto anteproyectoSeleccionado = 
-                        tvAnteproyecto.getSelectionModel().getSelectedItem();
-                irInformacionAnteproyecto(anteproyectoSeleccionado);
+                Anteproyecto anteproyectoSeleccionado = tvAnteproyecto.getSelectionModel().getSelectedItem();
+                int pos = tvAnteproyecto.getSelectionModel().getSelectedIndex();
+                if(pos != -1){
+                    irAsignarEstudiantes(anteproyectoSeleccionado);
+                }
             } 
             else {
                 row = (TableRow) node.getParent();

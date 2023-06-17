@@ -548,8 +548,8 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
         if(Salir == true){
           Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
           escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos.fxml"));
-          escenarioBase.setTitle("Administración anteproyectos");
+                Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos2.fxml"));
+          escenarioBase.setTitle("Administración Anteproyecto");
           escenarioBase.show();
         }
     }
@@ -557,8 +557,8 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
     private void salir(){
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos.fxml"));
-        escenarioBase.setTitle("Administración anteproyectos");
+                Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos2.fxml"));
+        escenarioBase.setTitle("Administración Anteproyecto");
         escenarioBase.show();
     }
     

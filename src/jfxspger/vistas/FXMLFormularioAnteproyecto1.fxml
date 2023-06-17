@@ -72,7 +72,7 @@
                            </font>
                         </Label>
                         <TextField fx:id="tfNombreTrabajo" layoutX="74.0" layoutY="423.0" prefHeight="54.0" prefWidth="345.0" styleClass="textField" stylesheets="@../css/estilos.css" />
-                        <TextArea fx:id="taRequisitos" layoutX="476.0" layoutY="425.0" prefHeight="131.0" prefWidth="421.0" />
+                        <TextArea fx:id="taRequisitos" layoutX="476.0" layoutY="425.0" prefHeight="131.0" prefWidth="421.0" wrapText="true" />
                         <Label layoutX="476.0" layoutY="361.0" stylesheets="@../css/estilos.css" text="Requisitos">
                            <font>
                               <Font name="System Bold Italic" size="27.0" />
@@ -84,13 +84,13 @@
                            </font>
                         </Label>
                         <TextField fx:id="tfCantidadAlumnos" layoutX="957.0" layoutY="423.0" prefHeight="54.0" prefWidth="192.0" styleClass="textField" stylesheets="@../css/estilos.css" />
-                        <TextArea fx:id="taDescripcionProyecto" layoutX="74.0" layoutY="627.0" prefHeight="131.0" prefWidth="421.0" />
+                        <TextArea fx:id="taDescripcionProyecto" layoutX="74.0" layoutY="627.0" prefHeight="131.0" prefWidth="421.0" wrapText="true" />
                         <Label layoutX="74.0" layoutY="565.0" prefHeight="60.0" prefWidth="535.0" stylesheets="@../css/estilos.css" text="Descripcion del proyecto de investigacion">
                            <font>
                               <Font name="System Bold Italic" size="27.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="taDescripcionTrabajo" layoutX="652.0" layoutY="627.0" prefHeight="131.0" prefWidth="421.0" />
+                        <TextArea fx:id="taDescripcionTrabajo" layoutX="652.0" layoutY="627.0" prefHeight="131.0" prefWidth="421.0" wrapText="true" />
                         <Label layoutX="650.0" layoutY="576.0" stylesheets="@../css/estilos.css" text="Descripcion de trabajo recepcional">
                            <font>
                               <Font name="System Bold Italic" size="27.0" />
@@ -101,8 +101,8 @@
                               <Font name="System Bold Italic" size="27.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="taResultadosEsperados" layoutX="1125.0" layoutY="625.0" prefHeight="100.0" prefWidth="366.0" />
-                        <TextArea fx:id="taBibliografia" layoutX="74.0" layoutY="835.0" prefHeight="131.0" prefWidth="421.0" />
+                        <TextArea fx:id="taResultadosEsperados" layoutX="1125.0" layoutY="625.0" prefHeight="100.0" prefWidth="366.0" wrapText="true" />
+                        <TextArea fx:id="taBibliografia" layoutX="74.0" layoutY="835.0" prefHeight="131.0" prefWidth="421.0" wrapText="true" />
                         <Label layoutX="74.0" layoutY="767.0" prefHeight="60.0" prefWidth="535.0" stylesheets="@../css/estilos.css" text="Bibliografía recomendada">
                            <font>
                               <Font name="System Bold Italic" size="27.0" />

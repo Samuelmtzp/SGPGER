@@ -28,13 +28,18 @@
          <children>
             <TableView fx:id="tvAlumnosDisponibles" layoutX="150.0" layoutY="251.0" prefHeight="507.0" prefWidth="789.0" stylesheets="@../css/estilos.css">
               <columns>
-                <TableColumn fx:id="columnNombreEstudiante" prefWidth="549.0" text="Nombre del estudiante" />
-                <TableColumn fx:id="columEstado" prefWidth="228.0" text="Estado" />
+                <TableColumn fx:id="columnNombreDisponible" prefWidth="172.0" text="Nombre" />
+                <TableColumn fx:id="columApellidoPaternoDisponible" prefWidth="199.0" text="Apellido Paterno" />
+                  <TableColumn fx:id="columApellidoMaternoDisponible" prefWidth="194.0" text="Apellido Materno" />
+                  <TableColumn fx:id="columMatriculaDisponible" prefWidth="223.0" text="Matricula" />
               </columns>
             </TableView>
-            <TableView fx:id="tvAlumnosAsignados" layoutX="1077.0" layoutY="251.0" prefHeight="248.0" prefWidth="330.0" stylesheets="@../css/estilos.css">
+            <TableView fx:id="tvAlumnosAsignados" layoutX="974.0" layoutY="251.0" prefHeight="248.0" prefWidth="622.0" stylesheets="@../css/estilos.css">
               <columns>
-                <TableColumn fx:id="columEstudianteAsig" prefWidth="329.0" text="Estudiante asignado" />
+                <TableColumn fx:id="columnNombreEstudiante" prefWidth="161.0" text="Nombre" />
+                  <TableColumn fx:id="columApellidoPaterno" prefWidth="165.0" text="Apellido Paterno" />
+                  <TableColumn fx:id="columApellidoMaterno" prefWidth="180.0" text="Apellido Materno" />
+                  <TableColumn fx:id="columMatricula" prefWidth="115.0" text="Matricula" />
               </columns>
             </TableView>
             <Button layoutX="1075.0" layoutY="549.0" mnemonicParsing="false" onAction="#clicBtnAsignarEstudiantes" prefHeight="53.0" prefWidth="202.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Asignar estudiante">
@@ -61,6 +66,25 @@
                   </ImageView>
                </graphic>
             </Button>
+            <Button layoutX="41.0" layoutY="59.0" mnemonicParsing="false" onAction="#clicRegresar" prefHeight="55.0" prefWidth="74.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/back.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label layoutX="357.0" layoutY="177.0" prefHeight="53.0" prefWidth="376.0" text="Estudiantes disponibles">
+               <font>
+                  <Font name="System Bold Italic" size="33.0" />
+               </font>
+            </Label>
+            <Label layoutX="1083.0" layoutY="177.0" prefHeight="53.0" prefWidth="405.0" text="Estudiante(s) asignado(s)">
+               <font>
+                  <Font name="System Bold Italic" size="33.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Pane layoutY="100.0" prefHeight="980.0" prefWidth="300.0" style="-fx-background-color: #33AB5B;">
