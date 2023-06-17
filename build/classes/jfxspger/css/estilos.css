@@ -107,7 +107,8 @@
     -fx-color: #0c3c78;
 }
 
-.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover 
+.combo-box-popup .list-view .list-cell:filled:selected, 
+.combo-box-popup .list-view .list-cell:filled:selected:hover 
 {
     -fx-background-color: #a2142b;
     -fx-text-fill: white;
