@@ -259,7 +259,7 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
     private void clicRegresar(ActionEvent event) {
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.setScene(
-              Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos.fxml"));
+              Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos2.fxml"));
         escenarioBase.setTitle("Administración anteproyectos");
         escenarioBase.show();
     }
