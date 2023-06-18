@@ -76,7 +76,8 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
 
     private void configurarTabla(){
         columnNombre.setCellValueFactory(new PropertyValueFactory("nombreTrabajo"));
-        columNombreProyecto.setCellValueFactory(new PropertyValueFactory("proyectoInvestigacion"));
+        columNombreProyecto.setCellValueFactory(new PropertyValueFactory(
+                "proyectoInvestigacion"));
         columFechaInicio.setCellValueFactory(new PropertyValueFactory("fechaInicio"));
         columFechaFin.setCellValueFactory(new PropertyValueFactory("fechaFin"));
         columDirector.setCellValueFactory(new PropertyValueFactory("Director"));
@@ -89,7 +90,7 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
         switch (respuestaBD.getCodigoRespuesta()) {
             case Constantes.ERROR_CONEXION:
                     Utilidades.mostrarDialogoSimple("Sin conexión", 
-                    "Lo sentimos, por el momento no hay conexión para poder cargar la información", 
+              "Lo sentimos, por el momento no hay conexión para poder cargar la información", 
                     Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
@@ -106,7 +107,8 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     
     private void irFormulario(boolean esEdicion, Anteproyecto anteproyectoEdicion){
            try{
-            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.getResource("vistas/FXMLFormularioAnteproyecto1.fxml"));
+            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.getResource(
+                    "vistas/FXMLFormularioAnteproyecto1.fxml"));
             Parent vista = accesoControlador.load();
             FXMLFormularioAnteproyectoController formulario = accesoControlador.getController();
             Scene sceneFormulario = new Scene(vista);
@@ -135,11 +137,11 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
                     "¿Estás seguro de que deseas eliminar el anteproyecto?");
             if (borrarRegistro==true) {
                 int codigoRespuesta = AnteproyectoDAO.
-                        eliminarAnteproyecto(anteproyectoSeleccionado.getIdAnteproyecto());
+                    eliminarAnteproyecto(anteproyectoSeleccionado.getIdAnteproyecto());
                 switch(codigoRespuesta){
                     case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Error de conexion", 
-                        "El anteproyecto no pudo ser eliminado debido a un error en su conexion...", 
+                 "El anteproyecto no pudo ser eliminado debido a un error en su conexion...", 
                         Alert.AlertType.ERROR);
                 break;
                     case Constantes.ERROR_CONSULTA:
@@ -175,22 +177,28 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
             }
     }
 
-    @FXML
-    private void clicIrAnteproyectos(ActionEvent event) {
-    }
     
     private void irAsignarEstudiantes(Anteproyecto anteproyecto){
            try{
-            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.getResource("vistas/FXMLAsignarEstudiantes.fxml"));
+            if(anteproyecto.getIdEstado()== 3){
+            FXMLLoader accesoControlador = new 
+      FXMLLoader(jfxspger.JFXSPGER.class.getResource(
+              "/jfxspger/vistas/FXMLAsignarEstudiantes.fxml"));
             Parent vista = accesoControlador.load();
             FXMLAsignarEstudiantesController formulario = accesoControlador.getController();
             Scene sceneFormulario = new Scene(vista);
             Stage escenarioPrincipal = (Stage)lbTitulo.getScene().getWindow();
             escenarioPrincipal.setScene(sceneFormulario);
             formulario.inicializarInformacionFormulario(anteproyecto);
-            
+            }else{
+                 Utilidades.mostrarDialogoSimple("Anteproyecto no disponible", 
+                    "El anteproyecto debe estar en un estado de disponibilidad "
+                            + "para poder asignarle estudiantes", 
+                    Alert.AlertType.WARNING);
+            }
          }catch(IOException ex){
-             Logger.getLogger(FXMLLgacFormularioController.class.getName()).log(Level.SEVERE, null, ex);
+             Logger.getLogger(FXMLLgacFormularioController.class.getName()).
+                     log(Level.SEVERE, null, ex);
          }
     }
 
@@ -201,11 +209,9 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
             TableRow row;
             if (node instanceof TableRow) {
                 row = (TableRow) node;
-                Anteproyecto anteproyectoSeleccionado = tvAnteproyecto.getSelectionModel().getSelectedItem();
-                int pos = tvAnteproyecto.getSelectionModel().getSelectedIndex();
-                if(pos != -1){
-                    irAsignarEstudiantes(anteproyectoSeleccionado);
-                }
+                Anteproyecto anteproyectoSeleccionado = 
+                        tvAnteproyecto.getSelectionModel().getSelectedItem();
+                irInformacionAnteproyecto(anteproyectoSeleccionado);
             } 
             else {
                 row = (TableRow) node.getParent();
@@ -265,6 +271,11 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
                     
                 }
             });
+            SortedList<Anteproyecto> sortedListaAnteproyectos = 
+                    new SortedList<>(filtradoAnteproyecto);
+            sortedListaAnteproyectos.comparatorProperty().
+                    bind(tvAnteproyecto.comparatorProperty());
+            tvAnteproyecto.setItems(sortedListaAnteproyectos);
         }
     }
     
@@ -279,12 +290,12 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     private void activarFiltroDisponible() {
         tvAnteproyecto.setItems(filtrarAnteproyectosPorEstado("Disponible"));
     }
-    
+
     private void activarFiltroValidacionPendiente() {
         tvAnteproyecto.setItems(filtrarAnteproyectosPorEstado("Validacion pendiente"));
     }
-    
-    private ObservableList<Anteproyecto> filtrarAnteproyectosPorEstado(String filtro) {
+
+    private ObservableList<Anteproyecto> filtrarAnteproyectos(String filtro) {
         ObservableList<Anteproyecto> anteproyectosFiltrados = FXCollections.observableArrayList();
         boolean busquedaPorDirector = !tfBusqueda.getText().isEmpty();
         boolean busquedaDisponibles = rbDisponibles.isSelected();
@@ -328,4 +339,18 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     private void clicRbValidacionPendiente(ActionEvent event) {
         activarFiltroValidacionPendiente();
     }
+
+    @FXML
+    private void clicAgregarEstudiante(ActionEvent event) {
+    Anteproyecto anteproyectoSeleccionado = tvAnteproyecto.getSelectionModel().getSelectedItem();
+            int pos = tvAnteproyecto.getSelectionModel().getSelectedIndex();
+            if(pos != -1){
+                irAsignarEstudiantes(anteproyectoSeleccionado);
+            }else{
+                Utilidades.mostrarDialogoSimple("Selecciona un anteproyecto", 
+              "Selecciona el registro en la tabla del anteproyecto para asignar estudiantes", 
+                 Alert.AlertType.WARNING);
+            }
+    }
+
 }

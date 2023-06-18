@@ -27,20 +27,20 @@
       <Pane layoutX="300.0" layoutY="100.0" prefHeight="980.0" prefWidth="1620.0">
          <children>
             <TableView fx:id="tvAlumnosDisponibles" layoutX="150.0" layoutY="251.0" prefHeight="507.0" prefWidth="789.0" stylesheets="@../css/estilos.css">
-              <columns>
-                <TableColumn fx:id="columnNombreDisponible" prefWidth="172.0" text="Nombre" />
-                <TableColumn fx:id="columApellidoPaternoDisponible" prefWidth="199.0" text="Apellido Paterno" />
+               <columns>
+                  <TableColumn fx:id="columnNombreDisponible" prefWidth="172.0" text="Nombre" />
+                  <TableColumn fx:id="columApellidoPaternoDisponible" prefWidth="199.0" text="Apellido Paterno" />
                   <TableColumn fx:id="columApellidoMaternoDisponible" prefWidth="194.0" text="Apellido Materno" />
                   <TableColumn fx:id="columMatriculaDisponible" prefWidth="223.0" text="Matricula" />
-              </columns>
+               </columns>
             </TableView>
             <TableView fx:id="tvAlumnosAsignados" layoutX="974.0" layoutY="251.0" prefHeight="248.0" prefWidth="622.0" stylesheets="@../css/estilos.css">
-              <columns>
-                <TableColumn fx:id="columnNombreEstudiante" prefWidth="161.0" text="Nombre" />
+               <columns>
+                  <TableColumn fx:id="columnNombreEstudiante" prefWidth="161.0" text="Nombre" />
                   <TableColumn fx:id="columApellidoPaterno" prefWidth="165.0" text="Apellido Paterno" />
                   <TableColumn fx:id="columApellidoMaterno" prefWidth="180.0" text="Apellido Materno" />
                   <TableColumn fx:id="columMatricula" prefWidth="115.0" text="Matricula" />
-              </columns>
+               </columns>
             </TableView>
             <Button layoutX="1075.0" layoutY="549.0" mnemonicParsing="false" onAction="#clicBtnAsignarEstudiantes" prefHeight="53.0" prefWidth="202.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Asignar estudiante">
                <font>
