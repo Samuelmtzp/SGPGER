@@ -241,17 +241,26 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
         String password = tfPassword.getText();
         String campoAdicional = tfCampoAdicional.getText();
         
-        if (nombre.isEmpty()) {
+        if (nombre.trim().isEmpty()) {
+            tfNombre.setStyle(Constantes.estiloError);
+            datosValidos = false;
+        } else if (nombre.length() > 255) {
             tfNombre.setStyle(Constantes.estiloError);
             datosValidos = false;
         }
         
-        if (apellidoPaterno.isEmpty()) {
+        if (apellidoPaterno.trim().isEmpty()) {
+            tfApellidoPaterno.setStyle(Constantes.estiloError);
+            datosValidos = false;
+        } else if (apellidoPaterno.length() > 255) {
             tfApellidoPaterno.setStyle(Constantes.estiloError);
             datosValidos = false;
         }
         
-        if (apellidoMaterno.isEmpty()) {
+        if (apellidoMaterno.trim().isEmpty()) {
+            tfApellidoMaterno.setStyle(Constantes.estiloError);
+            datosValidos = false;
+        } else if (apellidoMaterno.length() > 255) {
             tfApellidoMaterno.setStyle(Constantes.estiloError);
             datosValidos = false;
         }
@@ -283,7 +292,7 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
             if (!esEdicion) {
                 switch(cbTipoUsuario.getSelectionModel().getSelectedItem().getIdTipoUsuario()) {
                     case TIPO_USUARIO_ACADEMICO:
-                        if (campoAdicional.isEmpty()) {
+                        if (campoAdicional.trim().isEmpty()) {
                             tfCampoAdicional.setStyle(Constantes.estiloError);
                             datosValidos = false;
                         } else {
@@ -300,13 +309,16 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
                                 datosValidos = false;
                             }
                         }
-
                     break;
                     case TIPO_USUARIO_ESTUDIANTE:
-                        if (campoAdicional.isEmpty()) {
+                        if (campoAdicional.trim().isEmpty()) {
                             tfCampoAdicional.setStyle(Constantes.estiloError);
                             datosValidos = false;    
                         } else {
+                            if (campoAdicional.length() > 10) {
+                                tfCampoAdicional.setStyle(Constantes.estiloError);
+                                datosValidos = false;    
+                            }
                             if (!esMatriculaDisponible(campoAdicional)) {
                                 lbCampoAdicionalNoDisponible.setText(
                                         "Matrícula no disponible");
@@ -319,11 +331,15 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
             }
         }
         
-        if (username.isEmpty()) {
+        if (username.trim().isEmpty()) {
             tfUsername.setStyle(Constantes.estiloError);
             datosValidos = false;
         } else {
             if (!esEdicion || (esEdicion && !username.equals(copiaUsuarioEdicion.getUsername()))) {
+                if (username.length() > 10) {
+                    tfUsername.setStyle(Constantes.estiloError);
+                    datosValidos = false;    
+                }
                 if (!esUsernameDisponible(username)) {
                     lbUsernameNoDisponible.setText("Nombre de usuario no disponible");
                     tfUsername.setStyle(Constantes.estiloError);
@@ -332,9 +348,12 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
             }
         }
         
-        if (password.isEmpty()) {
+        if (password.trim().isEmpty()) {
             tfPassword.setStyle(Constantes.estiloError);
             datosValidos = false;
+        } else if (password.length() > 20) {
+            tfPassword.setStyle(Constantes.estiloError);
+            datosValidos = false;   
         }
         
         if (datosValidos) {
