@@ -23,22 +23,27 @@ public class CuerpoAcademicoDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT CuerpoAcademico.idCuerpoAcademico, "
-                        + "CuerpoAcademico.nombre, clave, idResponsable, "
-                        + "CONCAT(Usuario.nombre, ' ', Usuario.apellidoPaterno, ' ', "
-                        + "Usuario.apellidoMaterno) nombreCompletoResponsable, "
+                String consulta = "SELECT DISTINCT CuerpoAcademico.idCuerpoAcademico, "
+                        + "CuerpoAcademico.nombre, clave, "
+                        + "if (idResponsable IS NULL, -1, idResponsable) AS idResponsable, "
+                        + "if (idResponsable IS NULL, \"Sin responsable\", "
+                        + "(CONCAT(Usuario.nombre, ' ', Usuario.apellidoPaterno, ' ', "
+                        + "Usuario.apellidoMaterno))) AS nombreCompletoResponsable, "
                         + "CuerpoAcademico.idGradoConsolidacion, GradoConsolidacion.grado, "
                         + "CuerpoAcademico.idDependencia, Dependencia.dependencia "
                         + "FROM CuerpoAcademico "
                         + "INNER JOIN Academico "
                         + "ON CuerpoAcademico.idResponsable = Academico.idAcademico "
+                        + "OR CuerpoAcademico.idResponsable IS NULL "
                         + "INNER JOIN Usuario "
                         + "ON Academico.idUsuario = Usuario.idUsuario "
                         + "INNER JOIN GradoConsolidacion "
                         + "ON CuerpoAcademico.idGradoConsolidacion = "
                         + "GradoConsolidacion.idGradoConsolidacion "
                         + "INNER JOIN Dependencia "
-                        + "ON CuerpoAcademico.idDependencia = Dependencia.idDependencia";
+                        + "ON CuerpoAcademico.idDependencia = Dependencia.idDependencia "
+                        + "WHERE CuerpoAcademico.idResponsable IS NULL "
+                        + "OR CuerpoAcademico.idResponsable IS NOT NULL";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<CuerpoAcademico> cuerpoAcademicoConsulta = new ArrayList();
