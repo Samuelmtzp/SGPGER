@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -22,7 +23,6 @@ import jfxspger.modelo.pojo.UsuarioRespuesta;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
 import jfxspger.modelo.dao.UsuarioDAO;
-import jfxspger.modelo.dao.AnteproyectoDAO;
 import jfxspger.modelo.pojo.Anteproyecto;
 import jfxspger.modelo.pojo.Estudiante;
 
@@ -64,17 +64,22 @@ public class FXMLAsignarEstudiantesController extends FXMLPrincipalAcademicoCont
      private void configurarTablas(){
         columnNombreEstudiante.setCellValueFactory(new PropertyValueFactory("nombre"));
         columMatricula.setCellValueFactory(new PropertyValueFactory("matricula"));
-        columApellidoPaterno.setCellValueFactory(new PropertyValueFactory("apellidoPaterno"));
-        columApellidoMaterno.setCellValueFactory(new PropertyValueFactory("apellidoMaterno"));
+        columApellidoPaterno.setCellValueFactory(
+                new PropertyValueFactory("apellidoPaterno"));
+        columApellidoMaterno.setCellValueFactory(
+                new PropertyValueFactory("apellidoMaterno"));
         columnNombreDisponible.setCellValueFactory(new PropertyValueFactory("nombre"));
         columMatriculaDisponible.setCellValueFactory(new PropertyValueFactory("matricula"));
-        columApellidoPaternoDisponible.setCellValueFactory(new PropertyValueFactory("apellidoPaterno"));
-        columApellidoMaternoDisponible.setCellValueFactory(new PropertyValueFactory("apellidoMaterno"));
+        columApellidoPaternoDisponible.setCellValueFactory(
+                new PropertyValueFactory("apellidoPaterno"));
+        columApellidoMaternoDisponible.setCellValueFactory(
+                new PropertyValueFactory("apellidoMaterno"));
     } 
      
     private void cargarDatosTablaEstudiantesAsignados(Anteproyecto anteproyectoAsigandos) {
         estudiantesAsignados = FXCollections.observableArrayList();
-        UsuarioRespuesta respuestaBD = UsuarioDAO.consultarEstudianteEnAnteproyecto(anteproyectoAsigandos.getIdAnteproyecto());
+        UsuarioRespuesta respuestaBD = UsuarioDAO.consultarEstudianteEnAnteproyecto(
+                anteproyectoAsigandos.getIdAnteproyecto());
         if(respuestaBD != null){
         switch (respuestaBD.getCodigoRespuesta()) {
             case Constantes.ERROR_CONEXION:
@@ -135,12 +140,16 @@ public class FXMLAsignarEstudiantesController extends FXMLPrincipalAcademicoCont
             if (posicionEstudianteDisponible != -1) {
                 Usuario usarioprueba =  tvAlumnosDisponibles.getSelectionModel().getSelectedItem();
                 Estudiante estudianteEnAnteproyectoRegistro = new Estudiante();
-                estudianteEnAnteproyectoRegistro.setIdAnteproyecto(anteproyecto.getIdAnteproyecto());
+                estudianteEnAnteproyectoRegistro.setIdAnteproyecto(anteproyecto.
+                        getIdAnteproyecto());
                 estudianteEnAnteproyectoRegistro.setIdEstudiante(tvAlumnosDisponibles.
                     getSelectionModel().getSelectedItem().getIdEstudiante());
-                estudianteEnAnteproyectoRegistro.setIdUsuario(estudiantesDisponibles.get(posicionEstudianteDisponible).getIdUsuario());
-                estudianteEnAnteproyectoRegistro.setMatricula(estudiantesDisponibles.get(posicionEstudianteDisponible).getMatricula());
-                anteproyecto.setCantidadAlumnosParticipantes(anteproyecto.getCantidadAlumnosParticipantes()-1);
+                estudianteEnAnteproyectoRegistro.setIdUsuario(estudiantesDisponibles.get(
+                        posicionEstudianteDisponible).getIdUsuario());
+                estudianteEnAnteproyectoRegistro.setMatricula(estudiantesDisponibles.get(
+                        posicionEstudianteDisponible).getMatricula());
+                anteproyecto.setCantidadAlumnosParticipantes(
+                        anteproyecto.getCantidadAlumnosParticipantes()-1);
                 agregarEstudianteAAnteproyecto(estudianteEnAnteproyectoRegistro);
             } else {
                 Utilidades.mostrarDialogoSimple("Selección necesaria", 
@@ -158,7 +167,6 @@ public class FXMLAsignarEstudiantesController extends FXMLPrincipalAcademicoCont
     
     private void agregarEstudianteAAnteproyecto(Estudiante estudianteEnAnteproyecto) {
         int respuesta = EstudianteDAO.agregarEstudianteAnteproyecto(estudianteEnAnteproyecto);
-        System.out.println("Estudiante = " + estudianteEnAnteproyecto.getIdAnteproyecto() +", " + estudianteEnAnteproyecto.getMatricula() + ", " +estudianteEnAnteproyecto.getIdEstudiante());
         switch(respuesta) {
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Error de conexion", "El estudiante " + 
@@ -187,16 +195,18 @@ public class FXMLAsignarEstudiantesController extends FXMLPrincipalAcademicoCont
         Usuario usuarioSeleccionado = tvAlumnosAsignados.getSelectionModel().getSelectedItem();
         Estudiante student = new Estudiante();
         student.setIdEstudiante(usuarioSeleccionado.getIdEstudiante());
-        System.out.println("student = " + student.getIdEstudiante());
         if(usuarioSeleccionado != null){
-            boolean borrarRegistro = Utilidades.mostrarDialogoConfirmacion("Eliminar alumno del anteproyecto", 
+            boolean borrarRegistro = Utilidades.mostrarDialogoConfirmacion(
+                    "Eliminar alumno del anteproyecto", 
                     "¿Estás seguro de que deseas eliminar al alumno del anteproyecto?");
             if(borrarRegistro==true){
                 eliminarEstudianteDeAnteproyecto(student);
-                anteproyecto.setCantidadAlumnosParticipantes(anteproyecto.getCantidadAlumnosParticipantes() + 1);
+                anteproyecto.setCantidadAlumnosParticipantes(anteproyecto.
+                        getCantidadAlumnosParticipantes() + 1);
             }
         }else{
-             Utilidades.mostrarDialogoSimple("Selecciona un Alumno", "Selecciona a un alumno en la tabla de alumnos asigandos", 
+             Utilidades.mostrarDialogoSimple("Selecciona un Alumno", 
+                    "Selecciona a un alumno en la tabla de alumnos asigandos", 
                     Alert.AlertType.WARNING);
         }
     }

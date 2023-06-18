@@ -66,11 +66,10 @@ public class FXMLFormularioCuerpoAcademicoController extends FXMLPrincipalAdmini
             CuerpoAcademico cuerpoAcademicoEdicion) {
         this.esEdicion = esEdicion;
         this.cuerpoAcademicoEdicion = cuerpoAcademicoEdicion;
-        
         if (esEdicion) {
             lbTitulo.setText("Edición de cuerpo académico");
             btnRegistrarCuerpoAcademico.setVisible(false);
-            cargarInformacionEdicion();            
+            cargarInformacionEdicion();
         }else{
             lbTitulo.setText("Formulario de cuerpo académico");
             btnActualizarCuerpoAcademico.setVisible(false);
@@ -80,18 +79,19 @@ public class FXMLFormularioCuerpoAcademicoController extends FXMLPrincipalAdmini
     private void cargarInformacionEdicion(){
         tfClave.setText(cuerpoAcademicoEdicion.getClave());
         tfNombre.setText(cuerpoAcademicoEdicion.getNombre());
-        
         int posicionDependencia = obtenerPosicionComboDependencia(
                 cuerpoAcademicoEdicion.getIdDependencia());
-        cbResponsable.getItems().add(obtenerResponsableEdicion());
-        int posicionResponsable = obtenerPosicionComboResponsable(
-                cuerpoAcademicoEdicion.getIdResponsable());
-        int posicionGradoConsolidacion = obtenerPosicionGradoConsolidacion(
-                cuerpoAcademicoEdicion.getIdResponsable());
         
+        if (cuerpoAcademicoEdicion.getIdResponsable() != -1) {
+            cbResponsable.getItems().add(obtenerResponsableEdicion());
+            int posicionResponsable = obtenerPosicionComboResponsable(
+                    cuerpoAcademicoEdicion.getIdResponsable());
+            cbResponsable.getSelectionModel().select(posicionResponsable);
+        }
+        int posicionGradoConsolidacion = obtenerPosicionGradoConsolidacion(
+                cuerpoAcademicoEdicion.getIdGradoConsolidacion());
         cbDependencia.getSelectionModel().select(posicionDependencia);
         cbGradoConsolidacion.getSelectionModel().select(posicionGradoConsolidacion);
-        cbResponsable.getSelectionModel().select(posicionResponsable);
     }
     
     // Debido a que el DAO de responsable solo obtiene los academicos que 
