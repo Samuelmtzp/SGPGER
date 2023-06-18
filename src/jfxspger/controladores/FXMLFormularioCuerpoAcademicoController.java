@@ -49,11 +49,16 @@ public class FXMLFormularioCuerpoAcademicoController extends FXMLPrincipalAdmini
     private Button btnRegistrarCuerpoAcademico;
     @FXML
     private Button btnActualizarCuerpoAcademico;
+    @FXML
+    private Label lbNombreNoDisponible;
+    @FXML
+    private Label lbClaveNoDisponible;
     private CuerpoAcademico cuerpoAcademicoEdicion;
     private boolean esEdicion;
     private ObservableList<GradoConsolidacion> gradosConsolidacion;
     private ObservableList<Usuario> academicos;
     private ObservableList<Dependencia> dependencias;
+    private CuerpoAcademico copiaCuerpoAcademicoEdicion;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -69,11 +74,29 @@ public class FXMLFormularioCuerpoAcademicoController extends FXMLPrincipalAdmini
         if (esEdicion) {
             lbTitulo.setText("Edición de cuerpo académico");
             btnRegistrarCuerpoAcademico.setVisible(false);
+            inicializarCopiaCuerpoAcademicoEdicion();
             cargarInformacionEdicion();
         }else{
             lbTitulo.setText("Formulario de cuerpo académico");
             btnActualizarCuerpoAcademico.setVisible(false);
         }
+    }
+    
+    private void inicializarCopiaCuerpoAcademicoEdicion() {
+        copiaCuerpoAcademicoEdicion = new CuerpoAcademico();
+        copiaCuerpoAcademicoEdicion.setClave(cuerpoAcademicoEdicion.getClave());
+        copiaCuerpoAcademicoEdicion.setDependencia(cuerpoAcademicoEdicion.getDependencia());
+        copiaCuerpoAcademicoEdicion.setGradoConsolidacion(
+                cuerpoAcademicoEdicion.getGradoConsolidacion());
+        copiaCuerpoAcademicoEdicion.setIdCuerpoAcademico(
+                cuerpoAcademicoEdicion.getIdCuerpoAcademico());
+        copiaCuerpoAcademicoEdicion.setIdDependencia(cuerpoAcademicoEdicion.getIdDependencia());
+        copiaCuerpoAcademicoEdicion.setIdGradoConsolidacion(
+                cuerpoAcademicoEdicion.getIdGradoConsolidacion());
+        copiaCuerpoAcademicoEdicion.setIdResponsable(cuerpoAcademicoEdicion.getIdResponsable());
+        copiaCuerpoAcademicoEdicion.setNombre(cuerpoAcademicoEdicion.getNombre());
+        copiaCuerpoAcademicoEdicion.setNombreCompletoResponsable(
+                cuerpoAcademicoEdicion.getNombreCompletoResponsable());
     }
     
     private void cargarInformacionEdicion(){
@@ -208,14 +231,38 @@ public class FXMLFormularioCuerpoAcademicoController extends FXMLPrincipalAdmini
         String nombre = tfNombre.getText();
         String clave = tfClave.getText();
         
-        if (nombre.isEmpty()) {
+        if (nombre.trim().isEmpty()) {
             tfNombre.setStyle(Constantes.estiloError);
             datosValidos = false;
+        } else if (nombre.length() > 255) {
+            tfNombre.setStyle(Constantes.estiloError);
+            datosValidos = false;
+        } else {
+            if (!esEdicion || (esEdicion && !nombre.equals(
+                    copiaCuerpoAcademicoEdicion.getNombre()))) {
+                if (!esNombreDisponible(nombre)) {
+                    lbNombreNoDisponible.setText("Nombre no disponible");
+                    tfNombre.setStyle(Constantes.estiloError);
+                    datosValidos = false;
+                }
+            }
         }
         
-        if(tfClave.getLength() == 0) {
+        if (clave.trim().isEmpty()) {
             tfClave.setStyle(Constantes.estiloError);
             datosValidos = false;
+        } else if (clave.length() > 20) {
+            tfClave.setStyle(Constantes.estiloError);
+            datosValidos = false;
+        } else {
+            if (!esEdicion || (esEdicion && !clave.equals(
+                    copiaCuerpoAcademicoEdicion.getClave()))) {
+                if (!esClaveDisponible(clave)) {
+                    lbClaveNoDisponible.setText("Clave no disponible");
+                    tfClave.setStyle(Constantes.estiloError);
+                    datosValidos = false;
+                }
+            }
         }
         
         if (posicionGradoConsolidacion == -1) {
@@ -257,12 +304,24 @@ public class FXMLFormularioCuerpoAcademicoController extends FXMLPrincipalAdmini
         }   
     }
     
+    private boolean esNombreDisponible(String nombreVerificacion) {
+        int coincidencias = CuerpoAcademicoDAO.verificarDisponibilidadNombre(nombreVerificacion);
+        return coincidencias == 0;
+    }
+     
+    private boolean esClaveDisponible(String claveVerificacion) {
+        int coincidencias = CuerpoAcademicoDAO.verificarDisponibilidadClave(claveVerificacion);
+        return coincidencias == 0;
+    }
+    
     private void establecerEstiloNormal() {
         cbDependencia.setStyle(Constantes.estiloNormal);
         cbGradoConsolidacion.setStyle(Constantes.estiloNormal);
         cbResponsable.setStyle(Constantes.estiloNormal);
         tfNombre.setStyle(Constantes.estiloNormal);
         tfClave.setStyle(Constantes.estiloNormal);
+        lbClaveNoDisponible.setText("");
+        lbNombreNoDisponible.setText("");
     }
     
     private void registrarCuerpoAcademico(CuerpoAcademico cuerpoAcademicoRegistro) {
@@ -368,5 +427,5 @@ public class FXMLFormularioCuerpoAcademicoController extends FXMLPrincipalAdmini
     private void clicBtnActualizarCuerpoAcademico(ActionEvent event) {
         validarCamposRegistro();
     }
-    
+
 }

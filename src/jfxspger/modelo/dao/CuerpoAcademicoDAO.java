@@ -78,6 +78,50 @@ public class CuerpoAcademicoDAO {
         return respuesta;
     }
     
+    public static int verificarDisponibilidadNombre(String nombre) {
+        int respuesta = 1;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null) {
+            try {
+                String sentencia = "SELECT COUNT(*) AS coincidencias "
+                        + "FROM CuerpoAcademico WHERE nombre = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setString(1, nombre);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                if (resultado.next()) 
+                    respuesta = resultado.getInt("coincidencias");
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta = Constantes.ERROR_CONSULTA;
+            }
+        } else {
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
+    public static int verificarDisponibilidadClave(String clave) {
+        int respuesta = 1;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null) {
+            try {
+                String sentencia = "SELECT COUNT(*) AS coincidencias "
+                        + "FROM CuerpoAcademico WHERE clave = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setString(1, clave);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                if (resultado.next()) 
+                    respuesta = resultado.getInt("coincidencias");
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta = Constantes.ERROR_CONSULTA;
+            }
+        } else {
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
     public static int guardarCuerpoAcademico(CuerpoAcademico nuevoCuerpoAcademico) {
         int respuesta;
         Connection conexionBD = ConexionBD.abrirConexionBD();
