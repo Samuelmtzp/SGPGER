@@ -51,7 +51,7 @@ public class FXMLCronogramaActividadesController implements Initializable,
     private Label lTitulo;
     @FXML
     private TableColumn cFechaCreacion;
-    private Estudiante estudianteLogin;
+    public int idEstudiante;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -108,12 +108,17 @@ public class FXMLCronogramaActividadesController implements Initializable,
         cargarInformacionCronograma();
     }
      private void irFormulario(boolean esEdicion, Actividad actividadEdicion){
+        
+        FXMLInicioSesionController inicioSesion = new FXMLInicioSesionController();        
+        int id = inicioSesion.getIdEstudiante();
+         System.out.println("ID: " + id);
         try {
             FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.
                     getResource("vistas/FXMLActividadFormu.fxml"));
             Parent vista = accesoControlador.load();
             
             FXMLActividadFormularioController formulario = accesoControlador.getController();
+            formulario.setIdEstudiante(0);
             formulario.inicializarInformacionFormulario(esEdicion, actividadEdicion, this);
         
             Stage escenarioFormulario = new Stage();
@@ -240,4 +245,13 @@ public class FXMLCronogramaActividadesController implements Initializable,
         escenarioBase.setTitle("Ventana Principal");
         escenarioBase.show();       
     }
+
+    public int getIdEstudiante() {
+        return idEstudiante;
+    }
+
+    public void setIdEstudiante(int idEstudiante) {
+        this.idEstudiante = idEstudiante;
+    }
+        
 }

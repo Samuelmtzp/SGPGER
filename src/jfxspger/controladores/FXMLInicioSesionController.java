@@ -35,6 +35,7 @@ public class FXMLInicioSesionController implements Initializable {
     @FXML
     private Label lbErrorPassword;
     private Estudiante estudiante;
+    public int idEstudiante;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -100,7 +101,11 @@ public class FXMLInicioSesionController implements Initializable {
                                     EstudianteDAO.obtenerInformacionEstudiante(
                                             usuarioRespuesta.getIdUsuario());
                             Estudiante estudiante = estudianteRespuesta.getEstudiantes().get(0);
-                            guardarEstudiante(estudiante);
+                            setIdEstudiante(estudiante.getIdEstudiante());
+                            System.out.println("ID ESTUDIANTE: " + getIdEstudiante());
+                            FXMLPrincipalEstudianteController principalEstudiante = new FXMLPrincipalEstudianteController();
+                            principalEstudiante.setIdEstudiante(getIdEstudiante());
+                            System.out.println("ID ASIGNADO: " + principalEstudiante.getIdEstudiante());
                             irPantallaPrincipalEstudiante();
                             break;
 
@@ -141,15 +146,6 @@ public class FXMLInicioSesionController implements Initializable {
         configurarEscena(escenarioBase);
     }
     
-    public void guardarEstudiante(Estudiante estudiante){
-        this.estudiante = estudiante;
-        enviarEstudiante();
-        
-    }
-    public Estudiante enviarEstudiante(){
-        return estudiante;
-    }
-    
     private void irPantallaPrincipalAcademico() {
         Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
         escenarioBase.setScene(Utilidades.inicializarEscena(
@@ -162,4 +158,11 @@ public class FXMLInicioSesionController implements Initializable {
         escenarioBase.show();
     }
     
+    public void setIdEstudiante(int idEstudiante){
+        this.idEstudiante = idEstudiante;
+    }
+    
+    public int getIdEstudiante(){
+        return idEstudiante;
+    }
 }
