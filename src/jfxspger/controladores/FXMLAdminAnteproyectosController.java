@@ -288,11 +288,11 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     }
     
     private void activarFiltroDisponible() {
-        tvAnteproyecto.setItems(filtrarAnteproyectosPorEstado("Disponible"));
+        tvAnteproyecto.setItems(filtrarAnteproyectos("Disponible"));
     }
 
     private void activarFiltroValidacionPendiente() {
-        tvAnteproyecto.setItems(filtrarAnteproyectosPorEstado("Validacion pendiente"));
+        tvAnteproyecto.setItems(filtrarAnteproyectos("Validacion pendiente"));
     }
 
     private ObservableList<Anteproyecto> filtrarAnteproyectos(String filtro) {
