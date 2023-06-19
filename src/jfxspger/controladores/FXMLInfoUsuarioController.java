@@ -43,7 +43,6 @@ public class FXMLInfoUsuarioController extends FXMLPrincipalAdministradorControl
     @FXML
     private Label lbCampoAdicional;
     
-    private final int TIPO_USUARIO_ADMINISTRADOR = 1;
     private final int TIPO_USUARIO_ESTUDIANTE = 2;
     private final int TIPO_USUARIO_ACADEMICO = 3;
     private Usuario usuario;

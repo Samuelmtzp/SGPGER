@@ -179,7 +179,8 @@ public class UsuarioDAO {
                         + "ON Academico.idUsuario = Usuario.idUsuario "
                         + "WHERE Usuario.idTipoUsuario = 3 "
                         + "AND Academico.idAcademico "
-                        + "NOT IN (SELECT idResponsable FROM cuerpoacademico)";
+                        + "NOT IN (SELECT idResponsable FROM cuerpoacademico "
+                        + "WHERE idResponsable IS NOT NULL)";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Usuario> usuariosConsulta = new ArrayList();
@@ -457,9 +458,13 @@ public class UsuarioDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT usuario.idUsuario, usuario.nombre, usuario.apellidoPaterno, usuario.apellidoMaterno , estudiante.matricula, estudiante.idEstudiante \n" +
-                                  " FROM usuario " +
-                                  " INNER JOIN estudiante ON estudiante.idUsuario = usuario.idUsuario WHERE estudiante.idAnteproyecto IS NULL";
+                String consulta = "SELECT usuario.idUsuario, usuario.nombre, "
+                        + "usuario.apellidoPaterno, usuario.apellidoMaterno , "
+                        + "estudiante.matricula, estudiante.idEstudiante "
+                        + "FROM usuario "
+                        + "INNER JOIN estudiante "
+                        + "ON estudiante.idUsuario = usuario.idUsuario "
+                        + "WHERE estudiante.idAnteproyecto IS NULL";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Usuario> usuariosConsulta = new ArrayList();
@@ -491,9 +496,12 @@ public class UsuarioDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT usuario.idUsuario, usuario.nombre, usuario.apellidoPaterno, usuario.apellidoMaterno, estudiante.matricula, estudiante.idEstudiante "
+                String consulta = "SELECT usuario.idUsuario, usuario.nombre, "
+                        + "usuario.apellidoPaterno, usuario.apellidoMaterno, "
+                        + "estudiante.matricula, estudiante.idEstudiante "
                         + "FROM usuario "
-                        + "INNER JOIN estudiante ON estudiante.idUsuario = usuario.idUsuario WHERE estudiante.idAnteproyecto = ?;";
+                        + "INNER JOIN estudiante ON estudiante.idUsuario = "
+                        + "usuario.idUsuario WHERE estudiante.idAnteproyecto = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idAnteproyecto);
                 ResultSet resultado = prepararSentencia.executeQuery();

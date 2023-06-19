@@ -24,18 +24,18 @@ public class CursoDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT idCurso, Curso.idExperienciaEducativa, "
-                        + "ExperienciaEducativa.nombre, "
-                        + "curso.idPeriodo, PeriodoEscolar.nombre, idProfesor, "
-                        + "CONCAT(Usuario.nombre, ' ', "
-                        + "Usuario.apellidoPaterno, ' ', Usuario.apellidoMaterno) nombreCompleto, "
-                        + "NRC, bloque, seccion, cupo "
+                String consulta = "SELECT DISTINCT idCurso, Curso.idExperienciaEducativa, "
+                        + "ExperienciaEducativa.nombre, curso.idPeriodo, PeriodoEscolar.nombre, "
+                        + "if (idProfesor IS NULL, -1, idProfesor) AS idProfesor, "
+                        + "if (idProfesor IS NULL, \"Sin profesor\",CONCAT(Usuario.nombre, ' ', "
+                        + "Usuario.apellidoPaterno, ' ', Usuario.apellidoMaterno)) "
+                        + "AS nombreCompleto, NRC, bloque, seccion, cupo "
                         + "FROM Curso "
-                        + "INNER JOIN ExperienciaEducativa "
-                        + "ON Curso.idExperienciaEducativa = "
+                        + "INNER JOIN ExperienciaEducativa ON Curso.idExperienciaEducativa = "
                         + "ExperienciaEducativa.idExperienciaEducativa "
                         + "INNER JOIN Academico "
                         + "ON Curso.idProfesor = Academico.idAcademico "
+                        + "OR Curso.idProfesor IS NULL "
                         + "INNER JOIN Usuario "
                         + "ON Academico.idUsuario = Usuario.idUsuario "
                         + "INNER JOIN PeriodoEscolar "
@@ -68,6 +68,28 @@ public class CursoDAO {
             }
         } else {
             respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
+    }
+    
+    public static int verificarDisponibilidadNrc(int nrc) {
+        int respuesta = 1;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null) {
+            try {
+                String sentencia = "SELECT COUNT(*) AS coincidencias "
+                        + "FROM Curso WHERE nrc = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt(1, nrc);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                if (resultado.next()) 
+                    respuesta = resultado.getInt("coincidencias");
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta = Constantes.ERROR_CONSULTA;
+            }
+        } else {
+            respuesta = Constantes.ERROR_CONEXION;
         }
         return respuesta;
     }

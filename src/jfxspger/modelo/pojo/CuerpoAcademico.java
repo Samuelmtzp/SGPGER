@@ -107,9 +107,14 @@ public class CuerpoAcademico {
         this.dependencia = dependencia;
     }
     
-    @Override
-    public String toString(){
-        return nombre;
-    }
+//    @Override
+//    public String toString(){
+//        return nombre;
+//    }
 
+    @Override
+    public String toString() {
+        return "CuerpoAcademico{" + "idCuerpoAcademico=" + idCuerpoAcademico + ", nombre=" + nombre + ", clave=" + clave + ", idResponsable=" + idResponsable + ", nombreCompletoResponsable=" + nombreCompletoResponsable + ", idGradoConsolidacion=" + idGradoConsolidacion + ", gradoConsolidacion=" + gradoConsolidacion + ", idDependencia=" + idDependencia + ", dependencia=" + dependencia + '}';
+    }
+            
 }

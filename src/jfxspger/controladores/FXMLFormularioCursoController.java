@@ -49,6 +49,8 @@ public class FXMLFormularioCursoController extends FXMLAdminCursosController {
     private TextField tfSeccion;
     @FXML
     private TextField tfCupo;
+    @FXML
+    private Label lbNrcNoDisponible;
     private ObservableList<ExperienciaEducativa> experienciasEducativas;
     private ObservableList<PeriodoEscolar> periodosEscolares;
     private ObservableList<Usuario> profesores;
@@ -157,6 +159,11 @@ public class FXMLFormularioCursoController extends FXMLAdminCursosController {
         if (tfNrc.getLength() == 0) {
             tfNrc.setStyle(Constantes.estiloError);
             datosValidos = false;
+        } else if (!esNrcDisponible(Integer.parseInt(tfNrc.getText()))) {
+            lbNrcNoDisponible.setText("NRC no disponible");
+            tfNrc.setStyle(Constantes.estiloError);
+            datosValidos = false;
+                
         }
         
         if (tfBloque.getLength() == 0) {
@@ -164,7 +171,10 @@ public class FXMLFormularioCursoController extends FXMLAdminCursosController {
             datosValidos = false;
         }
         
-        if (seccion.isEmpty()) {
+        if (seccion.trim().isEmpty()) {
+            tfSeccion.setStyle(Constantes.estiloError);
+            datosValidos = false;
+        } else if (seccion.length() > 255) {
             tfSeccion.setStyle(Constantes.estiloError);
             datosValidos = false;
         }
@@ -209,8 +219,14 @@ public class FXMLFormularioCursoController extends FXMLAdminCursosController {
             cursoValidado.setSeccion(seccion);
             
             registrarCurso(cursoValidado);
-        }   
+        }
     }
+
+    private boolean esNrcDisponible(int nrcVerificacion) {
+        int coincidencias = CursoDAO.verificarDisponibilidadNrc(nrcVerificacion);
+        return coincidencias == 0;
+    }    
+        
     
     private void establecerEstiloNormal() {
         cbExperienciaEducativa.setStyle(Constantes.estiloNormal);
@@ -220,6 +236,7 @@ public class FXMLFormularioCursoController extends FXMLAdminCursosController {
         tfBloque.setStyle(Constantes.estiloNormal);
         tfSeccion.setStyle(Constantes.estiloNormal);
         tfCupo.setStyle(Constantes.estiloNormal);
+        lbNrcNoDisponible.setText("");
     }
     
     private void registrarCurso(Curso cursoRegistro) {

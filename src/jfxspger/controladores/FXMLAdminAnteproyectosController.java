@@ -288,14 +288,14 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     }
     
     private void activarFiltroDisponible() {
-        tvAnteproyecto.setItems(filtrarAnteproyectos("Disponible"));
+        tvAnteproyecto.setItems(filtrarAnteproyectos());
     }
 
     private void activarFiltroValidacionPendiente() {
-        tvAnteproyecto.setItems(filtrarAnteproyectos("Validacion pendiente"));
+        tvAnteproyecto.setItems(filtrarAnteproyectos());
     }
 
-    private ObservableList<Anteproyecto> filtrarAnteproyectos(String filtro) {
+    private ObservableList<Anteproyecto> filtrarAnteproyectos() {
         ObservableList<Anteproyecto> anteproyectosFiltrados = FXCollections.observableArrayList();
         boolean busquedaPorDirector = !tfBusqueda.getText().isEmpty();
         boolean busquedaDisponibles = rbDisponibles.isSelected();
