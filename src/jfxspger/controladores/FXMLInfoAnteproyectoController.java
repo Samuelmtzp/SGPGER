@@ -112,8 +112,8 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
         cbModalidad.getSelectionModel().select(
                 obtenerPosicionModalidad(anteproyecto.getIdModalidad()));
         cbLGAC.getSelectionModel().select(obtenerPosicionLgac(anteproyecto.getIdLgac()));
-        dpFechaInicio.setValue(LocalDate.parse(anteproyecto.getFechaInicio()));
-        dpFechaFin.setValue(LocalDate.parse(anteproyecto.getFechaFin()));
+        /*dpFechaInicio.setValue(LocalDate.parse(anteproyecto.getFechaInicio()));
+        dpFechaFin.setValue(LocalDate.parse(anteproyecto.getFechaFin()));*/
     }
     
     private int obtenerPosicionCuerpoAcademico(int idCuerpoAcademico){
@@ -259,7 +259,7 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
     private void clicRegresar(ActionEvent event) {
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.setScene(
-              Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos2.fxml"));
+              Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos3.fxml"));
         escenarioBase.setTitle("Administración anteproyectos");
         escenarioBase.show();
     }

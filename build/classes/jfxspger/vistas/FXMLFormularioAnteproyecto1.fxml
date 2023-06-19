@@ -120,14 +120,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <DatePicker fx:id="dpFechaInicio" layoutX="739.0" layoutY="110.0" />
-                        <DatePicker fx:id="dpFechaFin" layoutX="985.0" layoutY="110.0" />
-                        <Label layoutX="739.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Fecha Inicio">
-                           <font>
-                              <Font name="System Bold Italic" size="27.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="985.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Fecha Fin">
+                        <Label layoutX="756.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Duracion aproximada">
                            <font>
                               <Font name="System Bold Italic" size="27.0" />
                            </font>
@@ -153,6 +146,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
+                        <ComboBox fx:id="cbDuracionAprox" layoutX="756.0" layoutY="108.0" prefHeight="31.0" prefWidth="273.0" stylesheets="@../css/estilos.css" />
                      </children>
                   </AnchorPane>
               </content>

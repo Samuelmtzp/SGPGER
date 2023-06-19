@@ -50,10 +50,6 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     @FXML
     private TableColumn columNombreProyecto;
     @FXML
-    private TableColumn columFechaInicio;
-    @FXML
-    private TableColumn columFechaFin;
-    @FXML
     private TableColumn columDirector;
     @FXML
     private TableColumn columEstado;
@@ -66,6 +62,10 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     private RadioButton rbDisponibles;
     @FXML
     private RadioButton rbValidacionPendiente;
+    @FXML
+    private TableColumn columDuracionAprox;
+    @FXML
+    private TableColumn columFechaCreacion;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -78,8 +78,8 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
         columnNombre.setCellValueFactory(new PropertyValueFactory("nombreTrabajo"));
         columNombreProyecto.setCellValueFactory(new PropertyValueFactory(
                 "proyectoInvestigacion"));
-        columFechaInicio.setCellValueFactory(new PropertyValueFactory("fechaInicio"));
-        columFechaFin.setCellValueFactory(new PropertyValueFactory("fechaFin"));
+        columDuracionAprox.setCellValueFactory(new PropertyValueFactory("duracionAproximada"));
+        columFechaCreacion.setCellValueFactory(new PropertyValueFactory("fechaCreacion"));
         columDirector.setCellValueFactory(new PropertyValueFactory("Director"));
         columEstado.setCellValueFactory(new PropertyValueFactory("Estado"));
     }    

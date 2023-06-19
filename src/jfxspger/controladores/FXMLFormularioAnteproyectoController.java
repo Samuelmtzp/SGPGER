@@ -72,10 +72,6 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
     private TextArea taResultadosEsperados;
     @FXML
     private TextArea taBibliografia;
-    @FXML
-    private DatePicker dpFechaInicio;
-    @FXML
-    private DatePicker dpFechaFin;
     private ObservableList<Lgac> lgac;
     private ObservableList<Modalidad> modalidad;
     private ObservableList<CuerpoAcademico> cuerpoAcademico;
@@ -87,6 +83,8 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
     private Button btnPostularAnteproyecto;
     @FXML
     private Button btnGuardarAnteproyecto1;
+    @FXML
+    private ComboBox<?> cbDuracionAprox;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -104,8 +102,6 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
                      tfCantidadAlumnos.setText(newValue.replaceAll("[^\\d]", ""));
                  }
             }});
-        dpFechaInicio.setEditable(false);
-        dpFechaFin.setEditable(false);
         
         btnGuardarAnteproyecto1.setVisible(false);
     }    
@@ -136,8 +132,6 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
        int posicionDirector = cbDirector.getSelectionModel().getSelectedIndex();
        int posicionModalidad = cbModalidad.getSelectionModel().getSelectedIndex();
        int posicionLGAC = cbLGAC.getSelectionModel().getSelectedIndex();
-       LocalDate fechaInicio =dpFechaInicio.getValue();
-       LocalDate fechaFin = dpFechaFin.getValue();
        boolean sonValidos=true;
        
        //Validaciones
@@ -242,36 +236,6 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
            sonValidos=false;
        }
        
-       if(fechaInicio == null){
-            dpFechaInicio.setStyle(Constantes.estiloError);
-            sonValidos=false;
-        }else{
-           if(fechaFin!=null){
-                if(fechaInicio.isAfter(fechaFin)){
-                    dpFechaInicio.setStyle(Constantes.estiloError);
-                    sonValidos=false;
-                }else{
-                    if(fechaInicio.isEqual(fechaFin)){
-                        dpFechaInicio.setStyle(Constantes.estiloError);
-                        dpFechaFin.setStyle(Constantes.estiloError);
-                        sonValidos=false;
-                    }
-                }
-           }
-        }
-        
-        //Validacion fecha fin
-        if(fechaFin==null){
-            dpFechaFin.setStyle(Constantes.estiloError);
-            sonValidos=false;
-        }else{
-            if(fechaInicio!=null){
-                if(fechaFin.isBefore(fechaInicio)){
-                    dpFechaFin.setStyle(Constantes.estiloError);
-                    sonValidos=false;
-                }
-            }
-        }
         
         if(!bibliografiaRecomendada.isEmpty()){
             if(bibliografiaRecomendada.length()>2000){
@@ -286,8 +250,8 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
             anteproyectoValido.setIdDirector(usuarios.get(posicionDirector).getIdAcademico());
             anteproyectoValido.setIdCuerpoAcademico(cuerpoAcademico.
                     get(posicionCuerpoAcademico).getIdCuerpoAcademico());
-            anteproyectoValido.setFechaInicio(fechaInicio.toString());
-            anteproyectoValido.setFechaFin(fechaFin.toString());
+            //anteproyectoValido.setFechaInicio(fechaInicio.toString());
+            //anteproyectoValido.setFechaFin(fechaFin.toString());
             anteproyectoValido.setIdModalidad(modalidad.get(posicionModalidad).getIdModalidad());
             anteproyectoValido.setIdLgac(lgac.get(posicionLGAC).getIdLgac());
             anteproyectoValido.setProyectoInvestigacion(proyectoInvestigacion);
@@ -300,8 +264,6 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
             anteproyectoValido.setDescripcionTrabajoRecepcional(descripcionTrabajo);
             anteproyectoValido.setResultadosEsperados(resultadosEsperados);
             anteproyectoValido.setIdEstado(estado.get(posEstado).getIdEstadoAnteproyecto());
-            anteproyectoValido.setComentarios(requisitos);
-            System.out.println("Anteproyecto = " + anteproyectoValido.getIdDirector());
             if(!bibliografiaRecomendada.isEmpty()){
                 anteproyectoValido.setBibliografiaRecomendada(bibliografiaRecomendada);
             }
@@ -496,10 +458,10 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
         int cantAlum = anteproyectoEdicion.getCantidadAlumnosParticipantes();
         String cantidadAlumnos = Integer.toString(cantAlum);
         tfCantidadAlumnos.setText(cantidadAlumnos);
-        LocalDate fechaInicio = LocalDate.parse(anteproyectoEdicion.getFechaInicio());
-        dpFechaInicio.setValue(fechaInicio);
-        LocalDate fechaFin = LocalDate.parse(anteproyectoEdicion.getFechaFin());
-        dpFechaFin.setValue(fechaFin);
+        //LocalDate fechaInicio = LocalDate.parse(anteproyectoEdicion.getFechaInicio());
+        //dpFechaInicio.setValue(fechaInicio);
+        //LocalDate fechaFin = LocalDate.parse(anteproyectoEdicion.getFechaFin());
+        //dpFechaFin.setValue(fechaFin);
         tfProyectoInvestigacion.setText(anteproyectoEdicion.getProyectoInvestigacion());
         tfLineaInvestigacion.setText(anteproyectoEdicion.getLineaInvestigacion());
         tfNombreTrabajo.setText(anteproyectoEdicion.getNombreTrabajo());
@@ -529,8 +491,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
         taDescripcionTrabajo.setStyle(Constantes.estiloNormal);
         taRequisitos.setStyle(Constantes.estiloNormal);
         taResultadosEsperados.setStyle(Constantes.estiloNormal);
-        dpFechaInicio.setStyle(Constantes.estiloNormal);
-        dpFechaFin.setStyle(Constantes.estiloNormal);
+        cbDuracionAprox.setStyle(Constantes.estiloNormal);
         cbCuerpoAcademico.setStyle(Constantes.estiloNormal);
         cbDirector.setStyle(Constantes.estiloNormal);
         cbLGAC.setStyle(Constantes.estiloNormal);
@@ -553,7 +514,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
     private void salir(){
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos2.fxml"));
+                Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos3.fxml"));
         escenarioBase.setTitle("Administración Anteproyecto");
         escenarioBase.show();
     }
@@ -593,4 +554,5 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
         }
         return 0;
     }
+
 }

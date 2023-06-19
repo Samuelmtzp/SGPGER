@@ -17,8 +17,8 @@ public class Anteproyecto {
     private int idLgac;
     private String proyectoInvestigacion;
     private String lineaInvestigacion;
-    private String fechaInicio;
-    private String fechaFin;
+    private int idDuracionAproximada;
+    private String duracionAproximada;
     private String nombreTrabajo;
     private String requisitos;
     private int cantidadAlumnosParticipantes;
@@ -26,19 +26,17 @@ public class Anteproyecto {
     private String descripcionTrabajoRecepcional;
     private String resultadosEsperados;
     private String bibliografiaRecomendada;
-    private String comentarios;
+    private String fechaCreacion;
 
     public Anteproyecto() {
     }
 
-    public Anteproyecto(int idAnteproyecto, int idCuerpoAcademico, 
-            int idDirector, String Director, int idEstado, 
-            String Estado, int idModalidad, int idLgac, 
-            String proyectoInvestigacion, String lineaInvestigacion, 
-            String fechaInicio, String fechaFin, String nombreTrabajo, 
-            String requisitos, int cantidadAlumnosParticipantes, 
+    public Anteproyecto(int idAnteproyecto, int idCuerpoAcademico, int idDirector, String Director,
+            int idEstado, String Estado, int idModalidad, int idLgac, String proyectoInvestigacion,
+            String lineaInvestigacion, int idDuracionAproximada, String duracionAproximada, String nombreTrabajo, 
+            String requisitos, int cantidadAlumnosParticipantes,
             String descripcionProyectoInvestigacion, String descripcionTrabajoRecepcional, 
-            String resultadosEsperados, String bibliografiaRecomendada, String comentarios) {
+            String resultadosEsperados, String bibliografiaRecomendada, String fechaCreacion) {
         this.idAnteproyecto = idAnteproyecto;
         this.idCuerpoAcademico = idCuerpoAcademico;
         this.idDirector = idDirector;
@@ -49,8 +47,7 @@ public class Anteproyecto {
         this.idLgac = idLgac;
         this.proyectoInvestigacion = proyectoInvestigacion;
         this.lineaInvestigacion = lineaInvestigacion;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
+        this.idDuracionAproximada = idDuracionAproximada;
         this.nombreTrabajo = nombreTrabajo;
         this.requisitos = requisitos;
         this.cantidadAlumnosParticipantes = cantidadAlumnosParticipantes;
@@ -58,10 +55,35 @@ public class Anteproyecto {
         this.descripcionTrabajoRecepcional = descripcionTrabajoRecepcional;
         this.resultadosEsperados = resultadosEsperados;
         this.bibliografiaRecomendada = bibliografiaRecomendada;
-        this.comentarios = comentarios;
+        this.fechaCreacion = fechaCreacion;
+        this.duracionAproximada=duracionAproximada;
     }
 
-        public String getDirector() {
+    public int getIdDuracionAproximada() {
+        return idDuracionAproximada;
+    }
+
+    public void setIdDuracionAproximada(int idDuracionAproximada) {
+        this.idDuracionAproximada = idDuracionAproximada;
+    }
+
+    public String getDuracionAproximada() {
+        return duracionAproximada;
+    }
+
+    public void setDuracionAproximada(String duracionAproximada) {
+        this.duracionAproximada = duracionAproximada;
+    }
+
+    public String getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(String fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+    
+    public String getDirector() {
         return Director;
     }
 
@@ -140,23 +162,7 @@ public class Anteproyecto {
     public void setLineaInvestigacion(String lineaInvestigacion) {
         this.lineaInvestigacion = lineaInvestigacion;
     }
-
-    public String getFechaInicio() {
-        return fechaInicio;
-    }
-
-    public void setFechaInicio(String fechaInicio) {
-        this.fechaInicio = fechaInicio;
-    }
-
-    public String getFechaFin() {
-        return fechaFin;
-    }
-
-    public void setFechaFin(String fechaFin) {
-        this.fechaFin = fechaFin;
-    }
-
+    
     public String getNombreTrabajo() {
         return nombreTrabajo;
     }
@@ -212,28 +218,21 @@ public class Anteproyecto {
     public void setBibliografiaRecomendada(String bibliografiaRecomendada) {
         this.bibliografiaRecomendada = bibliografiaRecomendada;
     }
-
-    public String getComentarios() {
-        return comentarios;
-    }
-
-    public void setComentarios(String comentarios) {
-        this.comentarios = comentarios;
-    }
-
+    
     @Override
     public String toString() {
         return "Anteproyecto{" + "idAnteproyecto=" + idAnteproyecto + ", idCuerpoAcademico=" + 
                 idCuerpoAcademico + ", idDirector=" + idDirector + ", idEstado=" + idEstado + 
                 ", idModalidad=" + idModalidad + ", idLgac=" + idLgac + ", proyectoInvestigacion=" + 
                 proyectoInvestigacion + ", lineaInvestigacion=" + lineaInvestigacion + 
-                ", fechaIncio=" + fechaInicio + ", fechaFin=" + fechaFin + ", nombreTrabajo=" + 
+                ", duracionAproximada =" + idDuracionAproximada + ", duracionAproximada =" + 
+                duracionAproximada +  ", nombreTrabajo=" + 
                 nombreTrabajo + ", requisitos=" + requisitos + ", cantidadAlumnosParticipantes=" + 
                 cantidadAlumnosParticipantes + ", descripcionProyectoInvestigacion=" + 
                 descripcionProyectoInvestigacion + ", descripcionTrabajoRecepcional=" + 
                 descripcionTrabajoRecepcional + ", resultadosEsperados=" + resultadosEsperados + 
-                ", bibliografiaRecomendada=" + bibliografiaRecomendada + ", comentarios=" + 
-                comentarios + '}';
+                ", bibliografiaRecomendada=" + bibliografiaRecomendada + ", fechaCreacion=" + 
+                fechaCreacion + '}';
     }
     
 }
