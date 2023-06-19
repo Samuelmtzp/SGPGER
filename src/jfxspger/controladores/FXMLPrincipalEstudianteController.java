@@ -20,11 +20,19 @@ public class FXMLPrincipalEstudianteController implements Initializable {
 
     @FXML
     private Label lbTitulo;
-    private Estudiante estudiante;
+    public int idEstudiante;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+    }
+
+    public int getIdEstudiante() {
+        return idEstudiante;
+    }
+
+    public void setIdEstudiante(int idEstudiante) {
+        this.idEstudiante = idEstudiante;
     }    
 
     @FXML
@@ -46,6 +54,11 @@ public class FXMLPrincipalEstudianteController implements Initializable {
 
     @FXML
     private void clicIrCronograma(ActionEvent event) {
+        System.out.println("ID ALMACENADO: " + getIdEstudiante());
+        FXMLInicioSesionController inicioSesion = new FXMLInicioSesionController();
+        FXMLCronogramaActividadesController cronograma = new FXMLCronogramaActividadesController();
+        cronograma.setIdEstudiante(inicioSesion.getIdEstudiante());
+        System.out.println("ID: " + cronograma.getIdEstudiante());
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.setScene(Utilidades.inicializarEscena(
                 "vistas/FXMLCronogramaActividades.fxml"));

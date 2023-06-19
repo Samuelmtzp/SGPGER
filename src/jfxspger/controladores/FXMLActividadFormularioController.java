@@ -20,6 +20,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
@@ -29,6 +30,7 @@ import javafx.stage.Stage;
 import jfxspger.interfaz.INotificacionOperacionActividad;
 import jfxspger.modelo.dao.ActividadDAO;
 import jfxspger.modelo.pojo.Actividad;
+import jfxspger.modelo.pojo.Estudiante;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
 
@@ -42,8 +44,9 @@ public class FXMLActividadFormularioController implements Initializable {
     private DatePicker dpFechaInicio;
     @FXML
     private DatePicker dpFechaFin;
-    private Actividad actividadEdicion;   
-    private int idEstudiante = 1;
+    private Actividad actividadEdicion;
+    private Estudiante estudiante;
+    private int idEstudiante;
     private boolean esEdicion;
     private INotificacionOperacionActividad interfazNotificacion;
     
@@ -62,12 +65,15 @@ public class FXMLActividadFormularioController implements Initializable {
     private Spinner<Integer> spHorasFin;
     
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+    @FXML
+    private Button bEliminar;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         dpFechaInicio.setEditable(false);
         dpFechaFin.setEditable(false);        
-        configurarSeleccionHora();        
+        configurarSeleccionHora();
+        System.out.println("ID ESTUDIANTE: " + idEstudiante);
     }
     
     private void configurarSeleccionHora() {
@@ -111,9 +117,11 @@ public class FXMLActividadFormularioController implements Initializable {
         this.interfazNotificacion = interfazNotificacion;
         
         if(esEdicion){
-            lbTitulo.setText("Editando actividad: " + actividadEdicion.getTitulo());            
+            lbTitulo.setText("Editando actividad: " + actividadEdicion.getTitulo()); 
+            bEliminar.setVisible(true);
             cargarInformacionEdicion();
         } else {
+            bEliminar.setVisible(false);
             lbTitulo.setText("Programar nueva actividad");
         }
     }
@@ -136,12 +144,17 @@ public class FXMLActividadFormularioController implements Initializable {
         spHorasInicio.getValueFactory().setValue(horasInicio);
         spHorasFin.getValueFactory().setValue(horasFin);
         dpFechaInicio.setValue(fInicio);
-        dpFechaFin.setValue(fFin);
+        dpFechaFin.setValue(fFin);       
     }
 
     @FXML
     private void clicBtnGuardar(ActionEvent event) {
         validarCampos();
+    }
+    
+        @FXML
+    private void clicBtnEliminarActividad(ActionEvent event) {
+            eliminarActividad(actividadEdicion);
     }
     
     private void validarCampos(){
@@ -155,17 +168,20 @@ public class FXMLActividadFormularioController implements Initializable {
                 spMinutosInicio.getValue());
         LocalTime tiempoFin = LocalTime.of(spHorasFin.getValue(), spMinutosFin.getValue());        
         
-        
-        if(nomAct.isEmpty()){
-            tfNombreActividad.setStyle(estiloError);
-            datosValidos = false;
+        if(nomAct.trim() != null){
+            if(nomAct.isEmpty()){
+                tfNombreActividad.setStyle(estiloError);
+                datosValidos = false;
+            }    
         }
         
-        if(desc.isEmpty()){
+        if(desc.trim() != null){
+            if(desc.isEmpty()){
             tfDescripcionActividad.setStyle(estiloError);
             datosValidos = false;
+            }
         }
-
+        
         if(fechaFin == null){
             dpFechaFin.setStyle(estiloError);
             datosValidos = false;
@@ -203,7 +219,7 @@ public class FXMLActividadFormularioController implements Initializable {
         }
     }
     
-    private void registrarActividad(Actividad actividadNueva){
+    private void registrarActividad(Actividad actividadNueva){        
         int codigoRespuesta = ActividadDAO.guardarActividad(actividadNueva);
         switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
@@ -245,8 +261,31 @@ public class FXMLActividadFormularioController implements Initializable {
                         actividadActualizada.getTitulo());
                 cerrarVentana();
                 break;
-        }
-        
+        }        
+    }
+    
+    private void eliminarActividad(Actividad actividadSeleccionada){        
+        int codigoRespuesta = ActividadDAO.eliminarActividad(actividadSeleccionada.getIdActividad());
+        switch(codigoRespuesta){
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Sin conexión", 
+                        "Lo sentimos, por el momento no hay conexión", 
+                        Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                Utilidades.mostrarDialogoSimple("Error al eliminar", 
+                        "Hubo un error al eliminar la actividad. Por favor intente más tarde", 
+                        Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                Utilidades.mostrarDialogoSimple("Actividad eliminada", 
+                        "Actividad eliminada correctamente", 
+                        Alert.AlertType.INFORMATION);
+                interfazNotificacion.notificarOperacionActualizar(
+                        actividadSeleccionada.getTitulo());
+                cerrarVentana();
+                break;
+        }        
     }
     
     private void cerrarVentana(){
@@ -321,18 +360,12 @@ public class FXMLActividadFormularioController implements Initializable {
                 cerrarVentana();
             }
     }
-    
-    private void obtenerDatosEstudiante(){
-        try {
-            FXMLLoader accesoControlador = new FXMLLoader(
-                    jfxspger.JFXSPGER.class.getResource("vistas/FXMLInicioSesion.fxml"));
-            Parent vista = accesoControlador.load();
-            
-            FXMLInicioSesionController inicioSesion = accesoControlador.getController();
-            idEstudiante = inicioSesion.enviarEstudiante().getIdEstudiante();            
-        
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+
+    public FXMLActividadFormularioController(int idEstudiante) {
+        this.idEstudiante = idEstudiante;
     }
+
+    public FXMLActividadFormularioController() {
+    }
+        
 }
