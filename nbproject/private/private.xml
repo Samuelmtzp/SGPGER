@@ -6,11 +6,10 @@
             <file>file:/C:/Users/king_/OneDrive/Escritorio/Escuela/Construccion/JavaFX/SGPGER/src/jfxspger/modelo/dao/AnteproyectoDAO.java</file>
             <file>file:/C:/Users/king_/OneDrive/Escritorio/Escuela/Construccion/JavaFX/SGPGER/src/jfxspger/modelo/dao/UsuarioDAO.java</file>
             <file>file:/C:/Users/king_/OneDrive/Escritorio/Escuela/Construccion/JavaFX/SGPGER/src/jfxspger/controladores/FXMLAdminAnteproyectosController.java</file>
-            <file>file:/C:/Users/king_/OneDrive/Escritorio/Escuela/Construccion/JavaFX/SGPGER/src/jfxspger/controladores/FXMLPrincipalAcademicoController.java</file>
             <file>file:/C:/Users/king_/OneDrive/Escritorio/Escuela/Construccion/JavaFX/SGPGER/src/jfxspger/modelo/pojo/Anteproyecto.java</file>
             <file>file:/C:/Users/king_/OneDrive/Escritorio/Escuela/Construccion/JavaFX/SGPGER/src/jfxspger/controladores/FXMLAsignarEstudiantesController.java</file>
-            <file>file:/C:/Users/king_/OneDrive/Escritorio/Escuela/Construccion/JavaFX/SGPGER/src/jfxspger/controladores/FXMLInfoAnteproyectoController.java</file>
             <file>file:/C:/Users/king_/OneDrive/Escritorio/Escuela/Construccion/JavaFX/SGPGER/src/jfxspger/controladores/FXMLFormularioAnteproyectoController.java</file>
+            <file>file:/C:/Users/king_/OneDrive/Escritorio/Escuela/Construccion/JavaFX/SGPGER/src/jfxspger/modelo/ConexionBD.java</file>
         </group>
     </open-files>
 </project-private>

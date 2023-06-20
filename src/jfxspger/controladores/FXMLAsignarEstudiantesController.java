@@ -247,7 +247,7 @@ public class FXMLAsignarEstudiantesController extends FXMLPrincipalAcademicoCont
         if(Salir){
           Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
           escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos2.fxml"));
+                Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos3.fxml"));
           escenarioBase.setTitle("Administración LGAC");
           escenarioBase.show();
         }
