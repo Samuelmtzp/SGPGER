@@ -33,7 +33,7 @@
             <TableColumn fx:id="cFechaCreacion" prefWidth="292.0" text="Fecha de creacion" />
          </columns>
       </TableView>
-      <Button layoutX="379.0" layoutY="134.0" mnemonicParsing="false" onAction="#clicIrPrincipalAcademico" prefHeight="55.0" prefWidth="74.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css">
+      <Button layoutX="379.0" layoutY="134.0" mnemonicParsing="false" onAction="#clicIrInfoAnteproyecto" prefHeight="55.0" prefWidth="74.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css">
          <graphic>
             <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
