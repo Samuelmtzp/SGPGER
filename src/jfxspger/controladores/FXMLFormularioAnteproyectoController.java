@@ -526,11 +526,6 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
             taBibliografia.setText(anteproyectoEdicion.getBibliografiaRecomendada());
         }
     }  
-
-    @FXML
-    private void clicIrAnteproyectos(ActionEvent event) {
-        regresar();
-    }
     
     private void establecerEstiloNormal(){
         tfCantidadAlumnos.setStyle(Constantes.estiloNormal);

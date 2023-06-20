@@ -9,12 +9,15 @@ public class Anteproyecto {
     
     private int idAnteproyecto;
     private int idCuerpoAcademico;
+    private String cuerpoAcademico;
     private int idDirector;
     private String Director;
     private int idEstado;
     private String Estado;
     private int idModalidad;
+    private String modalidad;
     private int idLgac;
+    private String lgac;
     private String proyectoInvestigacion;
     private String lineaInvestigacion;
     private int idDuracionAproximada;
@@ -31,23 +34,28 @@ public class Anteproyecto {
     public Anteproyecto() {
     }
 
-    public Anteproyecto(int idAnteproyecto, int idCuerpoAcademico, int idDirector, String Director,
-            int idEstado, String Estado, int idModalidad, int idLgac, String proyectoInvestigacion,
-            String lineaInvestigacion, int idDuracionAproximada, String duracionAproximada, String nombreTrabajo, 
-            String requisitos, int cantidadAlumnosParticipantes,
+    public Anteproyecto(int idAnteproyecto, int idCuerpoAcademico, String cuerpoAcademico, 
+            int idDirector, String Director, int idEstado, String Estado, int idModalidad, 
+            String modalidad, int idLgac, String lgac, String proyectoInvestigacion, 
+            String lineaInvestigacion, int idDuracionAproximada, String duracionAproximada, 
+            String nombreTrabajo, String requisitos, int cantidadAlumnosParticipantes, 
             String descripcionProyectoInvestigacion, String descripcionTrabajoRecepcional, 
             String resultadosEsperados, String bibliografiaRecomendada, String fechaCreacion) {
         this.idAnteproyecto = idAnteproyecto;
         this.idCuerpoAcademico = idCuerpoAcademico;
+        this.cuerpoAcademico = cuerpoAcademico;
         this.idDirector = idDirector;
         this.Director = Director;
         this.idEstado = idEstado;
         this.Estado = Estado;
         this.idModalidad = idModalidad;
+        this.modalidad = modalidad;
         this.idLgac = idLgac;
+        this.lgac = lgac;
         this.proyectoInvestigacion = proyectoInvestigacion;
         this.lineaInvestigacion = lineaInvestigacion;
         this.idDuracionAproximada = idDuracionAproximada;
+        this.duracionAproximada = duracionAproximada;
         this.nombreTrabajo = nombreTrabajo;
         this.requisitos = requisitos;
         this.cantidadAlumnosParticipantes = cantidadAlumnosParticipantes;
@@ -56,7 +64,6 @@ public class Anteproyecto {
         this.resultadosEsperados = resultadosEsperados;
         this.bibliografiaRecomendada = bibliografiaRecomendada;
         this.fechaCreacion = fechaCreacion;
-        this.duracionAproximada=duracionAproximada;
     }
 
     public int getIdDuracionAproximada() {
@@ -67,6 +74,30 @@ public class Anteproyecto {
         this.idDuracionAproximada = idDuracionAproximada;
     }
 
+    public String getCuerpoAcademico() {
+        return cuerpoAcademico;
+    }
+
+    public void setCuerpoAcademico(String cuerpoAcademico) {
+        this.cuerpoAcademico = cuerpoAcademico;
+    }
+
+    public String getModalidad() {
+        return modalidad;
+    }
+
+    public void setModalidad(String modalidad) {
+        this.modalidad = modalidad;
+    }
+
+    public String getLgac() {
+        return lgac;
+    }
+
+    public void setLgac(String lgac) {
+        this.lgac = lgac;
+    }
+    
     public String getDuracionAproximada() {
         return duracionAproximada;
     }
@@ -218,21 +249,22 @@ public class Anteproyecto {
     public void setBibliografiaRecomendada(String bibliografiaRecomendada) {
         this.bibliografiaRecomendada = bibliografiaRecomendada;
     }
-    
+
     @Override
     public String toString() {
         return "Anteproyecto{" + "idAnteproyecto=" + idAnteproyecto + ", idCuerpoAcademico=" + 
-                idCuerpoAcademico + ", idDirector=" + idDirector + ", idEstado=" + idEstado + 
-                ", idModalidad=" + idModalidad + ", idLgac=" + idLgac + ", proyectoInvestigacion=" + 
+                idCuerpoAcademico + ", cuerpoAcademico=" + cuerpoAcademico + ", idDirector=" + 
+                idDirector + ", Director=" + Director + ", idEstado=" + idEstado + ", Estado=" + 
+                Estado + ", idModalidad=" + idModalidad + ", modalidad=" + modalidad +
+                ", idLgac=" + idLgac + ", lgac=" + lgac + ", proyectoInvestigacion=" + 
                 proyectoInvestigacion + ", lineaInvestigacion=" + lineaInvestigacion + 
-                ", duracionAproximada =" + idDuracionAproximada + ", duracionAproximada =" + 
-                duracionAproximada +  ", nombreTrabajo=" + 
-                nombreTrabajo + ", requisitos=" + requisitos + ", cantidadAlumnosParticipantes=" + 
-                cantidadAlumnosParticipantes + ", descripcionProyectoInvestigacion=" + 
-                descripcionProyectoInvestigacion + ", descripcionTrabajoRecepcional=" + 
-                descripcionTrabajoRecepcional + ", resultadosEsperados=" + resultadosEsperados + 
-                ", bibliografiaRecomendada=" + bibliografiaRecomendada + ", fechaCreacion=" + 
-                fechaCreacion + '}';
+                ", idDuracionAproximada=" + idDuracionAproximada + ", duracionAproximada=" + 
+                duracionAproximada + ", nombreTrabajo=" + nombreTrabajo + ", requisitos=" + 
+                requisitos + ", cantidadAlumnosParticipantes=" + cantidadAlumnosParticipantes + 
+                ", descripcionProyectoInvestigacion=" + descripcionProyectoInvestigacion +
+                ", descripcionTrabajoRecepcional=" + descripcionTrabajoRecepcional +
+                ", resultadosEsperados=" + resultadosEsperados + ", bibliografiaRecomendada=" +
+                bibliografiaRecomendada + ", fechaCreacion=" + fechaCreacion + '}';
     }
     
 }

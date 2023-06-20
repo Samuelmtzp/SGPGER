@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
@@ -30,91 +28,101 @@
       </Pane>
       <Pane layoutX="300.0" layoutY="100.0" prefHeight="980.0" prefWidth="1620.0">
          <children>
-            <ScrollPane prefHeight="900.0" prefWidth="1620.0" vbarPolicy="ALWAYS">
+            <ScrollPane prefHeight="980.0" prefWidth="1620.0" vbarPolicy="ALWAYS">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="980.0" prefWidth="1615.0">
                      <children>
-                        <Label layoutX="167.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Cuerpo Academico">
+                        <Label layoutX="74.0" layoutY="113.0" stylesheets="@../css/estilos.css" text="Cuerpo Academico">
                            <font>
-                              <Font name="System Bold Italic" size="27.0" />
+                              <Font name="System Bold" size="27.0" />
                            </font>
                         </Label>
-                        <Label layoutX="462.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Director">
+                        <Label layoutX="69.0" layoutY="673.0" stylesheets="@../css/estilos.css" text="Director">
                            <font>
-                              <Font name="System Bold Italic" size="27.0" />
+                              <Font name="System Bold" size="27.0" />
                            </font>
                         </Label>
-                        <Label layoutX="1239.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Modalidad">
+                        <Label layoutX="71.0" layoutY="516.0" stylesheets="@../css/estilos.css" text="Modalidad">
                            <font>
-                              <Font name="System Bold Italic" size="27.0" />
+                              <Font name="System Bold" size="27.0" />
                            </font>
                         </Label>
-                        <Label layoutX="82.0" layoutY="213.0" stylesheets="@../css/estilos.css" text="LGAC">
+                        <Label layoutX="76.0" layoutY="283.0" stylesheets="@../css/estilos.css" text="LGAC">
                            <font>
-                              <Font name="System Bold Italic" size="27.0" />
+                              <Font name="System Bold" size="27.0" />
                            </font>
                         </Label>
-                        <Label layoutX="444.0" layoutY="213.0" stylesheets="@../css/estilos.css" text="Proyecto de investigación">
+                        <Label layoutX="74.0" layoutY="198.0" stylesheets="@../css/estilos.css" text="Proyecto de investigación">
                            <font>
-                              <Font name="System Bold Italic" size="27.0" />
+                              <Font name="System Bold" size="27.0" />
                            </font>
                         </Label>
-                        <Label layoutX="890.0" layoutY="213.0" stylesheets="@../css/estilos.css" text="Línea de investigación">
+                        <Label layoutX="73.0" layoutY="362.0" stylesheets="@../css/estilos.css" text="Línea de investigación">
                            <font>
-                              <Font name="System Bold Italic" size="27.0" />
+                              <Font name="System Bold" size="27.0" />
                            </font>
                         </Label>
-                        <Label layoutX="77.0" layoutY="361.0" stylesheets="@../css/estilos.css" text="Nombre del trabajo">
+                        <Label layoutX="70.0" layoutY="596.0" stylesheets="@../css/estilos.css" text="Nombre del trabajo">
                            <font>
-                              <Font name="System Bold Italic" size="27.0" />
+                              <Font name="System Bold" size="27.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="taRequisitos" editable="false" layoutX="476.0" layoutY="425.0" prefHeight="131.0" prefWidth="421.0" wrapText="true" />
-                        <Label layoutX="476.0" layoutY="361.0" stylesheets="@../css/estilos.css" text="Requisitos">
+                        <TextArea fx:id="taCuerpoAcademico" editable="false" layoutX="423.0" layoutY="101.0" prefHeight="58.0" prefWidth="388.0" wrapText="true">
                            <font>
-                              <Font name="System Bold Italic" size="27.0" />
+                              <Font size="15.0" />
+                           </font></TextArea>
+                        <Label layoutX="912.0" layoutY="51.0" prefHeight="39.0" prefWidth="635.0" stylesheets="@../css/estilos.css" text="Requisitos">
+                           <font>
+                              <Font name="System Bold" size="27.0" />
                            </font>
                         </Label>
-                        <Label layoutX="954.0" layoutY="361.0" stylesheets="@../css/estilos.css" text="Cantidad de alumnos participantes">
+                        <Label layoutX="70.0" layoutY="821.0" stylesheets="@../css/estilos.css" text="Alumnos participantes">
                            <font>
-                              <Font name="System Bold Italic" size="27.0" />
+                              <Font name="System Bold" size="27.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="taDescripcionProyecto" editable="false" layoutX="74.0" layoutY="627.0" prefHeight="131.0" prefWidth="421.0" wrapText="true" />
-                        <Label layoutX="74.0" layoutY="565.0" prefHeight="60.0" prefWidth="535.0" stylesheets="@../css/estilos.css" text="Descripcion del proyecto de investigacion">
+                        <TextArea fx:id="taDescripcionProyecto" editable="false" layoutX="913.0" layoutY="242.0" prefHeight="110.0" prefWidth="641.0" wrapText="true">
                            <font>
-                              <Font name="System Bold Italic" size="27.0" />
+                              <Font size="15.0" />
+                           </font></TextArea>
+                        <Label layoutX="912.0" layoutY="188.0" prefHeight="60.0" prefWidth="635.0" stylesheets="@../css/estilos.css" text="Descripcion del proyecto de investigacion">
+                           <font>
+                              <Font name="System Bold" size="27.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="taDescripcionTrabajo" editable="false" layoutX="652.0" layoutY="627.0" prefHeight="131.0" prefWidth="421.0" wrapText="true" />
-                        <Label layoutX="650.0" layoutY="576.0" stylesheets="@../css/estilos.css" text="Descripcion de trabajo recepcional">
+                        <TextArea fx:id="taDescripcionTrabajo" editable="false" layoutX="914.0" layoutY="404.0" prefHeight="131.0" prefWidth="642.0" wrapText="true">
                            <font>
-                              <Font name="System Bold Italic" size="27.0" />
+                              <Font size="15.0" />
+                           </font></TextArea>
+                        <Label layoutX="914.0" layoutY="363.0" prefHeight="39.0" prefWidth="641.0" stylesheets="@../css/estilos.css" text="Descripcion de trabajo recepcional">
+                           <font>
+                              <Font name="System Bold" size="27.0" />
                            </font>
                         </Label>
-                        <Label layoutX="1134.0" layoutY="576.0" stylesheets="@../css/estilos.css" text="Resultados esperados">
+                        <Label layoutX="913.0" layoutY="543.0" prefHeight="46.0" prefWidth="306.0" stylesheets="@../css/estilos.css" text="Resultados esperados">
                            <font>
-                              <Font name="System Bold Italic" size="27.0" />
+                              <Font name="System Bold" size="27.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="taResultadosEsperados" editable="false" layoutX="1125.0" layoutY="625.0" prefHeight="100.0" prefWidth="366.0" wrapText="true" />
-                        <TextArea fx:id="taBibliografia" editable="false" layoutX="74.0" layoutY="835.0" prefHeight="131.0" prefWidth="421.0" wrapText="true" />
-                        <Label layoutX="74.0" layoutY="767.0" prefHeight="60.0" prefWidth="535.0" stylesheets="@../css/estilos.css" text="Bibliografía recomendada">
+                        <TextArea fx:id="taResultadosEsperados" editable="false" layoutX="915.0" layoutY="595.0" prefHeight="100.0" prefWidth="639.0" wrapText="true">
                            <font>
-                              <Font name="System Bold Italic" size="27.0" />
+                              <Font size="15.0" />
+                           </font></TextArea>
+                        <TextArea fx:id="taBibliografia" editable="false" layoutX="919.0" layoutY="752.0" prefHeight="118.0" prefWidth="633.0" wrapText="true">
+                           <font>
+                              <Font size="15.0" />
+                           </font></TextArea>
+                        <Label layoutX="920.0" layoutY="704.0" prefHeight="40.0" prefWidth="630.0" stylesheets="@../css/estilos.css" text="Bibliografía recomendada">
+                           <font>
+                              <Font name="System Bold" size="27.0" />
                            </font>
                         </Label>
-                        <Label layoutX="739.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Fecha Inicio">
+                        <Label layoutX="71.0" layoutY="443.0" stylesheets="@../css/estilos.css" text="Duracion aproximada">
                            <font>
-                              <Font name="System Bold Italic" size="27.0" />
+                              <Font name="System Bold" size="27.0" />
                            </font>
                         </Label>
-                        <Label layoutX="985.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Fecha Fin">
-                           <font>
-                              <Font name="System Bold Italic" size="27.0" />
-                           </font>
-                        </Label>
-                        <Button layoutX="51.0" layoutY="31.0" mnemonicParsing="false" onAction="#clicRegresar" prefHeight="55.0" prefWidth="74.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css">
+                        <Button layoutX="51.0" layoutY="31.0" mnemonicParsing="false" onAction="#clicIrAnteproyectos" prefHeight="55.0" prefWidth="74.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css">
                            <graphic>
                               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -123,32 +131,83 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Label fx:id="lbProyectoDeInvestigacion" layoutX="440.0" layoutY="276.0" prefHeight="27.0" prefWidth="331.0" text="Label">
+                        <Label layoutX="71.0" layoutY="753.0" stylesheets="@../css/estilos.css" text="Codirector">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="System Bold" size="27.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lbLineaDeInvestigacion" layoutX="887.0" layoutY="276.0" prefHeight="27.0" prefWidth="331.0" text="Label">
+                        <TextArea fx:id="taRequisitos" layoutX="912.0" layoutY="102.0" prefHeight="82.0" prefWidth="643.0" wrapText="true">
                            <font>
-                              <Font size="18.0" />
+                              <Font size="15.0" />
+                           </font>
+                        </TextArea>
+                        <TextArea fx:id="taProyectoInvestigacion" layoutX="424.0" layoutY="193.0" prefHeight="55.0" prefWidth="388.0" wrapText="true">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </TextArea>
+                        <TextArea fx:id="taLgac" layoutX="424.0" layoutY="276.0" prefHeight="55.0" prefWidth="389.0" wrapText="true">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </TextArea>
+                        <TextArea fx:id="taLineaInvestigacion" layoutX="424.0" layoutY="353.0" prefHeight="55.0" prefWidth="389.0" wrapText="true">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </TextArea>
+                        <TextArea fx:id="taDuracionAproximada" layoutX="425.0" layoutY="435.0" prefHeight="55.0" prefWidth="389.0" wrapText="true">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </TextArea>
+                        <TextArea fx:id="taModalidad" layoutX="425.0" layoutY="508.0" prefHeight="55.0" prefWidth="390.0" wrapText="true">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </TextArea>
+                        <TextArea fx:id="taNombreTrabajo" layoutX="425.0" layoutY="589.0" prefHeight="55.0" prefWidth="391.0" wrapText="true">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </TextArea>
+                        <TextArea fx:id="taDirector" layoutX="427.0" layoutY="667.0" prefHeight="61.0" prefWidth="390.0" wrapText="true">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </TextArea>
+                        <TextArea fx:id="taCodirector" layoutX="428.0" layoutY="744.0" prefHeight="55.0" prefWidth="387.0" wrapText="true">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </TextArea>
+                        <TextArea fx:id="taAlumnosParticipantes" layoutX="429.0" layoutY="814.0" prefHeight="55.0" prefWidth="385.0" wrapText="true">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </TextArea>
+                        <Label layoutX="1156.0" layoutY="11.0" stylesheets="@../css/estilos.css" text="ESTADO">
+                           <font>
+                              <Font name="System Bold" size="27.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lbNombreDelTrabajo" layoutX="74.0" layoutY="425.0" prefHeight="27.0" prefWidth="344.0" text="Label">
+                        <Label fx:id="lbEstado" layoutX="1276.0" layoutY="11.0" prefHeight="39.0" prefWidth="280.0">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="System Bold" size="27.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lbCantidadAlumnosParticipantes" layoutX="959.0" layoutY="425.0" prefHeight="27.0" prefWidth="188.0" text="Label">
+                        <Button layoutX="482.0" layoutY="19.0" mnemonicParsing="false" onAction="#clicBtnConsultarAvances" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Consultar avances">
+                           <graphic>
+                              <ImageView fitHeight="56.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../recursos/lupa.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
                            <font>
-                              <Font size="18.0" />
+                              <Font name="System Bold" size="22.0" />
                            </font>
-                        </Label>
-                        <ComboBox fx:id="cbCuerpoAcademico" layoutX="167.0" layoutY="107.0" prefHeight="31.0" prefWidth="238.0" stylesheets="@../css/estilos.css" />
-                        <ComboBox fx:id="cbDirector" layoutX="462.0" layoutY="107.0" prefHeight="31.0" prefWidth="238.0" stylesheets="@../css/estilos.css" />
-                        <ComboBox fx:id="cbModalidad" layoutX="1239.0" layoutY="107.0" prefHeight="31.0" prefWidth="238.0" stylesheets="@../css/estilos.css" />
-                        <ComboBox fx:id="cbLGAC" layoutX="82.0" layoutY="271.0" prefHeight="31.0" prefWidth="238.0" stylesheets="@../css/estilos.css" />
-                        <DatePicker fx:id="dpFechaInicio" layoutX="739.0" layoutY="107.0" />
-                        <DatePicker fx:id="dpFechaFin" layoutX="985.0" layoutY="107.0" />
+                        </Button>
                      </children>
                   </AnchorPane>
               </content>
