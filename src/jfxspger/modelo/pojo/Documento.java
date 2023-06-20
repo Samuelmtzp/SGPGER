@@ -12,17 +12,26 @@ public class Documento {
     private byte[] archivoDocumento;
     private String nombre;
     private int idEntrega;
+    private String fechaEntrega;
 
     public Documento() {
     }
 
-    public Documento(int idDocumento, byte[] archivoDocumento, 
-            String nombre, int entrega_idEntrega) {
+    public Documento(int idDocumento, byte[] archivoDocumento, String nombre, int idEntrega, String fechaEntrega) {
         this.idDocumento = idDocumento;
         this.archivoDocumento = archivoDocumento;
         this.nombre = nombre;
-        this.idEntrega = entrega_idEntrega;
+        this.idEntrega = idEntrega;
+        this.fechaEntrega = fechaEntrega;
     }
+
+    public String getFechaEntrega() {
+        return fechaEntrega;
+    }
+
+    public void setFechaEntrega(String fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
+    }    
 
     public int getIdDocumento() {
         return idDocumento;
