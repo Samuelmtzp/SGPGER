@@ -78,7 +78,7 @@ public class FXMLAsignarEstudiantesController extends FXMLPrincipalAcademicoCont
      
     private void cargarDatosTablaEstudiantesAsignados(Anteproyecto anteproyectoAsigandos) {
         estudiantesAsignados = FXCollections.observableArrayList();
-        UsuarioRespuesta respuestaBD = UsuarioDAO.consultarEstudianteEnAnteproyecto(
+        UsuarioRespuesta respuestaBD = UsuarioDAO.consultarEstudiantesEnAnteproyecto(
                 anteproyectoAsigandos.getIdAnteproyecto());
         if(respuestaBD != null){
         switch (respuestaBD.getCodigoRespuesta()) {
