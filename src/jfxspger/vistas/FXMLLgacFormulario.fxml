@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLLgacFormularioController">
+<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLLgacFormularioController">
    <children>
       <Pane prefHeight="100.0" prefWidth="1920.0" style="-fx-background-color: #343838;">
          <children>
@@ -90,7 +92,10 @@
       </Pane>
       <Pane layoutX="300.0" layoutY="100.0" prefHeight="980.0" prefWidth="1620.0">
          <children>
-            <TextField fx:id="tfNombre" layoutX="93.0" layoutY="566.0" prefHeight="70.0" prefWidth="859.0" styleClass="textField" stylesheets="@../css/estilos.css" />
+            <TextField fx:id="tfNombre" layoutX="93.0" layoutY="566.0" prefHeight="70.0" prefWidth="859.0" promptText="safdasdasdasdasdasd" styleClass="textField" stylesheets="@../css/estilos.css">
+               <font>
+                  <Font size="30.0" />
+               </font></TextField>
             <Label layoutX="93.0" layoutY="443.0" text="Nombre de LGAC">
                <font>
                   <Font name="System Bold" size="50.0" />
@@ -121,6 +126,11 @@
             <Label layoutX="93.0" layoutY="192.0" text="Cuerpo academico perteneciente">
                <font>
                   <Font name="System Bold" size="50.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbNombreNoDisponible" layoutX="93.0" layoutY="660.0" prefHeight="36.0" prefWidth="859.0" textFill="RED">
+               <font>
+                  <Font size="25.0" />
                </font>
             </Label>
          </children>

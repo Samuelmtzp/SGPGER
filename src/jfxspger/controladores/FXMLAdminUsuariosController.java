@@ -155,12 +155,10 @@ public class FXMLAdminUsuariosController extends FXMLPrincipalAdministradorContr
 
     @FXML
     private void clicConsultarUsuario(MouseEvent event) {
-        if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-            Node node = ((Node) event.getTarget()).getParent();
-            if (node instanceof TableRow) {
-                Usuario usuarioSeleccionado = tvUsuarios.getSelectionModel().getSelectedItem();
-                irInformacionUsuario(usuarioSeleccionado);
-            } 
+        if (event.isPrimaryButtonDown() && event.getClickCount() == 2 && 
+                tvUsuarios.getSelectionModel().getSelectedIndex() != -1) {
+            Usuario usuarioSeleccionado = tvUsuarios.getSelectionModel().getSelectedItem();
+            irInformacionUsuario(usuarioSeleccionado);
         }
     }
     
