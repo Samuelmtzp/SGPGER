@@ -8,6 +8,8 @@ package jfxspger.controladores;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -253,6 +255,10 @@ public class FXMLFormularioCuerpoAcademicoController extends FXMLPrincipalAdmini
                     datosValidos = false;
                 }
             }
+            if (!validarClaveCuerpoAcademico(clave)) {
+                tfClave.setStyle(Constantes.estiloError);
+                datosValidos = false;
+            }
         }
         
         if (posicionGradoConsolidacion == -1) {
@@ -299,6 +305,13 @@ public class FXMLFormularioCuerpoAcademicoController extends FXMLPrincipalAdmini
                 registrarCuerpoAcademico(cuerpoAcademicoValidado);
             }
         }   
+    }
+    
+    private boolean validarClaveCuerpoAcademico(String claveValidacion) {
+        String patron = "^(UV(-)?)?CA(-)?\\d+$";
+        Pattern pattern = Pattern.compile(patron);
+        Matcher matcher = pattern.matcher(claveValidacion);
+        return matcher.matches();
     }
     
     private void agregarMiembroACuerpoAcademico(int idAcademico, int idCuerpoAcademico) {

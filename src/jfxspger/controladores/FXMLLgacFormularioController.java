@@ -18,7 +18,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import jfxspger.modelo.dao.CuerpoAcademicoDAO;
 import jfxspger.modelo.dao.LgacDAO;
-import jfxspger.modelo.dao.UsuarioDAO;
 import jfxspger.modelo.pojo.CuerpoAcademico;
 import jfxspger.modelo.pojo.CuerpoAcademicoRespuesta;
 import jfxspger.modelo.pojo.Lgac;
