@@ -196,7 +196,7 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
             Scene sceneFormulario = new Scene(vista);
             Stage escenarioPrincipal = (Stage)lbTitulo.getScene().getWindow();
             escenarioPrincipal.setScene(sceneFormulario);
-            formulario.inicializarInformacionFormulario(anteproyecto);
+            formulario.inicializarInformacion(anteproyecto);
             }else{
                  Utilidades.mostrarDialogoSimple("Anteproyecto no disponible", 
                     "El anteproyecto debe estar en un estado de disponibilidad "

@@ -156,6 +156,11 @@
                   <Font size="19.0" />
                </font>
             </Label>
+            <Button fx:id="btnAgregarMiembros" layoutX="576.0" layoutY="826.0" mnemonicParsing="false" onAction="#clicBtnAgregarMiembros" prefHeight="53.0" prefWidth="252.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Agregar miembros">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
    </children>

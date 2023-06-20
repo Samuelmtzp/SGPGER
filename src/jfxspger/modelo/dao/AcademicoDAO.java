@@ -122,6 +122,51 @@ public class AcademicoDAO {
         return respuesta;
     }
     
+    public static int removerAcademicoDeCuerpoAcademico(int idAcademico) {
+        int respuesta;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null) {
+            try {
+                String sentencia = "UPDATE Academico SET idCuerpoAcademico = NULL "
+                        + "WHERE idAcademico = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt(1, idAcademico);
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
+                        Constantes.ERROR_CONSULTA;
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta = Constantes.ERROR_CONSULTA;
+            }
+        } else {
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
+    public static int agregarAcademicoACuerpoAcademico(int idAcademico, int idCuerpoAcademico) {
+        int respuesta;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null) {
+            try {
+                String sentencia = "UPDATE Academico SET idCuerpoAcademico = ? "
+                        + "WHERE idAcademico = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt(1, idCuerpoAcademico);
+                prepararSentencia.setInt(2, idAcademico);
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
+                        Constantes.ERROR_CONSULTA;
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta = Constantes.ERROR_CONSULTA;
+            }
+        } else {
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
     public static int eliminarAcademico(int idAcademico) {
         int respuesta;
         Connection conexionBD = ConexionBD.abrirConexionBD();
