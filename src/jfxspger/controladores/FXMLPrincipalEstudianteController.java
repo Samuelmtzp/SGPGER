@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import jfxspger.modelo.pojo.Estudiante;
 import jfxspger.utilidades.Utilidades;
 
 

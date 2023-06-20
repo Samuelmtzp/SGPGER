@@ -61,7 +61,7 @@ public class FXMLAsignarEstudiantesController extends FXMLPrincipalAcademicoCont
         
     }
     
-     private void configurarTablas(){
+    private void configurarTablas(){
         columnNombreEstudiante.setCellValueFactory(new PropertyValueFactory("nombre"));
         columMatricula.setCellValueFactory(new PropertyValueFactory("matricula"));
         columApellidoPaterno.setCellValueFactory(
@@ -85,13 +85,13 @@ public class FXMLAsignarEstudiantesController extends FXMLPrincipalAcademicoCont
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Sin conexión", 
                     "Lo sentimos, por el momento no hay conexión para poder "
-                    + "cargar la información de los estudiantes asignados al curso", 
+                    + "cargar la información de los estudiantes asignados al anteproyecto", 
                     Alert.AlertType.ERROR);
             break;
             case Constantes.ERROR_CONSULTA:
                 Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
                     "Hubo un error al cargar información de los estudiantes "
-                    + "asignados al curso, por favor inténtelo más tarde", 
+                    + "asignados al anteproyecto, por favor inténtelo más tarde", 
                     Alert.AlertType.WARNING);
             break;
             case Constantes.OPERACION_EXITOSA:
@@ -125,7 +125,7 @@ public class FXMLAsignarEstudiantesController extends FXMLPrincipalAcademicoCont
         }
     }
     
-     public void inicializarInformacionFormulario(Anteproyecto anteproyectoSelected){
+    public void inicializarInformacion(Anteproyecto anteproyectoSelected){
         this.anteproyecto=anteproyectoSelected;
         configurarTablas();
         cargarDatosTablaEstudiantesAsignados(anteproyectoSelected);
@@ -153,7 +153,7 @@ public class FXMLAsignarEstudiantesController extends FXMLPrincipalAcademicoCont
                 agregarEstudianteAAnteproyecto(estudianteEnAnteproyectoRegistro);
             } else {
                 Utilidades.mostrarDialogoSimple("Selección necesaria", 
-                        "Para agregar un estudiante al curso, debe seleccionarlo "
+                        "Para agregar un estudiante al anteproyecto, debe seleccionarlo "
                         + "previamente de la tabla de estudiantes disponibles", 
                         Alert.AlertType.WARNING);
             }
@@ -170,7 +170,7 @@ public class FXMLAsignarEstudiantesController extends FXMLPrincipalAcademicoCont
         switch(respuesta) {
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Error de conexion", "El estudiante " + 
-                        "no pudo agregarse al curso debido a un error de conexión.", 
+                        "no pudo agregarse al anteproyecto debido a un error de conexión.", 
                         Alert.AlertType.ERROR);
             break;
             case Constantes.ERROR_CONSULTA:

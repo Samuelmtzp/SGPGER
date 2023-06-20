@@ -6,10 +6,7 @@
 package jfxspger.controladores;
 
 import java.net.URL;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -20,7 +17,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -438,7 +434,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
     private void cargarInformacionAcademico(int idCuerpoAcademico){
         usuarios = FXCollections.observableArrayList();
         System.out.println("idCuerpoAcademico = " + idCuerpoAcademico);
-        UsuarioRespuesta AcademicoBD=UsuarioDAO.obtenerInformacionAcademicoEnCuerpoAcademico(idCuerpoAcademico);
+        UsuarioRespuesta AcademicoBD=UsuarioDAO.obtenerInformacionAcademicosEnCuerpoAcademico(idCuerpoAcademico);
         switch(AcademicoBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Error de conexion", 
