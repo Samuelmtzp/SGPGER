@@ -477,7 +477,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
         }
     }
      
-     private void cargarInformacionDuracion(){
+    private void cargarInformacionDuracion(){
         duracion = FXCollections.observableArrayList();
         DuracionAproxRespuesta DuracionBD= DuracionAproximadaDAO.obtenerDuracionAproximada();
         switch(DuracionBD.getCodigoRespuesta()){
