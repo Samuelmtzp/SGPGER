@@ -109,8 +109,8 @@ public class AnteproyectoDAO {
                         "lineaInvestigacion, idDuracionAproximada, nombreTrabajo, " + 
                         "requisitos, cantidadAlumnosParticipantes, " + 
                         "descripcionProyectoInvestigacion, descripcionTrabajoRecepcional, "+ 
-                        "resultadosEsperados, bibliografiaRecomendada) " +
-                        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,)";
+                        "resultadosEsperados, bibliografiaRecomendada, fechaCreacion) " +
+                        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP())";
 
                 PreparedStatement prepararSentencia =  conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setInt(1, nuevoAnteproyecto.getIdCuerpoAcademico());
@@ -130,7 +130,6 @@ public class AnteproyectoDAO {
                         nuevoAnteproyecto.getDescripcionTrabajoRecepcional());
                 prepararSentencia.setString(14, nuevoAnteproyecto.getResultadosEsperados());
                 prepararSentencia.setString(15, nuevoAnteproyecto.getBibliografiaRecomendada());
-
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;

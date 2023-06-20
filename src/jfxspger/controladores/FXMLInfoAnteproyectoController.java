@@ -12,7 +12,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.paint.Color;
+import jfxspger.modelo.dao.UsuarioDAO;
+import jfxspger.modelo.pojo.Usuario;
 import jfxspger.modelo.pojo.Anteproyecto;
+import jfxspger.modelo.pojo.UsuarioRespuesta;
+import jfxspger.utilidades.Constantes;
 
 public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoController {
 
@@ -60,6 +64,8 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
         this.anteproyecto = anteproyecto;
         cargarInformacion();
         cambiarColorEstado();
+        cargarEstudiantesAsignados();
+        cargarCodirectoresAsignados();
     }
 
     private void cargarInformacion() {
@@ -80,12 +86,48 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
     }
     
     private void cambiarColorEstado() {
-        if (anteproyecto.getIdEstado() == 1) {
-            lbEstado.setTextFill(Color.web("#F5A623"));
-        } else if (anteproyecto.getIdEstado() == 2) {
-            lbEstado.setTextFill(Color.web("#15A010"));
-        } else if (anteproyecto.getIdEstado() == 3) {
-            lbEstado.setTextFill(Color.web("#D0021B"));
+        final int ESTADO_VALIDACION_PENDIENTE = 1;
+        final int ESTADO_DISPONIBLE = 2;
+        final int ESTADO_NO_DISPONIBLE = 3;
+        
+        switch (anteproyecto.getIdEstado())
+        {
+            case ESTADO_VALIDACION_PENDIENTE:
+                lbEstado.setTextFill(Color.web("#F5A623"));
+                break;
+            case ESTADO_DISPONIBLE:
+                lbEstado.setTextFill(Color.web("#15A010"));
+                break;
+            case ESTADO_NO_DISPONIBLE:
+                lbEstado.setTextFill(Color.web("#D0021B"));
+                break;
+            default:
+                break;
+        }
+    }
+    
+    private void cargarEstudiantesAsignados() {
+        UsuarioRespuesta respuestaEstudiantesEnAnteproyecto = UsuarioDAO.
+                consultarEstudiantesEnAnteproyecto(anteproyecto.getIdAnteproyecto());
+        if (respuestaEstudiantesEnAnteproyecto.getCodigoRespuesta() == 
+                Constantes.OPERACION_EXITOSA) {
+            for (Usuario estudiante : respuestaEstudiantesEnAnteproyecto.getUsuarios()) {
+                
+                taAlumnosParticipantes.setText(taAlumnosParticipantes.getText() 
+                        + estudiante.toString() + "\n");                
+            }
+        }
+    }
+    
+    private void cargarCodirectoresAsignados() {
+        UsuarioRespuesta respuestaCodirectoresEnAnteproyecto = UsuarioDAO.
+                consultarCodirectoresEnAnteproyecto(anteproyecto.getIdAnteproyecto());
+        if (respuestaCodirectoresEnAnteproyecto.getCodigoRespuesta() == 
+                Constantes.OPERACION_EXITOSA) {
+            for (Usuario codirector : respuestaCodirectoresEnAnteproyecto.getUsuarios()) {
+                taCodirector.setText(taCodirector.getText() 
+                        + codirector.toString() + "\n");
+            }
         }
     }
 
