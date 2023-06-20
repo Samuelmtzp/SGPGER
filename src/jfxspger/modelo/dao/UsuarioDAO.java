@@ -305,8 +305,8 @@ public class UsuarioDAO {
         if (conexionBD != null) {
             try {
                 String consulta = "SELECT Usuario.idUsuario, Usuario.idTipoUsuario, "
-                        + "Estudiante.matricula, TipoUsuario.tipoUsuario, username, "
-                        + "password, correo, nombre, apellidoPaterno, "
+                        + "Estudiante.matricula, Estudiante.idEstudiante, TipoUsuario.tipoUsuario, "
+                        + "username, password, correo, nombre, apellidoPaterno, "
                         + "apellidoMaterno, telefono, fechaCreacion "
                         + "FROM Usuario "
                         + "INNER JOIN TipoUsuario "
@@ -326,6 +326,7 @@ public class UsuarioDAO {
                     usuario.setIdUsuario(resultado.getInt("Usuario.idUsuario"));
                     usuario.setIdTipoUsuario(resultado.getInt("Usuario.idTipoUsuario"));
                     usuario.setMatricula(resultado.getString("Estudiante.matricula"));
+                    usuario.setIdEstudiante(resultado.getInt("Estudiante.idEstudiante"));
                     usuario.setTipoUsuario(resultado.getString("TipoUsuario.tipoUsuario"));
                     usuario.setUsername(resultado.getString("username"));
                     usuario.setPassword(resultado.getString("password"));

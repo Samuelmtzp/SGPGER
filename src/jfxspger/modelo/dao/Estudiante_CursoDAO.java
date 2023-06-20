@@ -71,7 +71,7 @@ public class Estudiante_CursoDAO {
         return respuesta;
     }
     
-    public static int eliminarEstudiante_Curso(int idEstudiante, int idCurso) {
+    public static int eliminarEstudianteDeCurso(int idEstudiante, int idCurso) {
         int respuesta;
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {

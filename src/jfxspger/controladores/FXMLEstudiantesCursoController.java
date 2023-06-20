@@ -55,6 +55,8 @@ public class FXMLEstudiantesCursoController extends FXMLPrincipalAdministradorCo
     private TableColumn tcCorreoDisponibles;
     @FXML
     private TableColumn tcMatriculaDisponibles;
+    @FXML
+    private Label lbCupo;
     private Curso curso;
     private ObservableList<Usuario> estudiantesAsignados;
     private ObservableList<Usuario> estudiantesDisponibles;
@@ -133,6 +135,7 @@ public class FXMLEstudiantesCursoController extends FXMLPrincipalAdministradorCo
         configurarTablas();
         cargarDatosTablaEstudiantesAsignados();
         cargarDatosTablaEstudiantesDisponibles();
+        lbCupo.setText(String.valueOf(curso.getCupo()));
     }
 
     @FXML
@@ -154,7 +157,7 @@ public class FXMLEstudiantesCursoController extends FXMLPrincipalAdministradorCo
                 estudianteEnCursoRegistro.setIdCurso(curso.getIdCurso());
                 estudianteEnCursoRegistro.setIdEstudiante(tvEstudiantesDisponibles.
                     getSelectionModel().getSelectedItem().getIdEstudiante());
-                curso.setCupo(curso.getCupo() - 1);
+                
                 agregarEstudianteACurso(estudianteEnCursoRegistro);
             } else {
                 Utilidades.mostrarDialogoSimple("Selección necesaria", 
@@ -184,7 +187,7 @@ public class FXMLEstudiantesCursoController extends FXMLPrincipalAdministradorCo
                     "Hubo un error al tratar de actualizar la información del cupo, "
                     + "por favor inténtelo más tarde", 
                     Alert.AlertType.WARNING);
-                Estudiante_CursoDAO.eliminarEstudiante_Curso(
+                Estudiante_CursoDAO.eliminarEstudianteDeCurso(
                         estudianteEnCurso.getIdEstudiante(), curso.getIdCurso());
             break;
             case Constantes.OPERACION_EXITOSA:
@@ -213,8 +216,55 @@ public class FXMLEstudiantesCursoController extends FXMLPrincipalAdministradorCo
             case Constantes.OPERACION_EXITOSA:
                 cargarDatosTablaEstudiantesAsignados();
                 cargarDatosTablaEstudiantesDisponibles();
+                curso.setCupo(curso.getCupo() - 1);
+                lbCupo.setText(String.valueOf(curso.getCupo()));
                 actualizarCurso(estudianteEnCurso);
             break;
+        }
+    }
+
+    private void removerEstudianteDeCurso(int idEstudiante) {
+        int respuesta = Estudiante_CursoDAO.eliminarEstudianteDeCurso(idEstudiante, 
+                curso.getIdCurso());
+        switch(respuesta) {
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Error de conexion", "El estudiante " + 
+                        "no pudo eliminarse del curso debido a un error de conexión.", 
+                        Alert.AlertType.ERROR);
+            break;
+            case Constantes.ERROR_CONSULTA:
+                Utilidades.mostrarDialogoSimple("Error al remover al estudiante del curso",
+                        "No se puede remover al estudiante seleccionado del curso, "
+                        + "por favor inténtelo más tarde", 
+                        Alert.AlertType.WARNING);
+            break;
+            case Constantes.OPERACION_EXITOSA:
+                cargarDatosTablaEstudiantesAsignados();
+                cargarDatosTablaEstudiantesDisponibles();
+                curso.setCupo(curso.getCupo() + 1);
+                lbCupo.setText(String.valueOf(curso.getCupo()));
+                actualizarCurso(new Estudiante_Curso(idEstudiante, curso.getIdCurso()));
+            break;
+        }
+    }
+    
+    @FXML
+    private void clicBtnRemoverEstudiante(ActionEvent event) {
+        int posicionEstudianteSeleccionado = tvEstudiantesAsignados.
+                getSelectionModel().getSelectedIndex();
+        if (posicionEstudianteSeleccionado != -1) {
+            boolean removerEstudiante = Utilidades.mostrarDialogoConfirmacion(
+                    "Confirmación de eliminación", 
+                    "¿Está seguro de que desea remover al estudiante del curso?");
+            if (removerEstudiante) {                
+                removerEstudianteDeCurso(tvEstudiantesAsignados.getSelectionModel().
+                        getSelectedItem().getIdEstudiante());
+            }
+        } else {
+            Utilidades.mostrarDialogoSimple("Selección necesaria", 
+                    "Para remover un estudiante del curso, debe seleccionarlo "
+                    + "previamente de la tabla de estudiantes asignados al curso", 
+                    Alert.AlertType.WARNING);
         }
     }
     

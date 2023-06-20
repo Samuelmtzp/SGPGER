@@ -114,7 +114,6 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
              if(newValue != null){
                   
                  cargarInformacionAcademico(newValue.getIdCuerpoAcademico());
-                 System.out.println("exp = " + newValue.getIdCuerpoAcademico());
              } 
           }
         });
@@ -145,14 +144,12 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
        String bibliografiaRecomendada = taBibliografia.getText();
        int posicionCuerpoAcademico = cbCuerpoAcademico.getSelectionModel().getSelectedIndex();
        int posicionDirector = cbDirector.getSelectionModel().getSelectedIndex();
-        System.out.println("posicionDirector = " + posicionDirector);
        int posicionModalidad = cbModalidad.getSelectionModel().getSelectedIndex();
        int posicionLGAC = cbLGAC.getSelectionModel().getSelectedIndex();
        int posicionDuracion = cbDuracionAprox.getSelectionModel().getSelectedIndex();
        boolean sonValidos=true;
        
-       //Validaciones
-       if(proyectoInvestigacion.isEmpty()){
+       if(proyectoInvestigacion.trim().isEmpty()){
            tfProyectoInvestigacion.setStyle(Constantes.estiloError);
            sonValidos=false;
        }else{
@@ -162,7 +159,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
            }
        }
        
-       if(lineaInvestigacion.isEmpty()){
+       if(lineaInvestigacion.trim().isEmpty()){
            tfLineaInvestigacion.setStyle(Constantes.estiloError);
            sonValidos=false;
        }else{
@@ -172,7 +169,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
            }
        }
        
-       if(nombreTrabajo.isEmpty()){
+       if(nombreTrabajo.trim().isEmpty()){
            tfNombreTrabajo.setStyle(Constantes.estiloError);
            sonValidos=false;
        }else{
@@ -182,7 +179,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
            }
        }
        
-       if(cantidadAlumnos.isEmpty()){
+       if(cantidadAlumnos.trim().isEmpty()){
            tfCantidadAlumnos.setStyle(Constantes.estiloError);
            sonValidos=false;
        }else{
@@ -193,7 +190,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
            }
        }
        
-       if(requisitos.isEmpty()){
+       if(requisitos.trim().isEmpty()){
            taRequisitos.setStyle(Constantes.estiloError);
            sonValidos=false;
        }else{
@@ -203,7 +200,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
            }
        }
        
-       if(descripcionProyecto.isEmpty()){
+       if(descripcionProyecto.trim().isEmpty()){
            taDescripcionProyecto.setStyle(Constantes.estiloError);
            sonValidos=false;
        }else{
@@ -213,7 +210,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
            }
        }
        
-       if(descripcionTrabajo.isEmpty()){
+       if(descripcionTrabajo.trim().isEmpty()){
            taDescripcionTrabajo.setStyle(Constantes.estiloError);
            sonValidos=false;
        }else{
@@ -223,7 +220,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
            }
        }
        
-       if(resultadosEsperados.isEmpty()){
+       if(resultadosEsperados.trim().isEmpty()){
            taResultadosEsperados.setStyle(Constantes.estiloError);
            sonValidos=false;
        }else{
@@ -259,7 +256,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
        }
        
         
-        if(!bibliografiaRecomendada.isEmpty()){
+        if(!bibliografiaRecomendada.trim().isEmpty()){
             if(bibliografiaRecomendada.length()>2000){
                 taBibliografia.setStyle(Constantes.estiloError);
                 sonValidos=false;
@@ -270,10 +267,8 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
             int posEstado=0;
             Anteproyecto anteproyectoValido = new Anteproyecto();
             anteproyectoValido.setIdDirector(usuarios.get(posicionDirector).getIdAcademico());
-            System.out.println("anteproyectoValido_IdDirector = " + anteproyectoValido.getIdDirector());
             anteproyectoValido.setIdCuerpoAcademico(cuerpoAcademico.
                     get(posicionCuerpoAcademico).getIdCuerpoAcademico());
-            System.out.println("anteproyectoValido_IdCA = " + anteproyectoValido.getIdCuerpoAcademico());
             anteproyectoValido.setIdDuracionAproximada(duracion.get(posicionDuracion).getIdDuracionAproximada());
             anteproyectoValido.setIdModalidad(modalidad.get(posicionModalidad).getIdModalidad());
             anteproyectoValido.setIdLgac(lgac.get(posicionLGAC).getIdLgac());
@@ -289,7 +284,6 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
             anteproyectoValido.setIdEstado(estado.get(posEstado).getIdEstadoAnteproyecto());
             LocalDateTime tiempo = LocalDateTime.now();
             String fecha = tiempo.toString();
-            System.out.println("fecha = " + fecha);
             anteproyectoValido.setFechaCreacion(fecha);
             if(!bibliografiaRecomendada.isEmpty()){
                 anteproyectoValido.setBibliografiaRecomendada(bibliografiaRecomendada);
@@ -433,7 +427,6 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
     
     private void cargarInformacionAcademico(int idCuerpoAcademico){
         usuarios = FXCollections.observableArrayList();
-        System.out.println("idCuerpoAcademico = " + idCuerpoAcademico);
         UsuarioRespuesta AcademicoBD=UsuarioDAO.obtenerInformacionAcademicosEnCuerpoAcademico(idCuerpoAcademico);
         switch(AcademicoBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
