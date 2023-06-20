@@ -18,18 +18,17 @@ import jfxspger.utilidades.Constantes;
 
 public class ActividadDAO {
     
-    public static ActividadRespuesta obtenerInformacionActividad() {
+    public static ActividadRespuesta obtenerInformacionActividad(int idEstudiante) {
         ActividadRespuesta respuesta = new ActividadRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT a.idActividad, a.titulo, a.fechaCreacion, "
-                    + "a.fechaInicio, a.fechaFin, a.descripcion, " +
-                    "e.idEntrega, e.fechaEntrega, e.fechaCreacion " +
-                    "FROM SGPGER.actividad a " +
-                    "JOIN SGPGER.entrega e ON a.idActividad = e.idActividad";
+                String consulta = "SELECT idActividad, titulo, fechaCreacion, fechaInicio, fechaFin, descripcion " +
+                                    "FROM actividad " +
+                                    "WHERE idEstudiante = ?;";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, idEstudiante);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Actividad> actividadConsulta = new ArrayList();
                 while (resultado.next())
@@ -41,7 +40,7 @@ public class ActividadDAO {
                     actividad.setFechaInicio(resultado.getString("fechaInicio"));
                     actividad.setFechaFin(resultado.getString("fechaFin"));
                     actividad.setDescripcion(resultado.getString("descripcion"));
-                    actividad.setIdEntrega(resultado.getInt("idEntrega"));
+//                    actividad.setIdEntrega(resultado.getInt("idEntrega"));
                     actividadConsulta.add(actividad);
                 }
                 respuesta.setActividades(actividadConsulta);
@@ -61,8 +60,7 @@ public class ActividadDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
-                String sentencia = "INSERT INTO Actividad (idEstudiante, " + 
-                        "titulo, fechaCreacion, fechaInicio, fechaFin, descripcion) " +
+                String sentencia = "INSERT INTO actividad (idEstudiante, titulo, fechaCreacion, fechaInicio, fechaFin, descripcion) " +
                         "VALUES (?,?,?,?,?,?)";
                 PreparedStatement prepararSentencia =  conexionBD.prepareStatement(sentencia);
                 
