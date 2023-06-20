@@ -22,12 +22,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import jfxspger.modelo.dao.EntregaDAO;
+import jfxspger.modelo.pojo.Anteproyecto;
 import jfxspger.modelo.pojo.Entrega;
 import jfxspger.modelo.pojo.EntregaRespuesta;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
 
-public class FXMLAnteproyectoAvancesController implements Initializable {
+public class FXMLAnteproyectoAvancesController extends FXMLPrincipalAcademicoController implements Initializable {
 
     @FXML
     private Label lTitulo;
@@ -42,16 +43,23 @@ public class FXMLAnteproyectoAvancesController implements Initializable {
     @FXML
     private TableView<Entrega> tvEntregas;
     private ObservableList<Entrega> entregas;
+    private Anteproyecto anteproyecto;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {        
-    }    
+    }
+    
+    public void inicializarInformacion(Anteproyecto anteproyecto){
+        configurarTabla();
+        cargarInformacionAvances(anteproyecto.getIdAnteproyecto());
+        lbTituloAnteproyecto.setText(anteproyecto.getNombreTrabajo());
+    }
 
     @FXML
-    private void clicIrPrincipalEstudiante(ActionEvent event) {
+    private void clicIrInfoAnteproyecto(ActionEvent event) {
         Stage escenarioBase = (Stage) lbTituloAnteproyecto.getScene().getWindow();
         escenarioBase.setScene(Utilidades.inicializarEscena(
-                "vistas/FXMLPrincipalEstudiante.fxml"));
+                "vistas/FXMLInfoAnteproyecto.fxml"));
         escenarioBase.setTitle("Ventana Principal");
         escenarioBase.show();           
     }
@@ -76,9 +84,9 @@ public class FXMLAnteproyectoAvancesController implements Initializable {
         });
     }
     
-    private void cargarInformacionCronograma(){
+    private void cargarInformacionAvances(int idAnteproyecto){
         entregas = FXCollections.observableArrayList();
-        EntregaRespuesta respuestaBD = EntregaDAO.obtenerInformacionEntregas();
+        EntregaRespuesta respuestaBD = EntregaDAO.obtenerInformacionEntregasPorAnteproyecto(idAnteproyecto);
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Sin conexión", 
@@ -97,42 +105,36 @@ public class FXMLAnteproyectoAvancesController implements Initializable {
         }
     }
 
-    @FXML
-    private void clicIrAnteproyecto(ActionEvent event) {
-    }
     
     @FXML
-    private void clicCerrarSesion(ActionEvent event) {
-        if (Utilidades.mostrarDialogoConfirmacion(
-                "Cerrar sesión", 
-                "¿Está seguro de que desea cerrar sesión?")) {
-            irVentanaInicioSesion();
-        }
-    }
-    
-    private void irVentanaInicioSesion() {
-        Stage escenarioBase = (Stage) lbTituloAnteproyecto.getScene().getWindow();
-        escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLInicioSesion.fxml"));
-        escenarioBase.setTitle("Inicio de sesion");
-        escenarioBase.show();
-    }
+    protected void clicCerrarSesion(ActionEvent event) {
+        super.clicCerrarSesion(event);
+    }        
 
     @FXML
-    private void clicIrCronograma(ActionEvent event) {
-        Stage escenarioBase = (Stage) lbTituloAnteproyecto.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena(
-                "vistas/FXMLCronogramaActividades.fxml"));
-        escenarioBase.setTitle("Cronograma de actividades");
-        escenarioBase.show();        
+    protected void clicIrPropuestas(ActionEvent event) {
+        super.clicIrPropuestas(event);
+    }
+
+
+    @FXML
+    protected void clicIrAnteproyectos(ActionEvent event) {
+        super.clicIrAnteproyectos(event);
     }
 
     @FXML
-    private void clicIrCursos(ActionEvent event) {      
-    }    
+    protected void clicIrEstudiantes(ActionEvent event) {
+        super.clicIrEstudiantes(event);
+    }
 
     @FXML
-    private void clicIrPropuestas(ActionEvent event) {
+    protected void clicIrEntregables(ActionEvent event) {
+        super.clicIrEntregables(event);
+    }
+
+    @FXML
+    protected void clicIrRevisiones(ActionEvent event) {
+        super.clicIrRevisiones(event);
     }
     
 }

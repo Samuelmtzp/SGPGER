@@ -473,7 +473,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
         }
     }
      
-     private void cargarInformacionDuracion(){
+    private void cargarInformacionDuracion(){
         duracion = FXCollections.observableArrayList();
         DuracionAproxRespuesta DuracionBD= DuracionAproximadaDAO.obtenerDuracionAproximada();
         switch(DuracionBD.getCodigoRespuesta()){
@@ -495,8 +495,8 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
     } 
      
      private void cargarInformacionEdicion(){
-        int posDirector=obtenerPosicionComboDirector(anteproyectoEdicion.getIdDirector());
-        cbDirector.getSelectionModel().select(posDirector);
+        //int posDirector=obtenerComboDirector(anteproyectoEdicion.getIdDirector());
+        //cbDirector.getSelectionModel().select(posDirector);
         int posCuerpoAcademico = obtenerPosicionComboCuerpoAcademico(
                 anteproyectoEdicion.getIdCuerpoAcademico());
         cbCuerpoAcademico.getSelectionModel().select(posCuerpoAcademico);
@@ -561,7 +561,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
         escenarioBase.show();
     }
     
-    private int obtenerPosicionComboDirector(int idDirector){
+    /*private int obtenerPosicionComboDirector(int idDirector){
         for(int i=0; i <usuarios.size(); i++){
             System.out.println("usuarios = " + usuarios.get(i).getNombre());
             if(usuarios.get(i).getIdAcademico()== idDirector){
@@ -569,16 +569,8 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
             }
         }
         return 0;
-    }
+    }*/
     
-    private int obtenerComboDirector(int idDirector){
-        for(int i=0; i < usuarios.size(); i++){
-            if(usuarios.get(i).getIdAcademico() == idDirector){
-                return i;
-            }
-        }
-        return 0;
-    }
     
     private int obtenerPosicionComboCuerpoAcademico(int idCuerpoAcademico){
         for(int i=0; i <cuerpoAcademico.size(); i++){

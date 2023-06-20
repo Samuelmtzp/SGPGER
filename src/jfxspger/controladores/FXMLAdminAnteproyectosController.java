@@ -187,7 +187,7 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     
     private void irAsignarEstudiantes(Anteproyecto anteproyecto){
            try{
-            if(anteproyecto.getIdEstado()== 3){
+            if(anteproyecto.getIdEstado()== 2){
             FXMLLoader accesoControlador = new 
       FXMLLoader(jfxspger.JFXSPGER.class.getResource(
               "/jfxspger/vistas/FXMLAsignarEstudiantes.fxml"));
@@ -239,7 +239,7 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
             formulario.inicializarInformacion(anteproyecto);
         }catch(IOException e){
             Utilidades.mostrarDialogoSimple("Error", 
-                    "No se puede mostrar la pantalla de informacion de usuario", 
+                    "No se puede mostrar la pantalla de informacion de anteproyecto", 
                     Alert.AlertType.ERROR);  
         }
         
