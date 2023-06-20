@@ -90,8 +90,8 @@
       </Pane>
       <Pane layoutX="300.0" layoutY="100.0" prefHeight="980.0" prefWidth="1620.0">
          <children>
-            <TextField fx:id="tfNombre" layoutX="75.0" layoutY="333.0" prefHeight="70.0" prefWidth="859.0" styleClass="textField" stylesheets="@../css/estilos.css" />
-            <Label layoutX="75.0" layoutY="225.0" text="Nombre de LGAC">
+            <TextField fx:id="tfNombre" layoutX="93.0" layoutY="566.0" prefHeight="70.0" prefWidth="859.0" styleClass="textField" stylesheets="@../css/estilos.css" />
+            <Label layoutX="93.0" layoutY="443.0" text="Nombre de LGAC">
                <font>
                   <Font name="System Bold" size="50.0" />
                </font>
@@ -117,6 +117,12 @@
                   </ImageView>
                </graphic>
             </Button>
+            <ComboBox fx:id="cbCuerpoAcademico" layoutX="93.0" layoutY="314.0" prefHeight="46.0" prefWidth="520.0" stylesheets="@../css/estilos.css" />
+            <Label layoutX="93.0" layoutY="192.0" text="Cuerpo academico perteneciente">
+               <font>
+                  <Font name="System Bold" size="50.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>
