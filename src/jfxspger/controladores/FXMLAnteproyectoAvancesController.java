@@ -22,6 +22,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import jfxspger.modelo.dao.EntregaDAO;
+import jfxspger.modelo.pojo.Anteproyecto;
 import jfxspger.modelo.pojo.Entrega;
 import jfxspger.modelo.pojo.EntregaRespuesta;
 import jfxspger.utilidades.Constantes;
@@ -45,13 +46,19 @@ public class FXMLAnteproyectoAvancesController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {        
-    }    
+    }
+    
+    public void inicializarInformacion(Anteproyecto anteproyecto){
+        configurarTabla();
+        cargarInformacionAvances();
+        lbTituloAnteproyecto.setText(anteproyecto.getNombreTrabajo());
+    }
 
     @FXML
-    private void clicIrPrincipalEstudiante(ActionEvent event) {
+    private void clicIrPrincipalAcademico(ActionEvent event) {
         Stage escenarioBase = (Stage) lbTituloAnteproyecto.getScene().getWindow();
         escenarioBase.setScene(Utilidades.inicializarEscena(
-                "vistas/FXMLPrincipalEstudiante.fxml"));
+                "vistas/FXMLPrincipalAcademico.fxml"));
         escenarioBase.setTitle("Ventana Principal");
         escenarioBase.show();           
     }
@@ -76,9 +83,9 @@ public class FXMLAnteproyectoAvancesController implements Initializable {
         });
     }
     
-    private void cargarInformacionCronograma(){
+    private void cargarInformacionAvances(){
         entregas = FXCollections.observableArrayList();
-        EntregaRespuesta respuestaBD = EntregaDAO.obtenerInformacionEntrega();
+        EntregaRespuesta respuestaBD = EntregaDAO.obtenerInformacionEntregas();
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Sin conexión", 
@@ -97,9 +104,6 @@ public class FXMLAnteproyectoAvancesController implements Initializable {
         }
     }
 
-    @FXML
-    private void clicIrAnteproyecto(ActionEvent event) {
-    }
     
     @FXML
     private void clicCerrarSesion(ActionEvent event) {
@@ -118,21 +122,26 @@ public class FXMLAnteproyectoAvancesController implements Initializable {
         escenarioBase.show();
     }
 
-    @FXML
-    private void clicIrCronograma(ActionEvent event) {
-        Stage escenarioBase = (Stage) lbTituloAnteproyecto.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena(
-                "vistas/FXMLCronogramaActividades.fxml"));
-        escenarioBase.setTitle("Cronograma de actividades");
-        escenarioBase.show();        
-    }
-
-    @FXML
-    private void clicIrCursos(ActionEvent event) {      
-    }    
 
     @FXML
     private void clicIrPropuestas(ActionEvent event) {
+    }
+
+
+    @FXML
+    private void clicIrAnteproyectos(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicIrEstudiantes(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicIrEntregables(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicIrRevisiones(ActionEvent event) {
     }
     
 }

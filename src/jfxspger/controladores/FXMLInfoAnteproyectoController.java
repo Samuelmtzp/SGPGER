@@ -5,14 +5,25 @@
 */
 package jfxspger.controladores;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import jfxspger.modelo.dao.UsuarioDAO;
+import jfxspger.modelo.pojo.Usuario;
 import jfxspger.modelo.pojo.Anteproyecto;
+import jfxspger.modelo.pojo.UsuarioRespuesta;
+import jfxspger.utilidades.Constantes;
+import jfxspger.utilidades.Utilidades;
 
 public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoController {
 
@@ -60,6 +71,8 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
         this.anteproyecto = anteproyecto;
         cargarInformacion();
         cambiarColorEstado();
+        cargarEstudiantesAsignados();
+        cargarCodirectoresAsignados();
     }
 
     private void cargarInformacion() {
@@ -80,17 +93,68 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
     }
     
     private void cambiarColorEstado() {
-        if (anteproyecto.getIdEstado() == 1) {
-            lbEstado.setTextFill(Color.web("#F5A623"));
-        } else if (anteproyecto.getIdEstado() == 2) {
-            lbEstado.setTextFill(Color.web("#15A010"));
-        } else if (anteproyecto.getIdEstado() == 3) {
-            lbEstado.setTextFill(Color.web("#D0021B"));
+        final int ESTADO_VALIDACION_PENDIENTE = 1;
+        final int ESTADO_DISPONIBLE = 2;
+        final int ESTADO_NO_DISPONIBLE = 3;
+        
+        switch (anteproyecto.getIdEstado())
+        {
+            case ESTADO_VALIDACION_PENDIENTE:
+                lbEstado.setTextFill(Color.web("#F5A623"));
+                break;
+            case ESTADO_DISPONIBLE:
+                lbEstado.setTextFill(Color.web("#15A010"));
+                break;
+            case ESTADO_NO_DISPONIBLE:
+                lbEstado.setTextFill(Color.web("#D0021B"));
+                break;
+            default:
+                break;
+        }
+    }
+    
+    private void cargarEstudiantesAsignados() {
+        UsuarioRespuesta respuestaEstudiantesEnAnteproyecto = UsuarioDAO.
+                consultarEstudiantesEnAnteproyecto(anteproyecto.getIdAnteproyecto());
+        if (respuestaEstudiantesEnAnteproyecto.getCodigoRespuesta() == 
+                Constantes.OPERACION_EXITOSA) {
+            for (Usuario estudiante : respuestaEstudiantesEnAnteproyecto.getUsuarios()) {
+                
+                taAlumnosParticipantes.setText(taAlumnosParticipantes.getText() 
+                        + estudiante.toString() + "\n");                
+            }
+        }
+    }
+    
+    private void cargarCodirectoresAsignados() {
+        UsuarioRespuesta respuestaCodirectoresEnAnteproyecto = UsuarioDAO.
+                consultarCodirectoresEnAnteproyecto(anteproyecto.getIdAnteproyecto());
+        if (respuestaCodirectoresEnAnteproyecto.getCodigoRespuesta() == 
+                Constantes.OPERACION_EXITOSA) {
+            for (Usuario codirector : respuestaCodirectoresEnAnteproyecto.getUsuarios()) {
+                taCodirector.setText(taCodirector.getText() 
+                        + codirector.toString() + "\n");
+            }
         }
     }
 
     @FXML
     private void clicBtnConsultarAvances(ActionEvent event) {
+                try{
+            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.
+                    JFXSPGER.class.getResource("/jfxspger/vistas/FXMLAnteproyectoAvances.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLAnteproyectoAvancesController avances = accesoControlador.getController();
+            Scene sceneAvances = new Scene(vista);
+            Stage escenarioPrincipal = (Stage) lbTitulo.getScene().getWindow();
+            escenarioPrincipal.setTitle("Informacion de anteproyecto");
+            escenarioPrincipal.setScene(sceneAvances);
+            avances.inicializarInformacion(anteproyecto);
+        }catch(IOException e){
+            Utilidades.mostrarDialogoSimple("Error", 
+                    "No se puede mostrar la pantalla de informacion de anteproyecto", 
+                    Alert.AlertType.ERROR);  
+        }
     }
 
 }

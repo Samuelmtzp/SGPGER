@@ -63,7 +63,7 @@ public class FXMLAnteproyectoInformacionController implements Initializable {
     
     private void cargarInformacionTabla(){
         actividades = FXCollections.observableArrayList();
-        ActividadRespuesta respuestaBD = ActividadDAO.obtenerInformacionActividad();
+        ActividadRespuesta respuestaBD = ActividadDAO.obtenerInformacionActividad(3);
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Sin conexión", 

@@ -51,7 +51,7 @@ public class FXMLCronogramaActividadesController implements Initializable,
     private Label lTitulo;
     @FXML
     private TableColumn cFechaCreacion;
-    public int idEstudiante;
+    public int idEstudiante=3;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -83,7 +83,7 @@ public class FXMLCronogramaActividadesController implements Initializable,
     
     private void cargarInformacionCronograma(){
         actividades = FXCollections.observableArrayList();
-        ActividadRespuesta respuestaBD = ActividadDAO.obtenerInformacionActividad();
+        ActividadRespuesta respuestaBD = ActividadDAO.obtenerInformacionActividad(idEstudiante);
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Sin conexión", 

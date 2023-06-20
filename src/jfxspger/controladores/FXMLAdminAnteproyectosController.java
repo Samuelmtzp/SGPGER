@@ -57,7 +57,6 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     private TextField tfBusqueda;
     @FXML
     private ToggleGroup tgBusqueda;
-    private ObservableList<Anteproyecto> anteproyectos;
     @FXML
     private RadioButton rbDisponibles;
     @FXML
@@ -66,6 +65,12 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     private TableColumn columDuracionAprox;
     @FXML
     private TableColumn columFechaCreacion;
+    @FXML
+    private RadioButton rbNoDisponibles;
+    private ObservableList<Anteproyecto> anteproyectos;
+    private final String ESTADO_VALIDACION_PENDIENTE = "Validación pendiente";
+    private final String ESTADO_DISPONIBLE = "Disponible";
+    private final String ESTADO_NO_DISPONIBLE = "No disponible";
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -153,7 +158,7 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
                         Alert.AlertType.WARNING);
                 break;
                     case Constantes.OPERACION_EXITOSA:
-                         activarFiltroRbSeleccion();
+                         tvAnteproyecto.setItems(filtrarAnteproyectos());
                          tfBusqueda.setText("");
                          cargarInformacion();
                 break;
@@ -234,20 +239,21 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
             formulario.inicializarInformacion(anteproyecto);
         }catch(IOException e){
             Utilidades.mostrarDialogoSimple("Error", 
-                    "No se puede mostrar la pantalla de informacion de usuario", 
+                    "No se puede mostrar la pantalla de informacion de anteproyecto", 
                     Alert.AlertType.ERROR);  
         }
         
     }
     
-    private void configurarBusquedaTabla(){
+    private void configurarBusquedaTabla() {
         if (!anteproyectos.isEmpty()) {
             FilteredList<Anteproyecto> filtradoAnteproyecto = 
                     new FilteredList<>(anteproyectos, p-> true);
             tfBusqueda.textProperty().addListener(new ChangeListener<String>() {
                 @Override
-                public void changed(ObservableValue<? extends String> observable, 
-                        String oldValue, String newValue) {
+                public void changed(ObservableValue<? extends String> observable, String oldValue, 
+                        String newValue) {
+                    
                     SortedList<Anteproyecto> sortedListaAnteproyectos = 
                             new SortedList<>(filtradoAnteproyecto);
                     sortedListaAnteproyectos.comparatorProperty().bind(
@@ -256,74 +262,77 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
                     
                     filtradoAnteproyecto.setPredicate(anteproyectoFiltro -> {
                         if (newValue == null || newValue.isEmpty()) {
-                            activarFiltroRbSeleccion();
+                            tvAnteproyecto.setItems(filtrarAnteproyectos());
                             return true;
                         }
+                        
                         String lowerNewValue = newValue.toLowerCase();
+                        
                         if (rbDisponibles.isSelected()) {
-                            return anteproyectoFiltro.getDirector().toLowerCase().contains(newValue)
-                                    && anteproyectoFiltro.getEstado().contains("Disponible");
+                            return anteproyectoFiltro.getDirector().toLowerCase().
+                                    contains(lowerNewValue) 
+                                    && anteproyectoFiltro.getEstado().contains(ESTADO_DISPONIBLE);
                         } else if (rbValidacionPendiente.isSelected()) {
-                            return anteproyectoFiltro.getDirector().toLowerCase().contains(newValue)
-                                    && anteproyectoFiltro.getEstado().contains(
-                                            "Validacion pendiente");
+                            return anteproyectoFiltro.getDirector().toLowerCase().
+                                    contains(lowerNewValue)
+                                    && anteproyectoFiltro.getEstado().
+                                    contains(ESTADO_VALIDACION_PENDIENTE);
+                        } else if (rbNoDisponibles.isSelected()) {
+                            return anteproyectoFiltro.getDirector().toLowerCase().
+                                    contains(lowerNewValue)
+                                    && anteproyectoFiltro.getEstado().
+                                    contains(ESTADO_NO_DISPONIBLE);
                         } else                       
-                        return anteproyectoFiltro.getDirector().toLowerCase().contains(newValue);
+                            return anteproyectoFiltro.getDirector().toLowerCase().
+                                    contains(newValue);
                     });
-                    
                 }
             });
-            SortedList<Anteproyecto> sortedListaAnteproyectos = 
-                    new SortedList<>(filtradoAnteproyecto);
-            sortedListaAnteproyectos.comparatorProperty().
-                    bind(tvAnteproyecto.comparatorProperty());
+            SortedList<Anteproyecto> sortedListaAnteproyectos = new SortedList<>
+                    (filtradoAnteproyecto);
+            sortedListaAnteproyectos.comparatorProperty().bind(tvAnteproyecto.comparatorProperty());
             tvAnteproyecto.setItems(sortedListaAnteproyectos);
         }
     }
     
-    private void activarFiltroRbSeleccion() {
-        if (rbDisponibles.isSelected()) {
-            activarFiltroDisponible();
-        } else {
-            activarFiltroValidacionPendiente();
-        }
-    }
-    
-    private void activarFiltroDisponible() {
-        tvAnteproyecto.setItems(filtrarAnteproyectos());
-    }
-
-    private void activarFiltroValidacionPendiente() {
-        tvAnteproyecto.setItems(filtrarAnteproyectos());
-    }
-
     private ObservableList<Anteproyecto> filtrarAnteproyectos() {
         ObservableList<Anteproyecto> anteproyectosFiltrados = FXCollections.observableArrayList();
         boolean busquedaPorDirector = !tfBusqueda.getText().isEmpty();
         boolean busquedaDisponibles = rbDisponibles.isSelected();
-        
+        boolean busquedaNoDisponibles = rbNoDisponibles.isSelected();
+        boolean busquedaValidacionPendiente = rbValidacionPendiente.isSelected();
         for (Anteproyecto anteproyecto : anteproyectos) {
             if (busquedaPorDirector) {
                 if (busquedaDisponibles) {
                     if (anteproyecto.getDirector().toLowerCase().contains(
                             tfBusqueda.getText().toLowerCase()) && 
-                            anteproyecto.getEstado().contains("Disponible")) {
+                            anteproyecto.getEstado().contains(ESTADO_DISPONIBLE)) {
                         anteproyectosFiltrados.add(anteproyecto);
                     }
-                } else {
+                } else if (busquedaValidacionPendiente){
                     if (anteproyecto.getDirector().toLowerCase().contains(
                             tfBusqueda.getText().toLowerCase()) && 
-                            anteproyecto.getEstado().contains("Validacion pendiente")) {
+                            anteproyecto.getEstado().contains(ESTADO_VALIDACION_PENDIENTE)) {
+                        anteproyectosFiltrados.add(anteproyecto);
+                    }
+                } else if (busquedaNoDisponibles){
+                    if (anteproyecto.getDirector().toLowerCase().contains(
+                            tfBusqueda.getText().toLowerCase()) && 
+                            anteproyecto.getEstado().contains(ESTADO_NO_DISPONIBLE)) {
                         anteproyectosFiltrados.add(anteproyecto);
                     }
                 }
             } else {
                 if (busquedaDisponibles) {
-                    if (anteproyecto.getEstado().contains("Disponible")) {
+                    if (anteproyecto.getEstado().contains(ESTADO_DISPONIBLE)) {
                         anteproyectosFiltrados.add(anteproyecto);
                     }
-                } else {
-                    if (anteproyecto.getEstado().contains("Validacion pendiente")) {
+                } else if (busquedaValidacionPendiente){
+                    if (anteproyecto.getEstado().contains(ESTADO_VALIDACION_PENDIENTE)) {
+                        anteproyectosFiltrados.add(anteproyecto);
+                    }
+                } else if (busquedaNoDisponibles){
+                    if (anteproyecto.getEstado().contains(ESTADO_NO_DISPONIBLE)) {
                         anteproyectosFiltrados.add(anteproyecto);
                     }
                 }
@@ -333,13 +342,8 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     }
     
     @FXML
-    private void clicRbDisponibles(ActionEvent event) {
-        activarFiltroDisponible();
-    }
-
-    @FXML
-    private void clicRbValidacionPendiente(ActionEvent event) {
-        activarFiltroValidacionPendiente();
+    private void clicFiltro(ActionEvent event) {
+        tvAnteproyecto.setItems(filtrarAnteproyectos());
     }
 
     @FXML
@@ -354,5 +358,6 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
                  Alert.AlertType.WARNING);
             }
     }
+
 
 }

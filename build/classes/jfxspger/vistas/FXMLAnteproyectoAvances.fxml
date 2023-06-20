@@ -33,9 +33,28 @@
             <TableColumn fx:id="cFechaCreacion" prefWidth="292.0" text="Fecha de creacion" />
          </columns>
       </TableView>
+      <Button layoutX="379.0" layoutY="134.0" mnemonicParsing="false" onAction="#clicIrPrincipalAcademico" prefHeight="55.0" prefWidth="74.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css">
+         <graphic>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recursos/back.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label fx:id="lbTituloAnteproyecto" layoutX="505.0" layoutY="201.0" prefHeight="45.0" prefWidth="1244.0" text="Titulo anteproyecto">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="505.0" layoutY="132.0" text="ANTEPROYECTO">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
       <Pane layoutY="100.0" prefHeight="980.0" prefWidth="300.0" style="-fx-background-color: #33AB5B;">
          <children>
-            <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#clicIrAnteproyecto" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Anteproyecto" textFill="WHITE">
+            <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#clicIrAnteproyectos" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Anteproyectos" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
@@ -47,43 +66,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="20.0" layoutY="145.0" mnemonicParsing="false" onAction="#clicIrCronograma" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Cronograma" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../recursos/cronograma.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button layoutX="20.0" layoutY="270.0" mnemonicParsing="false" onAction="#clicIrCursos" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Cursos" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../recursos/educacion-en-linea.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button layoutX="21.0" layoutY="822.0" mnemonicParsing="false" onAction="#clicCerrarSesion" prefHeight="70.0" prefWidth="260.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" text="Cerrar sesión" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="23.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="52.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../recursos/cerrar-sesion.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button layoutX="20.0" layoutY="395.0" mnemonicParsing="false" onAction="#clicIrPropuestas" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Propuestas" textFill="WHITE">
+            <Button layoutX="20.0" layoutY="145.0" mnemonicParsing="false" onAction="#clicIrPropuestas" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Propuestas" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
@@ -95,26 +78,55 @@
                   </ImageView>
                </graphic>
             </Button>
+            <Button layoutX="20.0" layoutY="270.0" mnemonicParsing="false" onAction="#clicIrEstudiantes" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Estudiantes" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/usuario.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="21.0" layoutY="822.0" mnemonicParsing="false" onAction="#clicCerrarSesion" prefHeight="70.0" prefWidth="260.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" text="Cerrar sesión" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="52.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/cerrar-sesion.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="20.0" layoutY="396.0" mnemonicParsing="false" onAction="#clicIrEntregables" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Entregables" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/lista-de-tareas.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="20.0" layoutY="526.0" mnemonicParsing="false" onAction="#clicIrRevisiones" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Revisiones" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/lupa.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </Pane>
-      <Button layoutX="379.0" layoutY="134.0" mnemonicParsing="false" onAction="#clicIrPrincipalEstudiante" prefHeight="55.0" prefWidth="74.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css">
-         <graphic>
-            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../recursos/back.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Label fx:id="lbTituloAnteproyecto" layoutX="505.0" layoutY="201.0" prefHeight="45.0" prefWidth="300.0" text="Titulo anteproyecto">
-         <font>
-            <Font size="22.0" />
-         </font>
-      </Label>
-      <Label layoutX="505.0" layoutY="132.0" text="ANTEPROYECTO">
-         <font>
-            <Font name="System Bold" size="30.0" />
-         </font>
-      </Label>
    </children>
 </AnchorPane>
