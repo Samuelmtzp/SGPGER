@@ -78,7 +78,7 @@ public class FXMLAnteproyectoAvancesController implements Initializable {
     
     private void cargarInformacionCronograma(){
         entregas = FXCollections.observableArrayList();
-        EntregaRespuesta respuestaBD = EntregaDAO.obtenerInformacionEntrega();
+        EntregaRespuesta respuestaBD = EntregaDAO.obtenerInformacionEntregas();
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Sin conexión", 

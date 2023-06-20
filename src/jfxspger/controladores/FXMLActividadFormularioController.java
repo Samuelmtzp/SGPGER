@@ -46,7 +46,7 @@ public class FXMLActividadFormularioController implements Initializable {
     private DatePicker dpFechaFin;
     private Actividad actividadEdicion;
     private Estudiante estudiante;
-    private int idEstudiante;
+    private int idEstudiante = 3;
     private boolean esEdicion;
     private INotificacionOperacionActividad interfazNotificacion;
     
@@ -154,32 +154,35 @@ public class FXMLActividadFormularioController implements Initializable {
     
         @FXML
     private void clicBtnEliminarActividad(ActionEvent event) {
+        
+        boolean eliminarAct = Utilidades.mostrarDialogoConfirmacion(
+                "Eliminar actividad", 
+                "¿Estás seguro que deseas eliminar la actividad?");
+        
+        if(eliminarAct){
             eliminarActividad(actividadEdicion);
+        }
     }
     
     private void validarCampos(){
         establecerEstiloNormal();
         boolean datosValidos = true;        
-        String nomAct = tfNombreActividad.getText();
-        String desc = tfDescripcionActividad.getText();
+        String nomAct = tfNombreActividad.getText().trim();
+        String desc = tfDescripcionActividad.getText().trim();
         LocalDate fechaInicio = dpFechaInicio.getValue();
         LocalDate fechaFin = dpFechaFin.getValue();
         LocalTime tiempoInicio = LocalTime.of(spHorasInicio.getValue(), 
                 spMinutosInicio.getValue());
         LocalTime tiempoFin = LocalTime.of(spHorasFin.getValue(), spMinutosFin.getValue());        
         
-        if(nomAct.trim() != null){
-            if(nomAct.isEmpty()){
-                tfNombreActividad.setStyle(estiloError);
-                datosValidos = false;
-            }    
-        }
-        
-        if(desc.trim() != null){
-            if(desc.isEmpty()){
+        if(nomAct.isEmpty()){
+            tfNombreActividad.setStyle(estiloError);
+            datosValidos = false;
+        }            
+                
+        if(desc.isEmpty()){
             tfDescripcionActividad.setStyle(estiloError);
             datosValidos = false;
-            }
         }
         
         if(fechaFin == null){
@@ -200,8 +203,7 @@ public class FXMLActividadFormularioController implements Initializable {
         
         if(datosValidos){
             Actividad actividadValida = new Actividad();
-//            obtenerDatosEstudiante();
-            actividadValida.setIdEstudiante(idEstudiante);
+            actividadValida.setIdEstudiante(3);
             actividadValida.setTitulo(nomAct);
             actividadValida.setFechaInicio(fechaInicio.toString() + " " + tiempoInicio.toString());
             actividadValida.setFechaFin(fechaFin.toString() + " " + tiempoFin.toString());

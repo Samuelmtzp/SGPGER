@@ -24,9 +24,9 @@ public class DocumentoDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT idDocumento, archivoDocumento, " +
-                        "nombre, idEntrega " +
-                        "FROM Documento";
+                String consulta = "SELECT D.*, E.fechaEntrega " +
+                                        "FROM Documento D " +
+                                        "JOIN Entrega E ON D.idEntrega = E.idEntrega;";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Documento> archivoConsulta = new ArrayList();
@@ -37,6 +37,7 @@ public class DocumentoDAO {
                     archivo.setArchivoDocumento(resultado.getBytes("archivoDocumento"));
                     archivo.setNombre(resultado.getString("nombre"));
                     archivo.setIdEntrega(resultado.getInt("idEntrega"));
+                    archivo.setFechaEntrega(resultado.getString("fechaEntrega"));
                     archivoConsulta.add(archivo);
                 }
                 respuesta.setDocumentos(archivoConsulta);
