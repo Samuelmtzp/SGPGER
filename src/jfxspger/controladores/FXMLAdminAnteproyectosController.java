@@ -129,13 +129,15 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
 
     @FXML
     private void clicEliminarAnteproyecto(ActionEvent event) {
-        Anteproyecto anteproyectoSeleccionado = tvAnteproyecto.
-                getSelectionModel().getSelectedItem();
-        if(anteproyectoSeleccionado != null){
+        Anteproyecto anteproyectoSeleccionado = tvAnteproyecto.getSelectionModel().
+                getSelectedItem();
+        int posicion = tvAnteproyecto.
+                getSelectionModel().getSelectedIndex();
+        if(posicion != -1){
             boolean borrarRegistro = Utilidades.mostrarDialogoConfirmacion(
                     "Eliminar registro del anteproyecto", 
                     "¿Estás seguro de que deseas eliminar el anteproyecto?");
-            if (borrarRegistro==true) {
+            if (borrarRegistro) {
                 int codigoRespuesta = AnteproyectoDAO.
                     eliminarAnteproyecto(anteproyectoSeleccionado.getIdAnteproyecto());
                 switch(codigoRespuesta){
@@ -151,9 +153,9 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
                         Alert.AlertType.WARNING);
                 break;
                     case Constantes.OPERACION_EXITOSA:
-                         cargarInformacion();
                          activarFiltroRbSeleccion();
                          tfBusqueda.setText("");
+                         cargarInformacion();
                 break;
                 }
             }
