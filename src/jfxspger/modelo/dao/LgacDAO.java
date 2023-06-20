@@ -24,8 +24,9 @@ public class LgacDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT idLgac, nombre " +
-                        " FROM Lgac";
+                String consulta = "SELECT idLgac, Lgac.nombre, Lgac.idCuerpoAcademico, "
+                        + "cuerpoAcademico.nombre FROM Lgac INNER JOIN cuerpoAcademico ON "
+                        + "cuerpoAcademico.idCuerpoAcademico= Lgac.idCuerpoAcademico";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Lgac> lgacConsulta = new ArrayList();
@@ -33,7 +34,11 @@ public class LgacDAO {
                 {
                     Lgac lgac = new Lgac();
                     lgac.setIdLgac(resultado.getInt("idLgac"));
-                    lgac.setNombre(resultado.getString("nombre"));
+                    lgac.setNombre(resultado.getString("Lgac.nombre"));
+                    lgac.setIdCuerpoAcademico(resultado.getInt(
+                            "Lgac.idCuerpoAcademico"));
+                    lgac.setCuerpoAcademico(resultado.getString(
+                            "cuerpoAcademico.nombre"));
                     lgacConsulta.add(lgac);
                 }
                 respuesta.setListaLgac(lgacConsulta);
@@ -52,10 +57,11 @@ public class LgacDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
-                String sentencia = "INSERT INTO Lgac (nombre) " +
-                        "VALUES (?)";
+                String sentencia = "INSERT INTO Lgac (nombre, idCuerpoAcademico) " +
+                        "VALUES (?,?)";
                 PreparedStatement prepararSentencia =  conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setString(1, nuevaLgac.getNombre());
+                prepararSentencia.setInt(2, nuevaLgac.getIdCuerpoAcademico());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;
@@ -74,11 +80,12 @@ public class LgacDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
-                String sentencia = "UPDATE Lgac SET nombre = ? " + 
+                String sentencia = "UPDATE Lgac SET nombre = ?, idCuerpoAcademico = ? " + 
                         "WHERE idLgac = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setString(1, lgacEdicion.getNombre());
-                prepararSentencia.setInt(2, lgacEdicion.getIdLgac());
+                prepararSentencia.setInt(2, lgacEdicion.getIdCuerpoAcademico());
+                prepararSentencia.setInt(3, lgacEdicion.getIdLgac());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;

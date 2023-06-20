@@ -10,13 +10,17 @@ public class Lgac {
     
     private int idLgac;
     private String nombre;
+    private int idCuerpoAcademico;
+    private String cuerpoAcademico;
 
     public Lgac() {
     }
 
-    public Lgac(int idLgac, String nombre) {
+    public Lgac(int idLgac, String nombre, int idCuerpoAcademico, String cuerpoAcademico) {
         this.idLgac = idLgac;
         this.nombre = nombre;
+        this.idCuerpoAcademico=idCuerpoAcademico;
+        this.cuerpoAcademico=cuerpoAcademico;
     }
 
     public int getIdLgac() {
@@ -33,6 +37,22 @@ public class Lgac {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public int getIdCuerpoAcademico() {
+        return idCuerpoAcademico;
+    }
+
+    public void setIdCuerpoAcademico(int idCuerpoAcademico) {
+        this.idCuerpoAcademico = idCuerpoAcademico;
+    }
+
+    public String getCuerpoAcademico() {
+        return cuerpoAcademico;
+    }
+
+    public void setCuerpoAcademico(String cuerpoAcademico) {
+        this.cuerpoAcademico = cuerpoAcademico;
     }
 
     @Override

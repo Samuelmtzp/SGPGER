@@ -42,6 +42,8 @@ public class FXMLAdminLgacController extends FXMLPrincipalAdministradorControlle
     private Lgac lgacEdicion;
     private boolean esEdicion;
     private ObservableList<Lgac> lgacs;
+    @FXML
+    private TableColumn columnCuerpoAcademico;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -72,6 +74,7 @@ public class FXMLAdminLgacController extends FXMLPrincipalAdministradorControlle
      
      private void configurarTabla() {
         columbNombre.setCellValueFactory(new PropertyValueFactory("nombre"));
+        columnCuerpoAcademico.setCellValueFactory(new PropertyValueFactory("cuerpoAcademico"));
     }
      
     @FXML
