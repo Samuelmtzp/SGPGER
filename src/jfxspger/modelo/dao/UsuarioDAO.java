@@ -117,39 +117,29 @@ public class UsuarioDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT Usuario.idUsuario, Usuario.idTipoUsuario, "
-                        + "Academico.idAcademico, TipoUsuario.tipoUsuario, username, password, "
-                        + "correo, Usuario.nombre, apellidoPaterno, apellidoMaterno, "
-                        + "telefono, fechaCreacion "
-                        + "FROM Usuario "
-                        + "INNER JOIN TipoUsuario "
-                        + "ON Usuario.idTipoUsuario = TipoUsuario.idTipoUsuario "
-                        + "INNER JOIN Academico "
-                        + "ON Academico.idUsuario = Usuario.idUsuario "
-                        + "INNER JOIN CuerpoAcademico "
-                        + "ON CuerpoAcademico.idResponsable = Academico.idAcademico "
-                        + "WHERE Usuario.idTipoUsuario = 3 "
-                        + "AND CuerpoAcademico.idCuerpoAcademico = ?";
+                String consulta = "SELECT Usuario.idUsuario, Usuario.idTipoUsuario, Academico.idAcademico, TipoUsuario.tipoUsuario, " +
+"Usuario.nombre, apellidoPaterno, apellidoMaterno FROM Usuario INNER JOIN TipoUsuario ON " +
+"Usuario.idTipoUsuario = TipoUsuario.idTipoUsuario INNER JOIN Academico ON Academico.idUsuario = Usuario.idUsuario INNER JOIN CuerpoAcademico " +
+"ON CuerpoAcademico.idCuerpoAcademico = Academico.idCuerpoAcademico WHERE Usuario.idTipoUsuario = 3 AND CuerpoAcademico.idCuerpoAcademico = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idCuerpoAcademico);
+                System.out.println("prepararSentencia = " + idCuerpoAcademico);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Usuario> usuariosConsulta = new ArrayList();
                 if (resultado.next())
                 {
                     Usuario usuario = new Usuario();
-                    usuario.setIdUsuario(resultado.getInt("idUsuario"));
-                    usuario.setIdTipoUsuario(resultado.getInt("Usuario.idTipoUsuario"));
-                    usuario.setIdAcademico(resultado.getInt("Academico.idAcademico"));
-                    usuario.setTipoUsuario(resultado.getString("TipoUsuario.tipoUsuario"));
-                    usuario.setUsername(resultado.getString("username"));
-                    usuario.setPassword(resultado.getString("password"));
-                    usuario.setCorreo(resultado.getString("correo"));
+                    usuario.setIdUsuario(resultado.getInt("Usuario.idUsuario"));
+                    System.out.println("usuarioIdUsuario = " + usuario.getIdUsuario());
+                    usuario.setIdAcademico(resultado.getInt
+                        ("Academico.idAcademico"));
+                    System.out.println("usuarioIdAcademico = " + usuario.getIdAcademico());
                     usuario.setNombre(resultado.getString("nombre"));
+                    System.out.println("usuarioNombre = " + usuario.getNombre());
                     usuario.setApellidoPaterno(resultado.getString("apellidoPaterno"));
                     usuario.setApellidoMaterno(resultado.getString("apellidoMaterno"));
-                    usuario.setTelefono(resultado.getString("telefono"));
-                    usuario.setFechaCreacion(resultado.getString("fechaCreacion"));
                     usuariosConsulta.add(usuario);
+                    System.out.println("usuario = " + "{ Nombre= " + usuario.getNombre()+ " , " + "idAcademico= " + usuario.getIdAcademico() + " , " + "idUsuario= "+ usuario.getIdUsuario());
                 }
                 respuesta.setUsuarios(usuariosConsulta);
                 conexionBD.close();
