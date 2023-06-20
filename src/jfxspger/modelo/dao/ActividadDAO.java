@@ -40,7 +40,43 @@ public class ActividadDAO {
                     actividad.setFechaInicio(resultado.getString("fechaInicio"));
                     actividad.setFechaFin(resultado.getString("fechaFin"));
                     actividad.setDescripcion(resultado.getString("descripcion"));
-//                    actividad.setIdEntrega(resultado.getInt("idEntrega"));
+                    actividadConsulta.add(actividad);
+                }
+                respuesta.setActividades(actividadConsulta);
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+                e.printStackTrace();
+            }
+        } else {
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
+    }
+    
+        public static ActividadRespuesta obtenerActividadesYEntregas(int idEstudiante) {
+        ActividadRespuesta respuesta = new ActividadRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+        if (conexionBD != null) {
+            try {
+                String consulta = "SELECT a.idActividad, a.titulo, a.fechaInicio, a.fechaFin, e.idEntrega, e.fechaEntrega " +
+                                        "FROM actividad a " +
+                                        "LEFT JOIN entrega e ON a.idActividad = e.idActividad " +
+                                        "WHERE a.idEstudiante = ?;";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, idEstudiante);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList<Actividad> actividadConsulta = new ArrayList();
+                while (resultado.next())
+                {
+                    Actividad actividad = new Actividad();
+                    actividad.setIdActividad(resultado.getInt("idActividad"));
+                    actividad.setTitulo(resultado.getString("titulo"));                    
+                    actividad.setFechaInicio(resultado.getString("fechaInicio"));
+                    actividad.setFechaFin(resultado.getString("fechaFin"));
+                    actividad.setIdEntrega(resultado.getInt("idEntrega"));
+                    actividad.setFechaCreacion(resultado.getString("fechaEntrega"));                    
                     actividadConsulta.add(actividad);
                 }
                 respuesta.setActividades(actividadConsulta);

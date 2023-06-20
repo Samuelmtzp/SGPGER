@@ -54,7 +54,44 @@ public class EntregaDAO {
                 String consulta = "SELECT e.*, a.titulo " +
                                         "FROM entrega e " +
                                         "INNER JOIN actividad a ON e.idActividad = a.idActividad;";
-                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);                
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList<Entrega> entregaConsulta = new ArrayList();
+                while (resultado.next())
+                {
+                    Entrega entrega = new Entrega();
+                    entrega.setIdEntrega(resultado.getInt("idActividad"));
+                    entrega.setIdEntrega(resultado.getInt("idEntrega"));
+                    entrega.setFechaEntrega(resultado.getString("fechaEntrega"));
+                    entrega.setFechaEntrega(resultado.getString("fechaCreacion"));
+                    entrega.setTituloActividad(resultado.getString("titulo"));
+                    entregaConsulta.add(entrega);
+                }
+                respuesta.setEntregas(entregaConsulta);
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+            }
+        } else {
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
+    }
+    
+    public static EntregaRespuesta obtenerInformacionEntregasPorAnteproyecto(int idAnteproyecto) {
+        EntregaRespuesta respuesta = new EntregaRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+        if (conexionBD != null) {
+            try {
+                String consulta = "SELECT e.idEntrega, e.idActividad, a.titulo, e.fechaEntrega, e.fechaCreacion " +
+                                    "FROM entrega e " +
+                                    "INNER JOIN actividad a ON e.idActividad = a.idActividad " +
+                                    "INNER JOIN estudiante est ON a.idEstudiante = est.idEstudiante " +
+                                    "INNER JOIN anteproyecto ap ON est.idAnteproyecto = ap.idAnteproyecto " +
+                                    "WHERE ap.idAnteproyecto = ?;";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, idAnteproyecto);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Entrega> entregaConsulta = new ArrayList();
                 while (resultado.next())

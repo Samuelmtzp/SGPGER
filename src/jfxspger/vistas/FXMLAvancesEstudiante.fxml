@@ -10,11 +10,12 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLAnteproyectoAvancesController">
+
+<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="jfxspger.controladores.FXMLAvancesEstudianteController">
    <children>
       <Pane prefHeight="100.0" prefWidth="1920.0" style="-fx-background-color: #343838;">
          <children>
-            <Label fx:id="lTitulo" layoutX="698.0" layoutY="13.0" prefHeight="73.0" prefWidth="524.0" text="Avances anteproyecto" textFill="WHITE">
+            <Label fx:id="lTitulo" layoutX="697.0" layoutY="13.0" prefHeight="73.0" prefWidth="526.0" text="Avances de estudiante" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="50.0" />
                </font>
@@ -33,7 +34,7 @@
             <TableColumn fx:id="cFechaCreacion" prefWidth="292.0" text="Fecha de creacion" />
          </columns>
       </TableView>
-      <Button layoutX="379.0" layoutY="134.0" mnemonicParsing="false" onAction="#clicIrInfoAnteproyecto" prefHeight="55.0" prefWidth="74.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css">
+      <Button layoutX="379.0" layoutY="134.0" mnemonicParsing="false" onAction="#clicVentanaAnterior" prefHeight="55.0" prefWidth="74.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css">
          <graphic>
             <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -42,12 +43,12 @@
             </ImageView>
          </graphic>
       </Button>
-      <Label fx:id="lbTituloAnteproyecto" layoutX="505.0" layoutY="201.0" prefHeight="45.0" prefWidth="1244.0" text="Titulo anteproyecto">
+      <Label fx:id="lbNombreEstudiante" layoutX="505.0" layoutY="201.0" prefHeight="45.0" prefWidth="1244.0" text="Nombre del estudiante">
          <font>
             <Font size="22.0" />
          </font>
       </Label>
-      <Label layoutX="505.0" layoutY="132.0" text="ANTEPROYECTO">
+      <Label layoutX="505.0" layoutY="132.0" text="ESTUDIANTE">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
@@ -128,5 +129,10 @@
             </Button>
          </children>
       </Pane>
+      <Button layoutX="1681.0" layoutY="139.0" mnemonicParsing="false" onAction="#clicBtnEvaluarAvance" prefHeight="46.0" prefWidth="198.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Evaluar avance" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
