@@ -42,8 +42,8 @@
                               <Font name="System Bold Italic" size="27.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="cbModalidad" layoutX="1239.0" layoutY="110.0" prefHeight="31.0" prefWidth="238.0" stylesheets="@../css/estilos.css" />
-                        <Label layoutX="1239.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Modalidad">
+                        <ComboBox fx:id="cbModalidad" layoutX="1125.0" layoutY="108.0" prefHeight="31.0" prefWidth="238.0" stylesheets="@../css/estilos.css" />
+                        <Label layoutX="1125.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Modalidad">
                            <font>
                               <Font name="System Bold Italic" size="27.0" />
                            </font>

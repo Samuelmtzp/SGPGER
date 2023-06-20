@@ -17,14 +17,14 @@ import jfxspger.utilidades.Utilidades;
 public class FXMLPrincipalAcademicoController implements Initializable {
 
     @FXML
-    private Label lbTitulo;
+    protected Label lbTitulo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }    
 
     @FXML
-    private void clicIrAnteproyectos(ActionEvent event) {
+    protected void clicIrAnteproyectos(ActionEvent event) {
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.setScene(
                 Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos3.fxml"));
@@ -33,15 +33,15 @@ public class FXMLPrincipalAcademicoController implements Initializable {
     }
 
     @FXML
-    private void clicIrPropuestas(ActionEvent event) {
+    protected void clicIrPropuestas(ActionEvent event) {
     }
 
     @FXML
-    private void clicIrEstudiantes(ActionEvent event) {
+    protected void clicIrEstudiantes(ActionEvent event) {
     }
 
     @FXML
-    private void clicCerrarSesion(ActionEvent event) {
+    protected void clicCerrarSesion(ActionEvent event) {
         if (Utilidades.mostrarDialogoConfirmacion(
                 "Cerrar sesión", 
                 "¿Está seguro de que desea cerrar sesión?")) {
@@ -49,7 +49,7 @@ public class FXMLPrincipalAcademicoController implements Initializable {
         }
     }
     
-    private void irVentanaInicioSesion() {
+    protected void irVentanaInicioSesion() {
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.setScene(
                 Utilidades.inicializarEscena("vistas/FXMLInicioSesion.fxml"));
@@ -58,11 +58,11 @@ public class FXMLPrincipalAcademicoController implements Initializable {
     }
     
     @FXML
-    private void clicIrEntregables(ActionEvent event) {
+    protected void clicIrEntregables(ActionEvent event) {
     }
 
     @FXML
-    private void clicIrRevisiones(ActionEvent event) {
+    protected void clicIrRevisiones(ActionEvent event) {
     }
     
 }
