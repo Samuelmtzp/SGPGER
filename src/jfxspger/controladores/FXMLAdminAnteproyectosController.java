@@ -187,7 +187,7 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     
     private void irAsignarEstudiantes(Anteproyecto anteproyecto){
            try{
-            if(anteproyecto.getIdEstado()== 3){
+            if(anteproyecto.getIdEstado()== 2){
             FXMLLoader accesoControlador = new 
       FXMLLoader(jfxspger.JFXSPGER.class.getResource(
               "/jfxspger/vistas/FXMLAsignarEstudiantes.fxml"));
