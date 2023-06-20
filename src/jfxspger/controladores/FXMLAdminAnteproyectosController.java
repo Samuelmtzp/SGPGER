@@ -239,7 +239,7 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
             formulario.inicializarInformacion(anteproyecto);
         }catch(IOException e){
             Utilidades.mostrarDialogoSimple("Error", 
-                    "No se puede mostrar la pantalla de informacion de usuario", 
+                    "No se puede mostrar la pantalla de informacion de anteproyecto", 
                     Alert.AlertType.ERROR);  
         }
         
