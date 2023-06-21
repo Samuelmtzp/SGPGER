@@ -246,7 +246,7 @@ public class FXMLAsignarEstudiantesController extends FXMLPrincipalAcademicoCont
     }
     
     private void actualizarCantidadAlumnosAnteproyecto(int idAnteproyecto) {
-        int respuesta = AnteproyectoDAO.actualizarAlumnosEnAnteproyecto(idAnteproyecto);
+        int respuesta = AnteproyectoDAO.incrementarContadorAlumnosEnAnteproyecto(idAnteproyecto);
         switch(respuesta) {
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Error de conexion", "El anteproyecto " + 
@@ -265,7 +265,7 @@ public class FXMLAsignarEstudiantesController extends FXMLPrincipalAcademicoCont
     }
     
      private void actualizarEliminarCantidadAlumnosAnteproyecto(int idAnteproyecto) {
-        int respuesta = AnteproyectoDAO.actualizarEliminarAlumnosEnAnteproyecto(idAnteproyecto);
+        int respuesta = AnteproyectoDAO.decrementarContadorAlumnosEnAnteproyecto(idAnteproyecto);
         switch(respuesta) {
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Error de conexion", "El anteproyecto " + 

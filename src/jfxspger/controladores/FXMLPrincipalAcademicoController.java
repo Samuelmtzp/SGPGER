@@ -125,4 +125,10 @@ public class FXMLPrincipalAcademicoController implements Initializable {
                 SingletonUsuario.getInstancia().getUsuario().getIdAcademico()) > 0);
     }
     
+    protected boolean esCodirectorDeAnteproyecto(int idAnteproyecto) {
+        return (AcademicoDAO.consultarCoincidenciasCodirectorDeAnteproyecto(
+                SingletonUsuario.getInstancia().getUsuario().getIdAcademico(), 
+                idAnteproyecto) == 1);
+    }
+    
 }
