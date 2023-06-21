@@ -65,6 +65,8 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
     private Anteproyecto anteproyecto;
     @FXML
     private Button btnConsultarAvances;
+    @FXML
+    private TextArea taFechaCreacion;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -94,6 +96,7 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
         taLgac.setText(String.valueOf(anteproyecto.getLgac()));
         taDuracionAproximada.setText(anteproyecto.getDuracionAproximada());
         lbEstado.setText(anteproyecto.getEstado());
+        taFechaCreacion.setText(anteproyecto.getFechaCreacion());
     }
     
     private void cambiarColorEstado() {
