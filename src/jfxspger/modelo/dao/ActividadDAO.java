@@ -19,6 +19,7 @@ import jfxspger.utilidades.Constantes;
 public class ActividadDAO {
     
     public static ActividadRespuesta obtenerInformacionActividad(int idEstudiante) {
+        
         ActividadRespuesta respuesta = new ActividadRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);

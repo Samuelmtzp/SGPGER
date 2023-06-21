@@ -29,6 +29,42 @@ public class DocumentoDAO {
                                         "JOIN Entrega E ON D.idEntrega = E.idEntrega;";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList<Documento> archivoConsulta = new ArrayList();                
+                while (resultado.next())
+                {
+                    Documento archivo = new Documento();
+                    archivo.setIdDocumento(resultado.getInt("idDocumento"));
+                    archivo.setArchivoDocumento(resultado.getBytes("archivoDocumento"));
+                    archivo.setNombre(resultado.getString("nombre"));
+                    archivo.setIdEntrega(resultado.getInt("idEntrega"));
+                    archivo.setFechaEntrega(resultado.getString("fechaEntrega"));
+                    archivoConsulta.add(archivo);
+                }
+                respuesta.setDocumentos(archivoConsulta);
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+            }
+        } else {
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
+    }
+    
+    public static DocumentoRespuesta obtenerInformacionArchivoPorActividad(int idActividad) {
+        DocumentoRespuesta respuesta = new DocumentoRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+        if (conexionBD != null) {
+            try {
+                String consulta = "SELECT a.idActividad, en.idEntrega, en.fechaEntrega, d.idDocumento, d.archivoDocumento, d.nombre " +
+                                    "FROM actividad a " +
+                                    "JOIN entrega en ON a.idActividad = en.idActividad " +
+                                    "JOIN Documento d ON en.idEntrega = d.idEntrega " +
+                                    "WHERE a.idActividad = ?;";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, idActividad);
+                ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Documento> archivoConsulta = new ArrayList();
                 while (resultado.next())
                 {

@@ -111,6 +111,7 @@ public class FXMLInicioSesionController implements Initializable {
                                 SingletonUsuario.getInstancia().getUsuario().
                                         setMatricula(estudiante.getMatricula());
                                 mostrarBienvenida();
+                                
                                 irPantallaPrincipalEstudiante();
                             } else {
                                 Utilidades.mostrarDialogoSimple("Error al cargar los datos", 

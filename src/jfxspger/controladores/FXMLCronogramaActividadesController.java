@@ -9,6 +9,7 @@ package jfxspger.controladores;
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import java.io.IOException;
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -33,6 +34,7 @@ import jfxspger.modelo.pojo.Actividad;
 import jfxspger.modelo.pojo.ActividadRespuesta;
 import jfxspger.modelo.pojo.Estudiante;
 import jfxspger.utilidades.Constantes;
+import jfxspger.utilidades.SingletonUsuario;
 import jfxspger.utilidades.Utilidades;
 
 public class FXMLCronogramaActividadesController implements Initializable, 
@@ -51,7 +53,8 @@ public class FXMLCronogramaActividadesController implements Initializable,
     private Label lTitulo;
     @FXML
     private TableColumn cFechaCreacion;
-    public int idEstudiante=3;
+    public int idEstudiante = SingletonUsuario.getInstancia().getUsuario().getIdEstudiante();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyy HH:mm:ss.S");
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -108,12 +111,7 @@ public class FXMLCronogramaActividadesController implements Initializable,
         cargarInformacionCronograma();
     }
      private void irFormulario(boolean esEdicion, Actividad actividadEdicion){
-        
-        FXMLInicioSesionController inicioSesion = new FXMLInicioSesionController();        
-//        int id = inicioSesion.getIdEstudiante();
 
-//         System.out.println("ID: " + id);
-    
         try {
             FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.
                     getResource("vistas/FXMLActividadFormu.fxml"));

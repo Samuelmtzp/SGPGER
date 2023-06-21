@@ -10,11 +10,12 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLAvancesEstudianteController">
+
+<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="jfxspger.controladores.FXMLEstudiantesAcademicoController">
    <children>
       <Pane prefHeight="100.0" prefWidth="1920.0" style="-fx-background-color: #343838;">
          <children>
-            <Label fx:id="lTitulo" layoutX="697.0" layoutY="13.0" prefHeight="73.0" prefWidth="526.0" text="Avances de estudiante" textFill="WHITE">
+            <Label fx:id="lTitulo" layoutX="825.0" layoutY="13.0" prefHeight="73.0" prefWidth="270.0" text="Estudiantes" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="50.0" />
                </font>
@@ -26,11 +27,13 @@
             </ImageView>
          </children>
       </Pane>
-      <TableView fx:id="tvEntregas" layoutX="505.0" layoutY="288.0" prefHeight="739.0" prefWidth="1244.0" style="-fx-background-color: lightgray;">
+      <TableView fx:id="tvEstudiantes" layoutX="505.0" layoutY="288.0" prefHeight="739.0" prefWidth="1244.0" style="-fx-background-color: lightgray;">
          <columns>
-            <TableColumn fx:id="cNombreActividad" prefWidth="607.0" text="Titulo de actividad" />
-            <TableColumn fx:id="cFechaEntrega" prefWidth="344.0" text="Fecha de entrega" />
-            <TableColumn fx:id="cCalificacion" prefWidth="292.0" text="Calificacion" />
+            <TableColumn fx:id="cNombreAlumno" prefWidth="317.0" text="Nombre del estudiante" />
+            <TableColumn fx:id="cApellidoPat" prefWidth="275.0" text="Apellido Paterno" />
+            <TableColumn fx:id="cApellidoMat" prefWidth="215.0" text="Apellido Materno" />
+            <TableColumn fx:id="cMatricula" minWidth="0.0" prefWidth="142.0" text="Matricula" />
+            <TableColumn fx:id="cNombreAnteproyecto" prefWidth="294.0" text="Anteproyecto" />
          </columns>
       </TableView>
       <Button layoutX="379.0" layoutY="134.0" mnemonicParsing="false" onAction="#clicVentanaAnterior" prefHeight="55.0" prefWidth="74.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css">
@@ -42,19 +45,9 @@
             </ImageView>
          </graphic>
       </Button>
-      <Label fx:id="lbNombreEstudiante" layoutX="505.0" layoutY="201.0" prefHeight="45.0" prefWidth="1244.0" text="Nombre del estudiante">
-         <font>
-            <Font size="22.0" />
-         </font>
-      </Label>
-      <Label layoutX="505.0" layoutY="132.0" text="ESTUDIANTE">
-         <font>
-            <Font name="System Bold" size="30.0" />
-         </font>
-      </Label>
       <Pane layoutY="100.0" prefHeight="980.0" prefWidth="300.0" style="-fx-background-color: #33AB5B;">
          <children>
-            <Button fx:id="btnAnteproyectos" disable="true" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#clicIrAnteproyectos" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Anteproyectos" textFill="WHITE">
+            <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#clicIrAnteproyectos" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Anteproyectos" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
@@ -66,7 +59,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnPropuestas" disable="true" layoutX="20.0" layoutY="145.0" mnemonicParsing="false" onAction="#clicIrPropuestas" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Propuestas" textFill="WHITE">
+            <Button layoutX="20.0" layoutY="145.0" mnemonicParsing="false" onAction="#clicIrPropuestas" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Propuestas" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
@@ -78,7 +71,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnEstudiantes" disable="true" layoutX="20.0" layoutY="270.0" mnemonicParsing="false" onAction="#clicIrEstudiantes" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Estudiantes" textFill="WHITE">
+            <Button layoutX="20.0" layoutY="270.0" mnemonicParsing="false" onAction="#clicIrEstudiantes" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Estudiantes" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
@@ -102,7 +95,19 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnRevisiones" disable="true" layoutX="20.0" layoutY="396.0" mnemonicParsing="false" onAction="#clicIrRevisiones" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Revisiones" textFill="WHITE">
+            <Button layoutX="20.0" layoutY="396.0" mnemonicParsing="false" onAction="#clicIrEntregables" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Entregables" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/lista-de-tareas.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="20.0" layoutY="526.0" mnemonicParsing="false" onAction="#clicIrRevisiones" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Revisiones" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
@@ -116,7 +121,7 @@
             </Button>
          </children>
       </Pane>
-      <Button layoutX="1681.0" layoutY="139.0" mnemonicParsing="false" onAction="#clicBtnEvaluarAvance" prefHeight="46.0" prefWidth="198.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Evaluar avance" textFill="WHITE">
+      <Button layoutX="1681.0" layoutY="139.0" mnemonicParsing="false" onAction="#clicBtnVerAvances" prefHeight="46.0" prefWidth="198.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Ver avances" textFill="WHITE">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
