@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import jfxspger.modelo.pojo.Entrega;
 import jfxspger.utilidades.Utilidades;
 
-public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoController implements Initializable {
+public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoController {
 
     @FXML
     private Label lTitulo;
@@ -30,41 +30,12 @@ public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoContr
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {        
+        validarSeccionesPermitidas();
     }    
 
     @FXML
     private void clicVentanaAnterior(ActionEvent event) {
         super.clicIrEstudiantes(event);
-    }
-
-    @FXML
-    protected void clicIrAnteproyectos(ActionEvent event) {
-        super.clicIrAnteproyectos(event);
-    }
-
-    @FXML
-    protected void clicIrPropuestas(ActionEvent event) {
-        super.clicIrPropuestas(event);
-    }
-
-    @FXML
-    protected void clicIrEstudiantes(ActionEvent event) {
-        super.clicIrEstudiantes(event);
-    }
-
-    @FXML
-    protected void clicCerrarSesion(ActionEvent event) {
-        super.clicCerrarSesion(event);
-    }
-
-    @FXML
-    protected void clicIrEntregables(ActionEvent event) {
-        super.clicIrEntregables(event);
-    }
-
-    @FXML
-    protected void clicIrRevisiones(ActionEvent event) {
-        super.clicIrRevisiones(event);
     }
 
     @FXML

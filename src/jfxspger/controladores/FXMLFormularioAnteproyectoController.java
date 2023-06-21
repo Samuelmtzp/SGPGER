@@ -91,6 +91,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        validarSeccionesPermitidas();
         cargarInformacionLGAC();
         cargarInformacionModalidad();
         cargarInformacionCuerpoAcademico();
@@ -269,7 +270,8 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
             anteproyectoValido.setIdDirector(usuarios.get(posicionDirector).getIdAcademico());
             anteproyectoValido.setIdCuerpoAcademico(cuerpoAcademico.
                     get(posicionCuerpoAcademico).getIdCuerpoAcademico());
-            anteproyectoValido.setIdDuracionAproximada(duracion.get(posicionDuracion).getIdDuracionAproximada());
+            anteproyectoValido.setIdDuracionAproximada(duracion.get(posicionDuracion).
+                    getIdDuracionAproximada());
             anteproyectoValido.setIdModalidad(modalidad.get(posicionModalidad).getIdModalidad());
             anteproyectoValido.setIdLgac(lgac.get(posicionLGAC).getIdLgac());
             anteproyectoValido.setProyectoInvestigacion(proyectoInvestigacion);
@@ -427,7 +429,8 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
     
     private void cargarInformacionAcademico(int idCuerpoAcademico){
         usuarios = FXCollections.observableArrayList();
-        UsuarioRespuesta AcademicoBD=UsuarioDAO.obtenerInformacionAcademicosEnCuerpoAcademico(idCuerpoAcademico);
+        UsuarioRespuesta AcademicoBD = 
+                UsuarioDAO.obtenerInformacionAcademicosEnCuerpoAcademico(idCuerpoAcademico);
         switch(AcademicoBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Error de conexion", 
@@ -448,7 +451,8 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
     
      private void cargarInformacionEstado(){
         estado = FXCollections.observableArrayList();
-        EstadoAnteproyectoRespuesta EstadoBD=EstadoAnteproyectoDAO.obtenerInformacionEstadoAnteproyecto();
+        EstadoAnteproyectoRespuesta EstadoBD = 
+                EstadoAnteproyectoDAO.obtenerInformacionEstadoAnteproyecto();
         switch(EstadoBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Error de conexion", 
@@ -500,7 +504,8 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
         int cantAlum = anteproyectoEdicion.getCantidadAlumnosParticipantes();
         String cantidadAlumnos = Integer.toString(cantAlum);
         tfCantidadAlumnos.setText(cantidadAlumnos);
-        int posDuracion = obtenerPosicionComboDuracion(anteproyectoEdicion.getIdDuracionAproximada());
+        int posDuracion = obtenerPosicionComboDuracion(
+                anteproyectoEdicion.getIdDuracionAproximada());
         cbDuracionAprox.getSelectionModel().select(posDuracion);
         tfProyectoInvestigacion.setText(anteproyectoEdicion.getProyectoInvestigacion());
         tfLineaInvestigacion.setText(anteproyectoEdicion.getLineaInvestigacion());
