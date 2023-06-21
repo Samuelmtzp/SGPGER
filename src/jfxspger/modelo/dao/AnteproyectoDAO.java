@@ -15,6 +15,7 @@ import jfxspger.modelo.ConexionBD;
 import jfxspger.modelo.pojo.AnteproyectoRespuesta;
 import jfxspger.modelo.pojo.Anteproyecto;
 import jfxspger.utilidades.Constantes;
+import jfxspger.utilidades.Utilidades;
 
 public class AnteproyectoDAO {
     
@@ -86,8 +87,9 @@ public class AnteproyectoDAO {
                             resultado.getString("descripcionTrabajoRecepcional"));
                     anteproyecto.setResultadosEsperados(resultado.getString("resultadosEsperados"));
                     anteproyecto.setBibliografiaRecomendada(
-                            resultado.getString("bibliografiaRecomendada"));
-                    anteproyecto.setFechaCreacion(resultado.getString("fechaCreacion"));
+                            resultado.getString((String) "bibliografiaRecomendada"));
+                    anteproyecto.setFechaCreacion(Utilidades.convertirTimeStampAStringFecha(
+                            resultado.getTimestamp("fechaCreacion")));
                     anteproyectoConsulta.add(anteproyecto);
                 }
                 respuesta.setAnteproyectos(anteproyectoConsulta);

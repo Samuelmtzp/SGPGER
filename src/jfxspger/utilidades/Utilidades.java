@@ -7,8 +7,11 @@
 package jfxspger.utilidades;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -65,11 +68,12 @@ public class Utilidades {
         }
     }
     
-    public static String convertirFechaHoraAFecha(String fechaHoraString) {
-        DateTimeFormatter formatoEntrada = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        DateTimeFormatter formatoSalida = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDateTime fechaHora = LocalDateTime.parse(fechaHoraString, formatoEntrada);
-        return fechaHora.format(formatoSalida);
+    public static String convertirTimeStampAStringFecha(Timestamp timestamp) {
+        Date date = new Date(timestamp.getTime());
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = formatter.format(date);
+        
+        return formattedDate;
     }
     
     public static String formatearFechaHora(String fechaHoraString) {

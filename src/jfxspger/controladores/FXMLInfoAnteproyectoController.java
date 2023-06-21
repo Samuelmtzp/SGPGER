@@ -96,8 +96,7 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
         taLgac.setText(String.valueOf(anteproyecto.getLgac()));
         taDuracionAproximada.setText(anteproyecto.getDuracionAproximada());
         lbEstado.setText(anteproyecto.getEstado());
-        taFechaCreacion.setText(Utilidades.
-                convertirFechaHoraAFecha(anteproyecto.getFechaCreacion()));
+        taFechaCreacion.setText(anteproyecto.getFechaCreacion());
     }
     
     private void cambiarColorEstado() {
