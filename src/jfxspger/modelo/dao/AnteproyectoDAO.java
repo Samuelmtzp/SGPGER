@@ -147,7 +147,8 @@ public class AnteproyectoDAO {
                 {
                     Anteproyecto anteproyecto = new Anteproyecto();
                     anteproyecto.setIdAnteproyecto(resultado.getInt("idAnteproyecto"));
-                    anteproyecto.setIdCuerpoAcademico(resultado.getInt("Anteproyecto.idCuerpoAcademico"));
+                    anteproyecto.setIdCuerpoAcademico(resultado.getInt(
+                            "Anteproyecto.idCuerpoAcademico"));
                     anteproyecto.setCuerpoAcademico(resultado.getString("CuerpoAcademico.nombre"));
                     anteproyecto.setIdDirector(resultado.getInt("idDirector"));
                     anteproyecto.setDirector(resultado.getString("directorNombre"));
@@ -164,7 +165,8 @@ public class AnteproyectoDAO {
                     anteproyecto.setDuracionAproximada(resultado.getString("duracionAproximada"));
                     anteproyecto.setNombreTrabajo(resultado.getString("nombreTrabajo"));
                     anteproyecto.setRequisitos(resultado.getString("requisitos"));
-                    anteproyecto.setMaximoAlumnosParticipantes(resultado.getInt("maximoAlumnosParticipantes"));
+                    anteproyecto.setMaximoAlumnosParticipantes(resultado.getInt(
+                            "maximoAlumnosParticipantes"));
                     anteproyecto.setCantidadAlumnosParticipantes(
                             resultado.getInt("cantidadAlumnosParticipantes"));
                     anteproyecto.setDescripcionProyectoInvestigacion(
@@ -234,7 +236,8 @@ public class AnteproyectoDAO {
                 {
                     Anteproyecto anteproyecto = new Anteproyecto();
                     anteproyecto.setIdAnteproyecto(resultado.getInt("idAnteproyecto"));
-                    anteproyecto.setIdCuerpoAcademico(resultado.getInt("Anteproyecto.idCuerpoAcademico"));
+                    anteproyecto.setIdCuerpoAcademico(resultado.
+                            getInt("Anteproyecto.idCuerpoAcademico"));
                     anteproyecto.setCuerpoAcademico(resultado.getString("CuerpoAcademico.nombre"));
                     anteproyecto.setIdDirector(resultado.getInt("idDirector"));
                     anteproyecto.setDirector(resultado.getString("directorNombre"));
@@ -251,7 +254,8 @@ public class AnteproyectoDAO {
                     anteproyecto.setDuracionAproximada(resultado.getString("duracionAproximada"));
                     anteproyecto.setNombreTrabajo(resultado.getString("nombreTrabajo"));
                     anteproyecto.setRequisitos(resultado.getString("requisitos"));
-                    anteproyecto.setMaximoAlumnosParticipantes(resultado.getInt("maximoAlumnosParticipantes"));
+                    anteproyecto.setMaximoAlumnosParticipantes(resultado.
+                            getInt("maximoAlumnosParticipantes"));
                     anteproyecto.setCantidadAlumnosParticipantes(
                             resultado.getInt("cantidadAlumnosParticipantes"));
                     anteproyecto.setDescripcionProyectoInvestigacion(
@@ -548,7 +552,8 @@ public class AnteproyectoDAO {
                     anteproyecto.setResultadosEsperados(resultado.getString("resultadosEsperados"));
                     anteproyecto.setBibliografiaRecomendada(
                             resultado.getString("bibliografiaRecomendada"));
-                    anteproyecto.setFechaCreacion(resultado.getString("fechaCreacion"));
+                    anteproyecto.setFechaCreacion(Utilidades.convertirTimeStampAStringFecha(
+                            resultado.getTimestamp("fechaCreacion")));
                     anteproyectoConsulta.add(anteproyecto);
                 }
                 respuesta.setAnteproyectos(anteproyectoConsulta);

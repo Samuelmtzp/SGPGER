@@ -22,7 +22,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import jfxspger.modelo.dao.AnteproyectoDAO;
 import jfxspger.modelo.pojo.Anteproyecto;
@@ -30,11 +29,6 @@ import jfxspger.modelo.pojo.AnteproyectoRespuesta;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
 
-/**
- * FXML Controller class
- *
- * @author king_
- */
 public class FXMLAdminPropuestasAnteproyectosController extends FXMLPrincipalAcademicoController {
 
     @FXML
@@ -63,10 +57,6 @@ public class FXMLAdminPropuestasAnteproyectosController extends FXMLPrincipalAca
     @FXML
     private Button btnRevisiones;
    
-
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
@@ -92,7 +82,8 @@ public class FXMLAdminPropuestasAnteproyectosController extends FXMLPrincipalAca
     
     private void cargarInformacion(){
         anteproyectos = FXCollections.observableArrayList();
-        AnteproyectoRespuesta respuestaBD = AnteproyectoDAO.obtenerInformacionAnteproyectoConValidacionPendiente();
+        AnteproyectoRespuesta respuestaBD = AnteproyectoDAO.
+                obtenerInformacionAnteproyectoConValidacionPendiente();
         switch (respuestaBD.getCodigoRespuesta()) {
             case Constantes.ERROR_CONEXION:
                     Utilidades.mostrarDialogoSimple("Sin conexión", 
