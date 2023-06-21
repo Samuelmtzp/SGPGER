@@ -15,6 +15,7 @@ import jfxspger.modelo.ConexionBD;
 import jfxspger.modelo.pojo.AnteproyectoRespuesta;
 import jfxspger.modelo.pojo.Anteproyecto;
 import jfxspger.utilidades.Constantes;
+import jfxspger.utilidades.Utilidades;
 
 public class AnteproyectoDAO {
     
@@ -33,9 +34,10 @@ public class AnteproyectoDAO {
                         + "proyectoInvestigacion, lineaInvestigacion, "
                         + "duracionAproximada.IdDuracionAproximada, "
                         + "duracionAproximada.duracionAproximada, nombreTrabajo, requisitos, "
-                        + "cantidadAlumnosParticipantes, descripcionProyectoInvestigacion, "
-                        + "descripcionTrabajoRecepcional, resultadosEsperados, "
-                        + "bibliografiaRecomendada, anteproyecto.fechaCreacion "
+                        + "maximoAlumnosParticipantes, cantidadAlumnosParticipantes, "
+                        + "descripcionProyectoInvestigacion, descripcionTrabajoRecepcional, "
+                        + "resultadosEsperados, bibliografiaRecomendada, "
+                        + "anteproyecto.fechaCreacion "
                         + "FROM Anteproyecto "
                         + "INNER JOIN cuerpoAcademico "
                         + "ON Anteproyecto.idCuerpoAcademico = CuerpoAcademico.idCuerpoAcademico "
@@ -76,6 +78,7 @@ public class AnteproyectoDAO {
                     anteproyecto.setDuracionAproximada(resultado.getString("duracionAproximada"));
                     anteproyecto.setNombreTrabajo(resultado.getString("nombreTrabajo"));
                     anteproyecto.setRequisitos(resultado.getString("requisitos"));
+                    anteproyecto.setMaximoAlumnosParticipantes(resultado.getInt("maximoAlumnosParticipantes"));
                     anteproyecto.setCantidadAlumnosParticipantes(
                             resultado.getInt("cantidadAlumnosParticipantes"));
                     anteproyecto.setDescripcionProyectoInvestigacion(
@@ -84,8 +87,9 @@ public class AnteproyectoDAO {
                             resultado.getString("descripcionTrabajoRecepcional"));
                     anteproyecto.setResultadosEsperados(resultado.getString("resultadosEsperados"));
                     anteproyecto.setBibliografiaRecomendada(
-                            resultado.getString("bibliografiaRecomendada"));
-                    anteproyecto.setFechaCreacion(resultado.getString("fechaCreacion"));
+                            resultado.getString((String) "bibliografiaRecomendada"));
+                    anteproyecto.setFechaCreacion(Utilidades.convertirTimeStampAStringFecha(
+                            resultado.getTimestamp("fechaCreacion")));
                     anteproyectoConsulta.add(anteproyecto);
                 }
                 respuesta.setAnteproyectos(anteproyectoConsulta);
@@ -107,10 +111,10 @@ public class AnteproyectoDAO {
                 String sentencia = "INSERT INTO Anteproyecto (idCuerpoAcademico, " + 
                         "idDirector, idEstado, idModalidad, idLgac, proyectoInvestigacion, " + 
                         "lineaInvestigacion, idDuracionAproximada, nombreTrabajo, " + 
-                        "requisitos, cantidadAlumnosParticipantes, " + 
+                        "requisitos, maximoAlumnosParticipantes, cantidadAlumnosParticipantes, " + 
                         "descripcionProyectoInvestigacion, descripcionTrabajoRecepcional, "+ 
                         "resultadosEsperados, bibliografiaRecomendada, fechaCreacion) " +
-                        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP())";
+                        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP())";
 
                 PreparedStatement prepararSentencia =  conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setInt(1, nuevoAnteproyecto.getIdCuerpoAcademico());
@@ -123,13 +127,14 @@ public class AnteproyectoDAO {
                 prepararSentencia.setInt(8, nuevoAnteproyecto.getIdDuracionAproximada());
                 prepararSentencia.setString(9, nuevoAnteproyecto.getNombreTrabajo());
                 prepararSentencia.setString(10, nuevoAnteproyecto.getRequisitos());
-                prepararSentencia.setInt(11, nuevoAnteproyecto.getCantidadAlumnosParticipantes());
-                prepararSentencia.setString(12, 
-                        nuevoAnteproyecto.getDescripcionProyectoInvestigacion());
+                prepararSentencia.setInt(11, nuevoAnteproyecto.getMaximoAlumnosParticipantes());
+                prepararSentencia.setInt(12, nuevoAnteproyecto.getCantidadAlumnosParticipantes());
                 prepararSentencia.setString(13, 
+                        nuevoAnteproyecto.getDescripcionProyectoInvestigacion());
+                prepararSentencia.setString(14, 
                         nuevoAnteproyecto.getDescripcionTrabajoRecepcional());
-                prepararSentencia.setString(14, nuevoAnteproyecto.getResultadosEsperados());
-                prepararSentencia.setString(15, nuevoAnteproyecto.getBibliografiaRecomendada());
+                prepararSentencia.setString(15, nuevoAnteproyecto.getResultadosEsperados());
+                prepararSentencia.setString(16, nuevoAnteproyecto.getBibliografiaRecomendada());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;
@@ -148,14 +153,15 @@ public class AnteproyectoDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
-                String sentencia = "UPDATE Anteproyecto SET idCuerpoAcademico = ?, " + 
-                        "idDirector = ?, idEstado = ?, idModalidad = ?, idLgac = ?, " + 
-                        "proyectoInvestigacion = ?, lineaInvestigacion = ?, " + 
-                        "idDuracionAproximada = ?, nombreTrabajo = ?, requisitos = ?, " + 
-                        "cantidadAlumnosParticipantes = ?, descripcionProyectoInvestigacion = ?, " + 
-                        "descripcionTrabajoRecepcional = ?, resultadosEsperados = ?, " + 
-                        "bibliografiaRecomendada = ?, comentarios = ? " +
-                        "WHERE idAnteproyecto = ?";
+                String sentencia = "UPDATE Anteproyecto SET idCuerpoAcademico = ?, "
+                        + "idDirector = ?, idEstado = ?, idModalidad = ?, idLgac = ?, "
+                        + "proyectoInvestigacion = ?, lineaInvestigacion = ?, "
+                        + "idDuracionAproximada = ?, nombreTrabajo = ?, requisitos = ?, "
+                        + "maximoAlumnosParticipantes = ?, cantidadAlumnosParticipantes = ?, "
+                        + "descripcionProyectoInvestigacion = ?, "
+                        + "descripcionTrabajoRecepcional = ?, resultadosEsperados = ?, "
+                        + "bibliografiaRecomendada = ?, comentarios = ? "
+                        + "WHERE idAnteproyecto = ?";
                 
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setInt(1, anteproyectoEdicion.getIdCuerpoAcademico());
@@ -168,15 +174,16 @@ public class AnteproyectoDAO {
                 prepararSentencia.setInt(8, anteproyectoEdicion.getIdDuracionAproximada());
                 prepararSentencia.setString(9, anteproyectoEdicion.getNombreTrabajo());
                 prepararSentencia.setString(10, anteproyectoEdicion.getRequisitos());
-                prepararSentencia.setInt(11, anteproyectoEdicion.
+                prepararSentencia.setInt(11, anteproyectoEdicion.getMaximoAlumnosParticipantes());
+                prepararSentencia.setInt(12, anteproyectoEdicion.
                         getCantidadAlumnosParticipantes());
-                prepararSentencia.setString(12, anteproyectoEdicion.
-                        getDescripcionProyectoInvestigacion());
                 prepararSentencia.setString(13, anteproyectoEdicion.
+                        getDescripcionProyectoInvestigacion());
+                prepararSentencia.setString(14, anteproyectoEdicion.
                         getDescripcionTrabajoRecepcional());
-                prepararSentencia.setString(14, anteproyectoEdicion.getResultadosEsperados());
-                prepararSentencia.setString(15, anteproyectoEdicion.getBibliografiaRecomendada());
-                prepararSentencia.setInt(16, anteproyectoEdicion.getIdAnteproyecto());
+                prepararSentencia.setString(15, anteproyectoEdicion.getResultadosEsperados());
+                prepararSentencia.setString(16, anteproyectoEdicion.getBibliografiaRecomendada());
+                prepararSentencia.setInt(17, anteproyectoEdicion.getIdAnteproyecto());
                 
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
@@ -212,13 +219,13 @@ public class AnteproyectoDAO {
         return respuesta;
     }
     
-     public static int actualizarAlumnosEnAnteproyecto(int idAnteproyecto) {
+     public static int incrementarContadorAlumnosEnAnteproyecto(int idAnteproyecto) {
         int respuesta;
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
                 String sentencia = "UPDATE anteproyecto SET cantidadAlumnosParticipantes = "
-                        + "cantidadAlumnosParticipantes - 1 WHERE idAnteproyecto = ?";
+                        + "cantidadAlumnosParticipantes + 1 WHERE idAnteproyecto = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setInt(1, idAnteproyecto);
                 int filasAfectadas = prepararSentencia.executeUpdate();
@@ -234,13 +241,13 @@ public class AnteproyectoDAO {
         return respuesta;
     }
      
-    public static int actualizarEliminarAlumnosEnAnteproyecto(int idAnteproyecto) {
+    public static int decrementarContadorAlumnosEnAnteproyecto(int idAnteproyecto) {
         int respuesta;
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
                 String sentencia = "UPDATE anteproyecto SET cantidadAlumnosParticipantes = "
-                        + "cantidadAlumnosParticipantes + 1 WHERE idAnteproyecto = ?";
+                        + "cantidadAlumnosParticipantes - 1 WHERE idAnteproyecto = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setInt(1, idAnteproyecto);
                 int filasAfectadas = prepararSentencia.executeUpdate();

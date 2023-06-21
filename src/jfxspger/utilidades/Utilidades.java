@@ -7,6 +7,11 @@
 package jfxspger.utilidades;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -54,11 +59,29 @@ public class Utilidades {
     
     public static boolean correoValido(String correo) {
         if (correo != null && !correo.isEmpty()) {
-            Pattern patronCorreo = Pattern.compile("([a-z0-9]+(\\.?[a-z0-9])*)+@(([a-z]+)\\.([a-z]+))+");
+            Pattern patronCorreo = Pattern.compile(
+                    "([a-z0-9]+(\\.?[a-z0-9])*)+@(([a-z]+)\\.([a-z]+))+");
             Matcher matchPatron = patronCorreo.matcher(correo);
             return matchPatron.find();
         } else {
             return false;
         }
     }
+    
+    public static String convertirTimeStampAStringFecha(Timestamp timestamp) {
+        Date fecha = new Date(timestamp.getTime());
+        SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
+        String fechaFormateada = formato.format(fecha);
+        
+        return fechaFormateada;
+    }
+    
+    public static String convertirTimeStampAStringFechaHora(Timestamp timestamp) {
+        Date fecha = new Date(timestamp.getTime());
+        SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        String fechaFormateada = formato.format(fecha);
+        
+        return fechaFormateada;
+    }
+    
 }

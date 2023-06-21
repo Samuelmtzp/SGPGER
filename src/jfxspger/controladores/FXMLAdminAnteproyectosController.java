@@ -92,19 +92,22 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     
     private void agregarListenerATabla() {
         tvAnteproyecto.getSelectionModel().selectedItemProperty().addListener(
-                new ChangeListener<Anteproyecto>() {
-            @Override
-            public void changed(ObservableValue<? extends Anteproyecto> observable, 
-                    Anteproyecto oldValue, Anteproyecto newValue) {
-                if (newValue != null) {
-                    if (SingletonUsuario.getInstancia().getUsuario().getIdAcademico() == 
-                            newValue.getIdDirector()) {
-                        btnAgregarEstudiantes.setDisable(false);
-                        btnModificarAnteproyecto.setDisable(false);
-                        btnEliminarAnteproyecto.setDisable(false);
-                    } else {
-                        deshabilitarBotonesEdicionAnteproyecto();
-                    }
+                (ObservableValue<? extends Anteproyecto> observable, 
+                Anteproyecto oldValue, Anteproyecto newValue) ->
+        {
+            if (newValue != null) {
+                if (SingletonUsuario.getInstancia().getUsuario().getIdAcademico() ==
+                        newValue.getIdDirector() && newValue.getEstado().equals(
+                                ESTADO_VALIDACION_PENDIENTE)) {
+                    btnModificarAnteproyecto.setDisable(false);
+                    btnEliminarAnteproyecto.setDisable(false);
+                } else if ((SingletonUsuario.getInstancia().getUsuario().getIdAcademico() ==
+                        newValue.getIdDirector() || esCodirectorDeAnteproyecto(
+                                newValue.getIdAnteproyecto())) && newValue.getEstado().equals(
+                                        ESTADO_DISPONIBLE)){
+                    btnAgregarEstudiantes.setDisable(false);
+                } else {
+                    deshabilitarBotonesEdicionAnteproyecto();
                 }
             }
         });
@@ -172,14 +175,7 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
 
     @FXML
     private void clicCrearAnteproyecto(ActionEvent event) {
-        if (esMiembroDeCA())
-            irFormulario(false, null);
-        else {
-            Utilidades.mostrarDialogoSimple("Acción no permitida", 
-                    "Es necesario que pertenezca a un cuerpo académico para poder crear "
-                    + "un anteproyecto", 
-                    Alert.AlertType.WARNING);
-        }
+        irFormulario(false, null);
     }
 
     @FXML

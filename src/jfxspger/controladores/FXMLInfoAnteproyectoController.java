@@ -82,8 +82,8 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
     @FXML
     private Button btnConsultarAvances;
     @FXML
-    private Button btnRegresar;
-   
+    private TextArea taFechaCreacion;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         validarSeccionesPermitidas();
@@ -150,6 +150,7 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
         taLgac.setText(String.valueOf(anteproyecto.getLgac()));
         taDuracionAproximada.setText(anteproyecto.getDuracionAproximada());
         lbEstado.setText(anteproyecto.getEstado());
+        taFechaCreacion.setText(anteproyecto.getFechaCreacion());
     }
     
     private void cambiarColorEstado() {
@@ -232,7 +233,8 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
     @FXML
     private void clicBtnConsultarAvances(ActionEvent event) {
         try{
-            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.getResource("/jfxspger/vistas/FXMLAnteproyectoAvances.fxml"));
+            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.
+                    getResource("/jfxspger/vistas/FXMLAnteproyectoAvances.fxml"));
             Parent vista = accesoControlador.load();
             FXMLAnteproyectoAvancesController avances = accesoControlador.getController();
             avances.inicializarInformacion(anteproyecto);

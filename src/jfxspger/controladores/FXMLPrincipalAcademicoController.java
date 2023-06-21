@@ -59,7 +59,7 @@ public class FXMLPrincipalAcademicoController implements Initializable {
         escenarioBase.setScene(
                 Utilidades.inicializarEscena("vistas/FXMLEstudiantesAcademico.fxml"));
         escenarioBase.setTitle("Estudiantes");
-        escenarioBase.show();        
+        escenarioBase.show();
     }
 
     @FXML
@@ -128,6 +128,12 @@ public class FXMLPrincipalAcademicoController implements Initializable {
     protected boolean esProfesor() {
         return (AcademicoDAO.obtenerCantidadCursosAcademicoEsProfesor(
                 SingletonUsuario.getInstancia().getUsuario().getIdAcademico()) > 0);
+    }
+    
+    protected boolean esCodirectorDeAnteproyecto(int idAnteproyecto) {
+        return (AcademicoDAO.consultarCoincidenciasCodirectorDeAnteproyecto(
+                SingletonUsuario.getInstancia().getUsuario().getIdAcademico(), 
+                idAnteproyecto) == 1);
     }
     
 }

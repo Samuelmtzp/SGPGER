@@ -110,7 +110,8 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
     
         cbCuerpoAcademico.valueProperty().addListener(new ChangeListener<CuerpoAcademico>() {
           @Override
-          public void changed(ObservableValue<? extends CuerpoAcademico> observable, CuerpoAcademico oldValue, CuerpoAcademico newValue){
+          public void changed(ObservableValue<? extends CuerpoAcademico> observable, 
+                  CuerpoAcademico oldValue, CuerpoAcademico newValue){
              if(newValue != null){
                  cargarInformacionAcademico(newValue.getIdCuerpoAcademico());
                  cargarInformacionLGAC(newValue.getIdCuerpoAcademico());
@@ -278,7 +279,8 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
             anteproyectoValido.setNombreTrabajo(nombreTrabajo);
             anteproyectoValido.setRequisitos(requisitos);
             int cantidad = Integer.parseInt(cantidadAlumnos);
-            anteproyectoValido.setCantidadAlumnosParticipantes(cantidad);
+            anteproyectoValido.setMaximoAlumnosParticipantes(cantidad);
+            anteproyectoValido.setCantidadAlumnosParticipantes(0);
             anteproyectoValido.setDescripcionProyectoInvestigacion(descripcionProyecto);
             anteproyectoValido.setDescripcionTrabajoRecepcional(descripcionTrabajo);
             anteproyectoValido.setResultadosEsperados(resultadosEsperados);
@@ -491,8 +493,6 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
     } 
      
      private void cargarInformacionEdicion(){
-        //int posDirector=obtenerComboDirector(anteproyectoEdicion.getIdDirector());
-        //cbDirector.getSelectionModel().select(posDirector);
         int posCuerpoAcademico = obtenerPosicionComboCuerpoAcademico(
                 anteproyectoEdicion.getIdCuerpoAcademico());
         cbCuerpoAcademico.getSelectionModel().select(posCuerpoAcademico);
@@ -557,17 +557,6 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
         escenarioBase.setTitle("Administración Anteproyecto");
         escenarioBase.show();
     }
-    
-    /*private int obtenerPosicionComboDirector(int idDirector){
-        for(int i=0; i <usuarios.size(); i++){
-            System.out.println("usuarios = " + usuarios.get(i).getNombre());
-            if(usuarios.get(i).getIdAcademico()== idDirector){
-                return i; 
-            }
-        }
-        return 0;
-    }*/
-    
     
     private int obtenerPosicionComboCuerpoAcademico(int idCuerpoAcademico){
         for(int i=0; i <cuerpoAcademico.size(); i++){
