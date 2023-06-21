@@ -19,14 +19,12 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -196,7 +194,7 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
             Scene sceneFormulario = new Scene(vista);
             Stage escenarioPrincipal = (Stage)lbTitulo.getScene().getWindow();
             escenarioPrincipal.setScene(sceneFormulario);
-            formulario.inicializarInformacionFormulario(anteproyecto);
+            formulario.inicializarInformacion(anteproyecto);
             }else{
                  Utilidades.mostrarDialogoSimple("Anteproyecto no disponible", 
                     "El anteproyecto debe estar en un estado de disponibilidad "
@@ -211,18 +209,11 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
 
     @FXML
     private void clicConsultarAnteproyecto(MouseEvent event) {
-        if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-            Node node = ((Node) event.getTarget()).getParent();
-            TableRow row;
-            if (node instanceof TableRow) {
-                row = (TableRow) node;
-                Anteproyecto anteproyectoSeleccionado = 
-                        tvAnteproyecto.getSelectionModel().getSelectedItem();
-                irInformacionAnteproyecto(anteproyectoSeleccionado);
-            } 
-            else {
-                row = (TableRow) node.getParent();
-            }
+        if (event.isPrimaryButtonDown() && event.getClickCount() == 2 && 
+                tvAnteproyecto.getSelectionModel().getSelectedIndex() != -1) {
+            Anteproyecto anteproyectoSeleccionado = 
+                    tvAnteproyecto.getSelectionModel().getSelectedItem();
+            irInformacionAnteproyecto(anteproyectoSeleccionado);
         }
     }
     

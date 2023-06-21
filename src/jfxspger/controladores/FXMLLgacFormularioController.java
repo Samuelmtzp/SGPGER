@@ -34,6 +34,8 @@ public class FXMLLgacFormularioController extends FXMLPrincipalAdministradorCont
     private TextField tfNombre;
     @FXML
     private ComboBox<CuerpoAcademico> cbCuerpoAcademico;
+    @FXML
+    private Label lbNombreNoDisponible;
     private ObservableList<CuerpoAcademico> cuerpoAcademico;
     
     @Override
@@ -52,7 +54,8 @@ public class FXMLLgacFormularioController extends FXMLPrincipalAdministradorCont
       
     private void cargarInformacionEdicion(){
         tfNombre.setText(lgacEdicion.getNombre());
-        int posicionCuerpoAcademico=obtenerPosicionComboCuerpoAcademico(lgacEdicion.getIdCuerpoAcademico());
+        int posicionCuerpoAcademico=obtenerPosicionComboCuerpoAcademico(
+                lgacEdicion.getIdCuerpoAcademico());
         cbCuerpoAcademico.getSelectionModel().select(posicionCuerpoAcademico);
     }  
 
@@ -67,20 +70,28 @@ public class FXMLLgacFormularioController extends FXMLPrincipalAdministradorCont
     }
     
     private void validarInformacion(){
-        tfNombre.setStyle(Constantes.estiloNormal);
+        establecerEstiloNormal();
         boolean datosValidos=true;
         String nombre=tfNombre.getText();
         int pos=cbCuerpoAcademico.getSelectionModel().getSelectedIndex();
         
-        if(nombre.isEmpty()){
+        if(nombre.trim().isEmpty()){
             tfNombre.setStyle(Constantes.estiloError);
             datosValidos=false;
-        }else{
-            if(nombre.length()>200){
-                tfNombre.setStyle(Constantes.estiloError);
-                datosValidos=false;
+        } else {
+            if (!esEdicion || (esEdicion && !nombre.equals(lgacEdicion.getNombre()))) {
+                if (nombre.length() > 200) {
+                    tfNombre.setStyle(Constantes.estiloError);
+                    datosValidos = false;    
+                }
+                if (!esNombreDisponible(nombre)) {
+                    lbNombreNoDisponible.setText("Nombre de lgac no disponible");
+                    tfNombre.setStyle(Constantes.estiloError);
+                    datosValidos = false;
+                }
             }
         }
+        
         
         if(pos==-1){
             cbCuerpoAcademico.setStyle(Constantes.estiloError);
@@ -98,6 +109,16 @@ public class FXMLLgacFormularioController extends FXMLPrincipalAdministradorCont
                 registrarLGAC(lgacValido);
             }
         }
+    }
+    
+    private void establecerEstiloNormal() {
+        tfNombre.setStyle(Constantes.estiloNormal);
+        lbNombreNoDisponible.setText("");
+    }
+    
+    private boolean esNombreDisponible(String nombreVerificacion) {
+        int coincidencias = LgacDAO.verificarDisponibilidadNombreLgac(nombreVerificacion);
+        return coincidencias == 0;
     }
     
     private void actualizarLGAC(Lgac lgacActualizar){

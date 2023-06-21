@@ -16,12 +16,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import jfxspger.modelo.dao.AcademicoDAO;
 import jfxspger.modelo.dao.EstudianteDAO;
 import jfxspger.modelo.dao.SesionDAO;
+import jfxspger.modelo.pojo.AcademicoRespuesta;
 import jfxspger.modelo.pojo.Estudiante;
+import jfxspger.modelo.pojo.Academico;
 import jfxspger.modelo.pojo.EstudianteRespuesta;
 import jfxspger.modelo.pojo.Usuario;
 import jfxspger.utilidades.Constantes;
+import jfxspger.utilidades.SingletonUsuario;
 import jfxspger.utilidades.Utilidades;
 
 public class FXMLInicioSesionController implements Initializable {
@@ -34,11 +38,10 @@ public class FXMLInicioSesionController implements Initializable {
     private Label lbErrorUsuario;
     @FXML
     private Label lbErrorPassword;
-    private Estudiante estudiante;
-    public int idEstudiante;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        SingletonUsuario.getInstancia().setUsuario(null);        
     }    
 
     @FXML
@@ -83,25 +86,62 @@ public class FXMLInicioSesionController implements Initializable {
             
             case Constantes.OPERACION_EXITOSA:
                 if (usuarioRespuesta.getIdUsuario() > 0) {
-                    Utilidades.mostrarDialogoSimple("Bienvenido(a)", 
-                        "Bienvenido(a) "+usuarioRespuesta.toString()+" al sistema...", 
-                        Alert.AlertType.INFORMATION);
                     
                     final int TIPO_USUARIO_ADMINISTRADOR = 1;
                     final int TIPO_USUARIO_ESTUDIANTE = 2;
                     final int TIPO_USUARIO_ACADEMICO = 3;
                 
-                    switch (usuarioRespuesta.getIdTipoUsuario()) {
+                    SingletonUsuario.getInstancia().setUsuario(usuarioRespuesta);                    
+                    switch (SingletonUsuario.getInstancia().getUsuario().getIdTipoUsuario()) {
                         case TIPO_USUARIO_ADMINISTRADOR :
-                            
+                            mostrarBienvenida();
                             irPantallaPrincipalAdministrador();
                             break;
                         case TIPO_USUARIO_ESTUDIANTE :
+<<<<<<< HEAD
                             irPantallaPrincipalEstudiante();
+=======
+                            EstudianteRespuesta estudianteRespuesta = 
+                                    EstudianteDAO.obtenerInformacionEstudiante(
+                                            usuarioRespuesta.getIdUsuario());
+                            if (estudianteRespuesta.getCodigoRespuesta() == 
+                                    Constantes.OPERACION_EXITOSA) {
+                                Estudiante estudiante = estudianteRespuesta.getEstudiantes().get(0);
+                                SingletonUsuario.getInstancia().getUsuario().
+                                        setIdEstudiante(estudiante.getIdEstudiante());
+                                SingletonUsuario.getInstancia().getUsuario().
+                                        setIdAnteproyecto(estudiante.getIdAnteproyecto());
+                                SingletonUsuario.getInstancia().getUsuario().
+                                        setMatricula(estudiante.getMatricula());
+                                mostrarBienvenida();
+                                irPantallaPrincipalEstudiante();
+                            } else {
+                                Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
+                                        "Ocurrió un error al cargar la información "
+                                        + "adicional del estudiante", Alert.AlertType.ERROR);
+                            }
+>>>>>>> origin/main
                             break;
-
                         case TIPO_USUARIO_ACADEMICO :
-                            irPantallaPrincipalAcademico();
+                            AcademicoRespuesta academicoRespuesta = 
+                                    AcademicoDAO.obtenerInformacionAcademico(
+                                            usuarioRespuesta.getIdUsuario());
+                            if (academicoRespuesta.getCodigoRespuesta() == 
+                                    Constantes.OPERACION_EXITOSA) {
+                                Academico academico = academicoRespuesta.getAcademicos().get(0);
+                                SingletonUsuario.getInstancia().getUsuario().
+                                        setIdAcademico(academico.getIdAcademico());
+                                SingletonUsuario.getInstancia().getUsuario().
+                                        setNumeroDePersonal(academico.getNumeroDePersonal());
+                                SingletonUsuario.getInstancia().getUsuario().
+                                        setIdcuerpoAcademico(academico.getIdCuerpoAcademico());
+                                mostrarBienvenida();
+                                irPantallaPrincipalAcademico();
+                            } else {
+                                Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
+                                        "Ocurrió un error al cargar la información "
+                                        + "adicional del académico", Alert.AlertType.ERROR);
+                            }
                             break;
                         default :
                             Utilidades.mostrarDialogoSimple("Error al mostrar menú principal", 
@@ -121,6 +161,13 @@ public class FXMLInicioSesionController implements Initializable {
                         "El sistema no está disponible por el momento", 
                         Alert.AlertType.ERROR);
         }
+    }
+    
+    private void mostrarBienvenida() {
+        Utilidades.mostrarDialogoSimple("Bienvenido(a)", 
+            "Bienvenido(a) " + SingletonUsuario.getInstancia().
+                    getUsuario().toString() + " al sistema...", 
+            Alert.AlertType.INFORMATION);
     }
     
     private void irPantallaPrincipalAdministrador() {
@@ -147,13 +194,5 @@ public class FXMLInicioSesionController implements Initializable {
     private void configurarEscena(Stage escenarioBase) {
         escenarioBase.setTitle("Ventana Principal");
         escenarioBase.show();
-    }
-    
-    public void setIdEstudiante(int idEstudiante){
-        this.idEstudiante = idEstudiante;
-    }
-    
-    public int getIdEstudiante(){
-        return idEstudiante;
     }
 }

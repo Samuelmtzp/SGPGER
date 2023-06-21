@@ -8,17 +8,25 @@ package jfxspger.modelo.pojo;
 import java.util.ArrayList;
 
 public class CuerpoAcademicoRespuesta {
-    
+    private int idCuerpoAcademicoRegistrado;
     private int codigoRespuesta;
     private ArrayList<CuerpoAcademico> cuerposAcademicos;
 
     public CuerpoAcademicoRespuesta() {
     }
 
-    public CuerpoAcademicoRespuesta(int codigoRespuesta, 
-            ArrayList<CuerpoAcademico> cuerposAcademicos) {
+    public CuerpoAcademicoRespuesta(int idCuerpoAcademicoRegistrado, int codigoRespuesta, ArrayList<CuerpoAcademico> cuerposAcademicos) {
+        this.idCuerpoAcademicoRegistrado = idCuerpoAcademicoRegistrado;
         this.codigoRespuesta = codigoRespuesta;
         this.cuerposAcademicos = cuerposAcademicos;
+    }
+
+    public int getIdCuerpoAcademicoRegistrado() {
+        return idCuerpoAcademicoRegistrado;
+    }
+
+    public void setIdCuerpoAcademicoRegistrado(int idCuerpoAcademicoRegistrado) {
+        this.idCuerpoAcademicoRegistrado = idCuerpoAcademicoRegistrado;
     }
 
     public int getCodigoRespuesta() {
@@ -36,5 +44,5 @@ public class CuerpoAcademicoRespuesta {
     public void setCuerposAcademicos(ArrayList<CuerpoAcademico> cuerposAcademicos) {
         this.cuerposAcademicos = cuerposAcademicos;
     }
-    
+
 }

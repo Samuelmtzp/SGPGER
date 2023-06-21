@@ -110,14 +110,23 @@ public class FXMLCronogramaActividadesController implements Initializable,
         cargarInformacionCronograma();
     }
      private void irFormulario(boolean esEdicion, Actividad actividadEdicion){
+<<<<<<< HEAD
                          
+=======
+        
+        FXMLInicioSesionController inicioSesion = new FXMLInicioSesionController();        
+//        int id = inicioSesion.getIdEstudiante();
+
+//         System.out.println("ID: " + id);
+    
+>>>>>>> origin/main
         try {
             FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.
                     getResource("vistas/FXMLActividadFormu.fxml"));
             Parent vista = accesoControlador.load();
             
             FXMLActividadFormularioController formulario = accesoControlador.getController();
-            formulario.setIdEstudiante(0);
+//            formulario.setIdEstudiante(0);
             formulario.inicializarInformacionFormulario(esEdicion, actividadEdicion, this);
         
             Stage escenarioFormulario = new Stage();

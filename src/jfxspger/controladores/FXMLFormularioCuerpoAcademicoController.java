@@ -5,23 +5,31 @@
 */
 package jfxspger.controladores;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import jfxspger.modelo.dao.AcademicoDAO;
 import jfxspger.modelo.dao.GradoConsolidacionDAO;
 import jfxspger.modelo.dao.CuerpoAcademicoDAO;
 import jfxspger.modelo.dao.DependenciaDAO;
 import jfxspger.modelo.dao.UsuarioDAO;
 import jfxspger.modelo.pojo.CuerpoAcademico;
+import jfxspger.modelo.pojo.CuerpoAcademicoRespuesta;
 import jfxspger.modelo.pojo.Dependencia;
 import jfxspger.modelo.pojo.DependenciaRespuesta;
 import jfxspger.modelo.pojo.GradoConsolidacion;
@@ -58,7 +66,8 @@ public class FXMLFormularioCuerpoAcademicoController extends FXMLPrincipalAdmini
     private ObservableList<GradoConsolidacion> gradosConsolidacion;
     private ObservableList<Usuario> academicos;
     private ObservableList<Dependencia> dependencias;
-    private CuerpoAcademico copiaCuerpoAcademicoEdicion;
+    @FXML
+    private Button btnAgregarMiembros;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -74,29 +83,12 @@ public class FXMLFormularioCuerpoAcademicoController extends FXMLPrincipalAdmini
         if (esEdicion) {
             lbTitulo.setText("Edición de cuerpo académico");
             btnRegistrarCuerpoAcademico.setVisible(false);
-            inicializarCopiaCuerpoAcademicoEdicion();
             cargarInformacionEdicion();
         }else{
             lbTitulo.setText("Formulario de cuerpo académico");
             btnActualizarCuerpoAcademico.setVisible(false);
+            btnAgregarMiembros.setVisible(false);
         }
-    }
-    
-    private void inicializarCopiaCuerpoAcademicoEdicion() {
-        copiaCuerpoAcademicoEdicion = new CuerpoAcademico();
-        copiaCuerpoAcademicoEdicion.setClave(cuerpoAcademicoEdicion.getClave());
-        copiaCuerpoAcademicoEdicion.setDependencia(cuerpoAcademicoEdicion.getDependencia());
-        copiaCuerpoAcademicoEdicion.setGradoConsolidacion(
-                cuerpoAcademicoEdicion.getGradoConsolidacion());
-        copiaCuerpoAcademicoEdicion.setIdCuerpoAcademico(
-                cuerpoAcademicoEdicion.getIdCuerpoAcademico());
-        copiaCuerpoAcademicoEdicion.setIdDependencia(cuerpoAcademicoEdicion.getIdDependencia());
-        copiaCuerpoAcademicoEdicion.setIdGradoConsolidacion(
-                cuerpoAcademicoEdicion.getIdGradoConsolidacion());
-        copiaCuerpoAcademicoEdicion.setIdResponsable(cuerpoAcademicoEdicion.getIdResponsable());
-        copiaCuerpoAcademicoEdicion.setNombre(cuerpoAcademicoEdicion.getNombre());
-        copiaCuerpoAcademicoEdicion.setNombreCompletoResponsable(
-                cuerpoAcademicoEdicion.getNombreCompletoResponsable());
     }
     
     private void cargarInformacionEdicion(){
@@ -121,7 +113,7 @@ public class FXMLFormularioCuerpoAcademicoController extends FXMLPrincipalAdmini
     // estan disponibles, se debe de incluir también el responsable actual
     private Usuario obtenerResponsableEdicion() {
         UsuarioRespuesta usuarioRespuesta = UsuarioDAO.
-                obtenerInformacionAcademicoEnCuerpoAcademico(
+                obtenerInformacionResponsableDeCuerpoAcademico(
                 cuerpoAcademicoEdicion.getIdCuerpoAcademico());
         return usuarioRespuesta.getUsuarios().get(0);
     }
@@ -168,7 +160,7 @@ public class FXMLFormularioCuerpoAcademicoController extends FXMLPrincipalAdmini
     private void cargarAcademicosDisponibles() {
         academicos = FXCollections.observableArrayList();
         UsuarioRespuesta academicosDisponiblesRespuesta = 
-                UsuarioDAO.obtenerInformacionAcademicosDisponibles();
+                UsuarioDAO.obtenerInformacionAcademicosNoMiembrosDeCA();
         if (academicosDisponiblesRespuesta.getCodigoRespuesta() == Constantes.OPERACION_EXITOSA){ 
             academicos.addAll(
                     academicosDisponiblesRespuesta.getUsuarios());
@@ -239,7 +231,7 @@ public class FXMLFormularioCuerpoAcademicoController extends FXMLPrincipalAdmini
             datosValidos = false;
         } else {
             if (!esEdicion || (esEdicion && !nombre.equals(
-                    copiaCuerpoAcademicoEdicion.getNombre()))) {
+                    cuerpoAcademicoEdicion.getNombre()))) {
                 if (!esNombreDisponible(nombre)) {
                     lbNombreNoDisponible.setText("Nombre no disponible");
                     tfNombre.setStyle(Constantes.estiloError);
@@ -256,12 +248,16 @@ public class FXMLFormularioCuerpoAcademicoController extends FXMLPrincipalAdmini
             datosValidos = false;
         } else {
             if (!esEdicion || (esEdicion && !clave.equals(
-                    copiaCuerpoAcademicoEdicion.getClave()))) {
+                    cuerpoAcademicoEdicion.getClave()))) {
                 if (!esClaveDisponible(clave)) {
                     lbClaveNoDisponible.setText("Clave no disponible");
                     tfClave.setStyle(Constantes.estiloError);
                     datosValidos = false;
                 }
+            }
+            if (!validarClaveCuerpoAcademico(clave)) {
+                tfClave.setStyle(Constantes.estiloError);
+                datosValidos = false;
             }
         }
         
@@ -297,11 +293,60 @@ public class FXMLFormularioCuerpoAcademicoController extends FXMLPrincipalAdmini
             if (esEdicion) {
                 cuerpoAcademicoValidado.setIdCuerpoAcademico(
                         cuerpoAcademicoEdicion.getIdCuerpoAcademico());
+                if (cuerpoAcademicoValidado.getIdResponsable() != 
+                        cuerpoAcademicoEdicion.getIdResponsable()) {
+                    if (cuerpoAcademicoEdicion.getIdResponsable() != -1)
+                        removerMiembro(cuerpoAcademicoEdicion.getIdResponsable());
+                    agregarMiembroACuerpoAcademico(cuerpoAcademicoValidado.getIdResponsable(), 
+                            cuerpoAcademicoValidado.getIdCuerpoAcademico());
+                }
                 actualizarCuerpoAcademico(cuerpoAcademicoValidado);
             } else {
                 registrarCuerpoAcademico(cuerpoAcademicoValidado);
             }
         }   
+    }
+    
+    private boolean validarClaveCuerpoAcademico(String claveValidacion) {
+        String patron = "^(UV(-)?)?CA(-)?\\d+$";
+        Pattern pattern = Pattern.compile(patron);
+        Matcher matcher = pattern.matcher(claveValidacion);
+        return matcher.matches();
+    }
+    
+    private void agregarMiembroACuerpoAcademico(int idAcademico, int idCuerpoAcademico) {
+        int respuesta = AcademicoDAO.agregarAcademicoACuerpoAcademico(
+                idAcademico, idCuerpoAcademico);
+        switch (respuesta) { 
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Error de conexion", "El académico " + 
+                        "no pudo agregarse al cuerpo académico debido a un error de conexión.", 
+                        Alert.AlertType.ERROR);
+            break;
+            case Constantes.ERROR_CONSULTA:
+           Utilidades.mostrarDialogoSimple("Error al agregar al académico al cuerpo académico",
+                        "No se puede agregar al académico al cuerpo académico,"
+                        + "por favor inténtelo más tarde", 
+                        Alert.AlertType.WARNING);
+            break;
+        }
+    }
+    
+    private void removerMiembro(int idAcademico) {
+        int respuesta = AcademicoDAO.removerAcademicoDeCuerpoAcademico(idAcademico);
+        switch (respuesta) { 
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Error de conexion", "El miembro " + 
+                        "no pudo removerse del cuerpo académico debido a un error de conexión.", 
+                        Alert.AlertType.ERROR);
+            break;
+            case Constantes.ERROR_CONSULTA:
+           Utilidades.mostrarDialogoSimple("Error al remover el miembro del cuerpo académico",
+                        "No se puede remover el miembro del cuerpo académico,"
+                        + "por favor inténtelo más tarde", 
+                        Alert.AlertType.WARNING);
+            break;
+        }
     }
     
     private boolean esNombreDisponible(String nombreVerificacion) {
@@ -325,9 +370,10 @@ public class FXMLFormularioCuerpoAcademicoController extends FXMLPrincipalAdmini
     }
     
     private void registrarCuerpoAcademico(CuerpoAcademico cuerpoAcademicoRegistro) {
-        int respuesta = CuerpoAcademicoDAO.guardarCuerpoAcademico(cuerpoAcademicoRegistro);
+        CuerpoAcademicoRespuesta respuestaCuerpoAcademico = 
+                CuerpoAcademicoDAO.guardarCuerpoAcademico(cuerpoAcademicoRegistro);
         
-        switch(respuesta){
+        switch (respuestaCuerpoAcademico.getCodigoRespuesta()) {
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Error de conexion", "El cuerpo académico " + 
                         "no pudo ser guardado debido a un error de conexión.", 
@@ -343,6 +389,8 @@ public class FXMLFormularioCuerpoAcademicoController extends FXMLPrincipalAdmini
                 Utilidades.mostrarDialogoSimple("Cuerpo académico registrado", 
                         "La información del cuerpo académico fue guardada correctamente", 
                         Alert.AlertType.INFORMATION);
+                agregarMiembroACuerpoAcademico(cuerpoAcademicoRegistro.getIdResponsable(), 
+                            respuestaCuerpoAcademico.getIdCuerpoAcademicoRegistrado());
                 irAdminCuerposAcademicos();
             break;
         }
@@ -426,6 +474,30 @@ public class FXMLFormularioCuerpoAcademicoController extends FXMLPrincipalAdmini
     @FXML
     private void clicBtnActualizarCuerpoAcademico(ActionEvent event) {
         validarCamposRegistro();
+    }
+
+    @FXML
+    private void clicBtnAgregarMiembros(ActionEvent event) {
+        irAgregarMiembros(this.cuerpoAcademicoEdicion);
+    }
+    
+    private void irAgregarMiembros(CuerpoAcademico cuerpoAcademico) {
+        try{
+            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.
+                    JFXSPGER.class.getResource(
+                    "/jfxspger/vistas/FXMLAsignarMiembros.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLAsignarMiembrosController formulario = accesoControlador.getController();
+            Scene sceneFormulario = new Scene(vista);
+            Stage escenarioPrincipal = (Stage) lbTitulo.getScene().getWindow();
+            escenarioPrincipal.setTitle("Agregar miembros a cuerpo académico");
+            escenarioPrincipal.setScene(sceneFormulario);
+            formulario.inicializarInformacion(cuerpoAcademico);
+        } catch (IOException e) {
+            Utilidades.mostrarDialogoSimple("Error", 
+                    "No se puede mostrar la pantalla de asignar miembros a cuerpo academico", 
+                    Alert.AlertType.ERROR);  
+        }
     }
 
 }

@@ -32,6 +32,7 @@ import jfxspger.modelo.dao.ActividadDAO;
 import jfxspger.modelo.pojo.Actividad;
 import jfxspger.modelo.pojo.Estudiante;
 import jfxspger.utilidades.Constantes;
+import jfxspger.utilidades.SingletonUsuario;
 import jfxspger.utilidades.Utilidades;
 
 public class FXMLActividadFormularioController implements Initializable {
@@ -46,7 +47,7 @@ public class FXMLActividadFormularioController implements Initializable {
     private DatePicker dpFechaFin;
     private Actividad actividadEdicion;
     private Estudiante estudiante;
-    private int idEstudiante = 3;
+//    private int idEstudiante = 3;
     private boolean esEdicion;
     private INotificacionOperacionActividad interfazNotificacion;
     
@@ -73,7 +74,8 @@ public class FXMLActividadFormularioController implements Initializable {
         dpFechaInicio.setEditable(false);
         dpFechaFin.setEditable(false);        
         configurarSeleccionHora();
-        System.out.println("ID ESTUDIANTE: " + idEstudiante);
+        System.out.println("ID ESTUDIANTE: " + SingletonUsuario.
+                getInstancia().getUsuario().getIdEstudiante());
     }
     
     private void configurarSeleccionHora() {
@@ -106,9 +108,9 @@ public class FXMLActividadFormularioController implements Initializable {
         spMinutosFin.setValueFactory(minutosFinValueFactory);
     }
     
-    public void setIdEstudiante(int idEstudiante){
-        this.idEstudiante = idEstudiante;
-    }
+//    public void setIdEstudiante(int idEstudiante){
+//        this.idEstudiante = idEstudiante;
+//    }
     
     public void inicializarInformacionFormulario(boolean esEdicion, 
             Actividad actividadEdicion, INotificacionOperacionActividad interfazNotificacion){
@@ -363,9 +365,9 @@ public class FXMLActividadFormularioController implements Initializable {
             }
     }
 
-    public FXMLActividadFormularioController(int idEstudiante) {
-        this.idEstudiante = idEstudiante;
-    }
+//    public FXMLActividadFormularioController(int idEstudiante) {
+//        this.idEstudiante = idEstudiante;
+//    }
 
     public FXMLActividadFormularioController() {
     }
