@@ -97,15 +97,6 @@ public class FXMLInicioSesionController implements Initializable {
                             irPantallaPrincipalAdministrador();
                             break;
                         case TIPO_USUARIO_ESTUDIANTE :
-                            EstudianteRespuesta estudianteRespuesta = 
-                                    EstudianteDAO.obtenerInformacionEstudiante(
-                                            usuarioRespuesta.getIdUsuario());
-                            Estudiante estudiante = estudianteRespuesta.getEstudiantes().get(0);
-                            setIdEstudiante(estudiante.getIdEstudiante());
-                            System.out.println("ID ESTUDIANTE: " + getIdEstudiante());
-                            FXMLPrincipalEstudianteController principalEstudiante = new FXMLPrincipalEstudianteController();
-                            principalEstudiante.setIdEstudiante(getIdEstudiante());
-                            System.out.println("ID ASIGNADO: " + principalEstudiante.getIdEstudiante());
                             irPantallaPrincipalEstudiante();
                             break;
 
