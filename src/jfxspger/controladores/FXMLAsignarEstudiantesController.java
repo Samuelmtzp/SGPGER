@@ -18,6 +18,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import jfxspger.modelo.dao.AnteproyectoDAO;
 import jfxspger.modelo.dao.EstudianteDAO;
 import jfxspger.modelo.pojo.Usuario;
 import jfxspger.modelo.pojo.UsuarioRespuesta;
@@ -135,7 +136,7 @@ public class FXMLAsignarEstudiantesController extends FXMLPrincipalAcademicoCont
 
     @FXML
     private void clicBtnAsignarEstudiantes(ActionEvent event) {
-         if (anteproyecto.getCantidadAlumnosParticipantes() > 0) {
+         if (anteproyecto.getCantidadAlumnosParticipantes()>0) {
             int posicionEstudianteDisponible = tvAlumnosDisponibles.
                     getSelectionModel().getSelectedIndex();
             if (posicionEstudianteDisponible != -1) {
@@ -149,9 +150,11 @@ public class FXMLAsignarEstudiantesController extends FXMLPrincipalAcademicoCont
                         posicionEstudianteDisponible).getIdUsuario());
                 estudianteEnAnteproyectoRegistro.setMatricula(estudiantesDisponibles.get(
                         posicionEstudianteDisponible).getMatricula());
-                anteproyecto.setCantidadAlumnosParticipantes(
-                        anteproyecto.getCantidadAlumnosParticipantes()-1);
                 agregarEstudianteAAnteproyecto(estudianteEnAnteproyectoRegistro);
+                anteproyecto.setCantidadAlumnosParticipantes(anteproyecto.getCantidadAlumnosParticipantes()-1);
+                if(anteproyecto.getCantidadAlumnosParticipantes()==0){
+                     actualizarEstadoNoDisponibleAnteproyecto(anteproyecto.getIdAnteproyecto());
+                }
             } else {
                 Utilidades.mostrarDialogoSimple("Selección necesaria", 
                         "Para agregar un estudiante al anteproyecto, debe seleccionarlo "
@@ -186,6 +189,7 @@ public class FXMLAsignarEstudiantesController extends FXMLPrincipalAcademicoCont
                         Alert.AlertType.INFORMATION);
                 cargarDatosTablaEstudiantesAsignados(anteproyecto);
                 cargarDatosTablaEstudiantesDisponibles();
+                actualizarCantidadAlumnosAnteproyecto(anteproyecto.getIdAnteproyecto());
             break;
         }
     }
@@ -205,8 +209,7 @@ public class FXMLAsignarEstudiantesController extends FXMLPrincipalAcademicoCont
                         "¿Estás seguro de que deseas eliminar al alumno del anteproyecto?");
                 if(borrarRegistro){
                     eliminarEstudianteDeAnteproyecto(student);
-                    anteproyecto.setCantidadAlumnosParticipantes(anteproyecto.
-                            getCantidadAlumnosParticipantes() + 1);
+                    anteproyecto.setCantidadAlumnosParticipantes(anteproyecto.getCantidadAlumnosParticipantes()+1);
                 }
             }else{
                  Utilidades.mostrarDialogoSimple("Selecciona un Alumno", 
@@ -226,7 +229,7 @@ public class FXMLAsignarEstudiantesController extends FXMLPrincipalAcademicoCont
                         Alert.AlertType.ERROR);
             break;
             case Constantes.ERROR_CONSULTA:
-           Utilidades.mostrarDialogoSimple("Error al eliminar al estudiante  al anteproyecto",
+           Utilidades.mostrarDialogoSimple("Error al eliminar al estudiante del anteproyecto",
                         "No se puede eliminar el estudiante del anteproyecto,"
                         + "por favor inténtelo más tarde", 
                         Alert.AlertType.WARNING);
@@ -237,9 +240,88 @@ public class FXMLAsignarEstudiantesController extends FXMLPrincipalAcademicoCont
                         Alert.AlertType.INFORMATION);
                 cargarDatosTablaEstudiantesAsignados(anteproyecto);
                 cargarDatosTablaEstudiantesDisponibles();
+                actualizarEliminarCantidadAlumnosAnteproyecto(anteproyecto.getIdAnteproyecto());
             break;
         }
     }
+    
+    private void actualizarCantidadAlumnosAnteproyecto(int idAnteproyecto) {
+        int respuesta = AnteproyectoDAO.actualizarAlumnosEnAnteproyecto(idAnteproyecto);
+        switch(respuesta) {
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Error de conexion", "El anteproyecto " + 
+                        "no pudo ser actualizado debido a un error de conexion.", 
+                        Alert.AlertType.ERROR);
+            break;
+            case Constantes.ERROR_CONSULTA:
+            Utilidades.mostrarDialogoSimple("Error al actualizar anteproyecto",
+                        "No se puedo actualizar el anteproyecto,"
+                        + "por favor inténtelo más tarde", 
+                        Alert.AlertType.WARNING);
+            break;
+            case Constantes.OPERACION_EXITOSA:
+            break;
+        }
+    }
+    
+     private void actualizarEliminarCantidadAlumnosAnteproyecto(int idAnteproyecto) {
+        int respuesta = AnteproyectoDAO.actualizarEliminarAlumnosEnAnteproyecto(idAnteproyecto);
+        switch(respuesta) {
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Error de conexion", "El anteproyecto " + 
+                        "no pudo ser actualizado debido a un error de conexion.", 
+                        Alert.AlertType.ERROR);
+            break;
+            case Constantes.ERROR_CONSULTA:
+            Utilidades.mostrarDialogoSimple("Error al actualizar anteproyecto",
+                        "No se puedo actualizar el anteproyecto,"
+                        + "por favor inténtelo más tarde", 
+                        Alert.AlertType.WARNING);
+            break;
+            case Constantes.OPERACION_EXITOSA:
+                actualizarEstadoDisponibleAnteproyecto(anteproyecto.getIdAnteproyecto());
+            break;
+        }
+    }
+    
+    private void actualizarEstadoDisponibleAnteproyecto(int idAnteproyecto) {
+        int respuesta = AnteproyectoDAO.actualizarEstadoDisponibleAnteproyecto(idAnteproyecto);
+        switch(respuesta) {
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Error de conexion", "El anteproyecto " + 
+                        "no pudo ser actualizado debido a un error de conexion.", 
+                        Alert.AlertType.ERROR);
+            break;
+            case Constantes.ERROR_CONSULTA:
+            Utilidades.mostrarDialogoSimple("Error al actualizar anteproyecto",
+                        "No se puedo actualizar el anteproyecto,"
+                        + "por favor inténtelo más tarde", 
+                        Alert.AlertType.WARNING);
+            break;
+            case Constantes.OPERACION_EXITOSA:
+            break;
+        }
+    }
+    
+    private void actualizarEstadoNoDisponibleAnteproyecto(int idAnteproyecto) {
+        int respuesta = AnteproyectoDAO.actualizarEstadoNoDisponibleAnteproyecto(idAnteproyecto);
+        switch(respuesta) {
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Error de conexion", "El anteproyecto " + 
+                        "no pudo ser actualizado debido a un error de conexion.", 
+                        Alert.AlertType.ERROR);
+            break;
+            case Constantes.ERROR_CONSULTA:
+            Utilidades.mostrarDialogoSimple("Error al actualizar anteproyecto",
+                        "No se puedo actualizar el anteproyecto,"
+                        + "por favor inténtelo más tarde", 
+                        Alert.AlertType.WARNING);
+            break;
+            case Constantes.OPERACION_EXITOSA:
+            break;
+        }
+    }
+
 
     @FXML
     private void clicRegresar(ActionEvent event) {
