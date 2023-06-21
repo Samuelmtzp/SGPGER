@@ -16,7 +16,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -32,7 +31,7 @@ import jfxspger.modelo.pojo.EstudianteRespuesta;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
 
-public class FXMLEstudiantesAcademicoController extends FXMLPrincipalAcademicoController implements Initializable {
+public class FXMLEstudiantesAcademicoController extends FXMLPrincipalAcademicoController {
 
     @FXML
     private Label lTitulo;
@@ -50,11 +49,11 @@ public class FXMLEstudiantesAcademicoController extends FXMLPrincipalAcademicoCo
     private TableColumn cApellidoMat;
     private ObservableList<Estudiante> estudiantes;
 
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
         cargarInformacionEstudiantes();
+        validarSeccionesPermitidas();
     }
     
     private void configurarTabla(){
@@ -126,36 +125,6 @@ public class FXMLEstudiantesAcademicoController extends FXMLPrincipalAcademicoCo
                 Utilidades.inicializarEscena("vistas/FXMLPrincipalAcademico.fxml"));
         escenarioBase.setTitle("Principal Academico");
         escenarioBase.show();      
-    }
-
-    @FXML
-    protected void clicIrAnteproyectos(ActionEvent event) {
-        super.clicIrAnteproyectos(event);
-    }
-
-    @FXML
-    protected void clicIrPropuestas(ActionEvent event) {
-        super.clicIrPropuestas(event);
-    }
-
-    @FXML
-    protected void clicIrEstudiantes(ActionEvent event) {
-        super.clicIrEstudiantes(event);
-    }
-
-    @FXML
-    protected void clicCerrarSesion(ActionEvent event) {
-        super.clicCerrarSesion(event);
-    }
-
-    @FXML
-    protected void clicIrEntregables(ActionEvent event) {
-        super.clicIrEntregables(event);
-    }
-
-    @FXML
-    protected void clicIrRevisiones(ActionEvent event) {
-        super.clicIrRevisiones(event);
     }
 
     @FXML
