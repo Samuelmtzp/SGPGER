@@ -28,9 +28,9 @@
       </Pane>
       <Pane layoutX="300.0" layoutY="100.0" prefHeight="980.0" prefWidth="1620.0">
          <children>
-            <ScrollPane prefHeight="980.0" prefWidth="1620.0" vbarPolicy="ALWAYS">
+            <ScrollPane prefHeight="945.0" prefWidth="1620.0" vbarPolicy="ALWAYS">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="980.0" prefWidth="1615.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="946.0" prefWidth="1615.0">
                      <children>
                         <Label layoutX="74.0" layoutY="113.0" stylesheets="@../css/estilos.css" text="Cuerpo Academico">
                            <font>
@@ -52,7 +52,7 @@
                               <Font name="System Bold" size="27.0" />
                            </font>
                         </Label>
-                        <Label layoutX="74.0" layoutY="198.0" stylesheets="@../css/estilos.css" text="Proyecto de investigación">
+                        <Label layoutX="74.0" layoutY="188.0" stylesheets="@../css/estilos.css" text="Proyecto de investigación">
                            <font>
                               <Font name="System Bold" size="27.0" />
                            </font>
@@ -141,47 +141,47 @@
                               <Font size="15.0" />
                            </font>
                         </TextArea>
-                        <TextArea fx:id="taProyectoInvestigacion" editable="false" layoutX="424.0" layoutY="193.0" prefHeight="55.0" prefWidth="388.0" wrapText="true">
+                        <TextArea fx:id="taProyectoInvestigacion" editable="false" layoutX="425.0" layoutY="180.0" prefHeight="55.0" prefWidth="388.0" wrapText="true">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </TextArea>
-                        <TextArea fx:id="taLgac" editable="false" layoutX="424.0" layoutY="276.0" prefHeight="55.0" prefWidth="389.0" wrapText="true">
+                        <TextArea fx:id="taLgac" editable="false" layoutX="427.0" layoutY="255.0" prefHeight="55.0" prefWidth="389.0" wrapText="true">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </TextArea>
-                        <TextArea fx:id="taLineaInvestigacion" editable="false" layoutX="424.0" layoutY="353.0" prefHeight="55.0" prefWidth="389.0" wrapText="true">
+                        <TextArea fx:id="taLineaInvestigacion" editable="false" layoutX="427.0" layoutY="324.0" prefHeight="55.0" prefWidth="389.0" wrapText="true">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </TextArea>
-                        <TextArea fx:id="taDuracionAproximada" editable="false" layoutX="425.0" layoutY="435.0" prefHeight="55.0" prefWidth="389.0" wrapText="true">
+                        <TextArea fx:id="taDuracionAproximada" editable="false" layoutX="427.0" layoutY="401.0" prefHeight="55.0" prefWidth="389.0" wrapText="true">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </TextArea>
-                        <TextArea fx:id="taModalidad" editable="false" layoutX="425.0" layoutY="508.0" prefHeight="55.0" prefWidth="390.0" wrapText="true">
+                        <TextArea fx:id="taModalidad" editable="false" layoutX="426.0" layoutY="482.0" prefHeight="55.0" prefWidth="390.0" wrapText="true">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </TextArea>
-                        <TextArea fx:id="taNombreTrabajo" editable="false" layoutX="425.0" layoutY="589.0" prefHeight="55.0" prefWidth="391.0" wrapText="true">
+                        <TextArea fx:id="taNombreTrabajo" editable="false" layoutX="426.0" layoutY="561.0" prefHeight="55.0" prefWidth="391.0" wrapText="true">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </TextArea>
-                        <TextArea fx:id="taDirector" editable="false" layoutX="427.0" layoutY="667.0" prefHeight="61.0" prefWidth="390.0" wrapText="true">
+                        <TextArea fx:id="taDirector" editable="false" layoutX="426.0" layoutY="642.0" prefHeight="61.0" prefWidth="390.0" wrapText="true">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </TextArea>
-                        <TextArea fx:id="taCodirector" editable="false" layoutX="428.0" layoutY="744.0" prefHeight="55.0" prefWidth="387.0" wrapText="true">
+                        <TextArea fx:id="taCodirector" editable="false" layoutX="428.0" layoutY="724.0" prefHeight="55.0" prefWidth="387.0" wrapText="true">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </TextArea>
-                        <TextArea fx:id="taAlumnosParticipantes" editable="false" layoutX="429.0" layoutY="814.0" prefHeight="55.0" prefWidth="385.0" wrapText="true">
+                        <TextArea fx:id="taAlumnosParticipantes" editable="false" layoutX="429.0" layoutY="793.0" prefHeight="55.0" prefWidth="385.0" wrapText="true">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -208,6 +208,16 @@
                               <Font name="System Bold" size="22.0" />
                            </font>
                         </Button>
+                        <Label layoutX="71.0" layoutY="884.0" stylesheets="@../css/estilos.css" text="Fecha de creación">
+                           <font>
+                              <Font name="System Bold" size="27.0" />
+                           </font>
+                        </Label>
+                        <TextArea fx:id="taFechaCreacion" editable="false" layoutX="429.0" layoutY="869.0" prefHeight="55.0" prefWidth="385.0" wrapText="true">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </TextArea>
                      </children>
                   </AnchorPane>
               </content>
