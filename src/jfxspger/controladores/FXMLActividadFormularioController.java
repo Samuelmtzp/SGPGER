@@ -74,8 +74,6 @@ public class FXMLActividadFormularioController implements Initializable {
         dpFechaInicio.setEditable(false);
         dpFechaFin.setEditable(false);        
         configurarSeleccionHora();
-        System.out.println("ID ESTUDIANTE: " + SingletonUsuario.
-                getInstancia().getUsuario().getIdEstudiante());
     }
     
     private void configurarSeleccionHora() {
@@ -107,10 +105,6 @@ public class FXMLActividadFormularioController implements Initializable {
         minutosFinValueFactory.setValue(valorInicial);
         spMinutosFin.setValueFactory(minutosFinValueFactory);
     }
-    
-//    public void setIdEstudiante(int idEstudiante){
-//        this.idEstudiante = idEstudiante;
-//    }
     
     public void inicializarInformacionFormulario(boolean esEdicion, 
             Actividad actividadEdicion, INotificacionOperacionActividad interfazNotificacion){
@@ -239,7 +233,7 @@ public class FXMLActividadFormularioController implements Initializable {
                 Utilidades.mostrarDialogoSimple("Actividad registrada", 
                         "Actividad registrada correctamente", 
                         Alert.AlertType.INFORMATION);
-                cerrarVentana();
+                regresarCronograma();
                 break;
         }
     }
@@ -263,7 +257,7 @@ public class FXMLActividadFormularioController implements Initializable {
                         Alert.AlertType.INFORMATION);
                 interfazNotificacion.notificarOperacionActualizar(
                         actividadActualizada.getTitulo());
-                cerrarVentana();
+                regresarCronograma();
                 break;
         }        
     }
@@ -287,14 +281,17 @@ public class FXMLActividadFormularioController implements Initializable {
                         Alert.AlertType.INFORMATION);
                 interfazNotificacion.notificarOperacionActualizar(
                         actividadSeleccionada.getTitulo());
-                cerrarVentana();
+                regresarCronograma();
                 break;
         }        
-    }
+    }   
     
-    private void cerrarVentana(){
-        Stage escenarioBase = (Stage) tfNombreActividad.getScene().getWindow();
-        escenarioBase.close();
+    private void regresarCronograma(){
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        escenarioBase.setScene(Utilidades.inicializarEscena(
+                "vistas/FXMLCronogramaActividades.fxml"));
+        escenarioBase.setTitle("Cronograma de actividades");
+        escenarioBase.show();
     }
     
     private void establecerEstiloNormal(){
@@ -361,15 +358,7 @@ public class FXMLActividadFormularioController implements Initializable {
                 "Regresar a ventana anterior", 
                 "¿Desea regresar a la ventana anterior? No se guardaran los datos ingresados.");
             if(cerrarVentana){
-                cerrarVentana();
+                regresarCronograma();
             }
-    }
-
-//    public FXMLActividadFormularioController(int idEstudiante) {
-//        this.idEstudiante = idEstudiante;
-//    }
-
-    public FXMLActividadFormularioController() {
-    }
-        
+    }       
 }

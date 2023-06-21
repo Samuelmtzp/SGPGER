@@ -144,16 +144,16 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
 
     @FXML
     private void clicBtnConsultarAvances(ActionEvent event) {
-                try{
-            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.
-                    JFXSPGER.class.getResource("/jfxspger/vistas/FXMLAnteproyectoAvances.fxml"));
+        try{
+            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.getResource("/jfxspger/vistas/FXMLAnteproyectoAvances.fxml"));
             Parent vista = accesoControlador.load();
             FXMLAnteproyectoAvancesController avances = accesoControlador.getController();
+            avances.inicializarInformacion(anteproyecto);
             Scene sceneAvances = new Scene(vista);
             Stage escenarioPrincipal = (Stage) lbTitulo.getScene().getWindow();
-            escenarioPrincipal.setTitle("Informacion de anteproyecto");
+            escenarioPrincipal.setTitle("Avances de anteproyecto");
             escenarioPrincipal.setScene(sceneAvances);
-            avances.inicializarInformacion(anteproyecto);
+            
         }catch(IOException e){
             Utilidades.mostrarDialogoSimple("Error", 
                     "No se puede mostrar la pantalla de informacion de anteproyecto", 

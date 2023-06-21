@@ -28,9 +28,8 @@
       </Pane>
       <TableView fx:id="tvEntregas" layoutX="505.0" layoutY="288.0" prefHeight="739.0" prefWidth="1244.0" style="-fx-background-color: lightgray;">
          <columns>
-            <TableColumn fx:id="cNombreActividad" prefWidth="607.0" text="Titulo de actividad" />
-            <TableColumn fx:id="cFechaEntrega" prefWidth="344.0" text="Fecha de entrega" />
-            <TableColumn fx:id="cFechaCreacion" prefWidth="292.0" text="Fecha de creacion" />
+            <TableColumn fx:id="cTituloActividad" prefWidth="681.0" text="Titulo de actividad" />
+            <TableColumn fx:id="cFechaEntrega" prefWidth="562.0" text="Fecha de entrega" />
          </columns>
       </TableView>
       <Button layoutX="379.0" layoutY="134.0" mnemonicParsing="false" onAction="#clicIrInfoAnteproyecto" prefHeight="55.0" prefWidth="74.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css">

@@ -123,7 +123,7 @@ public class FXMLActividadInformacionController extends FXMLPrincipalEstudianteC
     @FXML
     private void clicBtnCargarArchivo(ActionEvent event) {
         
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyy HH:mm:ss.S");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
         LocalDateTime fechaFin = LocalDateTime.parse(actividadInformacion.getFechaFin(), formatter);
         LocalDateTime fechaActual = LocalDateTime.now();
         if(fechaActual.isBefore(fechaFin)){
@@ -294,10 +294,13 @@ public class FXMLActividadInformacionController extends FXMLPrincipalEstudianteC
                     }
     }
     
-        private void cerrarVentana(){
-        Stage escenarioBase = (Stage) lbTituloActividad.getScene().getWindow();
-        escenarioBase.close();
-        }
+    private void regresarCronograma(){
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        escenarioBase.setScene(Utilidades.inicializarEscena(
+                "vistas/FXMLCronogramaActividades.fxml"));
+        escenarioBase.setTitle("Cronograma de actividades");
+        escenarioBase.show();
+    }
 
     @FXML
     private void clicIrAnteproyecto(ActionEvent event) {
@@ -345,6 +348,6 @@ public class FXMLActividadInformacionController extends FXMLPrincipalEstudianteC
 
     @FXML
     private void clicBtnRegresar(ActionEvent event) {
-            cerrarVentana();               
+            regresarCronograma();               
     }
 }

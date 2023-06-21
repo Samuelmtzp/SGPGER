@@ -53,7 +53,7 @@ public class FXMLCronogramaActividadesController implements Initializable,
     private Label lTitulo;
     @FXML
     private TableColumn cFechaCreacion;
-    public int idEstudiante = SingletonUsuario.getInstancia().getUsuario().getIdEstudiante();
+    private int idEstudiante = SingletonUsuario.getInstancia().getUsuario().getIdEstudiante();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyy HH:mm:ss.S");
 
     @Override
@@ -118,14 +118,14 @@ public class FXMLCronogramaActividadesController implements Initializable,
             Parent vista = accesoControlador.load();
             
             FXMLActividadFormularioController formulario = accesoControlador.getController();
-//            formulario.setIdEstudiante(0);
             formulario.inicializarInformacionFormulario(esEdicion, actividadEdicion, this);
-        
-            Stage escenarioFormulario = new Stage();
-            escenarioFormulario.setScene(new Scene(vista));
-            escenarioFormulario.setTitle("Formulario Activdad");
-            escenarioFormulario.initModality(Modality.APPLICATION_MODAL);       
-            escenarioFormulario.showAndWait();
+                       
+            Scene sceneFormulario =  new Scene(vista);
+            Stage escenarioFormulario = (Stage) lTitulo.getScene().getWindow();
+            escenarioFormulario.setScene(sceneFormulario);
+            escenarioFormulario.setTitle("Formulario Activdad");      
+            escenarioFormulario.show();
+                        
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -139,13 +139,13 @@ public class FXMLCronogramaActividadesController implements Initializable,
             Parent vista = accesoControlador.load();
             
             FXMLActividadInformacionController informacion = accesoControlador.getController();
-            informacion.inicializarInformacionActividad(actividadInformacion, this);
-        
-            Stage escenarioDetalles = new Stage();
-            escenarioDetalles.setScene(new Scene(vista));
-            escenarioDetalles.setTitle("Detalles Activdad");
-            escenarioDetalles.initModality(Modality.APPLICATION_MODAL);       
-            escenarioDetalles.showAndWait();
+            informacion.inicializarInformacionActividad(actividadInformacion, this);                    
+            
+            Scene sceneDetalles = new Scene(vista);
+            Stage escenarioDetalles = (Stage) lTitulo.getScene().getWindow();
+            escenarioDetalles.setScene(sceneDetalles);
+            escenarioDetalles.setTitle("Detalles Activdad");      
+            escenarioDetalles.show();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -205,7 +205,7 @@ public class FXMLCronogramaActividadesController implements Initializable,
         escenarioBase.setScene(Utilidades.inicializarEscena(
                 "vistas/FXMLCronogramaActividades.fxml"));
         escenarioBase.setTitle("Cronograma de actividades");
-        escenarioBase.show();        
+        escenarioBase.show();
     }
 
     @FXML
@@ -245,13 +245,4 @@ public class FXMLCronogramaActividadesController implements Initializable,
         escenarioBase.setTitle("Ventana Principal");
         escenarioBase.show();       
     }
-
-    public int getIdEstudiante() {
-        return idEstudiante;
-    }
-
-    public void setIdEstudiante(int idEstudiante) {
-        this.idEstudiante = idEstudiante;
-    }
-        
 }
