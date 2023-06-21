@@ -56,7 +56,7 @@ public class FXMLPrincipalEstudianteController implements Initializable {
         System.out.println("ID ALMACENADO: " + getIdEstudiante());
         FXMLInicioSesionController inicioSesion = new FXMLInicioSesionController();
         FXMLCronogramaActividadesController cronograma = new FXMLCronogramaActividadesController();
-        cronograma.setIdEstudiante(inicioSesion.getIdEstudiante());
+//        cronograma.setIdEstudiante(inicioSesion.getIdEstudiante());
         System.out.println("ID: " + cronograma.getIdEstudiante());
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.setScene(Utilidades.inicializarEscena(
