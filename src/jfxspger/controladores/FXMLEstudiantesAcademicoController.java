@@ -23,7 +23,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import jfxspger.modelo.dao.EstudianteDAO;
 import jfxspger.modelo.pojo.Estudiante;
@@ -33,8 +32,6 @@ import jfxspger.utilidades.Utilidades;
 
 public class FXMLEstudiantesAcademicoController extends FXMLPrincipalAcademicoController {
 
-    @FXML
-    private Label lTitulo;
     @FXML
     private TableView<Estudiante> tvEstudiantes;
     @FXML
@@ -48,6 +45,8 @@ public class FXMLEstudiantesAcademicoController extends FXMLPrincipalAcademicoCo
     @FXML
     private TableColumn cApellidoMat;
     private ObservableList<Estudiante> estudiantes;
+    @FXML
+    private Label lbTitulo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -109,7 +108,7 @@ public class FXMLEstudiantesAcademicoController extends FXMLPrincipalAcademicoCo
             FXMLAvancesEstudianteController avances = accesoControlador.getController();            
             
             Scene sceneAvances = new Scene(vista);
-            Stage escenarioAvances = (Stage) lTitulo.getScene().getWindow();
+            Stage escenarioAvances = (Stage) lbTitulo.getScene().getWindow();
             escenarioAvances.setScene(sceneAvances);
             escenarioAvances.setTitle("Avances de estudiante");            
             escenarioAvances.show();
@@ -119,7 +118,7 @@ public class FXMLEstudiantesAcademicoController extends FXMLPrincipalAcademicoCo
     }
     @FXML
     private void clicVentanaAnterior(ActionEvent event) {        
-        Stage escenarioBase = (Stage) lTitulo.getScene().getWindow();
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.setScene(
                 Utilidades.inicializarEscena("vistas/FXMLPrincipalAcademico.fxml"));
         escenarioBase.setTitle("Principal Academico");
