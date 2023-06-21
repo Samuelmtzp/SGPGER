@@ -15,11 +15,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+<<<<<<< HEAD
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+=======
+>>>>>>> main
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -32,7 +36,7 @@ import jfxspger.modelo.pojo.EntregaRespuesta;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
 
-public class FXMLAnteproyectoAvancesController extends FXMLPrincipalAcademicoController implements Initializable {
+public class FXMLAnteproyectoAvancesController extends FXMLPrincipalAcademicoController {
 
     @FXML
     private Label lTitulo;
@@ -48,7 +52,8 @@ public class FXMLAnteproyectoAvancesController extends FXMLPrincipalAcademicoCon
     private Anteproyecto anteproyecto;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {        
+    public void initialize(URL url, ResourceBundle rb) {       
+        validarSeccionesPermitidas();
     }
     
     public void inicializarInformacion(Anteproyecto anteproyecto){
@@ -116,38 +121,6 @@ public class FXMLAnteproyectoAvancesController extends FXMLPrincipalAcademicoCon
                 tvEntregas.setItems(entregas);                
                 break;
         }
-    }
-
-    
-    @FXML
-    protected void clicCerrarSesion(ActionEvent event) {
-        super.clicCerrarSesion(event);
-    }        
-
-    @FXML
-    protected void clicIrPropuestas(ActionEvent event) {
-        super.clicIrPropuestas(event);
-    }
-
-
-    @FXML
-    protected void clicIrAnteproyectos(ActionEvent event) {
-        super.clicIrAnteproyectos(event);
-    }
-
-    @FXML
-    protected void clicIrEstudiantes(ActionEvent event) {
-        super.clicIrEstudiantes(event);
-    }
-
-    @FXML
-    protected void clicIrEntregables(ActionEvent event) {
-        super.clicIrEntregables(event);
-    }
-
-    @FXML
-    protected void clicIrRevisiones(ActionEvent event) {
-        super.clicIrRevisiones(event);
     }
     
 }

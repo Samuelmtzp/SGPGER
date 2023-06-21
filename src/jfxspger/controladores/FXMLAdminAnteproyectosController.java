@@ -22,6 +22,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
@@ -35,6 +36,7 @@ import jfxspger.modelo.dao.AnteproyectoDAO;
 import jfxspger.modelo.pojo.Anteproyecto;
 import jfxspger.modelo.pojo.AnteproyectoRespuesta;
 import jfxspger.utilidades.Constantes;
+import jfxspger.utilidades.SingletonUsuario;
 import jfxspger.utilidades.Utilidades;
 
 public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoController {
@@ -69,14 +71,57 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     private final String ESTADO_VALIDACION_PENDIENTE = "Validación pendiente";
     private final String ESTADO_DISPONIBLE = "Disponible";
     private final String ESTADO_NO_DISPONIBLE = "No disponible";
+    @FXML
+    private Button btnCrearAnteproyecto;
+    @FXML
+    private Button btnEliminarAnteproyecto;
+    @FXML
+    private Button btnModificarAnteproyecto;
+    @FXML
+    private Button btnAgregarEstudiantes;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cargarInformacion();
         configurarTabla();
         configurarBusquedaTabla();
-    }    
-
+        validarSeccionesPermitidas();
+        validarAccionesPermitidas();
+        agregarListenerATabla();
+    }
+    
+    private void agregarListenerATabla() {
+        tvAnteproyecto.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener<Anteproyecto>() {
+            @Override
+            public void changed(ObservableValue<? extends Anteproyecto> observable, 
+                    Anteproyecto oldValue, Anteproyecto newValue) {
+                if (newValue != null) {
+                    if (SingletonUsuario.getInstancia().getUsuario().getIdAcademico() == 
+                            newValue.getIdDirector()) {
+                        btnAgregarEstudiantes.setDisable(false);
+                        btnModificarAnteproyecto.setDisable(false);
+                        btnEliminarAnteproyecto.setDisable(false);
+                    } else {
+                        deshabilitarBotonesEdicionAnteproyecto();
+                    }
+                }
+            }
+        });
+    }
+    
+    private void validarAccionesPermitidas() {
+        if (esMiembroDeCA()) {
+            btnCrearAnteproyecto.setDisable(false);
+        }
+    }
+    
+    private void deshabilitarBotonesEdicionAnteproyecto() {
+        btnAgregarEstudiantes.setDisable(true);
+        btnModificarAnteproyecto.setDisable(true);
+        btnEliminarAnteproyecto.setDisable(true);
+    }
+    
     private void configurarTabla(){
         columnNombre.setCellValueFactory(new PropertyValueFactory("nombreTrabajo"));
         columNombreProyecto.setCellValueFactory(new PropertyValueFactory(
@@ -127,7 +172,14 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
 
     @FXML
     private void clicCrearAnteproyecto(ActionEvent event) {
-        irFormulario(false, null);
+        if (esMiembroDeCA())
+            irFormulario(false, null);
+        else {
+            Utilidades.mostrarDialogoSimple("Acción no permitida", 
+                    "Es necesario que pertenezca a un cuerpo académico para poder crear "
+                    + "un anteproyecto", 
+                    Alert.AlertType.WARNING);
+        }
     }
 
     @FXML
@@ -250,7 +302,7 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
                     sortedListaAnteproyectos.comparatorProperty().bind(
                             tvAnteproyecto.comparatorProperty());
                     tvAnteproyecto.setItems(sortedListaAnteproyectos);
-                    
+                    deshabilitarBotonesEdicionAnteproyecto();
                     filtradoAnteproyecto.setPredicate(anteproyectoFiltro -> {
                         if (newValue == null || newValue.isEmpty()) {
                             tvAnteproyecto.setItems(filtrarAnteproyectos());
@@ -335,6 +387,7 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     @FXML
     private void clicFiltro(ActionEvent event) {
         tvAnteproyecto.setItems(filtrarAnteproyectos());
+        deshabilitarBotonesEdicionAnteproyecto();
     }
 
     @FXML
@@ -348,7 +401,6 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
               "Selecciona el registro en la tabla del anteproyecto para asignar estudiantes", 
                  Alert.AlertType.WARNING);
             }
-    }
-
-
+    }    
+    
 }
