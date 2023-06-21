@@ -41,7 +41,7 @@
                   <TableColumn fx:id="columEstado" prefWidth="171.0" text="Estado" />
                </columns>
             </TableView>
-            <Button layoutX="679.0" layoutY="143.0" mnemonicParsing="false" onAction="#clicCrearAnteproyecto" prefHeight="60.0" prefWidth="212.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Crear anteproyecto">
+            <Button fx:id="btnCrearAnteproyecto" disable="true" layoutX="679.0" layoutY="143.0" mnemonicParsing="false" onAction="#clicCrearAnteproyecto" prefHeight="60.0" prefWidth="212.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Crear anteproyecto">
                <font>
                   <Font name="System Bold Italic" size="15.0" />
                </font>
@@ -53,7 +53,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="1177.0" layoutY="143.0" mnemonicParsing="false" onAction="#clicEliminarAnteproyecto" prefHeight="60.0" prefWidth="245.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" text="Eliminar anteproyecto">
+            <Button fx:id="btnEliminarAnteproyecto" disable="true" layoutX="1177.0" layoutY="143.0" mnemonicParsing="false" onAction="#clicEliminarAnteproyecto" prefHeight="60.0" prefWidth="245.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" text="Eliminar anteproyecto">
                <font>
                   <Font name="System Bold Italic" size="15.0" />
                </font>
@@ -65,7 +65,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="909.0" layoutY="143.0" mnemonicParsing="false" onAction="#clicModificarAnteproyecto" prefHeight="60.0" prefWidth="245.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Modificar anteproyecto">
+            <Button fx:id="btnModificarAnteproyecto" disable="true" layoutX="909.0" layoutY="143.0" mnemonicParsing="false" onAction="#clicModificarAnteproyecto" prefHeight="60.0" prefWidth="245.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Modificar anteproyecto">
                <font>
                   <Font name="System Bold Italic" size="15.0" />
                </font>
@@ -96,7 +96,7 @@
                   <Font size="16.0" />
                </font>
             </RadioButton>
-            <Button layoutX="1178.0" layoutY="79.0" mnemonicParsing="false" onAction="#clicAgregarEstudiante" prefHeight="49.0" prefWidth="245.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Agregar estudiante">
+            <Button fx:id="btnAgregarEstudiantes" disable="true" layoutX="1178.0" layoutY="79.0" mnemonicParsing="false" onAction="#clicAgregarEstudiante" prefHeight="49.0" prefWidth="245.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Agregar estudiante">
                <font>
                   <Font name="System Bold Italic" size="15.0" />
                </font>
