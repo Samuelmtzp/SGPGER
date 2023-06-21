@@ -15,13 +15,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-<<<<<<< HEAD
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-=======
->>>>>>> main
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -62,7 +59,7 @@ public class FXMLAnteproyectoAvancesController extends FXMLPrincipalAcademicoCon
         cargarInformacionAvances(anteproyecto.getIdAnteproyecto());
         lbTituloAnteproyecto.setText(anteproyecto.getNombreTrabajo());
     }
-
+    
     @FXML
     private void clicIrInfoAnteproyecto(ActionEvent event) {
         try{
@@ -74,15 +71,15 @@ public class FXMLAnteproyectoAvancesController extends FXMLPrincipalAcademicoCon
             Stage escenarioPrincipal = (Stage) lTitulo.getScene().getWindow();
             escenarioPrincipal.setTitle("Informacion de anteproyecto");
             escenarioPrincipal.setScene(sceneFormulario);
-            formulario.inicializarInformacion(anteproyecto);
+            formulario.inicializarInformacion(false,anteproyecto);
         }catch(IOException e){
             Utilidades.mostrarDialogoSimple("Error", 
                     "No se puede mostrar la pantalla de informacion de anteproyecto", 
                     Alert.AlertType.ERROR);  
         }
     }
-    
-    private void configurarTabla(){
+
+     private void configurarTabla(){
         
         cFechaEntrega.setCellValueFactory(new PropertyValueFactory("fechaEntrega"));
         cTituloActividad.setCellValueFactory(new PropertyValueFactory("tituloActividad"));
@@ -102,25 +99,25 @@ public class FXMLAnteproyectoAvancesController extends FXMLPrincipalAcademicoCon
         });
     }
     
-    private void cargarInformacionAvances(int idAnteproyecto){
-        entregas = FXCollections.observableArrayList();
+     private void cargarInformacionAvances(int idAnteproyecto){
+          entregas = FXCollections.observableArrayList();
         EntregaRespuesta respuestaBD = EntregaDAO.obtenerInformacionEntregasPorAnteproyecto(idAnteproyecto);
         switch(respuestaBD.getCodigoRespuesta()){
-            case Constantes.ERROR_CONEXION:
+             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Sin conexión", 
                         "Lo sentimos, por el momento no hay conexión", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
                 Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
-                        "Hubo un error al cargar la información. Por favor intente más tarde", 
+                        "Hubo un error al cargar los avances del anteproyecto.", 
                         Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
                 entregas.addAll(respuestaBD.getEntregas());
                 tvEntregas.setItems(entregas);                
                 break;
-        }
-    }
+        }    
+     }
     
 }
