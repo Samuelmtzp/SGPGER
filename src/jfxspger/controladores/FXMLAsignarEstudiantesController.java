@@ -136,7 +136,8 @@ public class FXMLAsignarEstudiantesController extends FXMLPrincipalAcademicoCont
 
     @FXML
     private void clicBtnAsignarEstudiantes(ActionEvent event) {
-         if (anteproyecto.getCantidadAlumnosParticipantes()>0) {
+         if (anteproyecto.getCantidadAlumnosParticipantes() < 
+                 anteproyecto.getMaximoAlumnosParticipantes()) {
             int posicionEstudianteDisponible = tvAlumnosDisponibles.
                     getSelectionModel().getSelectedIndex();
             if (posicionEstudianteDisponible != -1) {
@@ -151,8 +152,10 @@ public class FXMLAsignarEstudiantesController extends FXMLPrincipalAcademicoCont
                 estudianteEnAnteproyectoRegistro.setMatricula(estudiantesDisponibles.get(
                         posicionEstudianteDisponible).getMatricula());
                 agregarEstudianteAAnteproyecto(estudianteEnAnteproyectoRegistro);
-                anteproyecto.setCantidadAlumnosParticipantes(anteproyecto.getCantidadAlumnosParticipantes()-1);
-                if(anteproyecto.getCantidadAlumnosParticipantes()==0){
+                anteproyecto.setCantidadAlumnosParticipantes(
+                        anteproyecto.getCantidadAlumnosParticipantes() + 1);
+                if(anteproyecto.getCantidadAlumnosParticipantes() == 
+                        anteproyecto.getMaximoAlumnosParticipantes()){
                      actualizarEstadoNoDisponibleAnteproyecto(anteproyecto.getIdAnteproyecto());
                 }
             } else {
@@ -199,24 +202,22 @@ public class FXMLAsignarEstudiantesController extends FXMLPrincipalAcademicoCont
     private void clicBtnQuitar(ActionEvent event) {
         int posicionEstudianteDisponible = tvAlumnosAsignados.
                     getSelectionModel().getSelectedIndex();
-        if(posicionEstudianteDisponible!=-1){
+        if (posicionEstudianteDisponible != -1) {
             Usuario usuarioSeleccionado = tvAlumnosAsignados.getSelectionModel().getSelectedItem();
             Estudiante student = new Estudiante();
             student.setIdEstudiante(usuarioSeleccionado.getIdEstudiante());
-            if(usuarioSeleccionado != null){
-                boolean borrarRegistro = Utilidades.mostrarDialogoConfirmacion(
-                        "Eliminar alumno del anteproyecto", 
-                        "¿Estás seguro de que deseas eliminar al alumno del anteproyecto?");
-                if(borrarRegistro){
-                    eliminarEstudianteDeAnteproyecto(student);
-                    anteproyecto.setCantidadAlumnosParticipantes(anteproyecto.getCantidadAlumnosParticipantes()+1);
-                }
-            }else{
-                 Utilidades.mostrarDialogoSimple("Selecciona un Alumno", 
-                        "Selecciona a un alumno en la tabla de alumnos asigandos", 
-                        Alert.AlertType.WARNING);
+            boolean borrarRegistro = Utilidades.mostrarDialogoConfirmacion(
+                    "Eliminar alumno del anteproyecto", 
+                    "¿Estás seguro de que deseas eliminar al alumno del anteproyecto?");
+            if(borrarRegistro){
+                eliminarEstudianteDeAnteproyecto(student);
+                anteproyecto.setCantidadAlumnosParticipantes(
+                        anteproyecto.getCantidadAlumnosParticipantes() - 1);
             }
-        }
+        } else
+            Utilidades.mostrarDialogoSimple("Selecciona un Alumno", 
+                   "Selecciona a un alumno en la tabla de alumnos asigandos", 
+                   Alert.AlertType.WARNING);
     }
     
     private void eliminarEstudianteDeAnteproyecto(Estudiante estudianteEnAnteproyecto) {
