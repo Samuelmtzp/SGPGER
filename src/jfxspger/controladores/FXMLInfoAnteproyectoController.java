@@ -27,7 +27,6 @@ import jfxspger.modelo.dao.RevisionAnteproyectoDAO;
 import jfxspger.modelo.dao.UsuarioDAO;
 import jfxspger.modelo.pojo.Usuario;
 import jfxspger.modelo.pojo.Anteproyecto;
-import jfxspger.modelo.pojo.AnteproyectoRespuesta;
 import jfxspger.modelo.pojo.RevisionAnteproyecto;
 import jfxspger.modelo.pojo.RevisionAnteproyectoRespuesta;
 import jfxspger.modelo.pojo.UsuarioRespuesta;
@@ -68,13 +67,10 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
     private TextArea taAlumnosParticipantes;
     @FXML
     private Label lbEstado;
-    @FXML
-    private Label lbTitulo;
     private Anteproyecto anteproyecto;
     private ObservableList<RevisionAnteproyecto> revisionAnteproyecto;
     @FXML
     private TextArea taComentario;
-    private boolean esValidacion, esValido;
     @FXML
     private Button btnValidar;
     @FXML
@@ -82,14 +78,24 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
     @FXML
     private Button btnConsultarAvances;
     @FXML
-    private TextArea taFechaCreacion;
+    private Label lbFecha;
+    @FXML
+    private Button btnRegresar;
+    @FXML
+    private Label lbTitulo;
+    private boolean esValidacion, esValido;
+    @FXML
+    private Button btnAnteproyectos;
+    @FXML
+    private Button btnPropuestas;
+    @FXML
+    private Button btnEstudiantes;
+    @FXML
+    private Button btnRevisiones;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         validarSeccionesPermitidas();
-        btnValidar.setVisible(false);
-        taComentario.setEditable(false);
-        btnRegresar.setVisible(false);
     }
 
     public void inicializarInformacion(boolean esValidacion, Anteproyecto anteproyecto){
@@ -99,13 +105,11 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
         cambiarColorEstado();
         cargarEstudiantesAsignados();
         cargarCodirectoresAsignados();
-        cargarInformacionRevision();
         if(esValidacion){
+//            cargarInformacionRevision();
             btnValidar.setVisible(true);
-            taComentario.setEditable(true);
-            btnConsultarAvances.setVisible(false);
-            btnAnteproyectos.setVisible(false);
-            btnRegresar.setVisible(true);
+            taComentario.setVisible(true);
+            lbComentario.setVisible(true);
         }
     }
 
@@ -128,7 +132,6 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
         revisionAnteproyecto.setComentarioRevision(comentario);
         LocalDateTime tiempo = LocalDateTime.now();
         String fecha = tiempo.toString();
-        System.out.println("fecha = " + fecha);
         revisionAnteproyecto.setFechaRevision(fecha);
         if(esValido){
              registrarRevision(revisionAnteproyecto);
@@ -150,7 +153,7 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
         taLgac.setText(String.valueOf(anteproyecto.getLgac()));
         taDuracionAproximada.setText(anteproyecto.getDuracionAproximada());
         lbEstado.setText(anteproyecto.getEstado());
-        taFechaCreacion.setText(anteproyecto.getFechaCreacion());
+        lbFecha.setText(anteproyecto.getFechaCreacion());
     }
 
     private void cambiarColorEstado() {
@@ -218,12 +221,10 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
                     Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                System.out.println("hola");
                 for(int i=0; i<revisionAnteproyecto.size(); i++){
                   if(revisionAnteproyecto.get(i).getIdAnteproyecto()== anteproyecto.getIdAnteproyecto()){
                     taComentario.setText(
                         revisionAnteproyecto.get(i).getComentarioRevision());
-                         System.out.println("taComentario = " + taComentario.getText());
                     }
                 }
                 break;
@@ -309,10 +310,17 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
 
     @FXML
     private void clicRegresar(ActionEvent event) {
-         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
-        escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLAdminPropuestasAnteproyectos.fxml"));
-        escenarioBase.setTitle("Administración propuestas");
+        
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        if (esValidacion) {
+            escenarioBase.setScene(
+                    Utilidades.inicializarEscena("vistas/FXMLAdminPropuestasAnteproyectos.fxml"));
+            escenarioBase.setTitle("Administración propuestas");
+        } else {
+            escenarioBase.setScene(
+                    Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos3.fxml"));
+            escenarioBase.setTitle("Administración anteproyectos");
+        }
         escenarioBase.show();
     }
 
