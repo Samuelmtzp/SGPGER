@@ -43,7 +43,7 @@ import jfxspger.modelo.pojo.EntregaRespuesta;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
 
-public class FXMLActividadInformacionController implements Initializable, 
+public class FXMLActividadInformacionController extends FXMLPrincipalEstudianteController implements Initializable, 
         INotificacionOperacionActividad {
   
     private Documento archivoActividad;
@@ -72,11 +72,11 @@ public class FXMLActividadInformacionController implements Initializable,
     private ObservableList<Documento> documentos;
     @FXML
     private Button bEliminarDocumento;
+    private int idActividad;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTablaEntregas();
-        cargarInformacionEntregas();
     }
     
     private void configurarTablaEntregas(){
@@ -98,9 +98,10 @@ public class FXMLActividadInformacionController implements Initializable,
         });        
     }
     
-        private void cargarInformacionEntregas(){
+        private void cargarInformacionEntregas(Actividad actividadInformacion){
+            idActividad = actividadInformacion.getIdActividad();
         documentos = FXCollections.observableArrayList();
-            DocumentoRespuesta respuestaBD = DocumentoDAO.obtenerInformacionArchivo();
+            DocumentoRespuesta respuestaBD = DocumentoDAO.obtenerInformacionArchivoPorActividad(idActividad);
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Sin conexión", 
@@ -122,9 +123,8 @@ public class FXMLActividadInformacionController implements Initializable,
     @FXML
     private void clicBtnCargarArchivo(ActionEvent event) {
         
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
-        LocalDateTime fechaFin = LocalDateTime.parse(actividadInformacion.getFechaFin(), 
-                formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyy HH:mm:ss.S");
+        LocalDateTime fechaFin = LocalDateTime.parse(actividadInformacion.getFechaFin(), formatter);
         LocalDateTime fechaActual = LocalDateTime.now();
         if(fechaActual.isBefore(fechaFin)){
             FileChooser dialogoEntrega = new FileChooser();
@@ -172,15 +172,14 @@ public class FXMLActividadInformacionController implements Initializable,
                 break;
             case Constantes.ERROR_CONSULTA:
                 Utilidades.mostrarDialogoSimple("Error al eliminar", 
-                        "Hubo un error al eliminar la actividad. Por favor intente más tarde", 
+                        "Hubo un error al eliminar la entrega. Por favor intente más tarde", 
                         Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                Utilidades.mostrarDialogoSimple("Actividad eliminada", 
-                        "Actividad eliminada correctamente", 
+                Utilidades.mostrarDialogoSimple("Entrega eliminada", 
+                        "Entrega eliminada correctamente", 
                         Alert.AlertType.INFORMATION);
-                cargarInformacionEntregas();
-//                cerrarVentana();
+                notificarOperacionActualizar(actividadInformacion.getTitulo());
                 break;
         }        
     }
@@ -237,17 +236,20 @@ public class FXMLActividadInformacionController implements Initializable,
         this.interfazNotificacion = interfazNotificacion;
                 
             lbTitulo.setText("Detalles de actividad: " + actividadInformacion.getTitulo());
-            cargarInformacionActividad();        
+            cargarInformacionActividad();
+            cargarInformacionEntregas(actividadInformacion);
     }    
     
         @Override
     public void notificarOperacionGuardar(String nombreActividad) {
-        cargarInformacionActividad();
+        
+            cargarInformacionEntregas(actividadInformacion);
     }
 
     @Override
     public void notificarOperacionActualizar(String nombreActividad) {
-        cargarInformacionActividad();  
+        
+        cargarInformacionEntregas(actividadInformacion);
     }
     
     private void registrarEntrega(Entrega entregaNueva){
@@ -259,13 +261,12 @@ public class FXMLActividadInformacionController implements Initializable,
                         "Lo sentimos, por el momento no hay conexión", Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error al registrar la actividad", 
-                        "Hubo un error al registrar la actividad. Por favor intente más tarde", 
+                Utilidades.mostrarDialogoSimple("Error al registrar la entrega", 
+                        "Hubo un error al registrar la entrega. Por favor intente más tarde", 
                         Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                archivoActividad.setIdEntrega(codigoRespuesta.getIdEntrega());
-                System.out.println("ID ENTREGA ASIGNADO: " + archivoActividad.getIdEntrega());
+                archivoActividad.setIdEntrega(codigoRespuesta.getIdEntrega());                
                 registrarDocumento(archivoActividad);                
                 break;
         }        
@@ -288,8 +289,7 @@ public class FXMLActividadInformacionController implements Initializable,
                         Utilidades.mostrarDialogoSimple("Entrega registrada",
                                 "Entrega registrada correctamente",
                                 Alert.AlertType.INFORMATION);
-                        cargarInformacionEntregas();
-//                        cerrarVentana();
+                        notificarOperacionGuardar(actividadInformacion.getTitulo());
                         break;
                     }
     }
@@ -297,7 +297,7 @@ public class FXMLActividadInformacionController implements Initializable,
         private void cerrarVentana(){
         Stage escenarioBase = (Stage) lbTituloActividad.getScene().getWindow();
         escenarioBase.close();
-    }
+        }
 
     @FXML
     private void clicIrAnteproyecto(ActionEvent event) {
@@ -340,6 +340,7 @@ public class FXMLActividadInformacionController implements Initializable,
 
     @FXML
     private void clicIrPropuestas(ActionEvent event) {
+        
     }
 
     @FXML

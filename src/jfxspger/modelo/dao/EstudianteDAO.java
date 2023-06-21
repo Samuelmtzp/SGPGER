@@ -51,6 +51,43 @@ public class EstudianteDAO {
         return respuesta;
     }
     
+    public static EstudianteRespuesta obtenerInformacionEstudiantes() {
+        EstudianteRespuesta respuesta = new EstudianteRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+        if (conexionBD != null) {
+            try {
+                String consulta = "SELECT u.nombre, u.apellidoPaterno, u.apellidoMaterno, e.matricula, e.idEstudiante, a.nombreTrabajo " +
+                                    "FROM usuario u " +
+                                    "JOIN estudiante e ON u.idUsuario = e.idUsuario " +
+                                    "JOIN anteproyecto a ON e.idAnteproyecto = a.idAnteproyecto;";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);                
+                ResultSet resultado = prepararSentencia.executeQuery();
+                
+                ArrayList<Estudiante> estudianteConsulta = new ArrayList();
+                while (resultado.next())
+                {
+                    Estudiante estudiante = new Estudiante();
+                    estudiante.setNombre(resultado.getString("nombre"));
+                    estudiante.setApellidoPaterno(resultado.getString("apellidoPaterno"));
+                    estudiante.setApellidoMaterno(resultado.getString("apellidoMaterno"));
+                    estudiante.setNombreTrabajo(resultado.getString("nombreTrabajo"));
+                    estudiante.setIdEstudiante(resultado.getInt("idEstudiante"));                    
+                    estudiante.setMatricula(resultado.getString("matricula"));                    
+                    estudianteConsulta.add(estudiante);
+                }
+                respuesta.setEstudiantes(estudianteConsulta);
+                conexionBD.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+            }
+        } else {
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
+    }
+    
     public static int verificarDisponibilidadMatricula(String matricula) {
         int respuesta = 1;
         Connection conexionBD = ConexionBD.abrirConexionBD();

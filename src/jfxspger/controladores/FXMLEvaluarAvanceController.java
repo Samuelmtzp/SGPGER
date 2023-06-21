@@ -1,26 +1,19 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
+* Autor: Carlos Rodriguez Herrera
+* Fecha de creación: 18/06/2023
+* Descripción: Clase controladora para evaluar los avances del estudiante
+*/
 package jfxspger.controladores;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 
-/**
- * FXML Controller class
- *
- * @author carlo
- */
-public class FXMLEvaluarAvanceController implements Initializable {
+public class FXMLEvaluarAvanceController extends FXMLPrincipalAcademicoController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+        
+    }
     
 }

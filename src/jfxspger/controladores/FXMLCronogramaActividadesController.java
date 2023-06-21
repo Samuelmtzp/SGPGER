@@ -9,6 +9,7 @@ package jfxspger.controladores;
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import java.io.IOException;
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -52,6 +53,7 @@ public class FXMLCronogramaActividadesController implements Initializable,
     @FXML
     private TableColumn cFechaCreacion;
     public int idEstudiante=3;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyy HH:mm:ss.S");
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -108,12 +110,16 @@ public class FXMLCronogramaActividadesController implements Initializable,
         cargarInformacionCronograma();
     }
      private void irFormulario(boolean esEdicion, Actividad actividadEdicion){
+<<<<<<< HEAD
+                         
+=======
         
         FXMLInicioSesionController inicioSesion = new FXMLInicioSesionController();        
 //        int id = inicioSesion.getIdEstudiante();
 
 //         System.out.println("ID: " + id);
     
+>>>>>>> origin/main
         try {
             FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.
                     getResource("vistas/FXMLActividadFormu.fxml"));
