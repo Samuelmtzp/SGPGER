@@ -72,4 +72,11 @@ public class Utilidades {
         return fechaHora.format(formatoSalida);
     }
     
+    public static String formatearFechaHora(String fechaHoraString) {
+        DateTimeFormatter formatoEntrada = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatoSalida = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        LocalDateTime fechaHora = LocalDateTime.parse(fechaHoraString, formatoEntrada);
+        return fechaHora.format(formatoSalida);
+    }
+    
 }

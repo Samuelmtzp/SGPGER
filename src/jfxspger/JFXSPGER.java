@@ -19,7 +19,7 @@ public class JFXSPGER extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().
                 getResource("vistas/FXMLInicioSesion.fxml"));
-        
+
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setTitle("Inicio de sesion");
