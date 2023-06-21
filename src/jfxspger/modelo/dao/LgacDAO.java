@@ -24,9 +24,15 @@ public class LgacDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT idLgac, Lgac.nombre, Lgac.idCuerpoAcademico, "
-                        + "cuerpoAcademico.nombre FROM Lgac INNER JOIN cuerpoAcademico ON "
-                        + "cuerpoAcademico.idCuerpoAcademico= Lgac.idCuerpoAcademico";
+                String consulta = "SELECT DISTINCT idLgac, Lgac.nombre, "
+                        + "IF (Lgac.idCuerpoAcademico IS NULL, \"Sin cuerpo académico\", "
+                        + "CuerpoAcademico.nombre) nombreCuerpoAcademico, "
+                        + "IF (Lgac.idCuerpoAcademico IS NULL, -1, Lgac.idCuerpoAcademico) "
+                        + "idCuerpoAcademico "
+                        + "FROM Lgac "
+                        + "INNER JOIN cuerpoAcademico "
+                        + "ON CuerpoAcademico.idCuerpoAcademico = Lgac.idCuerpoAcademico "
+                        + "OR Lgac.idCuerpoAcademico IS NULL";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Lgac> lgacConsulta = new ArrayList();
@@ -36,9 +42,9 @@ public class LgacDAO {
                     lgac.setIdLgac(resultado.getInt("idLgac"));
                     lgac.setNombre(resultado.getString("Lgac.nombre"));
                     lgac.setIdCuerpoAcademico(resultado.getInt(
-                            "Lgac.idCuerpoAcademico"));
+                            "idCuerpoAcademico"));
                     lgac.setCuerpoAcademico(resultado.getString(
-                            "cuerpoAcademico.nombre"));
+                            "nombreCuerpoAcademico"));
                     lgacConsulta.add(lgac);
                 }
                 respuesta.setListaLgac(lgacConsulta);
