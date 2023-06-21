@@ -18,27 +18,23 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import jfxspger.interfaz.INotificacionOperacionActividad;
 import jfxspger.modelo.dao.ActividadDAO;
 import jfxspger.modelo.pojo.Actividad;
 import jfxspger.modelo.pojo.ActividadRespuesta;
-import jfxspger.modelo.pojo.Estudiante;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.SingletonUsuario;
 import jfxspger.utilidades.Utilidades;
 
-public class FXMLCronogramaActividadesController implements Initializable, 
-        INotificacionOperacionActividad {
+public class FXMLCronogramaActividadesController extends FXMLPrincipalEstudianteController {
 
     @FXML
     private TableView<Actividad> tvActividades;
@@ -48,18 +44,24 @@ public class FXMLCronogramaActividadesController implements Initializable,
     private TableColumn cFechaIncio;
     @FXML
     private TableColumn cFechaFin;
-    private ObservableList<Actividad> actividades;
-    @FXML
-    private Label lTitulo;
     @FXML
     private TableColumn cFechaCreacion;
-    private int idEstudiante = SingletonUsuario.getInstancia().getUsuario().getIdEstudiante();
+    @FXML
+    private Button btnAnteproyecto;
+    @FXML
+    private Button btnCronograma;
+    @FXML
+    private Button btnCursos;
+    @FXML
+    private Label lbTitulo;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyy HH:mm:ss.S");
+    private ObservableList<Actividad> actividades;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
         cargarInformacionCronograma(); 
+        validarSeccionesPermitidas();
    }
     
     
@@ -86,7 +88,8 @@ public class FXMLCronogramaActividadesController implements Initializable,
     
     private void cargarInformacionCronograma(){
         actividades = FXCollections.observableArrayList();
-        ActividadRespuesta respuestaBD = ActividadDAO.obtenerInformacionActividad(idEstudiante);
+        ActividadRespuesta respuestaBD = ActividadDAO.obtenerInformacionActividad(
+                SingletonUsuario.getInstancia().getUsuario().getIdEstudiante());
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Sin conexión", 
@@ -118,10 +121,10 @@ public class FXMLCronogramaActividadesController implements Initializable,
             Parent vista = accesoControlador.load();
             
             FXMLActividadFormularioController formulario = accesoControlador.getController();
-            formulario.inicializarInformacionFormulario(esEdicion, actividadEdicion, this);
+            formulario.inicializarInformacionFormulario(esEdicion, actividadEdicion);
                        
             Scene sceneFormulario =  new Scene(vista);
-            Stage escenarioFormulario = (Stage) lTitulo.getScene().getWindow();
+            Stage escenarioFormulario = (Stage) lbTitulo.getScene().getWindow();
             escenarioFormulario.setScene(sceneFormulario);
             escenarioFormulario.setTitle("Formulario Activdad");      
             escenarioFormulario.show();
@@ -139,10 +142,10 @@ public class FXMLCronogramaActividadesController implements Initializable,
             Parent vista = accesoControlador.load();
             
             FXMLActividadInformacionController informacion = accesoControlador.getController();
-            informacion.inicializarInformacionActividad(actividadInformacion, this);                    
+            informacion.inicializarInformacionActividad(actividadInformacion);                    
             
             Scene sceneDetalles = new Scene(vista);
-            Stage escenarioDetalles = (Stage) lTitulo.getScene().getWindow();
+            Stage escenarioDetalles = (Stage) lbTitulo.getScene().getWindow();
             escenarioDetalles.setScene(sceneDetalles);
             escenarioDetalles.setTitle("Detalles Activdad");      
             escenarioDetalles.show();
@@ -174,75 +177,10 @@ public class FXMLCronogramaActividadesController implements Initializable,
                     + " ver los detalles.", Alert.AlertType.WARNING);
         }
     }
-    public void inicializarInformacionCronograma(){
-                
-            lTitulo.setText("Cronograma de actividades");
+    
+    public void inicializarInformacionCronograma(){                
+            lbTitulo.setText("Cronograma de actividades");
             cargarInformacionCronograma();        
     }
-    
-    @Override
-    public void notificarOperacionGuardar(String nombreActividad) {
-        cargarInformacionCronograma();
-    }
 
-    @Override
-    public void notificarOperacionActualizar(String nombreActividad) {
-        cargarInformacionCronograma();  
-    }    
-
-    @FXML
-    private void clicIrAnteproyecto(ActionEvent event) {
-        Stage escenarioBase = (Stage) lTitulo.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena(
-                "vistas/FXMLAnteproyectoInformacion.fxml"));
-        escenarioBase.setTitle("Informacion de anteproyecto");
-        escenarioBase.show();        
-    }
-
-    @FXML
-    private void clicIrCronograma(ActionEvent event) {
-        Stage escenarioBase = (Stage) lTitulo.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena(
-                "vistas/FXMLCronogramaActividades.fxml"));
-        escenarioBase.setTitle("Cronograma de actividades");
-        escenarioBase.show();
-    }
-
-    @FXML
-    private void clicIrCursos(ActionEvent event) {
-        Stage escenarioBase = (Stage) lTitulo.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLEstudiantesCurso.fxml"));
-        escenarioBase.setTitle("Cursos");
-        escenarioBase.show();        
-    }
-
-    @FXML
-    private void clicCerrarSesion(ActionEvent event) {
-        if (Utilidades.mostrarDialogoConfirmacion(
-                "Cerrar sesión", 
-                "¿Está seguro de que desea cerrar sesión?")) {
-            irVentanaInicioSesion();
-        }        
-    }
-    
-    private void irVentanaInicioSesion() {
-        Stage escenarioBase = (Stage) lTitulo.getScene().getWindow();
-        escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLInicioSesion.fxml"));
-        escenarioBase.setTitle("Inicio de sesion");
-        escenarioBase.show();
-    }
-
-    @FXML
-    private void clicIrPropuestas(ActionEvent event) {
-    }
-
-    @FXML
-    private void clicIrPrincipalEstudiante(ActionEvent event) {
-        Stage escenarioBase = (Stage) lTitulo.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena(
-                "vistas/FXMLPrincipalEstudiante.fxml"));
-        escenarioBase.setTitle("Ventana Principal");
-        escenarioBase.show();       
-    }
 }

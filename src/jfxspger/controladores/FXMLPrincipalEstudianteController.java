@@ -10,9 +10,10 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import jfxspger.modelo.dao.EstudianteDAO;
 import jfxspger.utilidades.SingletonUsuario;
 import jfxspger.utilidades.Utilidades;
 
@@ -20,24 +21,40 @@ import jfxspger.utilidades.Utilidades;
 public class FXMLPrincipalEstudianteController implements Initializable {
 
     @FXML
-    private Label lbTitulo;
-    public int idEstudiante;
+    protected Label lbTitulo;
+    @FXML
+    protected Button btnAnteproyecto;
+    @FXML
+    protected Button btnCronograma;
+    @FXML
+    protected Button btnCursos;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {        
-
+        validarSeccionesPermitidas();
     }
-
-    public int getIdEstudiante() {
-        return idEstudiante;
+    
+    protected void validarSeccionesPermitidas() {        
+        if (esEstudianteConCurso()) {
+            btnCursos.setDisable(false);
+        }
+        if (esEstudianteConAnteproyecto()) {
+            btnCronograma.setDisable(false);
+            btnAnteproyecto.setDisable(false);
+        }
     }
-
-    public void setIdEstudiante(int idEstudiante) {
-        this.idEstudiante = idEstudiante;
+    
+    protected boolean esEstudianteConCurso() {
+        return (EstudianteDAO.obtenerCantidadCursosExistenciaEstudiante(
+                SingletonUsuario.getInstancia().getUsuario().getIdEstudiante()) > 0); 
     }    
-
+    
+    protected boolean esEstudianteConAnteproyecto() {
+        return SingletonUsuario.getInstancia().getUsuario().getIdAnteproyecto() != 0; 
+    }
+    
     @FXML
-    private void clicCerrarSesion(ActionEvent event) {
+    protected void clicCerrarSesion(ActionEvent event) {
         if (Utilidades.mostrarDialogoConfirmacion(
                 "Cerrar sesión", 
                 "¿Está seguro de que desea cerrar sesión?")) {
@@ -45,7 +62,7 @@ public class FXMLPrincipalEstudianteController implements Initializable {
         }
     }
     
-    private void irVentanaInicioSesion() {
+    protected void irVentanaInicioSesion() {
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.setScene(
                 Utilidades.inicializarEscena("vistas/FXMLInicioSesion.fxml"));
@@ -54,8 +71,7 @@ public class FXMLPrincipalEstudianteController implements Initializable {
     }
 
     @FXML
-    private void clicIrCronograma(ActionEvent event) {        
-        
+    protected void clicIrCronograma(ActionEvent event) {        
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.setScene(Utilidades.inicializarEscena(
                 "vistas/FXMLCronogramaActividades.fxml"));
@@ -64,20 +80,21 @@ public class FXMLPrincipalEstudianteController implements Initializable {
     }
 
     @FXML
-    private void clicIrCursos(ActionEvent event) {      
+    protected void clicIrCursos(ActionEvent event) {      
     }
 
     @FXML
-    private void clicIrPropuestas(ActionEvent event) {
+    protected void clicIrPropuestas(ActionEvent event) {
     }
 
     @FXML
-    private void clicIrAnteproyecto(ActionEvent event) {
+    protected void clicIrAnteproyecto(ActionEvent event) {
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.setScene(Utilidades.inicializarEscena(
-                "vistas/FXMLAnteproyectoInformacion.fxml"));
+                "vistas/FXMLInfoAnteproyectoEstudiante.fxml"));
         escenarioBase.setTitle("Informacion de anteproyecto");
         escenarioBase.show();        
+        
     }
     
 }
