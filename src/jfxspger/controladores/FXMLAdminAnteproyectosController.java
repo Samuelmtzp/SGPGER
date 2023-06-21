@@ -22,6 +22,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
@@ -75,6 +76,7 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
         cargarInformacion();
         configurarTabla();
         configurarBusquedaTabla();
+        validarSeccionesPermitidas();
     }    
 
     private void configurarTabla(){
@@ -349,6 +351,5 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
                  Alert.AlertType.WARNING);
             }
     }
-
 
 }

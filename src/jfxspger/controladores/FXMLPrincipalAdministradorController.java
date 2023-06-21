@@ -20,9 +20,8 @@ public class FXMLPrincipalAdministradorController implements Initializable {
     protected Label lbTitulo;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {        
-    }    
-
+    public void initialize(URL url, ResourceBundle rb) {
+    }
 
     @FXML
     protected void clicCerrarSesion(ActionEvent event) {

@@ -30,7 +30,7 @@ import jfxspger.modelo.pojo.EstudianteRespuesta;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
 
-public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoController implements Initializable {
+public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoController {
 
     @FXML
     private Label lTitulo;
@@ -48,28 +48,28 @@ public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoContr
     private Estudiante estudiante;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {                
+    public void initialize(URL url, ResourceBundle rb) {
+        validarSeccionesPermitidas();
     }
-    
     public void inicializarEntregas(Estudiante estudiante){
         this.estudiante = estudiante;
         lbNombreEstudiante.setText(estudiante.getNombre() + " " + estudiante.getApellidoPaterno() + " " + estudiante.getApellidoMaterno());
         configurarTabla();
         cargarInformacionEntregas(estudiante);
     }
-    
+
         private void configurarTabla(){
         cNombreActividad.setCellValueFactory(new PropertyValueFactory("titulo"));
         cFechaEntrega.setCellValueFactory(new PropertyValueFactory("fechaEntrega"));
-        cCalificacion.setCellValueFactory(new PropertyValueFactory("calificacion"));        
+        cCalificacion.setCellValueFactory(new PropertyValueFactory("calificacion"));
                 tvEntregas.widthProperty().addListener(new ChangeListener<Number>(){
             @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, 
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue,
                     Number newValue) {
                 TableHeaderRow header = (TableHeaderRow) tvEntregas.lookup("TableHeaderRow");
                 header.reorderingProperty().addListener(new ChangeListener<Boolean>(){
                     @Override
-                    public void changed(ObservableValue<? extends Boolean> observable, 
+                    public void changed(ObservableValue<? extends Boolean> observable,
                             Boolean oldValue, Boolean newValue) {
                         header.setReordering(false);
                     }
@@ -77,20 +77,20 @@ public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoContr
             }
         });
     }
-    
+
     private void cargarInformacionEntregas(Estudiante estudiante){
         int idEstudiante = estudiante.getIdEstudiante();
         entregas = FXCollections.observableArrayList();
         EntregaRespuesta respuestaBD = EntregaDAO.obtenerInformacionEntregasPorEstudiante(idEstudiante);
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Sin conexión", 
-                        "Lo sentimos, por el momento no hay conexión", 
+                Utilidades.mostrarDialogoSimple("Sin conexión",
+                        "Lo sentimos, por el momento no hay conexión",
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
-                        "Hubo un error al cargar la información. Por favor intente más tarde", 
+                Utilidades.mostrarDialogoSimple("Error al cargar los datos",
+                        "Hubo un error al cargar la información. Por favor intente más tarde",
                         Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
@@ -99,40 +99,9 @@ public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoContr
                 break;
         }
     }
-
     @FXML
     private void clicVentanaAnterior(ActionEvent event) {
         super.clicIrEstudiantes(event);
-    }
-
-    @FXML
-    protected void clicIrAnteproyectos(ActionEvent event) {
-        super.clicIrAnteproyectos(event);
-    }
-
-    @FXML
-    protected void clicIrPropuestas(ActionEvent event) {
-        super.clicIrPropuestas(event);
-    }
-
-    @FXML
-    protected void clicIrEstudiantes(ActionEvent event) {
-        super.clicIrEstudiantes(event);
-    }
-
-    @FXML
-    protected void clicCerrarSesion(ActionEvent event) {
-        super.clicCerrarSesion(event);
-    }
-
-    @FXML
-    protected void clicIrEntregables(ActionEvent event) {
-        super.clicIrEntregables(event);
-    }
-
-    @FXML
-    protected void clicIrRevisiones(ActionEvent event) {
-        super.clicIrRevisiones(event);
     }
 
     @FXML
@@ -140,7 +109,7 @@ public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoContr
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLEvaluarAvance.fxml"));
         escenarioBase.setTitle("Evaluar avance");
-        escenarioBase.show();        
+        escenarioBase.show();
     }
-    
+
 }

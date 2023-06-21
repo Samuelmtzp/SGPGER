@@ -52,14 +52,106 @@ public class AcademicoDAO {
     }
     
     public static int verificarDisponibilidadNumeroDePersonal(int numeroDePersonal) {
-        int respuesta = 1;
+        int respuesta = 0;
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
                 String sentencia = "SELECT COUNT(*) AS coincidencias "
-                        + "FROM Academicop WHERE numeroDePersonal = ?";
+                        + "FROM Academico WHERE numeroDePersonal = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setInt(1, numeroDePersonal);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                if (resultado.next())
+                    respuesta = resultado.getInt("coincidencias");
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta = Constantes.ERROR_CONSULTA;
+            }
+        } else {
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
+    public static int obtenerCantidadAnteproyectosAcademicoEsDirector(int idAcademico) {
+        int respuesta = 0;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null) {
+            try {
+                String sentencia = "SELECT COUNT(*) AS coincidencias "
+                        + "FROM anteproyecto "
+                        + "WHERE idDirector = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt(1, idAcademico);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                if (resultado.next())
+                    respuesta = resultado.getInt("coincidencias");
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta = Constantes.ERROR_CONSULTA;
+            }
+        } else {
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
+    public static int obtenerCantidadCuerposAcademicoSAcademicoEsResponsable(int idAcademico) {
+        int respuesta = 0;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null) {
+            try {
+                String sentencia = "SELECT COUNT(*) AS coincidencias "
+                        + "FROM cuerpoAcademico "
+                        + "WHERE idResponsable = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt(1, idAcademico);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                if (resultado.next())
+                    respuesta = resultado.getInt("coincidencias");
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta = Constantes.ERROR_CONSULTA;
+            }
+        } else {
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
+    public static int obtenerCantidadAnteproyectosAcademicoEsCodirector(int idAcademico) {
+        int respuesta = 0;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null) {
+            try {
+                String sentencia = "SELECT COUNT(*) AS coincidencias "
+                        + "FROM anteproyecto_codirector "
+                        + "WHERE idCodirector = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt(1, idAcademico);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                if (resultado.next())
+                    respuesta = resultado.getInt("coincidencias");
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta = Constantes.ERROR_CONSULTA;
+            }
+        } else {
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
+    public static int obtenerCantidadCursosAcademicoEsProfesor(int idAcademico) {
+        int respuesta = 0;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null) {
+            try {
+                String sentencia = "SELECT COUNT(*) AS coincidencias "
+                        + "FROM curso "
+                        + "WHERE idProfesor = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt(1, idAcademico);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 if (resultado.next())
                     respuesta = resultado.getInt("coincidencias");
@@ -78,8 +170,7 @@ public class AcademicoDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
-                String sentencia = "INSERT INTO Academico (idUsuario, " + 
-                        "numeroDePersonal) " +
+                String sentencia = "INSERT INTO Academico (idUsuario, numeroDePersonal) " +
                         "VALUES (?,?)";
                 PreparedStatement prepararSentencia =  conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setInt(1, nuevoAcademico.getIdUsuario());
