@@ -237,7 +237,7 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     
     private void irAsignarEstudiantes(Anteproyecto anteproyecto){
            try{
-            if(anteproyecto.getIdEstado()== 2){
+            if(anteproyecto.getIdEstado() != 1){
             FXMLLoader accesoControlador = new 
       FXMLLoader(jfxspger.JFXSPGER.class.getResource(
               "/jfxspger/vistas/FXMLAsignarEstudiantes.fxml"));
@@ -248,8 +248,8 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
             escenarioPrincipal.setScene(sceneFormulario);
             formulario.inicializarInformacion(anteproyecto);
             }else{
-                 Utilidades.mostrarDialogoSimple("Anteproyecto no disponible", 
-                    "El anteproyecto debe estar en un estado de disponibilidad "
+                 Utilidades.mostrarDialogoSimple("Anteproyecto no validado", 
+                    "El anteproyecto debe validado"
                             + "para poder asignarle estudiantes", 
                     Alert.AlertType.WARNING);
             }
