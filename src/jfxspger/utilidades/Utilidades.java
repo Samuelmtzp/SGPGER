@@ -69,18 +69,19 @@ public class Utilidades {
     }
     
     public static String convertirTimeStampAStringFecha(Timestamp timestamp) {
-        Date date = new Date(timestamp.getTime());
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        String formattedDate = formatter.format(date);
+        Date fecha = new Date(timestamp.getTime());
+        SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
+        String fechaFormateada = formato.format(fecha);
         
-        return formattedDate;
+        return fechaFormateada;
     }
     
-    public static String formatearFechaHora(String fechaHoraString) {
-        DateTimeFormatter formatoEntrada = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        DateTimeFormatter formatoSalida = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        LocalDateTime fechaHora = LocalDateTime.parse(fechaHoraString, formatoEntrada);
-        return fechaHora.format(formatoSalida);
+    public static String convertirTimeStampAStringFechaHora(Timestamp timestamp) {
+        Date fecha = new Date(timestamp.getTime());
+        SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        String fechaFormateada = formato.format(fecha);
+        
+        return fechaFormateada;
     }
     
 }
