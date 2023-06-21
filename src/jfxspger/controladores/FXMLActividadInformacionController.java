@@ -21,7 +21,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -30,12 +29,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import jfxspger.interfaz.INotificacionOperacionActividad;
-import jfxspger.modelo.dao.ActividadDAO;
 import jfxspger.modelo.dao.DocumentoDAO;
 import jfxspger.modelo.dao.EntregaDAO;
 import jfxspger.modelo.pojo.Actividad;
-import jfxspger.modelo.pojo.ActividadRespuesta;
 import jfxspger.modelo.pojo.Documento;
 import jfxspger.modelo.pojo.DocumentoRespuesta;
 import jfxspger.modelo.pojo.Entrega;
@@ -43,14 +39,12 @@ import jfxspger.modelo.pojo.EntregaRespuesta;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
 
-public class FXMLActividadInformacionController extends FXMLPrincipalEstudianteController implements Initializable, 
-        INotificacionOperacionActividad {
+public class FXMLActividadInformacionController extends FXMLPrincipalEstudianteController {
   
     private Documento archivoActividad;
     private Entrega entregaAct;    
     private File entregaActividad;    
     private Actividad actividadInformacion;       
-    private INotificacionOperacionActividad interfazNotificacion;
     @FXML
     private Label lbTituloActividad;
     @FXML
@@ -77,6 +71,7 @@ public class FXMLActividadInformacionController extends FXMLPrincipalEstudianteC
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTablaEntregas();
+        validarSeccionesPermitidas();
     }
     
     private void configurarTablaEntregas(){
@@ -179,7 +174,7 @@ public class FXMLActividadInformacionController extends FXMLPrincipalEstudianteC
                 Utilidades.mostrarDialogoSimple("Entrega eliminada", 
                         "Entrega eliminada correctamente", 
                         Alert.AlertType.INFORMATION);
-                notificarOperacionActualizar(actividadInformacion.getTitulo());
+                cargarInformacionEntregas(actividadInformacion);
                 break;
         }        
     }
@@ -198,8 +193,9 @@ public class FXMLActividadInformacionController extends FXMLPrincipalEstudianteC
             archivoActividad = new Documento();
             try{
                 if(entregaActividad != null){
-                    archivoActividad.setArchivoDocumento(Files.readAllBytes(entregaActividad.toPath()));                    
-                    archivoActividad.setNombre(entregaActividad.getName().toString());
+                    archivoActividad.setArchivoDocumento(Files.readAllBytes(
+                            entregaActividad.toPath()));                    
+                    archivoActividad.setNombre(entregaActividad.getName());
                     registrarEntrega(entregaAct);
                 }else {
                     Utilidades.mostrarDialogoSimple("ENTREGA VACIA", 
@@ -223,27 +219,13 @@ public class FXMLActividadInformacionController extends FXMLPrincipalEstudianteC
         }                
     }
     
-    public void inicializarInformacionActividad(Actividad actividadInformacion, 
-            INotificacionOperacionActividad interfazNotificacion){        
+    public void inicializarInformacionActividad(Actividad actividadInformacion){        
         this.actividadInformacion = actividadInformacion;
-        this.interfazNotificacion = interfazNotificacion;
                 
             lbTitulo.setText("Detalles de actividad: " + actividadInformacion.getTitulo());
             cargarInformacionActividad();
             cargarInformacionEntregas(actividadInformacion);
     }    
-    
-        @Override
-    public void notificarOperacionGuardar(String nombreActividad) {
-        
-            cargarInformacionEntregas(actividadInformacion);
-    }
-
-    @Override
-    public void notificarOperacionActualizar(String nombreActividad) {
-        
-        cargarInformacionEntregas(actividadInformacion);
-    }
     
     private void registrarEntrega(Entrega entregaNueva){
         
@@ -265,26 +247,25 @@ public class FXMLActividadInformacionController extends FXMLPrincipalEstudianteC
         }        
     }
     
-    private void registrarDocumento(Documento archivoNuevo){
-                
-                int docRespuesta = DocumentoDAO.guardarArchivo(archivoNuevo);
-                switch(docRespuesta){
-                    case Constantes.ERROR_CONEXION:
-                        Utilidades.mostrarDialogoSimple("Sin conexión", 
-                                "Lo sentimos, por el momento no hay conexión", Alert.AlertType.ERROR);
-                        break;
-                    case Constantes.ERROR_CONSULTA:
-                        Utilidades.mostrarDialogoSimple("Error al registrar el documento", 
-                                "Hubo un error al registrar la actividad. Por favor intente más tarde", 
-                                Alert.AlertType.WARNING);
-                        break;
-                    case Constantes.OPERACION_EXITOSA:
-                        Utilidades.mostrarDialogoSimple("Entrega registrada",
-                                "Entrega registrada correctamente",
-                                Alert.AlertType.INFORMATION);
-                        notificarOperacionGuardar(actividadInformacion.getTitulo());
-                        break;
-                    }
+    private void registrarDocumento(Documento archivoNuevo){                
+        int docRespuesta = DocumentoDAO.guardarArchivo(archivoNuevo);
+        switch(docRespuesta){
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Sin conexión", 
+                        "Lo sentimos, por el momento no hay conexión", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                Utilidades.mostrarDialogoSimple("Error al registrar el documento", 
+                        "Hubo un error al registrar la actividad. Por favor intente más tarde", 
+                        Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                Utilidades.mostrarDialogoSimple("Entrega registrada",
+                        "Entrega registrada correctamente",
+                        Alert.AlertType.INFORMATION);
+                cargarInformacionEntregas(actividadInformacion);
+                break;
+        }
     }
     
     private void regresarCronograma(){
@@ -293,50 +274,6 @@ public class FXMLActividadInformacionController extends FXMLPrincipalEstudianteC
                 "vistas/FXMLCronogramaActividades.fxml"));
         escenarioBase.setTitle("Cronograma de actividades");
         escenarioBase.show();
-    }
-
-    @FXML
-    private void clicIrAnteproyecto(ActionEvent event) {
-        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena(
-                "vistas/FXMLAnteproyectoInformacion.fxml"));
-        escenarioBase.setTitle("Informacion de anteproyecto");
-        escenarioBase.show();
-    }
-
-    @FXML
-    private void clicIrCronograma(ActionEvent event) {
-        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena(
-                "vistas/FXMLCronogramaActividades.fxml"));
-        escenarioBase.setTitle("Cronograma de actividades");
-        escenarioBase.show();
-    }
-
-    @FXML
-    private void clicIrCursos(ActionEvent event) {     
-    }
-
-    @FXML
-    private void clicCerrarSesion(ActionEvent event) {
-        if (Utilidades.mostrarDialogoConfirmacion(
-                "Cerrar sesión", 
-                "¿Está seguro de que desea cerrar sesión?")) {
-            irVentanaInicioSesion();
-        }          
-    }
-    
-    private void irVentanaInicioSesion() {
-        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
-        escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLInicioSesion.fxml"));
-        escenarioBase.setTitle("Inicio de sesion");
-        escenarioBase.show();
-    }
-
-    @FXML
-    private void clicIrPropuestas(ActionEvent event) {
-        
     }
 
     @FXML

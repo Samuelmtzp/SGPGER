@@ -137,7 +137,13 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     
     private void cargarInformacion(){
         anteproyectos = FXCollections.observableArrayList();
-        AnteproyectoRespuesta respuestaBD = AnteproyectoDAO.obtenerInformacionAnteproyecto();
+        AnteproyectoRespuesta respuestaBD;
+        if (esMiembroDeCA()) {
+            respuestaBD = AnteproyectoDAO.obtenerInformacionAnteproyectosEnCuerpoAcademico(
+                    SingletonUsuario.getInstancia().getUsuario().getIdcuerpoAcademico());
+        } else {
+            respuestaBD = AnteproyectoDAO.obtenerInformacionAnteproyectos();
+        }
         switch (respuestaBD.getCodigoRespuesta()) {
             case Constantes.ERROR_CONEXION:
                     Utilidades.mostrarDialogoSimple("Sin conexión", 

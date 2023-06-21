@@ -6,7 +6,6 @@
 
 package jfxspger.controladores;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -16,18 +15,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import jfxspger.interfaz.INotificacionOperacionActividad;
 import jfxspger.modelo.dao.ActividadDAO;
 import jfxspger.modelo.pojo.Actividad;
 import jfxspger.modelo.pojo.Estudiante;
@@ -35,7 +29,7 @@ import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.SingletonUsuario;
 import jfxspger.utilidades.Utilidades;
 
-public class FXMLActividadFormularioController implements Initializable {
+public class FXMLActividadFormularioController extends FXMLPrincipalEstudianteController {
 
     @FXML
     private TextField tfNombreActividad;
@@ -45,17 +39,6 @@ public class FXMLActividadFormularioController implements Initializable {
     private DatePicker dpFechaInicio;
     @FXML
     private DatePicker dpFechaFin;
-    private Actividad actividadEdicion;
-    private Estudiante estudiante;
-    private int idEstudiante = SingletonUsuario.getInstancia().getUsuario().getIdEstudiante();
-    private boolean esEdicion;
-    private INotificacionOperacionActividad interfazNotificacion;
-    
-    String estiloError = "-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 2;";
-    String estiloNormal = "-fx-border-width: 0;";
-    
-    @FXML
-    private Label lbTitulo;
     @FXML
     private Spinner<Integer> spMinutosInicio;
     @FXML
@@ -64,16 +47,20 @@ public class FXMLActividadFormularioController implements Initializable {
     private Spinner<Integer> spHorasInicio;
     @FXML
     private Spinner<Integer> spHorasFin;
-    
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
     @FXML
     private Button bEliminar;
+    
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+    private Actividad actividadEdicion;
+    private Estudiante estudiante;
+    private boolean esEdicion;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         dpFechaInicio.setEditable(false);
         dpFechaFin.setEditable(false);        
         configurarSeleccionHora();
+        validarSeccionesPermitidas();
     }
     
     private void configurarSeleccionHora() {
@@ -106,11 +93,9 @@ public class FXMLActividadFormularioController implements Initializable {
         spMinutosFin.setValueFactory(minutosFinValueFactory);
     }
     
-    public void inicializarInformacionFormulario(boolean esEdicion, 
-            Actividad actividadEdicion, INotificacionOperacionActividad interfazNotificacion){
+    public void inicializarInformacionFormulario(boolean esEdicion, Actividad actividadEdicion){
         this.esEdicion = esEdicion;
         this.actividadEdicion = actividadEdicion;
-        this.interfazNotificacion = interfazNotificacion;
         
         if(esEdicion){
             lbTitulo.setText("Editando actividad: " + actividadEdicion.getTitulo()); 
@@ -172,34 +157,35 @@ public class FXMLActividadFormularioController implements Initializable {
         LocalTime tiempoFin = LocalTime.of(spHorasFin.getValue(), spMinutosFin.getValue());        
         
         if(nomAct.isEmpty()){
-            tfNombreActividad.setStyle(estiloError);
+            tfNombreActividad.setStyle(Constantes.estiloError);
             datosValidos = false;
         }            
                 
         if(desc.isEmpty()){
-            tfDescripcionActividad.setStyle(estiloError);
+            tfDescripcionActividad.setStyle(Constantes.estiloError);
             datosValidos = false;
         }
         
         if(fechaFin == null){
-            dpFechaFin.setStyle(estiloError);
+            dpFechaFin.setStyle(Constantes.estiloError);
             datosValidos = false;
         }
         
         if(fechaInicio == null){
-            dpFechaInicio.setStyle(estiloError);            
+            dpFechaInicio.setStyle(Constantes.estiloError);            
             datosValidos = false;
         }        
         
         if(fechaFin.isBefore(fechaInicio)){
-            dpFechaInicio.setStyle(estiloError);
-            dpFechaFin.setStyle(estiloError);            
+            dpFechaInicio.setStyle(Constantes.estiloError);
+            dpFechaFin.setStyle(Constantes.estiloError);            
             datosValidos = false;            
         }        
         
         if(datosValidos){
             Actividad actividadValida = new Actividad();
-            actividadValida.setIdEstudiante(idEstudiante);
+            actividadValida.setIdEstudiante(
+                    SingletonUsuario.getInstancia().getUsuario().getIdEstudiante());
             actividadValida.setTitulo(nomAct);
             actividadValida.setFechaInicio(fechaInicio.toString() + " " + tiempoInicio.toString());
             actividadValida.setFechaFin(fechaFin.toString() + " " + tiempoFin.toString());
@@ -255,15 +241,14 @@ public class FXMLActividadFormularioController implements Initializable {
                 Utilidades.mostrarDialogoSimple("Actividad modificada", 
                         "Actividad modificada correctamente", 
                         Alert.AlertType.INFORMATION);
-                interfazNotificacion.notificarOperacionActualizar(
-                        actividadActualizada.getTitulo());
                 regresarCronograma();
                 break;
         }        
     }
     
     private void eliminarActividad(Actividad actividadSeleccionada){        
-        int codigoRespuesta = ActividadDAO.eliminarActividad(actividadSeleccionada.getIdActividad());
+        int codigoRespuesta = ActividadDAO.eliminarActividad(
+                actividadSeleccionada.getIdActividad());
         switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Sin conexión", 
@@ -279,8 +264,6 @@ public class FXMLActividadFormularioController implements Initializable {
                 Utilidades.mostrarDialogoSimple("Actividad eliminada", 
                         "Actividad eliminada correctamente", 
                         Alert.AlertType.INFORMATION);
-                interfazNotificacion.notificarOperacionActualizar(
-                        actividadSeleccionada.getTitulo());
                 regresarCronograma();
                 break;
         }        
@@ -295,61 +278,10 @@ public class FXMLActividadFormularioController implements Initializable {
     }
     
     private void establecerEstiloNormal(){
-        tfNombreActividad.setStyle(estiloNormal);
-        dpFechaInicio.setStyle(estiloNormal);
-        dpFechaFin.setStyle(estiloNormal);
-        tfDescripcionActividad.setStyle(estiloNormal);
-    }
-
-    @FXML
-    private void clicIrAnteproyecto(ActionEvent event) {
-        boolean cerrarVentana = Utilidades.mostrarDialogoConfirmacion("Salir de la ventana", 
-                "¿Desea regresar salir de la ventana? No se guardaran los datos ingresados.");
-            if(cerrarVentana){
-                Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
-                escenarioBase.setScene(Utilidades.inicializarEscena(
-                        "vistas/FXMLAnteproyectoInformacion.fxml"));
-                escenarioBase.setTitle("Informacion de anteproyecto");
-                escenarioBase.show();         
-            }
-    }
-
-    @FXML
-    private void clicIrCronograma(ActionEvent event) {
-    }
-
-    @FXML
-    private void clicIrCursos(ActionEvent event) {
-        boolean cerrarVentana = Utilidades.mostrarDialogoConfirmacion("Salir de la ventana", 
-                "¿Desea regresar salir de la ventana? No se guardaran los datos ingresados.");
-            if(cerrarVentana){
-                Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
-                escenarioBase.setScene(Utilidades.inicializarEscena(
-                        "vistas/FXMLEstudiantesCurso.fxml"));
-                escenarioBase.setTitle("Cursos");
-                escenarioBase.show();         
-            }
-    }
-
-    @FXML
-    private void clicCerrarSesion(ActionEvent event) {
-        if (Utilidades.mostrarDialogoConfirmacion(
-                "Cerrar sesión", 
-                "¿Está seguro de que desea cerrar sesión?")) {
-            irVentanaInicioSesion();
-        }        
-    }
-    
-        private void irVentanaInicioSesion() {
-        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
-        escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLInicioSesion.fxml"));
-        escenarioBase.setTitle("Inicio de sesion");
-        escenarioBase.show();
-    }
-
-    @FXML
-    private void clicIrPropuestas(ActionEvent event) {
+        tfNombreActividad.setStyle(Constantes.estiloNormal);
+        dpFechaInicio.setStyle(Constantes.estiloNormal);
+        dpFechaFin.setStyle(Constantes.estiloNormal);
+        tfDescripcionActividad.setStyle(Constantes.estiloNormal);
     }
 
     @FXML

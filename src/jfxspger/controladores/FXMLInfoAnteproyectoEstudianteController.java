@@ -1,8 +1,3 @@
-/*
-* Autor: Samuel Martínez Pazos
-* Fecha de creación: 13/06/2023
-* Descripción: Clase controladora para información de anteproyecto
-*/
 package jfxspger.controladores;
 
 import java.io.IOException;
@@ -19,17 +14,20 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import jfxspger.modelo.dao.AnteproyectoDAO;
 import jfxspger.modelo.dao.UsuarioDAO;
-import jfxspger.modelo.pojo.Usuario;
 import jfxspger.modelo.pojo.Anteproyecto;
+import jfxspger.modelo.pojo.AnteproyectoRespuesta;
+import jfxspger.modelo.pojo.Usuario;
 import jfxspger.modelo.pojo.UsuarioRespuesta;
 import jfxspger.utilidades.Constantes;
+import jfxspger.utilidades.SingletonUsuario;
 import jfxspger.utilidades.Utilidades;
 
-public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoController {
+public class FXMLInfoAnteproyectoEstudianteController extends FXMLPrincipalEstudianteController {
 
     @FXML
-    private TextArea taRequisitos;
+    private TextArea taCuerpoAcademico;
     @FXML
     private TextArea taDescripcionProyecto;
     @FXML
@@ -39,7 +37,7 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
     @FXML
     private TextArea taBibliografia;
     @FXML
-    private TextArea taCuerpoAcademico;
+    private TextArea taRequisitos;
     @FXML
     private TextArea taProyectoInvestigacion;
     @FXML
@@ -61,20 +59,42 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
     @FXML
     private Label lbEstado;
     @FXML
-    private Label lbTitulo;
-    private Anteproyecto anteproyecto;
-    @FXML
     private Button btnConsultarAvances;
     @FXML
     private TextArea taFechaCreacion;
-
+    private Anteproyecto anteproyecto;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         validarSeccionesPermitidas();
-    }    
+        cargarInformacionAnteproyecto();
+        inicializarInformacion();
+    }
+    
+    private void cargarInformacionAnteproyecto() {
+        AnteproyectoRespuesta respuestaBD = AnteproyectoDAO.obtenerInformacionAnteproyecto(
+                    SingletonUsuario.getInstancia().getUsuario().getIdAnteproyecto());
+        switch (respuestaBD.getCodigoRespuesta()) {
+            case Constantes.ERROR_CONEXION:
+                    Utilidades.mostrarDialogoSimple("Sin conexión", 
+                        "Lo sentimos, por el momento no hay conexión para poder cargar la información "
+                        + "del anteproyecto", 
+                        Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
+                        "Hubo un error al cargar la información, por favor inténtelo más tarde", 
+                        Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                    if (!respuestaBD.getAnteproyectos().isEmpty()) {
+                        anteproyecto = respuestaBD.getAnteproyectos().get(0);
+                    }
+                break;
+        }
+    }
 
-    public void inicializarInformacion(Anteproyecto anteproyecto){
-        this.anteproyecto = anteproyecto;
+    public void inicializarInformacion() {
         cargarInformacion();
         cambiarColorEstado();
         cargarEstudiantesAsignados();
@@ -164,5 +184,5 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
                     Alert.AlertType.ERROR);  
         }
     }
-
+    
 }
