@@ -25,6 +25,7 @@ public class Anteproyecto {
     private String nombreTrabajo;
     private String requisitos;
     private int cantidadAlumnosParticipantes;
+    private int maximoAlumnosParticipantes;
     private String descripcionProyectoInvestigacion;
     private String descripcionTrabajoRecepcional;
     private String resultadosEsperados;
@@ -39,8 +40,9 @@ public class Anteproyecto {
             String modalidad, int idLgac, String lgac, String proyectoInvestigacion, 
             String lineaInvestigacion, int idDuracionAproximada, String duracionAproximada, 
             String nombreTrabajo, String requisitos, int cantidadAlumnosParticipantes, 
-            String descripcionProyectoInvestigacion, String descripcionTrabajoRecepcional, 
-            String resultadosEsperados, String bibliografiaRecomendada, String fechaCreacion) {
+            int maximoAlumnosParticipantes, String descripcionProyectoInvestigacion, 
+            String descripcionTrabajoRecepcional, String resultadosEsperados, 
+            String bibliografiaRecomendada, String fechaCreacion) {
         this.idAnteproyecto = idAnteproyecto;
         this.idCuerpoAcademico = idCuerpoAcademico;
         this.cuerpoAcademico = cuerpoAcademico;
@@ -59,6 +61,7 @@ public class Anteproyecto {
         this.nombreTrabajo = nombreTrabajo;
         this.requisitos = requisitos;
         this.cantidadAlumnosParticipantes = cantidadAlumnosParticipantes;
+        this.maximoAlumnosParticipantes = maximoAlumnosParticipantes;
         this.descripcionProyectoInvestigacion = descripcionProyectoInvestigacion;
         this.descripcionTrabajoRecepcional = descripcionTrabajoRecepcional;
         this.resultadosEsperados = resultadosEsperados;
@@ -66,70 +69,6 @@ public class Anteproyecto {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public int getIdDuracionAproximada() {
-        return idDuracionAproximada;
-    }
-
-    public void setIdDuracionAproximada(int idDuracionAproximada) {
-        this.idDuracionAproximada = idDuracionAproximada;
-    }
-
-    public String getCuerpoAcademico() {
-        return cuerpoAcademico;
-    }
-
-    public void setCuerpoAcademico(String cuerpoAcademico) {
-        this.cuerpoAcademico = cuerpoAcademico;
-    }
-
-    public String getModalidad() {
-        return modalidad;
-    }
-
-    public void setModalidad(String modalidad) {
-        this.modalidad = modalidad;
-    }
-
-    public String getLgac() {
-        return lgac;
-    }
-
-    public void setLgac(String lgac) {
-        this.lgac = lgac;
-    }
-    
-    public String getDuracionAproximada() {
-        return duracionAproximada;
-    }
-
-    public void setDuracionAproximada(String duracionAproximada) {
-        this.duracionAproximada = duracionAproximada;
-    }
-
-    public String getFechaCreacion() {
-        return fechaCreacion;
-    }
-
-    public void setFechaCreacion(String fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
-    }
-    
-    public String getDirector() {
-        return Director;
-    }
-
-    public void setDirector(String Director) {
-        this.Director = Director;
-    }
-
-    public String getEstado() {
-        return Estado;
-    }
-
-    public void setEstado(String Estado) {
-        this.Estado = Estado;
-    }
-    
     public int getIdAnteproyecto() {
         return idAnteproyecto;
     }
@@ -146,12 +85,28 @@ public class Anteproyecto {
         this.idCuerpoAcademico = idCuerpoAcademico;
     }
 
+    public String getCuerpoAcademico() {
+        return cuerpoAcademico;
+    }
+
+    public void setCuerpoAcademico(String cuerpoAcademico) {
+        this.cuerpoAcademico = cuerpoAcademico;
+    }
+
     public int getIdDirector() {
         return idDirector;
     }
 
     public void setIdDirector(int idDirector) {
         this.idDirector = idDirector;
+    }
+
+    public String getDirector() {
+        return Director;
+    }
+
+    public void setDirector(String Director) {
+        this.Director = Director;
     }
 
     public int getIdEstado() {
@@ -162,6 +117,14 @@ public class Anteproyecto {
         this.idEstado = idEstado;
     }
 
+    public String getEstado() {
+        return Estado;
+    }
+
+    public void setEstado(String Estado) {
+        this.Estado = Estado;
+    }
+
     public int getIdModalidad() {
         return idModalidad;
     }
@@ -170,12 +133,28 @@ public class Anteproyecto {
         this.idModalidad = idModalidad;
     }
 
+    public String getModalidad() {
+        return modalidad;
+    }
+
+    public void setModalidad(String modalidad) {
+        this.modalidad = modalidad;
+    }
+
     public int getIdLgac() {
         return idLgac;
     }
 
     public void setIdLgac(int idLgac) {
         this.idLgac = idLgac;
+    }
+
+    public String getLgac() {
+        return lgac;
+    }
+
+    public void setLgac(String lgac) {
+        this.lgac = lgac;
     }
 
     public String getProyectoInvestigacion() {
@@ -193,7 +172,23 @@ public class Anteproyecto {
     public void setLineaInvestigacion(String lineaInvestigacion) {
         this.lineaInvestigacion = lineaInvestigacion;
     }
-    
+
+    public int getIdDuracionAproximada() {
+        return idDuracionAproximada;
+    }
+
+    public void setIdDuracionAproximada(int idDuracionAproximada) {
+        this.idDuracionAproximada = idDuracionAproximada;
+    }
+
+    public String getDuracionAproximada() {
+        return duracionAproximada;
+    }
+
+    public void setDuracionAproximada(String duracionAproximada) {
+        this.duracionAproximada = duracionAproximada;
+    }
+
     public String getNombreTrabajo() {
         return nombreTrabajo;
     }
@@ -216,6 +211,14 @@ public class Anteproyecto {
 
     public void setCantidadAlumnosParticipantes(int cantidadAlumnosParticipantes) {
         this.cantidadAlumnosParticipantes = cantidadAlumnosParticipantes;
+    }
+
+    public int getMaximoAlumnosParticipantes() {
+        return maximoAlumnosParticipantes;
+    }
+
+    public void setMaximoAlumnosParticipantes(int maximoAlumnosParticipantes) {
+        this.maximoAlumnosParticipantes = maximoAlumnosParticipantes;
     }
 
     public String getDescripcionProyectoInvestigacion() {
@@ -250,21 +253,30 @@ public class Anteproyecto {
         this.bibliografiaRecomendada = bibliografiaRecomendada;
     }
 
+    public String getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(String fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
     @Override
     public String toString() {
         return "Anteproyecto{" + "idAnteproyecto=" + idAnteproyecto + ", idCuerpoAcademico=" + 
                 idCuerpoAcademico + ", cuerpoAcademico=" + cuerpoAcademico + ", idDirector=" + 
                 idDirector + ", Director=" + Director + ", idEstado=" + idEstado + ", Estado=" + 
-                Estado + ", idModalidad=" + idModalidad + ", modalidad=" + modalidad +
+                Estado + ", idModalidad=" + idModalidad + ", modalidad=" + modalidad + 
                 ", idLgac=" + idLgac + ", lgac=" + lgac + ", proyectoInvestigacion=" + 
                 proyectoInvestigacion + ", lineaInvestigacion=" + lineaInvestigacion + 
                 ", idDuracionAproximada=" + idDuracionAproximada + ", duracionAproximada=" + 
                 duracionAproximada + ", nombreTrabajo=" + nombreTrabajo + ", requisitos=" + 
                 requisitos + ", cantidadAlumnosParticipantes=" + cantidadAlumnosParticipantes + 
-                ", descripcionProyectoInvestigacion=" + descripcionProyectoInvestigacion +
-                ", descripcionTrabajoRecepcional=" + descripcionTrabajoRecepcional +
-                ", resultadosEsperados=" + resultadosEsperados + ", bibliografiaRecomendada=" +
+                ", maximoAlumnosParticipantes=" + maximoAlumnosParticipantes + 
+                ", descripcionProyectoInvestigacion=" + descripcionProyectoInvestigacion + 
+                ", descripcionTrabajoRecepcional=" + descripcionTrabajoRecepcional + 
+                ", resultadosEsperados=" + resultadosEsperados + ", bibliografiaRecomendada=" + 
                 bibliografiaRecomendada + ", fechaCreacion=" + fechaCreacion + '}';
     }
-    
+
 }

@@ -142,6 +142,31 @@ public class AcademicoDAO {
         return respuesta;
     }
     
+    public static int consultarCoincidenciasCodirectorDeAnteproyecto(int idAcademico, 
+            int idAnteproyecto) {
+        int respuesta = 0;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null) {
+            try {
+                String sentencia = "SELECT COUNT(*) AS coincidencias "
+                        + "FROM anteproyecto_codirector "
+                        + "WHERE idCodirector = ? AND idAnteproyecto = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt(1, idAcademico);
+                prepararSentencia.setInt(2, idAnteproyecto);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                if (resultado.next())
+                    respuesta = resultado.getInt("coincidencias");
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta = Constantes.ERROR_CONSULTA;
+            }
+        } else {
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
     public static int obtenerCantidadCursosAcademicoEsProfesor(int idAcademico) {
         int respuesta = 0;
         Connection conexionBD = ConexionBD.abrirConexionBD();
