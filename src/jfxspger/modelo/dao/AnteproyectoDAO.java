@@ -305,5 +305,88 @@ public class AnteproyectoDAO {
             respuesta = Constantes.ERROR_CONEXION;
         }
         return respuesta;
-    } 
+    }
+    
+    public static AnteproyectoRespuesta obtenerInformacionAnteproyectoConValidacionPendiente() {
+        AnteproyectoRespuesta respuesta = new AnteproyectoRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+        if (conexionBD != null) {
+            try {
+                String consulta = "SELECT idAnteproyecto, Anteproyecto.idCuerpoAcademico, "
+                        + "CuerpoAcademico.nombre, anteproyecto.idDirector, "
+                        + "CONCAT(usuario.nombre, ' ', usuario.apellidoPaterno, ' ', "
+                        + "apellidoMaterno) directorNombre, Anteproyecto.idEstado, "
+                        + "estadoanteproyecto.estado, Anteproyecto.idModalidad, "
+                        + "Modalidad.modalidad, Anteproyecto.idLgac, Lgac.nombre, "
+                        + "proyectoInvestigacion, lineaInvestigacion, "
+                        + "duracionAproximada.IdDuracionAproximada, "
+                        + "duracionAproximada.duracionAproximada, nombreTrabajo, requisitos, "
+                        + "cantidadAlumnosParticipantes, descripcionProyectoInvestigacion, "
+                        + "descripcionTrabajoRecepcional, resultadosEsperados, "
+                        + "bibliografiaRecomendada, anteproyecto.fechaCreacion "
+                        + "FROM Anteproyecto "
+                        + "INNER JOIN cuerpoAcademico "
+                        + "ON Anteproyecto.idCuerpoAcademico = CuerpoAcademico.idCuerpoAcademico "
+                        + "INNER JOIN estadoanteproyecto "
+                        + "ON anteproyecto.idEstado = estadoanteproyecto.idEstadoAnteproyecto "
+                        + "INNER JOIN Modalidad "
+                        + "ON Anteproyecto.idModalidad = Modalidad.idModalidad "
+                        + "INNER JOIN Academico "
+                        + "ON Academico.idAcademico = Anteproyecto.idDirector "
+                        + "INNER JOIN usuario "
+                        + "ON Academico.idUsuario = Usuario.idUsuario "
+                        + "INNER JOIN duracionaproximada "
+                        + "ON Anteproyecto.idDuracionAproximada = "
+                        + "duracionaproximada.idDuracionAproximada "
+                        + "INNER JOIN Lgac "
+                        + "ON Anteproyecto.idLgac = Lgac.idLgac "
+                        + "WHERE idEstado = 1";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList<Anteproyecto> anteproyectoConsulta = new ArrayList();
+                while (resultado.next())
+                {
+                    Anteproyecto anteproyecto = new Anteproyecto();
+                    anteproyecto.setIdAnteproyecto(resultado.getInt("idAnteproyecto"));
+                    anteproyecto.setIdCuerpoAcademico(resultado.getInt("Anteproyecto.idCuerpoAcademico"));
+                    anteproyecto.setCuerpoAcademico(resultado.getString("CuerpoAcademico.nombre"));
+                    anteproyecto.setIdDirector(resultado.getInt("idDirector"));
+                    anteproyecto.setDirector(resultado.getString("directorNombre"));
+                    anteproyecto.setIdEstado(resultado.getInt("idEstado"));
+                    anteproyecto.setEstado(resultado.getString("estado"));
+                    anteproyecto.setIdModalidad(resultado.getInt("Anteproyecto.idModalidad"));
+                    anteproyecto.setModalidad(resultado.getString("Modalidad.modalidad"));
+                    anteproyecto.setIdLgac(resultado.getInt("Anteproyecto.idLgac"));
+                    anteproyecto.setLgac(resultado.getString("Lgac.nombre"));
+                    anteproyecto.setProyectoInvestigacion(
+                            resultado.getString("proyectoInvestigacion"));
+                    anteproyecto.setLineaInvestigacion(resultado.getString("lineaInvestigacion"));
+                    anteproyecto.setIdDuracionAproximada(resultado.getInt("idDuracionAproximada"));
+                    anteproyecto.setDuracionAproximada(resultado.getString("duracionAproximada"));
+                    anteproyecto.setNombreTrabajo(resultado.getString("nombreTrabajo"));
+                    anteproyecto.setRequisitos(resultado.getString("requisitos"));
+                    anteproyecto.setCantidadAlumnosParticipantes(
+                            resultado.getInt("cantidadAlumnosParticipantes"));
+                    anteproyecto.setDescripcionProyectoInvestigacion(
+                            resultado.getString("descripcionProyectoInvestigacion"));
+                    anteproyecto.setDescripcionTrabajoRecepcional(
+                            resultado.getString("descripcionTrabajoRecepcional"));
+                    anteproyecto.setResultadosEsperados(resultado.getString("resultadosEsperados"));
+                    anteproyecto.setBibliografiaRecomendada(
+                            resultado.getString("bibliografiaRecomendada"));
+                    anteproyecto.setFechaCreacion(resultado.getString("fechaCreacion"));
+                    anteproyectoConsulta.add(anteproyecto);
+                }
+                respuesta.setAnteproyectos(anteproyectoConsulta);
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+            }
+        } else {
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
+    }
+    
 }

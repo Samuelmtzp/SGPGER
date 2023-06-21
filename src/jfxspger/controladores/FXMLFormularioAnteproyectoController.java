@@ -92,7 +92,6 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         validarSeccionesPermitidas();
-        cargarInformacionLGAC();
         cargarInformacionModalidad();
         cargarInformacionCuerpoAcademico();
         cargarInformacionEstado();
@@ -114,8 +113,8 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
           public void changed(ObservableValue<? extends CuerpoAcademico> observable, 
                   CuerpoAcademico oldValue, CuerpoAcademico newValue){
              if(newValue != null){
-                  
                  cargarInformacionAcademico(newValue.getIdCuerpoAcademico());
+                 cargarInformacionLGAC(newValue.getIdCuerpoAcademico());
              } 
           }
         });
@@ -365,9 +364,9 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
         }
     }
     
-    private void cargarInformacionLGAC(){
+    private void cargarInformacionLGAC(int idCuerpoAcademico){
         lgac = FXCollections.observableArrayList();
-        LgacRespuesta LgacBD=LgacDAO.obtenerInformacionLgac();
+        LgacRespuesta LgacBD=LgacDAO.obtenerInformacionLgacEnCuerpoAcademico(idCuerpoAcademico);
         switch(LgacBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Error de conexion", 
@@ -376,7 +375,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
                 break;
             case Constantes.ERROR_CONSULTA:
                 Utilidades.mostrarDialogoSimple("Error de consulta", 
-                        "Por el momento no se pudo obtener la informacion", 
+                        "Por el momento no se pudo obtener la informacion de la LGAC", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.OPERACION_EXITOSA:
