@@ -10,8 +10,10 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import jfxspger.utilidades.SingletonUsuario;
 import jfxspger.utilidades.Utilidades;
 
 
@@ -23,6 +25,7 @@ public class FXMLPrincipalEstudianteController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        Utilidades.mostrarDialogoSimple("INFORMACION USUARIO", SingletonUsuario.getInstancia().getUsuario().toString() , Alert.AlertType.INFORMATION);
 
     }
 

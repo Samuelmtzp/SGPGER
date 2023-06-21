@@ -47,7 +47,7 @@ public class FXMLActividadFormularioController implements Initializable {
     private DatePicker dpFechaFin;
     private Actividad actividadEdicion;
     private Estudiante estudiante;
-//    private int idEstudiante = 3;
+    private int idEstudiante = SingletonUsuario.getInstancia().getUsuario().getIdEstudiante();
     private boolean esEdicion;
     private INotificacionOperacionActividad interfazNotificacion;
     
@@ -205,7 +205,7 @@ public class FXMLActividadFormularioController implements Initializable {
         
         if(datosValidos){
             Actividad actividadValida = new Actividad();
-            actividadValida.setIdEstudiante(3);
+            actividadValida.setIdEstudiante(idEstudiante);
             actividadValida.setTitulo(nomAct);
             actividadValida.setFechaInicio(fechaInicio.toString() + " " + tiempoInicio.toString());
             actividadValida.setFechaFin(fechaFin.toString() + " " + tiempoFin.toString());

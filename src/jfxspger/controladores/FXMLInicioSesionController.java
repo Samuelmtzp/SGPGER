@@ -98,9 +98,6 @@ public class FXMLInicioSesionController implements Initializable {
                             irPantallaPrincipalAdministrador();
                             break;
                         case TIPO_USUARIO_ESTUDIANTE :
-<<<<<<< HEAD
-                            irPantallaPrincipalEstudiante();
-=======
                             EstudianteRespuesta estudianteRespuesta = 
                                     EstudianteDAO.obtenerInformacionEstudiante(
                                             usuarioRespuesta.getIdUsuario());
@@ -114,13 +111,13 @@ public class FXMLInicioSesionController implements Initializable {
                                 SingletonUsuario.getInstancia().getUsuario().
                                         setMatricula(estudiante.getMatricula());
                                 mostrarBienvenida();
+                                
                                 irPantallaPrincipalEstudiante();
                             } else {
                                 Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
                                         "Ocurrió un error al cargar la información "
                                         + "adicional del estudiante", Alert.AlertType.ERROR);
                             }
->>>>>>> origin/main
                             break;
                         case TIPO_USUARIO_ACADEMICO :
                             AcademicoRespuesta academicoRespuesta = 
