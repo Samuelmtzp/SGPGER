@@ -356,7 +356,7 @@ public class FXMLActividadFormularioController implements Initializable {
     private void clicIrPrincipalEstudiante(ActionEvent event) {
         boolean cerrarVentana = Utilidades.mostrarDialogoConfirmacion(
                 "Regresar a ventana anterior", 
-                "¿Desea regresar a la ventana anterior? No se guardaran los datos ingresados.");
+                "¿Está seguro de que desea regresar? Los cambios realizados no se guardarán.");
             if(cerrarVentana){
                 regresarCronograma();
             }

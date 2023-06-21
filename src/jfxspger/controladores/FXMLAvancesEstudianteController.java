@@ -6,6 +6,7 @@
 package jfxspger.controladores;
 
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -14,7 +15,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -101,15 +105,30 @@ public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoContr
     }
     @FXML
     private void clicVentanaAnterior(ActionEvent event) {
-        super.clicIrEstudiantes(event);
+        Stage escenarioBase = (Stage) lTitulo.getScene().getWindow();
+        escenarioBase.setScene(
+                Utilidades.inicializarEscena("vistas/FXMLEstudiantesAcademico.fxml"));
+        escenarioBase.setTitle("Estudiantes");
+        escenarioBase.show();
     }
 
     @FXML
     private void clicBtnEvaluarAvance(ActionEvent event) {
-        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLEvaluarAvance.fxml"));
-        escenarioBase.setTitle("Evaluar avance");
-        escenarioBase.show();
+        try{
+            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.
+                    JFXSPGER.class.getResource("/jfxspger/vistas/FXMLEvaluarAvance.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLEvaluarAvanceController avance = accesoControlador.getController();
+            
+            Scene sceneFormulario = new Scene(vista);
+            Stage escenarioPrincipal = (Stage) lTitulo.getScene().getWindow();
+            escenarioPrincipal.setTitle("Información de entrega");
+            escenarioPrincipal.setScene(sceneFormulario);            
+        }catch(IOException e){
+            Utilidades.mostrarDialogoSimple("Error", 
+                    "No se puede mostrar la pantalla de informacion de anteproyecto", 
+                    Alert.AlertType.ERROR);  
+        }
     }
 
 }

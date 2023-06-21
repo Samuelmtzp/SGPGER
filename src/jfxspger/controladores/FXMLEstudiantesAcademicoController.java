@@ -106,21 +106,20 @@ public class FXMLEstudiantesAcademicoController extends FXMLPrincipalAcademicoCo
                     class.getResource("vistas/FXMLAvancesEstudiante.fxml"));        
             Parent vista = accesoControlador.load();
             
-            FXMLAvancesEstudianteController avances = accesoControlador.getController();
+            FXMLAvancesEstudianteController avances = accesoControlador.getController();            
             
-        
-            Stage escenarioDetalles = new Stage();
-            escenarioDetalles.setScene(new Scene(vista));
-            escenarioDetalles.setTitle("Avances de estudiante");
-            escenarioDetalles.initModality(Modality.APPLICATION_MODAL);       
-            escenarioDetalles.showAndWait();
+            Scene sceneAvances = new Scene(vista);
+            Stage escenarioAvances = (Stage) lTitulo.getScene().getWindow();
+            escenarioAvances.setScene(sceneAvances);
+            escenarioAvances.setTitle("Avances de estudiante");            
+            escenarioAvances.show();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
     @FXML
     private void clicVentanaAnterior(ActionEvent event) {        
-        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        Stage escenarioBase = (Stage) lTitulo.getScene().getWindow();
         escenarioBase.setScene(
                 Utilidades.inicializarEscena("vistas/FXMLPrincipalAcademico.fxml"));
         escenarioBase.setTitle("Principal Academico");
