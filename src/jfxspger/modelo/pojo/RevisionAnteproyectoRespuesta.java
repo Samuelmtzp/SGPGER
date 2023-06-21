@@ -12,6 +12,9 @@ public class RevisionAnteproyectoRespuesta {
     
     private int codigoRespuesta;
     private ArrayList<RevisionAnteproyecto> revisionesAnteproyecto;
+    
+    public RevisionAnteproyectoRespuesta(){
+    }
 
     public RevisionAnteproyectoRespuesta(int codigoRespuesta, 
             ArrayList<RevisionAnteproyecto> revisionesAnteproyecto) {

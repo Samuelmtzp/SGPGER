@@ -57,7 +57,7 @@ public class FXMLAnteproyectoAvancesController extends FXMLPrincipalAcademicoCon
         cargarInformacionAvances(anteproyecto.getIdAnteproyecto());
         lbTituloAnteproyecto.setText(anteproyecto.getNombreTrabajo());
     }
-
+    
     @FXML
     private void clicIrInfoAnteproyecto(ActionEvent event) {
         try{
@@ -69,15 +69,15 @@ public class FXMLAnteproyectoAvancesController extends FXMLPrincipalAcademicoCon
             Stage escenarioPrincipal = (Stage) lTitulo.getScene().getWindow();
             escenarioPrincipal.setTitle("Informacion de anteproyecto");
             escenarioPrincipal.setScene(sceneFormulario);
-            formulario.inicializarInformacion(anteproyecto);
+            formulario.inicializarInformacion(false,anteproyecto);
         }catch(IOException e){
             Utilidades.mostrarDialogoSimple("Error", 
                     "No se puede mostrar la pantalla de informacion de anteproyecto", 
                     Alert.AlertType.ERROR);  
         }
     }
-    
-    private void configurarTabla(){
+
+     private void configurarTabla(){
         
         cFechaEntrega.setCellValueFactory(new PropertyValueFactory("fechaEntrega"));
         cTituloActividad.setCellValueFactory(new PropertyValueFactory("tituloActividad"));
@@ -97,11 +97,11 @@ public class FXMLAnteproyectoAvancesController extends FXMLPrincipalAcademicoCon
         });
     }
     
-    private void cargarInformacionAvances(int idAnteproyecto){
-        entregas = FXCollections.observableArrayList();
+     private void cargarInformacionAvances(int idAnteproyecto){
+          entregas = FXCollections.observableArrayList();
         EntregaRespuesta respuestaBD = EntregaDAO.obtenerInformacionEntregasPorAnteproyecto(idAnteproyecto);
         switch(respuestaBD.getCodigoRespuesta()){
-            case Constantes.ERROR_CONEXION:
+             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Sin conexión", 
                         "Lo sentimos, por el momento no hay conexión", 
                         Alert.AlertType.ERROR);
@@ -115,7 +115,7 @@ public class FXMLAnteproyectoAvancesController extends FXMLPrincipalAcademicoCon
                 entregas.addAll(respuestaBD.getEntregas());
                 tvEntregas.setItems(entregas);                
                 break;
-        }
-    }
+        }    
+     }
     
 }

@@ -147,4 +147,37 @@ public class LgacDAO {
         }
         return respuesta;
     }
+    
+     public static LgacRespuesta obtenerInformacionLgacEnCuerpoAcademico(int idCuerpoAcademico) {
+      LgacRespuesta respuesta = new LgacRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+        if (conexionBD != null) {
+            try {
+                String consulta = "Select idLgac, nombre, idCuerpoAcademico FROM lgac "
+                        + "WHERE idCuerpoAcademico = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, idCuerpoAcademico);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList<Lgac> LgacConsulta = new ArrayList();
+                while (resultado.next())
+                {
+                    Lgac lgac = new Lgac();
+                    lgac.setIdLgac(resultado.getInt("idLgac"));
+                    lgac.setNombre(resultado.getString("nombre"));
+                    lgac.setIdCuerpoAcademico(resultado.getInt(
+                            "idCuerpoAcademico"));
+                    LgacConsulta.add(lgac);
+                }
+                respuesta.setListaLgac(LgacConsulta);
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+            }
+        } else {
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
+    }
+     
 }

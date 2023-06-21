@@ -267,11 +267,11 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
                 tvAnteproyecto.getSelectionModel().getSelectedIndex() != -1) {
             Anteproyecto anteproyectoSeleccionado = 
                     tvAnteproyecto.getSelectionModel().getSelectedItem();
-            irInformacionAnteproyecto(anteproyectoSeleccionado);
+            irInformacionAnteproyecto(false,anteproyectoSeleccionado);
         }
     }
     
-    private void irInformacionAnteproyecto(Anteproyecto anteproyecto){
+    private void irInformacionAnteproyecto(boolean esValidacion, Anteproyecto anteproyecto){
         try{
             FXMLLoader accesoControlador = new FXMLLoader(jfxspger.
                     JFXSPGER.class.getResource("/jfxspger/vistas/FXMLInfoAnteproyecto.fxml"));
@@ -281,7 +281,7 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
             Stage escenarioPrincipal = (Stage) lbTitulo.getScene().getWindow();
             escenarioPrincipal.setTitle("Informacion de anteproyecto");
             escenarioPrincipal.setScene(sceneFormulario);
-            formulario.inicializarInformacion(anteproyecto);
+            formulario.inicializarInformacion(esValidacion,anteproyecto);
         }catch(IOException e){
             Utilidades.mostrarDialogoSimple("Error", 
                     "No se puede mostrar la pantalla de informacion de anteproyecto", 
