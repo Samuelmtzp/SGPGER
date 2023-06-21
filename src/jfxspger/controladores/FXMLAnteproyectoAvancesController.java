@@ -6,6 +6,7 @@
 package jfxspger.controladores;
 
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -14,6 +15,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+<<<<<<< HEAD
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+=======
+>>>>>>> main
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -33,11 +41,9 @@ public class FXMLAnteproyectoAvancesController extends FXMLPrincipalAcademicoCon
     @FXML
     private Label lTitulo;
     @FXML
-    private TableColumn cNombreActividad;
+    private TableColumn cTituloActividad;
     @FXML
     private TableColumn cFechaEntrega;
-    @FXML
-    private TableColumn cFechaCreacion;
     @FXML
     private Label lbTituloAnteproyecto;
     @FXML
@@ -51,6 +57,7 @@ public class FXMLAnteproyectoAvancesController extends FXMLPrincipalAcademicoCon
     }
     
     public void inicializarInformacion(Anteproyecto anteproyecto){
+        this.anteproyecto = anteproyecto;
         configurarTabla();
         cargarInformacionAvances(anteproyecto.getIdAnteproyecto());
         lbTituloAnteproyecto.setText(anteproyecto.getNombreTrabajo());
@@ -58,17 +65,27 @@ public class FXMLAnteproyectoAvancesController extends FXMLPrincipalAcademicoCon
 
     @FXML
     private void clicIrInfoAnteproyecto(ActionEvent event) {
-        Stage escenarioBase = (Stage) lbTituloAnteproyecto.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena(
-                "vistas/FXMLInfoAnteproyecto.fxml"));
-        escenarioBase.setTitle("Ventana Principal");
-        escenarioBase.show();           
+        try{
+            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.
+                    JFXSPGER.class.getResource("/jfxspger/vistas/FXMLInfoAnteproyecto.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLInfoAnteproyectoController formulario = accesoControlador.getController();
+            Scene sceneFormulario = new Scene(vista);
+            Stage escenarioPrincipal = (Stage) lTitulo.getScene().getWindow();
+            escenarioPrincipal.setTitle("Informacion de anteproyecto");
+            escenarioPrincipal.setScene(sceneFormulario);
+            formulario.inicializarInformacion(anteproyecto);
+        }catch(IOException e){
+            Utilidades.mostrarDialogoSimple("Error", 
+                    "No se puede mostrar la pantalla de informacion de anteproyecto", 
+                    Alert.AlertType.ERROR);  
+        }
     }
     
     private void configurarTabla(){
-        cNombreActividad.setCellValueFactory(new PropertyValueFactory("titulo"));
-        cFechaCreacion.setCellValueFactory(new PropertyValueFactory("fechaCreacion"));
-        cFechaEntrega.setCellValueFactory(new PropertyValueFactory("fechaEntrega"));        
+        
+        cFechaEntrega.setCellValueFactory(new PropertyValueFactory("fechaEntrega"));
+        cTituloActividad.setCellValueFactory(new PropertyValueFactory("tituloActividad"));
                 tvEntregas.widthProperty().addListener(new ChangeListener<Number>(){
             @Override
             public void changed(ObservableValue<? extends Number> observable, 

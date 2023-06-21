@@ -7,6 +7,8 @@ package jfxspger.controladores;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -315,7 +317,11 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
                             tfCampoAdicional.setStyle(Constantes.estiloError);
                             datosValidos = false;    
                         } else {
-                            if (campoAdicional.length() > 10) {
+                            if (campoAdicional.length() != 10) {
+                                tfCampoAdicional.setStyle(Constantes.estiloError);
+                                datosValidos = false;    
+                            }
+                            if (!validarMatricula(campoAdicional)) {
                                 tfCampoAdicional.setStyle(Constantes.estiloError);
                                 datosValidos = false;    
                             }
@@ -374,6 +380,13 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
                 registrarUsuario(usuarioValidado, campoAdicional);
             }
         }
+    }
+    
+    private boolean validarMatricula(String matriculaValidacion) {
+        String patron = "^ZS\\d+$";
+        Pattern pattern = Pattern.compile(patron);
+        Matcher matcher = pattern.matcher(matriculaValidacion.toUpperCase());
+        return matcher.matches();
     }
     
     private boolean esUsernameDisponible(String usernameVerificacion) {

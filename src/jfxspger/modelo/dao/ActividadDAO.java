@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import jfxspger.modelo.ConexionBD;
 import jfxspger.modelo.pojo.ActividadRespuesta;
@@ -19,41 +20,40 @@ import jfxspger.utilidades.Constantes;
 public class ActividadDAO {
     
     public static ActividadRespuesta obtenerInformacionActividad(int idEstudiante) {
-        
-        ActividadRespuesta respuesta = new ActividadRespuesta();
-        Connection conexionBD = ConexionBD.abrirConexionBD();
-        respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
-        if (conexionBD != null) {
-            try {
-                String consulta = "SELECT idActividad, titulo, fechaCreacion, fechaInicio, fechaFin, descripcion " +
-                                    "FROM actividad " +
-                                    "WHERE idEstudiante = ?;";
-                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
-                prepararSentencia.setInt(1, idEstudiante);
-                ResultSet resultado = prepararSentencia.executeQuery();
-                ArrayList<Actividad> actividadConsulta = new ArrayList();
-                while (resultado.next())
-                {
-                    Actividad actividad = new Actividad();
-                    actividad.setIdActividad(resultado.getInt("idActividad"));
-                    actividad.setTitulo(resultado.getString("titulo"));
-                    actividad.setFechaCreacion(resultado.getString("fechaCreacion"));
-                    actividad.setFechaInicio(resultado.getString("fechaInicio"));
-                    actividad.setFechaFin(resultado.getString("fechaFin"));
-                    actividad.setDescripcion(resultado.getString("descripcion"));
-                    actividadConsulta.add(actividad);
-                }
-                respuesta.setActividades(actividadConsulta);
-                conexionBD.close();
-            } catch (SQLException e) {
-                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
-                e.printStackTrace();
+    ActividadRespuesta respuesta = new ActividadRespuesta();
+    Connection conexionBD = ConexionBD.abrirConexionBD();
+    respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+    if (conexionBD != null) {
+        try {
+            String consulta = "SELECT idActividad, titulo, fechaCreacion, fechaInicio, fechaFin, descripcion " +
+                                "FROM actividad " +
+                                "WHERE idEstudiante = ?;";
+            PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+            prepararSentencia.setInt(1, idEstudiante);
+            ResultSet resultado = prepararSentencia.executeQuery();
+            ArrayList<Actividad> actividadConsulta = new ArrayList();            
+            while (resultado.next())
+            {
+                Actividad actividad = new Actividad();
+                actividad.setIdActividad(resultado.getInt("idActividad"));
+                actividad.setTitulo(resultado.getString("titulo"));
+                actividad.setFechaCreacion(resultado.getString("fechaCreacion"));
+                actividad.setFechaInicio(resultado.getString("fechaInicio"));
+                actividad.setFechaFin(resultado.getString("fechaFin"));
+                actividad.setDescripcion(resultado.getString("descripcion"));
+                actividadConsulta.add(actividad);
             }
-        } else {
-            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+            respuesta.setActividades(actividadConsulta);
+            conexionBD.close();
+        } catch (SQLException e) {
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+            e.printStackTrace();
         }
-        return respuesta;
+    } else {
+        respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
     }
+    return respuesta;
+}
     
         public static ActividadRespuesta obtenerActividadesYEntregas(int idEstudiante) {
         ActividadRespuesta respuesta = new ActividadRespuesta();
@@ -68,16 +68,17 @@ public class ActividadDAO {
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idEstudiante);
                 ResultSet resultado = prepararSentencia.executeQuery();
+                SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                 ArrayList<Actividad> actividadConsulta = new ArrayList();
                 while (resultado.next())
                 {
                     Actividad actividad = new Actividad();
                     actividad.setIdActividad(resultado.getInt("idActividad"));
                     actividad.setTitulo(resultado.getString("titulo"));                    
-                    actividad.setFechaInicio(resultado.getString("fechaInicio"));
-                    actividad.setFechaFin(resultado.getString("fechaFin"));
+                    actividad.setFechaInicio(formateador.format(resultado.getString("fechaInicio")));
+                    actividad.setFechaFin(formateador.format(resultado.getString("fechaFin")));
                     actividad.setIdEntrega(resultado.getInt("idEntrega"));
-                    actividad.setFechaCreacion(resultado.getString("fechaEntrega"));                    
+                    actividad.setFechaCreacion(formateador.format(resultado.getString("fechaEntrega")));
                     actividadConsulta.add(actividad);
                 }
                 respuesta.setActividades(actividadConsulta);

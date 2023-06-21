@@ -59,10 +59,10 @@ public class EntregaDAO {
                 while (resultado.next())
                 {
                     Entrega entrega = new Entrega();
-                    entrega.setIdEntrega(resultado.getInt("idActividad"));
+                    entrega.setIdActividad(resultado.getInt("idActividad"));
                     entrega.setIdEntrega(resultado.getInt("idEntrega"));
                     entrega.setFechaEntrega(resultado.getString("fechaEntrega"));
-                    entrega.setFechaEntrega(resultado.getString("fechaCreacion"));
+                    entrega.setFechaCreacion(resultado.getString("fechaCreacion"));
                     entrega.setTituloActividad(resultado.getString("titulo"));
                     entregaConsulta.add(entrega);
                 }
@@ -96,17 +96,19 @@ public class EntregaDAO {
                 while (resultado.next())
                 {
                     Entrega entrega = new Entrega();
-                    entrega.setIdEntrega(resultado.getInt("idActividad"));
                     entrega.setIdEntrega(resultado.getInt("idEntrega"));
-                    entrega.setFechaEntrega(resultado.getString("fechaEntrega"));
-                    entrega.setFechaEntrega(resultado.getString("fechaCreacion"));
+                    entrega.setIdActividad(resultado.getInt("idActividad"));                   
                     entrega.setTituloActividad(resultado.getString("titulo"));
+                    entrega.setFechaEntrega(resultado.getString("fechaEntrega"));
+                    entrega.setFechaCreacion(resultado.getString("fechaCreacion"));
+                    
                     entregaConsulta.add(entrega);
                 }
                 respuesta.setEntregas(entregaConsulta);
                 conexionBD.close();
             } catch (SQLException e) {
                 respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+                e.printStackTrace();
             }
         } else {
             respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
