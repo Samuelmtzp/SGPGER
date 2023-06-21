@@ -54,7 +54,7 @@ public class FXMLPrincipalAcademicoController implements Initializable {
         escenarioBase.setScene(
                 Utilidades.inicializarEscena("vistas/FXMLEstudiantesAcademico.fxml"));
         escenarioBase.setTitle("Estudiantes");
-        escenarioBase.show();        
+        escenarioBase.show();
     }
 
     @FXML

@@ -192,14 +192,7 @@ public class FXMLActividadInformacionController extends FXMLPrincipalEstudianteC
         entregaAct.setFechaEntrega(fechaActual.toString());
         LocalDateTime fCreacion = LocalDateTime.now();
         Timestamp fechaCreacion = Timestamp.valueOf(fCreacion);
-        entregaAct.setFechaCreacion(fechaCreacion.toString());
-        
-        if(entregaAct.getIdActividad() == 0){
-            datosValidos = false;
-            Utilidades.mostrarDialogoSimple("ERROR CON ENTREGA", 
-                            "Ha ocurrido un error al asignar una entrega a la actividad. Intentelo de nuevo más tarde.", 
-                            Alert.AlertType.WARNING);
-        }                
+        entregaAct.setFechaCreacion(fechaCreacion.toString());                        
         
         if(datosValidos){
             archivoActividad = new Documento();
