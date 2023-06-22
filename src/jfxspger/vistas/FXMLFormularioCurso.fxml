@@ -107,8 +107,8 @@
                </font>
             </Label>
             <ComboBox fx:id="cbExperienciaEducativa" layoutX="170.0" layoutY="367.0" prefHeight="37.0" prefWidth="379.0" />
-            <ComboBox fx:id="cbProfesor" layoutX="172.0" layoutY="568.0" prefHeight="37.0" prefWidth="381.0" />
-            <Label layoutX="173.0" layoutY="524.0" text="Profesor">
+            <ComboBox fx:id="cbProfesor" layoutX="1064.0" layoutY="365.0" prefHeight="37.0" prefWidth="381.0" />
+            <Label layoutX="1065.0" layoutY="321.0" text="Profesor">
                <font>
                   <Font size="22.0" />
                </font>
@@ -119,26 +119,14 @@
                </font>
             </Label>
             <ComboBox fx:id="cbPeriodoEscolar" layoutX="616.0" layoutY="367.0" prefHeight="37.0" prefWidth="374.0" />
-            <Label layoutX="948.0" layoutY="525.0" prefHeight="32.0" prefWidth="51.0" text="NRC">
+            <Label layoutX="168.0" layoutY="510.0" prefHeight="32.0" prefWidth="51.0" text="NRC">
                <font>
                   <Font size="22.0" />
                </font>
             </Label>
-            <TextField fx:id="tfNrc" layoutX="948.0" layoutY="567.0" onKeyTyped="#permitirInputSoloNumeros" prefHeight="37.0" prefWidth="242.0" />
-            <TextField fx:id="tfBloque" layoutX="1072.0" layoutY="368.0" onKeyTyped="#permitirInputSoloNumeros" prefHeight="37.0" prefWidth="374.0" />
-            <Label layoutX="1072.0" layoutY="327.0" text="Bloque">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
-            <Label layoutX="623.0" layoutY="526.0" text="Sección">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
-            <TextField fx:id="tfSeccion" layoutX="623.0" layoutY="567.0" prefHeight="37.0" prefWidth="261.0" />
-            <TextField fx:id="tfCupo" layoutX="1249.0" layoutY="566.0" onKeyTyped="#permitirInputSoloNumeros" prefHeight="37.0" prefWidth="196.0" />
-            <Label layoutX="1249.0" layoutY="525.0" text="Cupo">
+            <TextField fx:id="tfNrc" layoutX="168.0" layoutY="552.0" onKeyTyped="#permitirInputSoloNumeros" prefHeight="37.0" prefWidth="386.0" />
+            <TextField fx:id="tfCupo" layoutX="618.0" layoutY="549.0" onKeyTyped="#permitirInputSoloNumeros" prefHeight="37.0" prefWidth="371.0" />
+            <Label layoutX="618.0" layoutY="508.0" text="Cupo">
                <font>
                   <Font size="22.0" />
                </font>

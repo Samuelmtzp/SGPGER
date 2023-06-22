@@ -28,6 +28,7 @@ import jfxspger.modelo.dao.EstudianteDAO;
 import jfxspger.modelo.pojo.Estudiante;
 import jfxspger.modelo.pojo.EstudianteRespuesta;
 import jfxspger.utilidades.Constantes;
+import jfxspger.utilidades.SingletonUsuario;
 import jfxspger.utilidades.Utilidades;
 
 public class FXMLEstudiantesAcademicoController extends FXMLPrincipalAcademicoController {
@@ -45,8 +46,6 @@ public class FXMLEstudiantesAcademicoController extends FXMLPrincipalAcademicoCo
     @FXML
     private TableColumn cApellidoMat;
     private ObservableList<Estudiante> estudiantes;
-    @FXML
-    private Label lbTitulo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -79,7 +78,8 @@ public class FXMLEstudiantesAcademicoController extends FXMLPrincipalAcademicoCo
     
     private void cargarInformacionEstudiantes(){
         estudiantes = FXCollections.observableArrayList();
-        EstudianteRespuesta respuestaBD = EstudianteDAO.obtenerInformacionEstudiantes();
+        EstudianteRespuesta respuestaBD = EstudianteDAO.obtenerInformacionEstudiantesDeProfesor(
+                SingletonUsuario.getInstancia().getUsuario().getIdAcademico());
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Sin conexión", 
@@ -116,14 +116,6 @@ public class FXMLEstudiantesAcademicoController extends FXMLPrincipalAcademicoCo
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-    }
-    @FXML
-    private void clicVentanaAnterior(ActionEvent event) {        
-        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
-        escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLPrincipalAcademico.fxml"));
-        escenarioBase.setTitle("Principal Academico");
-        escenarioBase.show();      
     }
 
     @FXML
