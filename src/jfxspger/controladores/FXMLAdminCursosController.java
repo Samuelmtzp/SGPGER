@@ -92,7 +92,7 @@ public class FXMLAdminCursosController extends FXMLPrincipalAdministradorControl
     private void clicBtnAgregarCurso(ActionEvent event) {
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLFormularioCurso1.fxml"));
+                Utilidades.inicializarEscena("vistas/FXMLFormularioCurso.fxml"));
         escenarioBase.setTitle("Formulario de curso");
         escenarioBase.show();
     }
@@ -113,9 +113,9 @@ public class FXMLAdminCursosController extends FXMLPrincipalAdministradorControl
     private void irEstudiantesCurso(Curso curso){
         try{
             FXMLLoader accesoControlador = new FXMLLoader(jfxspger.
-                    JFXSPGER.class.getResource("/jfxspger/vistas/FXMLEstudiantesCurso.fxml"));
+                    JFXSPGER.class.getResource("/jfxspger/vistas/FXMLAsignarEstudiantesCurso.fxml"));
             Parent vista = accesoControlador.load();
-            FXMLEstudiantesCursoController formulario = accesoControlador.getController();
+            FXMLAsignarEstudiantesCursoController formulario = accesoControlador.getController();
             Scene sceneFormulario = new Scene(vista);
             Stage escenarioPrincipal = (Stage) lbTitulo.getScene().getWindow();
             escenarioPrincipal.setTitle("Agregar estudiantes a curso");

@@ -27,7 +27,7 @@ import jfxspger.modelo.pojo.UsuarioRespuesta;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
 
-public class FXMLEstudiantesCursoController extends FXMLPrincipalAdministradorController {
+public class FXMLAsignarEstudiantesCursoController extends FXMLPrincipalAdministradorController {
 
     @FXML
     private Label lbTitulo;

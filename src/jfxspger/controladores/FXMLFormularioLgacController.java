@@ -24,7 +24,7 @@ import jfxspger.modelo.pojo.Lgac;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
 
-public class FXMLLgacFormularioController extends FXMLPrincipalAdministradorController {
+public class FXMLFormularioLgacController extends FXMLPrincipalAdministradorController {
     
     private Lgac lgacEdicion;
     private boolean esEdicion;
@@ -189,8 +189,8 @@ public class FXMLLgacFormularioController extends FXMLPrincipalAdministradorCont
     
      private void cargarInformacionCuerpoAcademico(){
         cuerpoAcademico = FXCollections.observableArrayList();
-        CuerpoAcademicoRespuesta CuerpoAcademicoBD=CuerpoAcademicoDAO.
-                obtenerInformacionCuerpoAcademico();
+        CuerpoAcademicoRespuesta CuerpoAcademicoBD = 
+                CuerpoAcademicoDAO.obtenerInformacionCuerposAcademico();
         switch(CuerpoAcademicoBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Error de conexion", 

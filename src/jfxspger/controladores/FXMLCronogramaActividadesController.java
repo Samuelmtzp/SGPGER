@@ -117,10 +117,10 @@ public class FXMLCronogramaActividadesController extends FXMLPrincipalEstudiante
 
         try {
             FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.
-                    getResource("vistas/FXMLActividadFormu.fxml"));
+                    getResource("vistas/FXMLFormularioActividad.fxml"));
             Parent vista = accesoControlador.load();
             
-            FXMLActividadFormularioController formulario = accesoControlador.getController();
+            FXMLFormularioActividadController formulario = accesoControlador.getController();
             formulario.inicializarInformacionFormulario(esEdicion, actividadEdicion);
                        
             Scene sceneFormulario =  new Scene(vista);
@@ -138,10 +138,10 @@ public class FXMLCronogramaActividadesController extends FXMLPrincipalEstudiante
          
         try {
             FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.
-                    class.getResource("vistas/FXMLActividadInformacion.fxml"));        
+                    class.getResource("vistas/FXMLInfoActividad.fxml"));        
             Parent vista = accesoControlador.load();
             
-            FXMLActividadInformacionController informacion = accesoControlador.getController();
+            FXMLInfoActividadController informacion = accesoControlador.getController();
             informacion.inicializarInformacionActividad(actividadInformacion);                    
             
             Scene sceneDetalles = new Scene(vista);

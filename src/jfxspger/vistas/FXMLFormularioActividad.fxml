@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLActividadFormularioController">
+<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLFormularioActividadController">
    <children>
       <Spinner fx:id="spHorasInicio" layoutX="1525.0" layoutY="380.0" prefHeight="38.0" prefWidth="102.0" />
       <Label layoutX="404.0" layoutY="257.0" text="ACTIVIDAD">
