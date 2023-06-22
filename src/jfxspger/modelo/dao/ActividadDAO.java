@@ -16,6 +16,7 @@ import jfxspger.modelo.ConexionBD;
 import jfxspger.modelo.pojo.ActividadRespuesta;
 import jfxspger.modelo.pojo.Actividad;
 import jfxspger.utilidades.Constantes;
+import jfxspger.utilidades.Utilidades;
 
 public class ActividadDAO {
 
@@ -40,9 +41,9 @@ public class ActividadDAO {
                     actividad.setIdActividad(resultado.getInt("idActividad"));
                     actividad.setIdEntrega(resultado.getInt("idEntrega"));
                     actividad.setTitulo(resultado.getString("titulo"));
-                    actividad.setFechaCreacion(resultado.getString("fechaCreacion"));
-                    actividad.setFechaInicio(resultado.getString("fechaInicio"));
-                    actividad.setFechaFin(resultado.getString("fechaFin"));
+                    actividad.setFechaCreacion(Utilidades.convertirTimeStampAStringFechaHora((resultado.getTimestamp("fechaCreacion"))));
+                    actividad.setFechaInicio(Utilidades.convertirTimeStampAStringFechaHora((resultado.getTimestamp("fechaInicio"))));
+                    actividad.setFechaFin(Utilidades.convertirTimeStampAStringFechaHora((resultado.getTimestamp("fechaFin"))));
                     actividad.setDescripcion(resultado.getString("descripcion"));
                     actividad.setFechaEntrega(resultado.getString("fechaEntrega"));
                     actividad.setCalificacion(resultado.getDouble("calificacion"));
@@ -78,9 +79,9 @@ public class ActividadDAO {
                     Actividad actividad = new Actividad();
                     actividad.setIdActividad(resultado.getInt("idActividad"));
                     actividad.setTitulo(resultado.getString("titulo"));
-                    actividad.setFechaCreacion(resultado.getString("fechaCreacion"));
-                    actividad.setFechaInicio(resultado.getString("fechaInicio"));
-                    actividad.setFechaFin(resultado.getString("fechaFin"));
+                    actividad.setFechaCreacion(Utilidades.convertirTimeStampAStringFechaHora(resultado.getTimestamp("fechaCreacion")));
+                    actividad.setFechaInicio(Utilidades.convertirTimeStampAStringFechaHora(resultado.getTimestamp("fechaInicio")));
+                    actividad.setFechaFin(Utilidades.convertirTimeStampAStringFechaHora(resultado.getTimestamp("fechaFin")));
                     actividad.setDescripcion(resultado.getString("descripcion"));
                     actividadConsulta.add(actividad);
                 }
@@ -111,9 +112,9 @@ public class ActividadDAO {
                 ResultSet resultado = prepararSentencia.executeQuery();
 
                 actividad.setTitulo(resultado.getString("titulo"));
-                actividad.setFechaCreacion(resultado.getString("fechaCreacion"));
-                actividad.setFechaInicio(resultado.getString("fechaInicio"));
-                actividad.setFechaFin(resultado.getString("fechaFin"));
+                actividad.setFechaCreacion(Utilidades.convertirTimeStampAStringFechaHora(resultado.getTimestamp("fechaCreacion")));
+                actividad.setFechaInicio(Utilidades.convertirTimeStampAStringFechaHora(resultado.getTimestamp("fechaInicio")));
+                actividad.setFechaFin(Utilidades.convertirTimeStampAStringFechaHora(resultado.getTimestamp("fechaFin")));
                 actividad.setDescripcion(resultado.getString("descripcion"));
                     conexionBD.close();
                 }            
@@ -139,18 +140,17 @@ public class ActividadDAO {
                                         "WHERE a.idEstudiante = ?;";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idEstudiante);
-                ResultSet resultado = prepararSentencia.executeQuery();
-                SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                ResultSet resultado = prepararSentencia.executeQuery();                
                 ArrayList<Actividad> actividadConsulta = new ArrayList();
                 while (resultado.next())
                 {
                     Actividad actividad = new Actividad();
                     actividad.setIdActividad(resultado.getInt("idActividad"));
                     actividad.setTitulo(resultado.getString("titulo"));                    
-                    actividad.setFechaInicio(formateador.format(resultado.getString("fechaInicio")));
-                    actividad.setFechaFin(formateador.format(resultado.getString("fechaFin")));
+                    actividad.setFechaInicio(Utilidades.convertirTimeStampAStringFechaHora(resultado.getTimestamp("fechaInicio")));
+                    actividad.setFechaFin(Utilidades.convertirTimeStampAStringFechaHora(resultado.getTimestamp("fechaFin")));
                     actividad.setIdEntrega(resultado.getInt("idEntrega"));
-                    actividad.setFechaCreacion(formateador.format(resultado.getString("fechaEntrega")));
+                    actividad.setFechaCreacion(Utilidades.convertirTimeStampAStringFechaHora(resultado.getTimestamp("fechaEntrega")));
                     actividadConsulta.add(actividad);
                 }
                 respuesta.setActividades(actividadConsulta);

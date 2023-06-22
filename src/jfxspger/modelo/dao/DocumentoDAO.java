@@ -15,6 +15,7 @@ import jfxspger.modelo.ConexionBD;
 import jfxspger.modelo.pojo.DocumentoRespuesta;
 import jfxspger.modelo.pojo.Documento;
 import jfxspger.utilidades.Constantes;
+import jfxspger.utilidades.Utilidades;
 
 public class DocumentoDAO {
     
@@ -37,7 +38,7 @@ public class DocumentoDAO {
                     archivo.setArchivoDocumento(resultado.getBytes("archivoDocumento"));
                     archivo.setNombre(resultado.getString("nombre"));
                     archivo.setIdEntrega(resultado.getInt("idEntrega"));
-                    archivo.setFechaEntrega(resultado.getString("fechaEntrega"));
+                    archivo.setFechaEntrega(Utilidades.convertirTimeStampAStringFechaHora(resultado.getTimestamp("fechaEntrega")));
                     archivoConsulta.add(archivo);
                 }
                 respuesta.setDocumentos(archivoConsulta);
@@ -73,7 +74,7 @@ public class DocumentoDAO {
                     archivo.setArchivoDocumento(resultado.getBytes("archivoDocumento"));
                     archivo.setNombre(resultado.getString("nombre"));
                     archivo.setIdEntrega(resultado.getInt("idEntrega"));
-                    archivo.setFechaEntrega(resultado.getString("fechaEntrega"));
+                    archivo.setFechaEntrega(Utilidades.convertirTimeStampAStringFechaHora(resultado.getTimestamp("fechaEntrega")));
                     archivoConsulta.add(archivo);
                 }
                 respuesta.setDocumentos(archivoConsulta);

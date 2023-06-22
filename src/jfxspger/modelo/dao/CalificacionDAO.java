@@ -50,6 +50,39 @@ public class CalificacionDAO {
         return respuesta;
     }
     
+    public static Calificacion obtenerInformacionCalificacionPorActividad(int idActividad) {
+        CalificacionRespuesta respuesta = new CalificacionRespuesta();
+        Calificacion califRespuesta = new Calificacion();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+        if (conexionBD != null) {
+            try {
+                String consulta = "SELECT idCalificacion, idActividad, " +
+                        "calificacion, comentario " +
+                        "FROM Calificacion";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList<Calificacion> calificacionConsulta = new ArrayList();
+                while (resultado.next())
+                {
+                    Calificacion calificacion = new Calificacion();
+                    calificacion.setIdCalificacion(resultado.getInt("idCalificacion"));
+                    calificacion.setIdActividad(resultado.getInt("idActividad"));
+                    calificacion.setCalificacion(resultado.getDouble("calificacion"));
+                    calificacion.setComentario(resultado.getString("comentario"));
+                    calificacionConsulta.add(calificacion);
+                }
+                respuesta.setCalificaciones(calificacionConsulta);
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+            }
+        } else {
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return califRespuesta;
+    }
+    
     public static int guardarCalificacion(Calificacion nuevaCalificacion) {
         int respuesta;
         Connection conexionBD = ConexionBD.abrirConexionBD();
