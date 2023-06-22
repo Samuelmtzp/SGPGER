@@ -72,8 +72,6 @@ public class FXMLEvaluarAvanceController extends FXMLPrincipalAcademicoControlle
     @FXML
     private Label lbFechaFin;
     @FXML
-    private Label lbActividad;
-    @FXML
     private TableView<Documento> tvEntregas;
     @FXML
     private TableColumn cNombreDocumento;
@@ -90,7 +88,7 @@ public class FXMLEvaluarAvanceController extends FXMLPrincipalAcademicoControlle
     String estiloNormal = "-fx-border-width: 0;";
     private double calific;
     @FXML
-    private WebView wView;
+    private Button bEliminarEval;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -252,15 +250,21 @@ public class FXMLEvaluarAvanceController extends FXMLPrincipalAcademicoControlle
     }    
 
     @FXML
-    private void clicBtnDescargarEntrega(ActionEvent event) {
+    private void clicBtnAbrirArchivo(ActionEvent event) {
         Documento documentoSeleccionado = tvEntregas.getSelectionModel().getSelectedItem();
         if (documentoSeleccionado != null) {
             File archivo = guardarDocumentoTemporal(documentoSeleccionado);
             if (archivo != null) {
                 abrirArchivo(archivo);
             } else {
-                // Manejar el caso en el que no se pudo guardar el archivo temporal
+                Utilidades.mostrarDialogoSimple("Selecciona un documento", 
+                    "Debes selecionar un documento para poder"
+                    + " abrir el archivo.", Alert.AlertType.WARNING);
             }
+        }else {
+                Utilidades.mostrarDialogoSimple("Selecciona un documento", 
+                    "Debes selecionar un documento para poder"
+                    + " abrir el archivo.", Alert.AlertType.WARNING);
         }
     }
 
@@ -273,21 +277,27 @@ public class FXMLEvaluarAvanceController extends FXMLPrincipalAcademicoControlle
     }
 
     private File guardarDocumentoTemporal(Documento documento) {
-        try {
-            // Crear un archivo temporal
-            File tempFile = File.createTempFile(documento.getNombre(), ".pdf");
+    try {
+        String nombreArchivo = documento.getNombre();
+        String extension = nombreArchivo.substring(nombreArchivo.lastIndexOf("."));
+        String nombreSinExtension = nombreArchivo.substring(0, nombreArchivo.lastIndexOf("."));
+                
+        File tempFile = File.createTempFile(nombreSinExtension, extension);
 
-            // Escribir los bytes del archivo en el archivo temporal
-            FileOutputStream fos = new FileOutputStream(tempFile);
-            fos.write(documento.getArchivoDocumento());
-            fos.close();
+        FileOutputStream fos = new FileOutputStream(tempFile);
+        fos.write(documento.getArchivoDocumento());
+        fos.close();
 
-            return tempFile;
-        } catch (IOException e) {
-            System.out.println("Error al guardar el archivo temporal: " + e.getMessage());
-            return null;
+        return tempFile;
+    } catch (IOException e) {
+        System.out.println("Error al guardar el archivo temporal: " + e.getMessage());
+        return null;
         }
     }
 
+    @FXML
+    private void clicBtnEliminarEvaluacion(ActionEvent event) {
     }
+
+}
 

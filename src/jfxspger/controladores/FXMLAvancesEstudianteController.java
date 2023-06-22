@@ -159,9 +159,10 @@ public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoContr
             
             Scene sceneFormulario = new Scene(vista);
             Stage escenarioPrincipal = (Stage) lbTitulo.getScene().getWindow();
-            escenarioPrincipal.setTitle("Información de entrega");
+            escenarioPrincipal.setTitle("Evaluar entrega");
             escenarioPrincipal.setScene(sceneFormulario);            
         }catch(IOException e){
+            e.printStackTrace();
             Utilidades.mostrarDialogoSimple("Error", 
                     "No se puede mostrar la pantalla de informacion de anteproyecto", 
                     Alert.AlertType.ERROR);  
