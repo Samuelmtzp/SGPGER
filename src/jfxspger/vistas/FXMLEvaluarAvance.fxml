@@ -150,11 +150,6 @@
             <Font size="22.0" />
          </font>
       </Label>
-      <Label fx:id="lbActividad" layoutX="362.0" layoutY="921.0" prefHeight="45.0" prefWidth="300.0" textAlignment="CENTER">
-         <font>
-            <Font size="22.0" />
-         </font>
-      </Label>
       <ScrollPane layoutX="1423.0" layoutY="385.0" prefHeight="239.0" prefWidth="457.0">
          <content>
             <TableView fx:id="tvEntregas" prefHeight="237.0" prefWidth="455.0">
@@ -182,5 +177,10 @@
          </font>
       </Label>
       <TextField fx:id="tfComent" layoutX="423.0" layoutY="798.0" prefHeight="45.0" prefWidth="653.0" />
+      <Button fx:id="bEliminarEval" layoutX="406.0" layoutY="914.0" mnemonicParsing="false" onAction="#clicBtnEliminarEvaluacion" prefHeight="46.0" prefWidth="243.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Eliminar evaluacion" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
