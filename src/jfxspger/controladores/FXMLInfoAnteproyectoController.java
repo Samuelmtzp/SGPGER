@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,15 +20,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import jfxspger.modelo.dao.AcademicoDAO;
 import jfxspger.modelo.dao.AnteproyectoDAO;
 import jfxspger.modelo.dao.RevisionAnteproyectoDAO;
 import jfxspger.modelo.dao.UsuarioDAO;
 import jfxspger.modelo.pojo.Usuario;
 import jfxspger.modelo.pojo.Anteproyecto;
 import jfxspger.modelo.pojo.RevisionAnteproyecto;
-import jfxspger.modelo.pojo.RevisionAnteproyectoRespuesta;
 import jfxspger.modelo.pojo.UsuarioRespuesta;
 import jfxspger.utilidades.Constantes;
+import jfxspger.utilidades.SingletonUsuario;
 import jfxspger.utilidades.Utilidades;
 
 public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoController {
@@ -68,7 +67,6 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
     @FXML
     private Label lbEstado;
     private Anteproyecto anteproyecto;
-    private ObservableList<RevisionAnteproyecto> revisionAnteproyecto;
     @FXML
     private TextArea taComentario;
     @FXML
@@ -79,23 +77,33 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
     private Button btnConsultarAvances;
     @FXML
     private Label lbFecha;
-    @FXML
-    private Button btnRegresar;
-    @FXML
-    private Label lbTitulo;
-    private boolean esValidacion, esValido;
-    @FXML
-    private Button btnAnteproyectos;
-    @FXML
-    private Button btnPropuestas;
-    @FXML
-    private Button btnEstudiantes;
-    @FXML
-    private Button btnRevisiones;
+    private boolean esValidacion;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         validarSeccionesPermitidas();
+    }
+    
+    private void validarConsultaAvancesPermitida() {
+        if ((esDirectorDeAnteproyecto() && hayAlumnosAsignados()) || 
+                esProfesorDeEstudianteEnAnteproyecto()) {
+            btnConsultarAvances.setVisible(true);
+        }
+    }
+    
+    private boolean esProfesorDeEstudianteEnAnteproyecto() {
+        return (AcademicoDAO.consultarCoincidenciasProfesorDeEstudianteEnAnteproyecto(
+                SingletonUsuario.getInstancia().getUsuario().getIdAcademico(), 
+                anteproyecto.getIdAnteproyecto()) > 0);
+    }
+    
+    private boolean esDirectorDeAnteproyecto() {
+        return (SingletonUsuario.getInstancia().getUsuario().getIdAcademico() == 
+                anteproyecto.getIdDirector());
+    }
+    
+    private boolean hayAlumnosAsignados() {
+        return !taAlumnosParticipantes.getText().trim().isEmpty();
     }
 
     public void inicializarInformacion(boolean esValidacion, Anteproyecto anteproyecto){
@@ -105,8 +113,8 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
         cambiarColorEstado();
         cargarEstudiantesAsignados();
         cargarCodirectoresAsignados();
-        if(esValidacion){
-//            cargarInformacionRevision();
+        validarConsultaAvancesPermitida();
+        if (esValidacion) {
             btnValidar.setVisible(true);
             taComentario.setVisible(true);
             lbComentario.setVisible(true);
@@ -114,14 +122,14 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
     }
 
     private void validarRegistro(){
-        esValido=true;
+        boolean esValido = true;
         String comentario = taComentario.getText();
 
-        if(comentario.isEmpty()){
+        if (comentario.isEmpty()) {
             taComentario.setStyle(Constantes.estiloError);
             esValido=false;
-        }else{
-            if(comentario.length()>2000){
+        } else {
+            if (comentario.length() > 2000) {
                 taComentario.setStyle(Constantes.estiloError);
                 esValido=false;
             }
@@ -201,33 +209,6 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
                 taCodirector.setText(taCodirector.getText()
                         + codirector.toString() + "\n");
             }
-        }
-    }
-
-      private void cargarInformacionRevision(){
-        revisionAnteproyecto = FXCollections.observableArrayList();
-        RevisionAnteproyectoRespuesta respuestaBD = RevisionAnteproyectoDAO.
-               obtenerInformacionRevisionAnteproyecto(anteproyecto.getIdAnteproyecto());
-        switch (respuestaBD.getCodigoRespuesta()) {
-            case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Sin conexión",
-              "Lo sentimos, por el momento no hay conexión para poder cargar la información",
-                    Alert.AlertType.ERROR);
-                break;
-            case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error al cargar los datos",
-                    "Hubo un error al cargar la información de la revision, "
-                            + "por favor inténtelo más tarde",
-                    Alert.AlertType.WARNING);
-                break;
-            case Constantes.OPERACION_EXITOSA:
-                for(int i=0; i<revisionAnteproyecto.size(); i++){
-                  if(revisionAnteproyecto.get(i).getIdAnteproyecto()== anteproyecto.getIdAnteproyecto()){
-                    taComentario.setText(
-                        revisionAnteproyecto.get(i).getComentarioRevision());
-                    }
-                }
-                break;
         }
     }
 

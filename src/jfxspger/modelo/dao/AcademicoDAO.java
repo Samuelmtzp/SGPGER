@@ -167,6 +167,38 @@ public class AcademicoDAO {
         return respuesta;
     }
     
+    public static int consultarCoincidenciasProfesorDeEstudianteEnAnteproyecto(int idAcademico, 
+            int idAnteproyecto) {
+        int respuesta = 0;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null) {
+            try {
+                String sentencia = "SELECT COUNT(*) AS coincidencias "
+                        + "FROM Anteproyecto "
+                        + "INNER JOIN Estudiante "
+                        + "ON Estudiante.idAnteproyecto = Anteproyecto.idAnteproyecto "
+                        + "INNER JOIN Estudiante_Curso "
+                        + "ON Estudiante.idEstudiante = Estudiante_Curso.idEstudiante "
+                        + "INNER JOIN Curso "
+                        + "ON Curso.idCurso = Estudiante_Curso.idCurso "
+                        + "WHERE Anteproyecto.idAnteproyecto = ? "
+                        + "AND Curso.idProfesor = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt(1, idAnteproyecto);
+                prepararSentencia.setInt(2, idAcademico);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                if (resultado.next())
+                    respuesta = resultado.getInt("coincidencias");
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta = Constantes.ERROR_CONSULTA;
+            }
+        } else {
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
     public static int obtenerCantidadCursosAcademicoEsProfesor(int idAcademico) {
         int respuesta = 0;
         Connection conexionBD = ConexionBD.abrirConexionBD();

@@ -257,18 +257,6 @@
                               <Font name="System Bold" size="27.0" />
                            </font>
                         </Label>
-                        <Button fx:id="btnConsultarAvances" layoutX="482.0" layoutY="19.0" mnemonicParsing="false" onAction="#clicBtnConsultarAvances" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Consultar avances">
-                           <graphic>
-                              <ImageView fitHeight="56.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../recursos/lupa.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <font>
-                              <Font name="System Bold" size="22.0" />
-                           </font>
-                        </Button>
                         <Label layoutX="71.0" layoutY="884.0" stylesheets="@../css/estilos.css" text="Fecha de creación">
                            <font>
                               <Font name="System Bold" size="27.0" />
