@@ -23,6 +23,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -77,6 +78,19 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     private Button btnModificarAnteproyecto;
     @FXML
     private Button btnAgregarEstudiantes;
+    @FXML
+    private Label lbTitulo;
+    @FXML
+    private Button btnCodirectores;
+    @FXML
+    private Button btnAnteproyectos;
+    @FXML
+    private Button btnPropuestas;
+    @FXML
+    private Button btnEstudiantes;
+    @FXML
+    private Button btnRevisiones;
+   
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -99,6 +113,7 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
                                 ESTADO_VALIDACION_PENDIENTE)) {
                     btnModificarAnteproyecto.setDisable(false);
                     btnEliminarAnteproyecto.setDisable(false);
+                    btnCodirectores.setDisable(false);
                 } else if ((SingletonUsuario.getInstancia().getUsuario().getIdAcademico() ==
                         newValue.getIdDirector() || esCodirectorDeAnteproyecto(
                                 newValue.getIdAnteproyecto())) && newValue.getEstado().equals(
@@ -249,7 +264,7 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
             formulario.inicializarInformacion(anteproyecto);
             }else{
                  Utilidades.mostrarDialogoSimple("Anteproyecto no validado", 
-                    "El anteproyecto debe validado"
+                    "El anteproyecto debe estar validado"
                             + "para poder asignarle estudiantes", 
                     Alert.AlertType.WARNING);
             }
@@ -399,4 +414,16 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
             }
     }    
     
+    @FXML
+    private void clicBtnCodirectores(ActionEvent event) {
+        Anteproyecto anteproyectoSeleccionado = tvAnteproyecto.getSelectionModel().getSelectedItem();
+            int pos = tvAnteproyecto.getSelectionModel().getSelectedIndex();
+            if(pos != -1){
+                //irAsignarCodirectores(anteproyectoSeleccionado);
+            }else{
+                Utilidades.mostrarDialogoSimple("Selecciona un anteproyecto", 
+              "Selecciona el registro en la tabla del anteproyecto para asignar estudiantes", 
+                 Alert.AlertType.WARNING);
+            }
+    }
 }

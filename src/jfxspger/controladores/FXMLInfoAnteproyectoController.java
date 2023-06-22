@@ -78,6 +78,18 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
     @FXML
     private Label lbFecha;
     private boolean esValidacion;
+    @FXML
+    private Label lbTitulo;
+    @FXML
+    private Button btnRechazar;
+    @FXML
+    private Button btnAnteproyectos;
+    @FXML
+    private Button btnPropuestas;
+    @FXML
+    private Button btnEstudiantes;
+    @FXML
+    private Button btnRevisiones;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -118,10 +130,11 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
             btnValidar.setVisible(true);
             taComentario.setVisible(true);
             lbComentario.setVisible(true);
+            btnRechazar.setVisible(true);
         }
     }
 
-    private void validarRegistro(){
+    private void validarRegistro(int boton){
         boolean esValido = true;
         String comentario = taComentario.getText();
 
@@ -134,15 +147,20 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
                 esValido=false;
             }
         }
-
-        RevisionAnteproyecto revisionAnteproyecto = new RevisionAnteproyecto();
-        revisionAnteproyecto.setIdAnteproyecto(anteproyecto.getIdAnteproyecto());
-        revisionAnteproyecto.setComentarioRevision(comentario);
-        LocalDateTime tiempo = LocalDateTime.now();
-        String fecha = tiempo.toString();
-        revisionAnteproyecto.setFechaRevision(fecha);
+        
+           RevisionAnteproyecto revisionAnteproyecto = new RevisionAnteproyecto();
+           revisionAnteproyecto.setIdAnteproyecto(anteproyecto.getIdAnteproyecto());
+           revisionAnteproyecto.setComentarioRevision(comentario);
+           LocalDateTime tiempo = LocalDateTime.now();
+           String fecha = tiempo.toString();
+           revisionAnteproyecto.setFechaRevision(fecha); 
         if(esValido){
-             registrarRevision(revisionAnteproyecto);
+            registrarRevision(revisionAnteproyecto);
+            if(boton==1){
+                actualizarEstadoDisponibleAnteproyecto(anteproyecto.getIdAnteproyecto());
+            }else{
+                actualizarEstadoRechazadoAnteproyecto(anteproyecto.getIdAnteproyecto());
+            }
         }
     }
 
@@ -234,7 +252,8 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
 
     @FXML
     private void clicValidarAnteproyecto(ActionEvent event) {
-        validarRegistro();
+        int boton = 1;
+        validarRegistro(boton);
     }
 
     private void registrarRevision(RevisionAnteproyecto revisionRegistro){
@@ -252,11 +271,9 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
                         Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                Utilidades.mostrarDialogoSimple("Anteproyecto registrado",
-                        "La información del anteproyecto fue guardada correctamente",
+                Utilidades.mostrarDialogoSimple("Revision registrada",
+                        "La revision del anteproyecto fue guardada correctamente",
                         Alert.AlertType.INFORMATION);
-                actualizarEstadoDisponibleAnteproyecto(anteproyecto.getIdAnteproyecto());
-                salir();
                 break;
         }
     }
@@ -271,11 +288,32 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
             break;
             case Constantes.ERROR_CONSULTA:
             Utilidades.mostrarDialogoSimple("Error al actualizar anteproyecto",
-                        "No se puedo actualizar el anteproyecto,"
+                        "No se puedo actualizar el estado del anteproyecto a disponible,"
                         + "por favor inténtelo más tarde",
                         Alert.AlertType.WARNING);
             break;
             case Constantes.OPERACION_EXITOSA:
+                 salir();
+            break;
+        }
+    }
+     
+    private void actualizarEstadoRechazadoAnteproyecto(int idAnteproyecto) {
+        int respuesta = AnteproyectoDAO.actualizarEstadoRechazadoAnteproyecto(idAnteproyecto);
+        switch(respuesta) {
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Error de conexion", "El anteproyecto " +
+                        "no pudo ser actualizado debido a un error de conexion.",
+                        Alert.AlertType.ERROR);
+            break;
+            case Constantes.ERROR_CONSULTA:
+            Utilidades.mostrarDialogoSimple("Error al actualizar anteproyecto",
+                        "No se puedo actualizar el estado del anteproyecto a rechazado,"
+                        + "por favor inténtelo más tarde",
+                        Alert.AlertType.WARNING);
+            break;
+            case Constantes.OPERACION_EXITOSA:
+                 salir();
             break;
         }
     }
@@ -303,6 +341,12 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
             escenarioBase.setTitle("Administración anteproyectos");
         }
         escenarioBase.show();
+    }
+
+    @FXML
+    private void clicRechazarAnteproyecto(ActionEvent event) {
+        int boton=0;
+         validarRegistro(boton);
     }
 
 }

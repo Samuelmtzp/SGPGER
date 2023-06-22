@@ -85,6 +85,14 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
     private ComboBox<DuracionAprox> cbDuracionAprox;
     @FXML
     private Label lbCuerpoAcademico;
+    @FXML
+    private Button btnAnteproyectos;
+    @FXML
+    private Button btnPropuestas;
+    @FXML
+    private Button btnEstudiantes;
+    @FXML
+    private Button btnRevisiones;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
