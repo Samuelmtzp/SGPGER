@@ -14,7 +14,7 @@
    <children>
       <Pane prefHeight="100.0" prefWidth="1920.0" style="-fx-background-color: #343838;">
          <children>
-            <Label fx:id="lTitulo" layoutX="697.0" layoutY="13.0" prefHeight="73.0" prefWidth="526.0" text="Avances de estudiante" textFill="WHITE">
+            <Label fx:id="lbTitulo" layoutX="697.0" layoutY="13.0" prefHeight="73.0" prefWidth="526.0" text="Avances de estudiante" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="50.0" />
                </font>
@@ -26,13 +26,6 @@
             </ImageView>
          </children>
       </Pane>
-      <TableView fx:id="tvEntregas" layoutX="505.0" layoutY="288.0" prefHeight="739.0" prefWidth="1244.0" style="-fx-background-color: lightgray;">
-         <columns>
-            <TableColumn fx:id="cNombreActividad" prefWidth="607.0" text="Titulo de actividad" />
-            <TableColumn fx:id="cFechaEntrega" prefWidth="344.0" text="Fecha de entrega" />
-            <TableColumn fx:id="cCalificacion" prefWidth="292.0" text="Calificacion" />
-         </columns>
-      </TableView>
       <Button layoutX="379.0" layoutY="134.0" mnemonicParsing="false" onAction="#clicVentanaAnterior" prefHeight="55.0" prefWidth="74.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css">
          <graphic>
             <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
@@ -121,5 +114,14 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </Button>
+      <TableView fx:id="tvActividades" layoutX="363.0" layoutY="253.0" prefHeight="726.0" prefWidth="1528.0" style="-fx-background-color: lightgray;">
+         <columns>
+            <TableColumn fx:id="cNombreActividad" prefWidth="523.0" text="Titulo de actividad" />
+            <TableColumn fx:id="cFechaIncio" prefWidth="245.0" text="Fecha de inicio" />
+            <TableColumn fx:id="cFechaFin" prefWidth="209.0" text="Fecha de fin" />
+            <TableColumn fx:id="cFechaEntrega" prefWidth="327.0" text="Fecha de entrega" />
+            <TableColumn fx:id="cCalificacion" prefWidth="223.0" text="Calificacion" />
+         </columns>
+      </TableView>
    </children>
 </AnchorPane>

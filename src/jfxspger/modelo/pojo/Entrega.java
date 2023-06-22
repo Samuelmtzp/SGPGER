@@ -13,18 +13,27 @@ public class Entrega {
     private String tituloActividad;
     private String fechaEntrega;
     private String fechaCreacion;
+    private double calificacion;
 
     public Entrega() {
     }
 
-    public Entrega(int idEntrega, int idActividad, String tituloActividad, 
-            String fechaEntrega, String fechaCreacion) {
+    public Entrega(int idEntrega, int idActividad, String tituloActividad, String fechaEntrega, String fechaCreacion, double calificacion) {
         this.idEntrega = idEntrega;
         this.idActividad = idActividad;
         this.tituloActividad = tituloActividad;
         this.fechaEntrega = fechaEntrega;
         this.fechaCreacion = fechaCreacion;
+        this.calificacion = calificacion;
     }
+
+    public double getCalificacion() {
+        return calificacion;
+    }
+
+    public void setCalificacion(double calificacion) {
+        this.calificacion = calificacion;
+    }    
 
     public int getIdEntrega() {
         return idEntrega;

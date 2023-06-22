@@ -105,7 +105,8 @@ public class FXMLEstudiantesAcademicoController extends FXMLPrincipalAcademicoCo
                     class.getResource("vistas/FXMLAvancesEstudiante.fxml"));        
             Parent vista = accesoControlador.load();
             
-            FXMLAvancesEstudianteController avances = accesoControlador.getController();            
+            FXMLAvancesEstudianteController avances = accesoControlador.getController();
+            avances.inicializarEntregas(estudianteAvances);
             
             Scene sceneAvances = new Scene(vista);
             Stage escenarioAvances = (Stage) lbTitulo.getScene().getWindow();
