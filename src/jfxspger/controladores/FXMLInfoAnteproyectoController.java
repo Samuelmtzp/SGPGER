@@ -81,8 +81,17 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
     private Label lbComentario;
     @FXML
     private Button btnConsultarAvances;
-    @FXML
     private TextArea taFechaCreacion;
+    @FXML
+    private Button btnRegresar;
+    @FXML
+    private Button btnAnteproyectos;
+    @FXML
+    private Button btnPropuestas;
+    @FXML
+    private Button btnEstudiantes;
+    @FXML
+    private Button btnRevisiones;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -150,7 +159,7 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
         taLgac.setText(String.valueOf(anteproyecto.getLgac()));
         taDuracionAproximada.setText(anteproyecto.getDuracionAproximada());
         lbEstado.setText(anteproyecto.getEstado());
-        taFechaCreacion.setText(anteproyecto.getFechaCreacion());
+        //taFechaCreacion.setText(anteproyecto.getFechaCreacion());
     }
     
     private void cambiarColorEstado() {

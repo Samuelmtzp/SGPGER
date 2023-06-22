@@ -153,37 +153,31 @@ public class AnteproyectoDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
-                String sentencia = "UPDATE Anteproyecto SET idCuerpoAcademico = ?, "
-                        + "idDirector = ?, idEstado = ?, idModalidad = ?, idLgac = ?, "
+                String sentencia = "UPDATE Anteproyecto SET idModalidad = ?, idLgac = ?, "
                         + "proyectoInvestigacion = ?, lineaInvestigacion = ?, "
                         + "idDuracionAproximada = ?, nombreTrabajo = ?, requisitos = ?, "
-                        + "maximoAlumnosParticipantes = ?, cantidadAlumnosParticipantes = ?, "
+                        + "maximoAlumnosParticipantes = ?, "
                         + "descripcionProyectoInvestigacion = ?, "
                         + "descripcionTrabajoRecepcional = ?, resultadosEsperados = ?, "
-                        + "bibliografiaRecomendada = ?, comentarios = ? "
+                        + "bibliografiaRecomendada = ? "
                         + "WHERE idAnteproyecto = ?";
                 
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
-                prepararSentencia.setInt(1, anteproyectoEdicion.getIdCuerpoAcademico());
-                prepararSentencia.setInt(2, anteproyectoEdicion.getIdDirector());
-                prepararSentencia.setInt(3, anteproyectoEdicion.getIdEstado());
-                prepararSentencia.setInt(4, anteproyectoEdicion.getIdModalidad());
-                prepararSentencia.setInt(5, anteproyectoEdicion.getIdLgac());
-                prepararSentencia.setString(6, anteproyectoEdicion.getProyectoInvestigacion());
-                prepararSentencia.setString(7, anteproyectoEdicion.getLineaInvestigacion());
-                prepararSentencia.setInt(8, anteproyectoEdicion.getIdDuracionAproximada());
-                prepararSentencia.setString(9, anteproyectoEdicion.getNombreTrabajo());
-                prepararSentencia.setString(10, anteproyectoEdicion.getRequisitos());
-                prepararSentencia.setInt(11, anteproyectoEdicion.getMaximoAlumnosParticipantes());
-                prepararSentencia.setInt(12, anteproyectoEdicion.
-                        getCantidadAlumnosParticipantes());
-                prepararSentencia.setString(13, anteproyectoEdicion.
+                prepararSentencia.setInt(1, anteproyectoEdicion.getIdModalidad());
+                prepararSentencia.setInt(2, anteproyectoEdicion.getIdLgac());
+                prepararSentencia.setString(3, anteproyectoEdicion.getProyectoInvestigacion());
+                prepararSentencia.setString(4, anteproyectoEdicion.getLineaInvestigacion());
+                prepararSentencia.setInt(5, anteproyectoEdicion.getIdDuracionAproximada());
+                prepararSentencia.setString(6, anteproyectoEdicion.getNombreTrabajo());
+                prepararSentencia.setString(7, anteproyectoEdicion.getRequisitos());
+                prepararSentencia.setInt(8, anteproyectoEdicion.getMaximoAlumnosParticipantes());
+                prepararSentencia.setString(9, anteproyectoEdicion.
                         getDescripcionProyectoInvestigacion());
-                prepararSentencia.setString(14, anteproyectoEdicion.
+                prepararSentencia.setString(10, anteproyectoEdicion.
                         getDescripcionTrabajoRecepcional());
-                prepararSentencia.setString(15, anteproyectoEdicion.getResultadosEsperados());
-                prepararSentencia.setString(16, anteproyectoEdicion.getBibliografiaRecomendada());
-                prepararSentencia.setInt(17, anteproyectoEdicion.getIdAnteproyecto());
+                prepararSentencia.setString(11, anteproyectoEdicion.getResultadosEsperados());
+                prepararSentencia.setString(12, anteproyectoEdicion.getBibliografiaRecomendada());
+                prepararSentencia.setInt(13, anteproyectoEdicion.getIdAnteproyecto());
                 
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
@@ -307,7 +301,7 @@ public class AnteproyectoDAO {
         return respuesta;
     }
     
-    public static AnteproyectoRespuesta obtenerInformacionAnteproyectoConValidacionPendiente() {
+    public static AnteproyectoRespuesta obtenerInformacionAnteproyectoConValidacionPendiente(int idCuerpoAcademico) {
         AnteproyectoRespuesta respuesta = new AnteproyectoRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
@@ -341,8 +335,9 @@ public class AnteproyectoDAO {
                         + "duracionaproximada.idDuracionAproximada "
                         + "INNER JOIN Lgac "
                         + "ON Anteproyecto.idLgac = Lgac.idLgac "
-                        + "WHERE idEstado = 1";
+                        + "WHERE idEstado = 1 AND anteproyecto.idCuerpoAcademico = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, idCuerpoAcademico);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Anteproyecto> anteproyectoConsulta = new ArrayList();
                 while (resultado.next())
