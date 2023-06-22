@@ -28,7 +28,7 @@ import jfxspger.modelo.dao.UsuarioDAO;
 import jfxspger.modelo.pojo.Anteproyecto;
 import jfxspger.modelo.pojo.Estudiante;
 
-public class FXMLAsignarEstudiantesController extends FXMLPrincipalAcademicoController {
+public class FXMLAsignarEstudiantesAnteproyectoController extends FXMLPrincipalAcademicoController {
 
     @FXML
     private TableView<Usuario> tvAlumnosDisponibles;
@@ -326,14 +326,10 @@ public class FXMLAsignarEstudiantesController extends FXMLPrincipalAcademicoCont
 
     @FXML
     private void clicRegresar(ActionEvent event) {
-         boolean Salir =Utilidades.mostrarDialogoConfirmacion("Confirmacion", 
+         boolean Salir = Utilidades.mostrarDialogoConfirmacion("Confirmacion", 
                 "¿Seguro que deseas salir? No se guardaran los cambios");
         if(Salir){
-          Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
-          escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos3.fxml"));
-          escenarioBase.setTitle("Administración LGAC");
-          escenarioBase.show();
+            clicIrAnteproyectos(event);
         }
     }
    

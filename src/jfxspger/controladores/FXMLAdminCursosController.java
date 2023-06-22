@@ -16,7 +16,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -30,8 +29,6 @@ import jfxspger.utilidades.Utilidades;
 public class FXMLAdminCursosController extends FXMLPrincipalAdministradorController {
 
     @FXML
-    private Label lbTitulo;
-    @FXML
     private TableView<Curso> tvCursos;
     @FXML
     private TableColumn tcExperienciaEducativa;
@@ -41,10 +38,6 @@ public class FXMLAdminCursosController extends FXMLPrincipalAdministradorControl
     private TableColumn tcProfesor;
     @FXML
     private TableColumn tcNrc;
-    @FXML
-    private TableColumn tcBloque;
-    @FXML
-    private TableColumn tcSeccion;
     @FXML
     private TableColumn tcCupo;
     ObservableList<Curso> cursos;
@@ -61,8 +54,6 @@ public class FXMLAdminCursosController extends FXMLPrincipalAdministradorControl
         tcPeriodo.setCellValueFactory(new PropertyValueFactory("periodo"));
         tcProfesor.setCellValueFactory(new PropertyValueFactory("nombreCompletoProfesor"));
         tcNrc.setCellValueFactory(new PropertyValueFactory("nrc"));
-        tcBloque.setCellValueFactory(new PropertyValueFactory("bloque"));
-        tcSeccion.setCellValueFactory(new PropertyValueFactory("seccion"));
         tcCupo.setCellValueFactory(new PropertyValueFactory("cupo"));
     }
     
@@ -92,7 +83,7 @@ public class FXMLAdminCursosController extends FXMLPrincipalAdministradorControl
     private void clicBtnAgregarCurso(ActionEvent event) {
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLFormularioCurso1.fxml"));
+                Utilidades.inicializarEscena("vistas/FXMLFormularioCurso.fxml"));
         escenarioBase.setTitle("Formulario de curso");
         escenarioBase.show();
     }
@@ -113,9 +104,9 @@ public class FXMLAdminCursosController extends FXMLPrincipalAdministradorControl
     private void irEstudiantesCurso(Curso curso){
         try{
             FXMLLoader accesoControlador = new FXMLLoader(jfxspger.
-                    JFXSPGER.class.getResource("/jfxspger/vistas/FXMLEstudiantesCurso.fxml"));
+                    JFXSPGER.class.getResource("/jfxspger/vistas/FXMLAsignarEstudiantesCurso.fxml"));
             Parent vista = accesoControlador.load();
-            FXMLEstudiantesCursoController formulario = accesoControlador.getController();
+            FXMLAsignarEstudiantesCursoController formulario = accesoControlador.getController();
             Scene sceneFormulario = new Scene(vista);
             Stage escenarioPrincipal = (Stage) lbTitulo.getScene().getWindow();
             escenarioPrincipal.setTitle("Agregar estudiantes a curso");
