@@ -39,20 +39,13 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="980.0" prefWidth="1615.0">
                      <children>
-                        <ComboBox fx:id="cbCuerpoAcademico" layoutX="167.0" layoutY="110.0" prefHeight="31.0" prefWidth="238.0" stylesheets="@../css/estilos.css" />
                         <Label layoutX="167.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Cuerpo Academico">
                            <font>
                               <Font name="System Bold Italic" size="27.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="cbDirector" layoutX="462.0" layoutY="110.0" prefHeight="31.0" prefWidth="238.0" stylesheets="@../css/estilos.css" />
-                        <Label layoutX="462.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Director">
-                           <font>
-                              <Font name="System Bold Italic" size="27.0" />
-                           </font>
-                        </Label>
-                        <ComboBox fx:id="cbModalidad" layoutX="1125.0" layoutY="108.0" prefHeight="31.0" prefWidth="238.0" stylesheets="@../css/estilos.css" />
-                        <Label layoutX="1125.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Modalidad">
+                        <ComboBox fx:id="cbModalidad" layoutX="1297.0" layoutY="275.0" prefHeight="31.0" prefWidth="238.0" stylesheets="@../css/estilos.css" />
+                        <Label layoutX="1297.0" layoutY="213.0" stylesheets="@../css/estilos.css" text="Modalidad">
                            <font>
                               <Font name="System Bold Italic" size="27.0" />
                            </font>
@@ -129,7 +122,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Label layoutX="756.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Duracion aproximada">
+                        <Label layoutX="1097.0" layoutY="39.0" stylesheets="@../css/estilos.css" text="Duracion aproximada">
                            <font>
                               <Font name="System Bold Italic" size="27.0" />
                            </font>
@@ -155,7 +148,12 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <ComboBox fx:id="cbDuracionAprox" layoutX="756.0" layoutY="108.0" prefHeight="31.0" prefWidth="273.0" stylesheets="@../css/estilos.css" />
+                        <ComboBox fx:id="cbDuracionAprox" layoutX="1099.0" layoutY="111.0" prefHeight="31.0" prefWidth="273.0" stylesheets="@../css/estilos.css" />
+                        <Label fx:id="lbCuerpoAcademico" layoutX="168.0" layoutY="104.0" prefHeight="44.0" prefWidth="811.0">
+                           <font>
+                              <Font name="System Bold Italic" size="25.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
               </content>

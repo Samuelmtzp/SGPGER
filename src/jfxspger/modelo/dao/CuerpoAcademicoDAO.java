@@ -18,7 +18,7 @@ import jfxspger.modelo.pojo.CuerpoAcademico;
 import jfxspger.utilidades.Constantes;
 
 public class CuerpoAcademicoDAO {
-    public static CuerpoAcademicoRespuesta obtenerInformacionCuerpoAcademico() {
+    public static CuerpoAcademicoRespuesta obtenerInformacionCuerpoAcademico(int idCuerpoAcademico) {
         CuerpoAcademicoRespuesta respuesta = new CuerpoAcademicoRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
@@ -44,8 +44,10 @@ public class CuerpoAcademicoDAO {
                         + "INNER JOIN Dependencia "
                         + "ON CuerpoAcademico.idDependencia = Dependencia.idDependencia "
                         + "WHERE CuerpoAcademico.idResponsable IS NULL "
-                        + "OR CuerpoAcademico.idResponsable IS NOT NULL";
+                        + "OR CuerpoAcademico.idResponsable IS NOT NULL "
+                        + "AND cuerpoacademico.idCuerpoAcademico= ? ";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, idCuerpoAcademico);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<CuerpoAcademico> cuerpoAcademicoConsulta = new ArrayList();
                 while (resultado.next())
