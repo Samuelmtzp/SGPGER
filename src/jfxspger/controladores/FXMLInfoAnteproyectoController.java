@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,16 +20,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import jfxspger.modelo.dao.AcademicoDAO;
 import jfxspger.modelo.dao.AnteproyectoDAO;
 import jfxspger.modelo.dao.RevisionAnteproyectoDAO;
 import jfxspger.modelo.dao.UsuarioDAO;
 import jfxspger.modelo.pojo.Usuario;
 import jfxspger.modelo.pojo.Anteproyecto;
-import jfxspger.modelo.pojo.AnteproyectoRespuesta;
 import jfxspger.modelo.pojo.RevisionAnteproyecto;
-import jfxspger.modelo.pojo.RevisionAnteproyectoRespuesta;
 import jfxspger.modelo.pojo.UsuarioRespuesta;
 import jfxspger.utilidades.Constantes;
+import jfxspger.utilidades.SingletonUsuario;
 import jfxspger.utilidades.Utilidades;
 
 public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoController {
@@ -68,37 +66,44 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
     private TextArea taAlumnosParticipantes;
     @FXML
     private Label lbEstado;
-    @FXML
-    private Label lbTitulo;
     private Anteproyecto anteproyecto;
-    private ObservableList<RevisionAnteproyecto> revisionAnteproyecto;
     @FXML
     private TextArea taComentario;
-    private boolean esValidacion, esValido;
     @FXML
     private Button btnValidar;
     @FXML
     private Label lbComentario;
     @FXML
     private Button btnConsultarAvances;
-    private TextArea taFechaCreacion;
     @FXML
-    private Button btnRegresar;
-    @FXML
-    private Button btnAnteproyectos;
-    @FXML
-    private Button btnPropuestas;
-    @FXML
-    private Button btnEstudiantes;
-    @FXML
-    private Button btnRevisiones;
+    private Label lbFecha;
+    private boolean esValidacion;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         validarSeccionesPermitidas();
-        btnValidar.setVisible(false);
-        taComentario.setEditable(false);
-        btnRegresar.setVisible(false);
+    }
+    
+    private void validarConsultaAvancesPermitida() {
+        if ((esDirectorDeAnteproyecto() && hayAlumnosAsignados()) || 
+                esProfesorDeEstudianteEnAnteproyecto()) {
+            btnConsultarAvances.setVisible(true);
+        }
+    }
+    
+    private boolean esProfesorDeEstudianteEnAnteproyecto() {
+        return (AcademicoDAO.consultarCoincidenciasProfesorDeEstudianteEnAnteproyecto(
+                SingletonUsuario.getInstancia().getUsuario().getIdAcademico(), 
+                anteproyecto.getIdAnteproyecto()) > 0);
+    }
+    
+    private boolean esDirectorDeAnteproyecto() {
+        return (SingletonUsuario.getInstancia().getUsuario().getIdAcademico() == 
+                anteproyecto.getIdDirector());
+    }
+    
+    private boolean hayAlumnosAsignados() {
+        return !taAlumnosParticipantes.getText().trim().isEmpty();
     }
 
     public void inicializarInformacion(boolean esValidacion, Anteproyecto anteproyecto){
@@ -108,36 +113,33 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
         cambiarColorEstado();
         cargarEstudiantesAsignados();
         cargarCodirectoresAsignados();
-        cargarInformacionRevision();
-        if(esValidacion){
+        validarConsultaAvancesPermitida();
+        if (esValidacion) {
             btnValidar.setVisible(true);
-            taComentario.setEditable(true);
-            btnConsultarAvances.setVisible(false);
-            btnAnteproyectos.setVisible(false);
-            btnRegresar.setVisible(true);
+            taComentario.setVisible(true);
+            lbComentario.setVisible(true);
         }
     }
-    
+
     private void validarRegistro(){
-        esValido=true;
+        boolean esValido = true;
         String comentario = taComentario.getText();
-        
-        if(comentario.isEmpty()){
+
+        if (comentario.isEmpty()) {
             taComentario.setStyle(Constantes.estiloError);
             esValido=false;
-        }else{
-            if(comentario.length()>2000){
+        } else {
+            if (comentario.length() > 2000) {
                 taComentario.setStyle(Constantes.estiloError);
                 esValido=false;
             }
         }
-        
+
         RevisionAnteproyecto revisionAnteproyecto = new RevisionAnteproyecto();
         revisionAnteproyecto.setIdAnteproyecto(anteproyecto.getIdAnteproyecto());
         revisionAnteproyecto.setComentarioRevision(comentario);
         LocalDateTime tiempo = LocalDateTime.now();
         String fecha = tiempo.toString();
-        System.out.println("fecha = " + fecha);
         revisionAnteproyecto.setFechaRevision(fecha);
         if(esValido){
              registrarRevision(revisionAnteproyecto);
@@ -159,14 +161,14 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
         taLgac.setText(String.valueOf(anteproyecto.getLgac()));
         taDuracionAproximada.setText(anteproyecto.getDuracionAproximada());
         lbEstado.setText(anteproyecto.getEstado());
-        //taFechaCreacion.setText(anteproyecto.getFechaCreacion());
+        lbFecha.setText(anteproyecto.getFechaCreacion());
     }
-    
+
     private void cambiarColorEstado() {
         final int ESTADO_VALIDACION_PENDIENTE = 1;
         final int ESTADO_DISPONIBLE = 2;
         final int ESTADO_NO_DISPONIBLE = 3;
-        
+
         switch (anteproyecto.getIdEstado())
         {
             case ESTADO_VALIDACION_PENDIENTE:
@@ -182,62 +184,33 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
                 break;
         }
     }
-    
+
     private void cargarEstudiantesAsignados() {
         UsuarioRespuesta respuestaEstudiantesEnAnteproyecto = UsuarioDAO.
                 consultarEstudiantesEnAnteproyecto(anteproyecto.getIdAnteproyecto());
-        if (respuestaEstudiantesEnAnteproyecto.getCodigoRespuesta() == 
+        if (respuestaEstudiantesEnAnteproyecto.getCodigoRespuesta() ==
                 Constantes.OPERACION_EXITOSA) {
             for (Usuario estudiante : respuestaEstudiantesEnAnteproyecto.getUsuarios()) {
-                
-                taAlumnosParticipantes.setText(taAlumnosParticipantes.getText() 
-                        + estudiante.toString() + "\n");                
+
+                taAlumnosParticipantes.setText(taAlumnosParticipantes.getText()
+                        + estudiante.toString() + "\n");
             }
         }
     }
-    
-    
-    
+
+
+
     private void cargarCodirectoresAsignados() {
         UsuarioRespuesta respuestaCodirectoresEnAnteproyecto = UsuarioDAO.
                 consultarCodirectoresEnAnteproyecto(anteproyecto.getIdAnteproyecto());
-        if (respuestaCodirectoresEnAnteproyecto.getCodigoRespuesta() == 
+        if (respuestaCodirectoresEnAnteproyecto.getCodigoRespuesta() ==
                 Constantes.OPERACION_EXITOSA) {
             for (Usuario codirector : respuestaCodirectoresEnAnteproyecto.getUsuarios()) {
-                taCodirector.setText(taCodirector.getText() 
+                taCodirector.setText(taCodirector.getText()
                         + codirector.toString() + "\n");
             }
         }
     }
-    
-      private void cargarInformacionRevision(){
-        revisionAnteproyecto = FXCollections.observableArrayList();
-        RevisionAnteproyectoRespuesta respuestaBD = RevisionAnteproyectoDAO.
-               obtenerInformacionRevisionAnteproyecto(anteproyecto.getIdAnteproyecto());
-        switch (respuestaBD.getCodigoRespuesta()) {
-            case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Sin conexión", 
-              "Lo sentimos, por el momento no hay conexión para poder cargar la información", 
-                    Alert.AlertType.ERROR);
-                break;
-            case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
-                    "Hubo un error al cargar la información de la revision, "
-                            + "por favor inténtelo más tarde", 
-                    Alert.AlertType.WARNING);
-                break;
-            case Constantes.OPERACION_EXITOSA:
-                System.out.println("hola");
-                for(int i=0; i<revisionAnteproyecto.size(); i++){
-                  if(revisionAnteproyecto.get(i).getIdAnteproyecto()== anteproyecto.getIdAnteproyecto()){
-                    taComentario.setText(
-                        revisionAnteproyecto.get(i).getComentarioRevision());
-                         System.out.println("taComentario = " + taComentario.getText());
-                    }
-                }
-                break;
-        }
-    } 
 
     @FXML
     private void clicBtnConsultarAvances(ActionEvent event) {
@@ -251,11 +224,11 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
             Stage escenarioPrincipal = (Stage) lbTitulo.getScene().getWindow();
             escenarioPrincipal.setTitle("Avances de anteproyecto");
             escenarioPrincipal.setScene(sceneAvances);
-            
+
         }catch(IOException e){
-            Utilidades.mostrarDialogoSimple("Error", 
-                    "No se puede mostrar la pantalla de informacion de anteproyecto", 
-                    Alert.AlertType.ERROR);  
+            Utilidades.mostrarDialogoSimple("Error",
+                    "No se puede mostrar la pantalla de informacion de anteproyecto",
+                    Alert.AlertType.ERROR);
         }
     }
 
@@ -263,65 +236,72 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
     private void clicValidarAnteproyecto(ActionEvent event) {
         validarRegistro();
     }
-    
+
     private void registrarRevision(RevisionAnteproyecto revisionRegistro){
         int codigoRespuesta = RevisionAnteproyectoDAO.guardarRevisionAnteproyecto(revisionRegistro);
         switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Error de conexion", 
-                        "El anteproyecto no pudo ser guardado debido a un error en su conexión...", 
+                Utilidades.mostrarDialogoSimple("Error de conexion",
+                        "El anteproyecto no pudo ser guardado debido a un error en su conexión...",
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error en la información", 
+                Utilidades.mostrarDialogoSimple("Error en la información",
                         "La información del anteproyecto no puede ser guardada, "
-                        + "por favor verifique su información", 
+                        + "por favor verifique su información",
                         Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                Utilidades.mostrarDialogoSimple("Anteproyecto registrado", 
-                        "La información del anteproyecto fue guardada correctamente", 
+                Utilidades.mostrarDialogoSimple("Anteproyecto registrado",
+                        "La información del anteproyecto fue guardada correctamente",
                         Alert.AlertType.INFORMATION);
                 actualizarEstadoDisponibleAnteproyecto(anteproyecto.getIdAnteproyecto());
                 salir();
                 break;
         }
     }
-    
+
      private void actualizarEstadoDisponibleAnteproyecto(int idAnteproyecto) {
         int respuesta = AnteproyectoDAO.actualizarEstadoDisponibleAnteproyecto(idAnteproyecto);
         switch(respuesta) {
             case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Error de conexion", "El anteproyecto " + 
-                        "no pudo ser actualizado debido a un error de conexion.", 
+                Utilidades.mostrarDialogoSimple("Error de conexion", "El anteproyecto " +
+                        "no pudo ser actualizado debido a un error de conexion.",
                         Alert.AlertType.ERROR);
             break;
             case Constantes.ERROR_CONSULTA:
             Utilidades.mostrarDialogoSimple("Error al actualizar anteproyecto",
                         "No se puedo actualizar el anteproyecto,"
-                        + "por favor inténtelo más tarde", 
+                        + "por favor inténtelo más tarde",
                         Alert.AlertType.WARNING);
             break;
             case Constantes.OPERACION_EXITOSA:
             break;
         }
     }
-     
+
      private void salir(){
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.setScene(
                 Utilidades.inicializarEscena("vistas/FXMLAdminPropuestasAnteproyectos.fxml"));
         escenarioBase.setTitle("Administración propuestas");
         escenarioBase.show();
-    } 
+    }
 
 
     @FXML
     private void clicRegresar(ActionEvent event) {
-         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
-        escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLAdminPropuestasAnteproyectos.fxml"));
-        escenarioBase.setTitle("Administración propuestas");
+        
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        if (esValidacion) {
+            escenarioBase.setScene(
+                    Utilidades.inicializarEscena("vistas/FXMLAdminPropuestasAnteproyectos.fxml"));
+            escenarioBase.setTitle("Administración propuestas");
+        } else {
+            escenarioBase.setScene(
+                    Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos3.fxml"));
+            escenarioBase.setTitle("Administración anteproyectos");
+        }
         escenarioBase.show();
     }
 

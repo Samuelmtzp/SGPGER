@@ -122,11 +122,12 @@ public class EntregaDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT e.idEstudiante, a.idActividad, a.titulo, en.idEntrega, en.fechaEntrega " +
-                                    "FROM estudiante e " +
-                                    "JOIN actividad a ON e.idEstudiante = a.idEstudiante " +
-                                    "JOIN entrega en ON a.idActividad = en.idActividad " +
-                                    "WHERE e.idEstudiante = ?;";
+                String consulta = "SELECT a.idActividad, a.titulo, e.fechaEntrega, c.idCalificacion, c.calificacion " +
+                                    "FROM entrega e " +
+                                    "JOIN actividad a ON e.idActividad = a.idActividad " +
+                                    "JOIN estudiante est ON a.idEstudiante = est.idEstudiante " +
+                                    "LEFT JOIN Calificacion c ON a.idActividad = c.idActividad " +
+                                    "WHERE est.idEstudiante = ?;";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idEstudiante);
                 ResultSet resultado = prepararSentencia.executeQuery();
@@ -135,10 +136,9 @@ public class EntregaDAO {
                 {
                     Entrega entrega = new Entrega();
                     entrega.setIdEntrega(resultado.getInt("idActividad"));
-                    entrega.setIdEntrega(resultado.getInt("idEntrega"));
                     entrega.setFechaEntrega(resultado.getString("fechaEntrega"));
-                    entrega.setFechaEntrega(resultado.getString("fechaCreacion"));
                     entrega.setTituloActividad(resultado.getString("titulo"));
+                    entrega.setCalificacion(resultado.getInt("calificacion"));
                     entregaConsulta.add(entrega);
                 }
                 respuesta.setEntregas(entregaConsulta);

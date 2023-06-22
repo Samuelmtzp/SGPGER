@@ -4,49 +4,17 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLCronogramaActividadesController">
+<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLPropuestasEstudianteController">
    <children>
-      <Pane prefHeight="100.0" prefWidth="1920.0" style="-fx-background-color: #343838;">
-         <children>
-            <Label fx:id="lbTitulo" layoutX="637.0" layoutY="14.0" prefHeight="73.0" prefWidth="646.0" text="Cronograma de actividades" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="50.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="102.0" fitWidth="74.0" layoutX="1832.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../recursos/UV_Logo.png" />
-               </image>
-            </ImageView>
-         </children>
-      </Pane>
-      <TableView fx:id="tvActividades" layoutX="353.0" layoutY="230.0" prefHeight="739.0" prefWidth="1528.0" style="-fx-background-color: lightgray;">
-        <columns>
-          <TableColumn fx:id="cNombreActividad" prefWidth="669.0" text="Titulo de actividad" />
-          <TableColumn fx:id="cFechaCreacion" prefWidth="400.0" text="Fecha de creación" />
-            <TableColumn fx:id="cFechaIncio" prefWidth="231.0" text="Fecha de inicio" />
-            <TableColumn fx:id="cFechaFin" prefWidth="231.0" text="Fecha de fin" />
-        </columns>
-      </TableView>
-      <Button layoutX="594.0" layoutY="997.0" mnemonicParsing="false" onAction="#clicBtnProgramarActividad" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Programar actividad" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="22.0" />
-         </font></Button>
-      <Button layoutX="1414.0" layoutY="997.0" mnemonicParsing="false" onAction="#clicBtnModificarActividad" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Modificar actividad" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="22.0" />
-         </font></Button>
-      <Button layoutX="1696.0" layoutY="134.0" mnemonicParsing="false" onAction="#clicBtnVerDetalles" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Ver detalles" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="22.0" />
-         </font></Button>
-      <Pane layoutY="100.0" prefHeight="980.0" prefWidth="300.0" style="-fx-background-color: #33AB5B;">
+      <Pane layoutX="299.0" layoutY="99.0" prefHeight="980.0" prefWidth="1620.0" />
+      <Pane layoutX="-1.0" layoutY="99.0" prefHeight="980.0" prefWidth="300.0" style="-fx-background-color: #33AB5B;">
          <children>
             <Button fx:id="btnAnteproyecto" disable="true" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#clicIrAnteproyecto" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Anteproyecto" textFill="WHITE">
                <font>
@@ -108,6 +76,46 @@
                   </ImageView>
                </graphic>
             </Button>
+         </children>
+      </Pane>
+      <Pane layoutX="-1.0" layoutY="-1.0" prefHeight="100.0" prefWidth="1920.0" style="-fx-background-color: #343838;">
+         <children>
+            <Label fx:id="lbTitulo" layoutX="648.0" layoutY="13.0" text="Anteproyectos disponibles" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="50.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="102.0" fitWidth="74.0" layoutX="1820.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recursos/UV_Logo.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane layoutX="300.0" layoutY="100.0" prefHeight="980.0" prefWidth="1620.0">
+         <children>
+            <TableView fx:id="tvAnteproyecto" layoutX="60.0" layoutY="228.0" onMousePressed="#clicConsultarAnteproyecto" prefHeight="636.0" prefWidth="1419.0" stylesheets="@../css/estilos.css">
+               <columns>
+                  <TableColumn fx:id="columnNombre" prefWidth="207.0" text="Nombre " />
+                  <TableColumn fx:id="columNombreProyecto" prefWidth="385.0" text="Nombre del proyecto de investigacion" />
+                  <TableColumn fx:id="columDuracionAprox" prefWidth="211.0" text="Duracion aproximada" />
+                  <TableColumn fx:id="columFechaCreacion" prefWidth="199.0" text="Fecha de creacion" />
+                  <TableColumn fx:id="columDirector" prefWidth="245.0" text="Director" />
+               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+            <TextField fx:id="tfBusqueda" layoutX="61.0" layoutY="155.0" prefHeight="48.0" prefWidth="505.0">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </TextField>
+            <Label layoutX="60.0" layoutY="98.0" prefHeight="50.0" prefWidth="332.0" text="Búsqueda por director">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>

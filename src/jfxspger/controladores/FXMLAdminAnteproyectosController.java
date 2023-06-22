@@ -23,7 +23,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -41,9 +40,7 @@ import jfxspger.utilidades.SingletonUsuario;
 import jfxspger.utilidades.Utilidades;
 
 public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoController {
-
-    @FXML
-    private Label lbTitulo;
+    
     @FXML
     private TableView<Anteproyecto> tvAnteproyecto;
     @FXML
@@ -138,7 +135,13 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     
     private void cargarInformacion(){
         anteproyectos = FXCollections.observableArrayList();
-        AnteproyectoRespuesta respuestaBD = AnteproyectoDAO.obtenerInformacionAnteproyecto();
+        AnteproyectoRespuesta respuestaBD;
+        if (esMiembroDeCA()) {
+            respuestaBD = AnteproyectoDAO.obtenerInformacionAnteproyectosEnCuerpoAcademico(
+                    SingletonUsuario.getInstancia().getUsuario().getIdcuerpoAcademico());
+        } else {
+            respuestaBD = AnteproyectoDAO.obtenerInformacionAnteproyectos();
+        }
         switch (respuestaBD.getCodigoRespuesta()) {
             case Constantes.ERROR_CONEXION:
                     Utilidades.mostrarDialogoSimple("Sin conexión", 
@@ -324,14 +327,10 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
                                     contains(ESTADO_NO_DISPONIBLE);
                         } else                       
                             return anteproyectoFiltro.getDirector().toLowerCase().
-                                    contains(newValue);
+                                    contains(lowerNewValue);
                     });
                 }
             });
-            SortedList<Anteproyecto> sortedListaAnteproyectos = new SortedList<>
-                    (filtradoAnteproyecto);
-            sortedListaAnteproyectos.comparatorProperty().bind(tvAnteproyecto.comparatorProperty());
-            tvAnteproyecto.setItems(sortedListaAnteproyectos);
         }
     }
     

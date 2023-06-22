@@ -57,10 +57,13 @@ public class EstudianteDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT u.nombre, u.apellidoPaterno, u.apellidoMaterno, e.matricula, e.idEstudiante, a.nombreTrabajo " +
-                                    "FROM usuario u " +
-                                    "JOIN estudiante e ON u.idUsuario = e.idUsuario " +
-                                    "JOIN anteproyecto a ON e.idAnteproyecto = a.idAnteproyecto;";
+                String consulta = "SELECT u.nombre, u.apellidoPaterno, u.apellidoMaterno, "
+                        + "e.matricula, e.idEstudiante, a.nombreTrabajo "
+                        + "FROM usuario u "
+                        + "JOIN estudiante e "
+                        + "ON u.idUsuario = e.idUsuario "
+                        + "JOIN anteproyecto a "
+                        + "ON e.idAnteproyecto = a.idAnteproyecto;";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);                
                 ResultSet resultado = prepararSentencia.executeQuery();
                 
@@ -84,6 +87,29 @@ public class EstudianteDAO {
             }
         } else {
             respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
+    }
+    
+    public static int obtenerCantidadCursosExistenciaEstudiante(int idEstudiante) {
+        int respuesta = 0;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null) {
+            try {
+                String sentencia = "SELECT COUNT(*) AS coincidencias "
+                        + "FROM Estudiante_Curso "
+                        + "WHERE idEstudiante = ?;";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt(1, idEstudiante);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                if (resultado.next())
+                    respuesta = resultado.getInt("coincidencias");
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta = Constantes.ERROR_CONSULTA;
+            }
+        } else {
+            respuesta = Constantes.ERROR_CONEXION;
         }
         return respuesta;
     }

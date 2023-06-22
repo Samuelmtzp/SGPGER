@@ -10,11 +10,76 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLInfoAnteproyectoController">
+<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLInfoAnteproyectoEstudianteController">
    <children>
-      <Pane prefHeight="100.0" prefWidth="1920.0" style="-fx-background-color: #343838;">
+      <Pane layoutX="299.0" layoutY="99.0" prefHeight="980.0" prefWidth="1620.0" />
+      <Pane layoutX="-1.0" layoutY="99.0" prefHeight="980.0" prefWidth="300.0" style="-fx-background-color: #33AB5B;">
          <children>
-            <Label fx:id="lbTitulo" layoutX="605.0" layoutY="14.0" text="Información de  Anteproyecto" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="btnAnteproyecto" disable="true" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#clicIrAnteproyecto" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Anteproyecto" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/contract.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnCronograma" disable="true" layoutX="20.0" layoutY="145.0" mnemonicParsing="false" onAction="#clicIrCronograma" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Cronograma" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/cronograma.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnCursos" disable="true" layoutX="20.0" layoutY="270.0" mnemonicParsing="false" onAction="#clicIrCursos" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Cursos" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/educacion-en-linea.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="21.0" layoutY="822.0" mnemonicParsing="false" onAction="#clicCerrarSesion" prefHeight="70.0" prefWidth="260.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" text="Cerrar sesión" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="23.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="52.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/cerrar-sesion.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="20.0" layoutY="395.0" mnemonicParsing="false" onAction="#clicIrPropuestas" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Propuestas" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/advertising.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </Pane>
+      <Pane layoutX="-1.0" layoutY="-1.0" prefHeight="100.0" prefWidth="1920.0" style="-fx-background-color: #343838;">
+         <children>
+            <Label fx:id="lbTitulo" layoutX="653.0" layoutY="13.0" text="Información anteproyecto" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="50.0" />
                </font>
@@ -38,9 +103,9 @@
       </Pane>
       <Pane layoutX="300.0" layoutY="100.0" prefHeight="980.0" prefWidth="1620.0">
          <children>
-            <ScrollPane prefHeight="900.0" prefWidth="1620.0" vbarPolicy="ALWAYS">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1100.0" prefWidth="1615.0">
+            <ScrollPane prefHeight="945.0" prefWidth="1620.0" vbarPolicy="ALWAYS">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="946.0" prefWidth="1615.0">
                      <children>
                         <Label layoutX="74.0" layoutY="113.0" stylesheets="@../css/estilos.css" text="Cuerpo Academico">
                            <font>
@@ -80,7 +145,8 @@
                         <TextArea fx:id="taCuerpoAcademico" editable="false" layoutX="423.0" layoutY="101.0" prefHeight="58.0" prefWidth="388.0" wrapText="true">
                            <font>
                               <Font size="15.0" />
-                           </font></TextArea>
+                           </font>
+                        </TextArea>
                         <Label layoutX="912.0" layoutY="51.0" prefHeight="39.0" prefWidth="635.0" stylesheets="@../css/estilos.css" text="Requisitos">
                            <font>
                               <Font name="System Bold" size="27.0" />
@@ -94,7 +160,8 @@
                         <TextArea fx:id="taDescripcionProyecto" editable="false" layoutX="913.0" layoutY="242.0" prefHeight="110.0" prefWidth="641.0" wrapText="true">
                            <font>
                               <Font size="15.0" />
-                           </font></TextArea>
+                           </font>
+                        </TextArea>
                         <Label layoutX="912.0" layoutY="188.0" prefHeight="60.0" prefWidth="635.0" stylesheets="@../css/estilos.css" text="Descripcion del proyecto de investigacion">
                            <font>
                               <Font name="System Bold" size="27.0" />
@@ -103,7 +170,8 @@
                         <TextArea fx:id="taDescripcionTrabajo" editable="false" layoutX="914.0" layoutY="404.0" prefHeight="131.0" prefWidth="642.0" wrapText="true">
                            <font>
                               <Font size="15.0" />
-                           </font></TextArea>
+                           </font>
+                        </TextArea>
                         <Label layoutX="914.0" layoutY="363.0" prefHeight="39.0" prefWidth="641.0" stylesheets="@../css/estilos.css" text="Descripcion de trabajo recepcional">
                            <font>
                               <Font name="System Bold" size="27.0" />
@@ -117,11 +185,13 @@
                         <TextArea fx:id="taResultadosEsperados" editable="false" layoutX="915.0" layoutY="595.0" prefHeight="100.0" prefWidth="639.0" wrapText="true">
                            <font>
                               <Font size="15.0" />
-                           </font></TextArea>
+                           </font>
+                        </TextArea>
                         <TextArea fx:id="taBibliografia" editable="false" layoutX="919.0" layoutY="752.0" prefHeight="118.0" prefWidth="633.0" wrapText="true">
                            <font>
                               <Font size="15.0" />
-                           </font></TextArea>
+                           </font>
+                        </TextArea>
                         <Label layoutX="920.0" layoutY="704.0" prefHeight="40.0" prefWidth="630.0" stylesheets="@../css/estilos.css" text="Bibliografía recomendada">
                            <font>
                               <Font name="System Bold" size="27.0" />
@@ -132,15 +202,6 @@
                               <Font name="System Bold" size="27.0" />
                            </font>
                         </Label>
-                        <Button layoutX="51.0" layoutY="31.0" mnemonicParsing="false" onAction="#clicIrAnteproyectos" prefHeight="55.0" prefWidth="74.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../recursos/back.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
                         <Label layoutX="71.0" layoutY="753.0" stylesheets="@../css/estilos.css" text="Codirector">
                            <font>
                               <Font name="System Bold" size="27.0" />
@@ -206,113 +267,10 @@
                               <Font name="System Bold" size="27.0" />
                            </font>
                         </Label>
-                        <Button fx:id="btnConsultarAvances" layoutX="482.0" layoutY="19.0" mnemonicParsing="false" onAction="#clicBtnConsultarAvances" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Consultar avances" visible="false">
-                           <graphic>
-                              <ImageView fitHeight="56.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../recursos/lupa.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <font>
-                              <Font name="System Bold" size="22.0" />
-                           </font>
-                        </Button>
-                        <TextArea fx:id="taComentario" layoutX="429.0" layoutY="890.0" prefHeight="172.0" prefWidth="386.0" visible="false" wrapText="true" />
-                        <Label fx:id="lbComentario" layoutX="65.0" layoutY="912.0" stylesheets="@../css/estilos.css" text="Comentario" visible="false">
-                           <font>
-                              <Font name="System Bold" size="27.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="btnValidar" layoutX="1235.0" layoutY="916.0" mnemonicParsing="false" onAction="#clicValidarAnteproyecto" prefHeight="67.0" prefWidth="306.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Validar anteproyecto" visible="false">
-                           <graphic>
-                              <ImageView fitHeight="53.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../recursos/contract.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <font>
-                              <Font name="System Bold Italic" size="19.0" />
-                           </font>
-                        </Button>
-                        <Button layoutX="51.0" layoutY="31.0" mnemonicParsing="false" onAction="#clicRegresar" prefHeight="55.0" prefWidth="74.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../recursos/back.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
                      </children>
                   </AnchorPane>
-              </content>
+               </content>
             </ScrollPane>
-         </children>
-      </Pane>
-      <Pane layoutY="100.0" prefHeight="980.0" prefWidth="300.0" style="-fx-background-color: #33AB5B;">
-         <children>
-            <Button fx:id="btnAnteproyectos" disable="true" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#clicIrAnteproyectos" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Anteproyectos" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../recursos/contract.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="btnPropuestas" disable="true" layoutX="20.0" layoutY="145.0" mnemonicParsing="false" onAction="#clicIrPropuestas" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Propuestas" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../recursos/advertising.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="btnEstudiantes" disable="true" layoutX="20.0" layoutY="270.0" mnemonicParsing="false" onAction="#clicIrEstudiantes" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Estudiantes" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../recursos/usuario.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button layoutX="21.0" layoutY="822.0" mnemonicParsing="false" onAction="#clicCerrarSesion" prefHeight="70.0" prefWidth="260.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" text="Cerrar sesión" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="52.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../recursos/cerrar-sesion.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="btnRevisiones" disable="true" layoutX="20.0" layoutY="396.0" mnemonicParsing="false" onAction="#clicIrRevisiones" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Revisiones" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../recursos/lupa.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
          </children>
       </Pane>
    </children>

@@ -11,27 +11,55 @@ public class Actividad {
     private int idActividad;
     private int idEstudiante;
     private int idEntrega;
+    private int idCalificacion;
     private String titulo;
     private String fechaCreacion;
     private String fechaInicio;
     private String fechaFin;
     private String descripcion;
+    private double calificacion;
+    private String fechaEntrega;
 
     public Actividad() {
     }
 
-    public Actividad(int idActividad, int idEstudiante, int idEntrega, 
-            String titulo, String fechaCreacion, String fechaInicio, 
-            String fechaFin, String descripcion) {
+    public Actividad(int idActividad, int idEstudiante, int idEntrega, int idCalificacion, String titulo, String fechaCreacion, String fechaInicio, String fechaFin, String descripcion, double calificacion, String fechaEntrega) {
         this.idActividad = idActividad;
         this.idEstudiante = idEstudiante;
         this.idEntrega = idEntrega;
+        this.idCalificacion = idCalificacion;
         this.titulo = titulo;
         this.fechaCreacion = fechaCreacion;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.descripcion = descripcion;
+        this.calificacion = calificacion;
+        this.fechaEntrega = fechaEntrega;
     }
+
+    public int getIdCalificacion() {
+        return idCalificacion;
+    }
+
+    public void setIdCalificacion(int idCalificacion) {
+        this.idCalificacion = idCalificacion;
+    }
+
+    public double getCalificacion() {
+        return calificacion;
+    }
+
+    public void setCalificacion(double calificacion) {
+        this.calificacion = calificacion;
+    }
+
+    public String getFechaEntrega() {
+        return fechaEntrega;
+    }
+
+    public void setFechaEntrega(String fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
+    }   
 
     public int getIdEntrega() {
         return idEntrega;
