@@ -65,7 +65,7 @@ public class FXMLAdminCuerposAcademicosController extends FXMLPrincipalAdministr
     private void cargarDatosTabla() {
         cuerposAcademicos = FXCollections.observableArrayList();
         CuerpoAcademicoRespuesta respuestaBD = 
-                CuerpoAcademicoDAO.obtenerInformacionCuerpoAcademico();
+                CuerpoAcademicoDAO.obtenerInformacionCuerposAcademico();
         switch (respuestaBD.getCodigoRespuesta()) {
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Sin conexión", 

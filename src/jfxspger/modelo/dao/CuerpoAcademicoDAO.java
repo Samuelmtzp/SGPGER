@@ -50,6 +50,67 @@ public class CuerpoAcademicoDAO {
                 prepararSentencia.setInt(1, idCuerpoAcademico);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<CuerpoAcademico> cuerpoAcademicoConsulta = new ArrayList();
+                if (resultado.next())
+                {
+                    CuerpoAcademico cuerpoAcademico = new CuerpoAcademico();
+                    cuerpoAcademico.setIdCuerpoAcademico(
+                            resultado.getInt("CuerpoAcademico.idCuerpoAcademico"));
+                    cuerpoAcademico.setNombre(resultado.getString("CuerpoAcademico.nombre"));
+                    cuerpoAcademico.setClave(resultado.getString("clave"));
+                    cuerpoAcademico.setIdResponsable(resultado.getInt("idResponsable"));
+                    cuerpoAcademico.setNombreCompletoResponsable(
+                            resultado.getString("nombreCompletoResponsable"));
+                    cuerpoAcademico.setIdGradoConsolidacion(
+                            resultado.getInt("CuerpoAcademico.idGradoConsolidacion"));
+                    cuerpoAcademico.setGradoConsolidacion(
+                            resultado.getString("GradoConsolidacion.grado"));
+                    cuerpoAcademico.setIdDependencia(
+                            resultado.getInt("CuerpoAcademico.idDependencia"));
+                    cuerpoAcademico.setDependencia(
+                            resultado.getString("Dependencia.dependencia"));
+                    cuerpoAcademicoConsulta.add(cuerpoAcademico);
+                }
+                respuesta.setCuerposAcademicos(cuerpoAcademicoConsulta);
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+            }
+        } else {
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
+    }
+    
+    public static CuerpoAcademicoRespuesta obtenerInformacionCuerposAcademico() {
+        CuerpoAcademicoRespuesta respuesta = new CuerpoAcademicoRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+        if (conexionBD != null) {
+            try {
+                String consulta = "SELECT DISTINCT CuerpoAcademico.idCuerpoAcademico, "
+                        + "CuerpoAcademico.nombre, clave, "
+                        + "if (idResponsable IS NULL, -1, idResponsable) AS idResponsable, "
+                        + "if (idResponsable IS NULL, \"Sin responsable\", "
+                        + "(CONCAT(Usuario.nombre, ' ', Usuario.apellidoPaterno, ' ', "
+                        + "Usuario.apellidoMaterno))) AS nombreCompletoResponsable, "
+                        + "CuerpoAcademico.idGradoConsolidacion, GradoConsolidacion.grado, "
+                        + "CuerpoAcademico.idDependencia, Dependencia.dependencia "
+                        + "FROM CuerpoAcademico "
+                        + "INNER JOIN Academico "
+                        + "ON CuerpoAcademico.idResponsable = Academico.idAcademico "
+                        + "OR CuerpoAcademico.idResponsable IS NULL "
+                        + "INNER JOIN Usuario "
+                        + "ON Academico.idUsuario = Usuario.idUsuario "
+                        + "INNER JOIN GradoConsolidacion "
+                        + "ON CuerpoAcademico.idGradoConsolidacion = "
+                        + "GradoConsolidacion.idGradoConsolidacion "
+                        + "INNER JOIN Dependencia "
+                        + "ON CuerpoAcademico.idDependencia = Dependencia.idDependencia "
+                        + "WHERE CuerpoAcademico.idResponsable IS NULL "
+                        + "OR CuerpoAcademico.idResponsable IS NOT NULL";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList<CuerpoAcademico> cuerpoAcademicoConsulta = new ArrayList();
                 while (resultado.next())
                 {
                     CuerpoAcademico cuerpoAcademico = new CuerpoAcademico();

@@ -189,8 +189,8 @@ public class FXMLLgacFormularioController extends FXMLPrincipalAdministradorCont
     
      private void cargarInformacionCuerpoAcademico(){
         cuerpoAcademico = FXCollections.observableArrayList();
-        CuerpoAcademicoRespuesta CuerpoAcademicoBD=CuerpoAcademicoDAO.
-                obtenerInformacionCuerpoAcademico();
+        CuerpoAcademicoRespuesta CuerpoAcademicoBD = 
+                CuerpoAcademicoDAO.obtenerInformacionCuerposAcademico();
         switch(CuerpoAcademicoBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Error de conexion", 
