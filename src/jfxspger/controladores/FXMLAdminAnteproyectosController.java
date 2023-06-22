@@ -35,7 +35,6 @@ import javafx.stage.Stage;
 import jfxspger.modelo.dao.AnteproyectoDAO;
 import jfxspger.modelo.pojo.Anteproyecto;
 import jfxspger.modelo.pojo.AnteproyectoRespuesta;
-import jfxspger.modelo.pojo.Anteproyecto_Codirector;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.SingletonUsuario;
 import jfxspger.utilidades.Utilidades;
@@ -178,7 +177,7 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     private void irFormulario(boolean esEdicion, Anteproyecto anteproyectoEdicion){
            try{
             FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.getResource(
-                    "vistas/FXMLFormularioAnteproyecto1.fxml"));
+                    "vistas/FXMLFormularioAnteproyecto.fxml"));
             Parent vista = accesoControlador.load();
             FXMLFormularioAnteproyectoController formulario = accesoControlador.getController();
             Scene sceneFormulario = new Scene(vista);
@@ -187,7 +186,7 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
             formulario.inicializarInformacionFormulario(esEdicion, anteproyectoEdicion);
             
          }catch(IOException ex){
-             Logger.getLogger(FXMLLgacFormularioController.class.getName()).
+             Logger.getLogger(FXMLFormularioLgacController.class.getName()).
                      log(Level.SEVERE, null, ex);
          }
     }
@@ -255,9 +254,9 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
             if(anteproyecto.getIdEstado() != 1){
             FXMLLoader accesoControlador = new 
       FXMLLoader(jfxspger.JFXSPGER.class.getResource(
-              "/jfxspger/vistas/FXMLAsignarEstudiantes.fxml"));
+              "/jfxspger/vistas/FXMLAsignarEstudiantesAnteproyecto.fxml"));
             Parent vista = accesoControlador.load();
-            FXMLAsignarEstudiantesController formulario = accesoControlador.getController();
+            FXMLAsignarEstudiantesAnteproyectoController formulario = accesoControlador.getController();
             Scene sceneFormulario = new Scene(vista);
             Stage escenarioPrincipal = (Stage)lbTitulo.getScene().getWindow();
             escenarioPrincipal.setScene(sceneFormulario);
@@ -269,7 +268,7 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
                     Alert.AlertType.WARNING);
             }
          }catch(IOException ex){
-             Logger.getLogger(FXMLLgacFormularioController.class.getName()).
+             Logger.getLogger(FXMLFormularioLgacController.class.getName()).
                      log(Level.SEVERE, null, ex);
          }
     }

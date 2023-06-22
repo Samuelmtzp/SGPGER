@@ -39,7 +39,7 @@ import jfxspger.modelo.pojo.EntregaRespuesta;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
 
-public class FXMLActividadInformacionController extends FXMLPrincipalEstudianteController {
+public class FXMLInfoActividadController extends FXMLPrincipalEstudianteController {
   
     private Documento archivoActividad;
     private Entrega entregaAct;    

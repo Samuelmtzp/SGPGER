@@ -319,7 +319,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
                 Utilidades.mostrarDialogoSimple("Anteproyecto registrado", 
                         "La información del anteproyecto fue guardada correctamente", 
                         Alert.AlertType.INFORMATION);
-                salir();
+                irAnteproyectos();
                 break;
         }
     }
@@ -343,7 +343,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
                  Utilidades.mostrarDialogoSimple("Anteproyecto actualizado", 
                          "La informacion del anteproyecto fue actualizada correctamente", 
                         Alert.AlertType.INFORMATION);
-                salir();
+                irAnteproyectos();
                 break;
         }
     }
@@ -508,23 +508,9 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
 
     @FXML
     private void clicRegresar(ActionEvent event) {
-        regresar();
-    }
-    
-    private void regresar(){
         boolean Salir = Utilidades.mostrarDialogoConfirmacion("Confirmacion", 
                 "¿Seguro que deseas salir? No se guardaran los cambios");
-        if(Salir){
-          salir();
-        }
-    }
-    
-    private void salir(){
-        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
-        escenarioBase.setScene(
-                Utilidades.inicializarEscena("vistas/FXMLAdminAnteproyectos3.fxml"));
-        escenarioBase.setTitle("Administración Anteproyecto");
-        escenarioBase.show();
+        clicIrAnteproyectos(event);
     }
     
     private int obtenerPosicionComboModalidad(int idModalidad){

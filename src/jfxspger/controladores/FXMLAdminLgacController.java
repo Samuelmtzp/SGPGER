@@ -97,16 +97,16 @@ public class FXMLAdminLgacController extends FXMLPrincipalAdministradorControlle
      private void irFormulario(boolean esEdicion, Lgac lgacEdicion){
          try{
             FXMLLoader accesoControlador = new FXMLLoader(
-                    jfxspger.JFXSPGER.class.getResource("vistas/FXMLLgacFormulario.fxml"));
+                    jfxspger.JFXSPGER.class.getResource("vistas/FXMLFormularioLgac.fxml"));
             Parent vista = accesoControlador.load();
-            FXMLLgacFormularioController formulario = accesoControlador.getController();
+            FXMLFormularioLgacController formulario = accesoControlador.getController();
             Scene sceneFormulario = new Scene(vista);
             Stage escenarioPrincipal = (Stage)lbTitulo.getScene().getWindow();
             escenarioPrincipal.setScene(sceneFormulario);
             formulario.inicializarInformacionFormulario(esEdicion, lgacEdicion);
             
          }catch(IOException ex){
-             Logger.getLogger(FXMLLgacFormularioController.class.getName()).
+             Logger.getLogger(FXMLFormularioLgacController.class.getName()).
                      log(Level.SEVERE, null, ex);
          }
     }

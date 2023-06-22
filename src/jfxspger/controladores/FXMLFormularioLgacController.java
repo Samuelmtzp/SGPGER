@@ -24,7 +24,7 @@ import jfxspger.modelo.pojo.Lgac;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
 
-public class FXMLLgacFormularioController extends FXMLPrincipalAdministradorController {
+public class FXMLFormularioLgacController extends FXMLPrincipalAdministradorController {
     
     private Lgac lgacEdicion;
     private boolean esEdicion;

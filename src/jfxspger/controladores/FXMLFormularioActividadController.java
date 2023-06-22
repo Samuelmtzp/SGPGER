@@ -29,7 +29,7 @@ import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.SingletonUsuario;
 import jfxspger.utilidades.Utilidades;
 
-public class FXMLActividadFormularioController extends FXMLPrincipalEstudianteController {
+public class FXMLFormularioActividadController extends FXMLPrincipalEstudianteController {
 
     @FXML
     private TextField tfNombreActividad;
