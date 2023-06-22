@@ -27,6 +27,7 @@ import jfxspger.modelo.dao.AnteproyectoDAO;
 import jfxspger.modelo.pojo.Anteproyecto;
 import jfxspger.modelo.pojo.AnteproyectoRespuesta;
 import jfxspger.utilidades.Constantes;
+import jfxspger.utilidades.SingletonUsuario;
 import jfxspger.utilidades.Utilidades;
 
 public class FXMLAdminPropuestasAnteproyectosController extends FXMLPrincipalAcademicoController {
@@ -83,7 +84,11 @@ public class FXMLAdminPropuestasAnteproyectosController extends FXMLPrincipalAca
     private void cargarInformacion(){
         anteproyectos = FXCollections.observableArrayList();
         AnteproyectoRespuesta respuestaBD = AnteproyectoDAO.
-                obtenerInformacionAnteproyectoConValidacionPendiente();
+                obtenerInformacionAnteproyectoConValidacionPendiente(
+                        (SingletonUsuario.getInstancia().getUsuario().
+                getIdcuerpoAcademico()));
+        System.out.println("idCuerpoAcademico = " + SingletonUsuario.getInstancia().getUsuario().
+                getIdcuerpoAcademico());
         switch (respuestaBD.getCodigoRespuesta()) {
             case Constantes.ERROR_CONEXION:
                     Utilidades.mostrarDialogoSimple("Sin conexión", 
@@ -134,5 +139,5 @@ public class FXMLAdminPropuestasAnteproyectosController extends FXMLPrincipalAca
         }
         
      }
-  
+     
 }

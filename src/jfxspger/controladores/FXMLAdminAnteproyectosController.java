@@ -34,6 +34,7 @@ import javafx.stage.Stage;
 import jfxspger.modelo.dao.AnteproyectoDAO;
 import jfxspger.modelo.pojo.Anteproyecto;
 import jfxspger.modelo.pojo.AnteproyectoRespuesta;
+import jfxspger.modelo.pojo.Anteproyecto_Codirector;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.SingletonUsuario;
 import jfxspger.utilidades.Utilidades;
