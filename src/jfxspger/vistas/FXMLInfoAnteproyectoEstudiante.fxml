@@ -89,6 +89,16 @@
                   <Image url="@../recursos/UV_Logo.png" />
                </image>
             </ImageView>
+            <Label layoutX="1481.0" layoutY="33.0" text="Fecha creación:" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbFecha" layoutX="1650.0" layoutY="33.0" prefHeight="35.0" prefWidth="162.0" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Pane layoutX="300.0" layoutY="100.0" prefHeight="980.0" prefWidth="1620.0">
@@ -257,16 +267,6 @@
                               <Font name="System Bold" size="27.0" />
                            </font>
                         </Label>
-                        <Label layoutX="71.0" layoutY="884.0" stylesheets="@../css/estilos.css" text="Fecha de creación">
-                           <font>
-                              <Font name="System Bold" size="27.0" />
-                           </font>
-                        </Label>
-                        <TextArea fx:id="taFechaCreacion" editable="false" layoutX="429.0" layoutY="869.0" prefHeight="55.0" prefWidth="385.0" wrapText="true">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </TextArea>
                      </children>
                   </AnchorPane>
                </content>

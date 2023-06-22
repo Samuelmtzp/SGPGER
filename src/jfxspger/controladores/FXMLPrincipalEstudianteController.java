@@ -85,6 +85,11 @@ public class FXMLPrincipalEstudianteController implements Initializable {
 
     @FXML
     protected void clicIrPropuestas(ActionEvent event) {
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        escenarioBase.setScene(Utilidades.inicializarEscena(
+                "vistas/FXMLPropuestasEstudiante.fxml"));
+        escenarioBase.setTitle("Anteproyectos disponibles");
+        escenarioBase.show();        
     }
 
     @FXML
@@ -94,7 +99,6 @@ public class FXMLPrincipalEstudianteController implements Initializable {
                 "vistas/FXMLInfoAnteproyectoEstudiante.fxml"));
         escenarioBase.setTitle("Informacion de anteproyecto");
         escenarioBase.show();        
-        
     }
     
 }
