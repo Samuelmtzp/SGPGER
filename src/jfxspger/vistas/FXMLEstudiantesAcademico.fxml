@@ -85,18 +85,6 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnRevisiones" disable="true" layoutX="20.0" layoutY="396.0" mnemonicParsing="false" onAction="#clicIrRevisiones" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Revisiones" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../recursos/lupa.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
          </children>
       </Pane>
       <Button layoutX="1681.0" layoutY="139.0" mnemonicParsing="false" onAction="#clicBtnVerAvances" prefHeight="46.0" prefWidth="198.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Ver avances" textFill="WHITE">

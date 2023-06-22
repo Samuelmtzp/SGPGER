@@ -173,7 +173,7 @@ public class FXMLAsignarEstudiantesCursoController extends FXMLPrincipalAdminist
         }
     }
     
-    private void actualizarCurso(Estudiante_Curso estudianteEnCurso) {
+    private void actualizarCurso(Estudiante_Curso estudianteEnCurso, boolean esEliminacion) {
         int respuesta = CursoDAO.modificarCurso(curso);
         switch (respuesta) {
             case Constantes.ERROR_CONEXION:
@@ -191,9 +191,14 @@ public class FXMLAsignarEstudiantesCursoController extends FXMLPrincipalAdminist
                         estudianteEnCurso.getIdEstudiante(), curso.getIdCurso());
             break;
             case Constantes.OPERACION_EXITOSA:
-                Utilidades.mostrarDialogoSimple("Estudiante agregado", 
-                    "El estudiante fue agregado al curso correctamente", 
-                    Alert.AlertType.INFORMATION);
+                if (!esEliminacion)
+                    Utilidades.mostrarDialogoSimple("Estudiante agregado", 
+                        "El estudiante fue agregado al curso correctamente", 
+                        Alert.AlertType.INFORMATION);
+                else
+                    Utilidades.mostrarDialogoSimple("Estudiante removido", 
+                        "El estudiante fue removido del curso correctamente", 
+                        Alert.AlertType.INFORMATION);
             break;
         }
     }
@@ -218,7 +223,7 @@ public class FXMLAsignarEstudiantesCursoController extends FXMLPrincipalAdminist
                 cargarDatosTablaEstudiantesDisponibles();
                 curso.setCupo(curso.getCupo() - 1);
                 lbCupo.setText(String.valueOf(curso.getCupo()));
-                actualizarCurso(estudianteEnCurso);
+                actualizarCurso(estudianteEnCurso, false);
             break;
         }
     }
@@ -243,7 +248,8 @@ public class FXMLAsignarEstudiantesCursoController extends FXMLPrincipalAdminist
                 cargarDatosTablaEstudiantesDisponibles();
                 curso.setCupo(curso.getCupo() + 1);
                 lbCupo.setText(String.valueOf(curso.getCupo()));
-                actualizarCurso(new Estudiante_Curso(idEstudiante, curso.getIdCurso()));
+                actualizarCurso(new Estudiante_Curso(idEstudiante, 
+                        curso.getIdCurso()), true);
             break;
         }
     }
