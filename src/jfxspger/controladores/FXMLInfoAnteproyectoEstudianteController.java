@@ -1,3 +1,8 @@
+/*
+* Autor: Samuel Martínez Pazos
+* Fecha de creación: 21/06/2023
+* Descripción: Clase controladora para información de anteproyecto del menú de estudiante
+*/
 package jfxspger.controladores;
 
 import java.io.IOException;
@@ -9,7 +14,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.paint.Color;
@@ -58,8 +62,6 @@ public class FXMLInfoAnteproyectoEstudianteController extends FXMLPrincipalEstud
     private TextArea taAlumnosParticipantes;
     @FXML
     private Label lbEstado;
-    @FXML
-    private Button btnConsultarAvances;
     @FXML
     private TextArea taFechaCreacion;
     private Anteproyecto anteproyecto;
@@ -165,7 +167,6 @@ public class FXMLInfoAnteproyectoEstudianteController extends FXMLPrincipalEstud
         }
     }
 
-    @FXML
     private void clicBtnConsultarAvances(ActionEvent event) {
         try{
             FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.class.

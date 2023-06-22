@@ -279,7 +279,7 @@ public class AnteproyectoDAO {
         }
         return respuesta;
     }
-    
+
     public static int guardarAnteproyecto(Anteproyecto nuevoAnteproyecto) {
         int respuesta;
         Connection conexionBD = ConexionBD.abrirConexionBD();
