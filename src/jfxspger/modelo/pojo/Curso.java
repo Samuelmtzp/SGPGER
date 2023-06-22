@@ -15,8 +15,6 @@ public class Curso {
     private int idProfesor;
     private String nombreCompletoProfesor;
     private int nrc;
-    private int bloque;
-    private String seccion;
     private int cupo;
 
     public Curso() {
@@ -24,7 +22,7 @@ public class Curso {
 
     public Curso(int idCurso, int idExperienciaEducativa, String experienciaEducativa, 
             int idPeriodo, String periodo, int idProfesor, String nombreCompletoProfesor, 
-            int nrc, int bloque, String seccion, int cupo) {
+            int nrc, int cupo) {
         this.idCurso = idCurso;
         this.idExperienciaEducativa = idExperienciaEducativa;
         this.experienciaEducativa = experienciaEducativa;
@@ -33,8 +31,6 @@ public class Curso {
         this.idProfesor = idProfesor;
         this.nombreCompletoProfesor = nombreCompletoProfesor;
         this.nrc = nrc;
-        this.bloque = bloque;
-        this.seccion = seccion;
         this.cupo = cupo;
     }
 
@@ -102,22 +98,6 @@ public class Curso {
         this.nrc = nrc;
     }
 
-    public int getBloque() {
-        return bloque;
-    }
-
-    public void setBloque(int bloque) {
-        this.bloque = bloque;
-    }
-
-    public String getSeccion() {
-        return seccion;
-    }
-
-    public void setSeccion(String seccion) {
-        this.seccion = seccion;
-    }
-
     public int getCupo() {
         return cupo;
     }
@@ -132,8 +112,8 @@ public class Curso {
                 idExperienciaEducativa + ", experienciaEducativa=" + experienciaEducativa + 
                 ", idPeriodo=" + idPeriodo + ", periodo=" + periodo + ", idProfesor=" + 
                 idProfesor + ", nombreCompletoProfesor=" + nombreCompletoProfesor + 
-                ", nrc=" + nrc + ", bloque=" + bloque + ", seccion=" + seccion + 
-                ", cupo=" + cupo + '}';
+                ", nrc=" + nrc + ", cupo=" + cupo + '}';
     }
 
+    
 }

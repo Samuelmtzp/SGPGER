@@ -44,10 +44,6 @@ public class FXMLFormularioCursoController extends FXMLAdminCursosController {
     @FXML
     private TextField tfNrc;
     @FXML
-    private TextField tfBloque;
-    @FXML
-    private TextField tfSeccion;
-    @FXML
     private TextField tfCupo;
     @FXML
     private Label lbNrcNoDisponible;
@@ -153,10 +149,8 @@ public class FXMLFormularioCursoController extends FXMLAdminCursosController {
                 getSelectionModel().getSelectedIndex();
         int posicionPeriodo = cbPeriodoEscolar.getSelectionModel().getSelectedIndex();
         int posicionProfesor = cbProfesor.getSelectionModel().getSelectedIndex();
-        String seccion = tfSeccion.getText();
-
         
-        if (tfNrc.getLength() == 0) {
+        if (tfNrc.getLength() == 0 || tfNrc.getLength() > 5) {
             tfNrc.setStyle(Constantes.estiloError);
             datosValidos = false;
         } else if (!esNrcDisponible(Integer.parseInt(tfNrc.getText()))) {
@@ -166,20 +160,11 @@ public class FXMLFormularioCursoController extends FXMLAdminCursosController {
                 
         }
         
-        if (tfBloque.getLength() == 0) {
-            tfBloque.setStyle(Constantes.estiloError);
-            datosValidos = false;
-        }
-        
-        if (seccion.trim().isEmpty()) {
-            tfSeccion.setStyle(Constantes.estiloError);
-            datosValidos = false;
-        } else if (seccion.length() > 255) {
-            tfSeccion.setStyle(Constantes.estiloError);
-            datosValidos = false;
-        }
-        
         if(tfCupo.getLength() == 0) {
+            tfCupo.setStyle(Constantes.estiloError);
+            datosValidos = false;
+        } else if (Integer.parseInt(tfCupo.getText()) == 0 ||
+                Integer.parseInt(tfCupo.getText()) > 40) {
             tfCupo.setStyle(Constantes.estiloError);
             datosValidos = false;
         }
@@ -201,7 +186,6 @@ public class FXMLFormularioCursoController extends FXMLAdminCursosController {
         
         if (datosValidos) {
             int nrc = Integer.parseInt(tfNrc.getText());
-            int bloque = Integer.parseInt(tfBloque.getText());
             int cupo  = Integer.parseInt(tfCupo.getText());
             int idExperienciaEducativa = experienciasEducativas.get(
                     posicionExperienciaEducativa).getIdExperienciaEducativa();
@@ -210,13 +194,11 @@ public class FXMLFormularioCursoController extends FXMLAdminCursosController {
             int idProfesor = profesores.get(
                     posicionProfesor).getIdAcademico();
             Curso cursoValidado = new Curso();
-            cursoValidado.setBloque(bloque);
             cursoValidado.setCupo(cupo);
             cursoValidado.setIdExperienciaEducativa(idExperienciaEducativa);
             cursoValidado.setIdPeriodo(idPeriodo);
             cursoValidado.setIdProfesor(idProfesor);
             cursoValidado.setNrc(nrc);
-            cursoValidado.setSeccion(seccion);
             
             registrarCurso(cursoValidado);
         }
@@ -233,8 +215,6 @@ public class FXMLFormularioCursoController extends FXMLAdminCursosController {
         cbPeriodoEscolar.setStyle(Constantes.estiloNormal);
         cbProfesor.setStyle(Constantes.estiloNormal);
         tfNrc.setStyle(Constantes.estiloNormal);
-        tfBloque.setStyle(Constantes.estiloNormal);
-        tfSeccion.setStyle(Constantes.estiloNormal);
         tfCupo.setStyle(Constantes.estiloNormal);
         lbNrcNoDisponible.setText("");
     }

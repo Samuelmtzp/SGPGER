@@ -29,7 +29,7 @@ public class CursoDAO {
                         + "if (idProfesor IS NULL, -1, idProfesor) AS idProfesor, "
                         + "if (idProfesor IS NULL, \"Sin profesor\",CONCAT(Usuario.nombre, ' ', "
                         + "Usuario.apellidoPaterno, ' ', Usuario.apellidoMaterno)) "
-                        + "AS nombreCompleto, NRC, bloque, seccion, cupo "
+                        + "AS nombreCompleto, NRC, cupo "
                         + "FROM Curso "
                         + "INNER JOIN ExperienciaEducativa ON Curso.idExperienciaEducativa = "
                         + "ExperienciaEducativa.idExperienciaEducativa "
@@ -56,8 +56,6 @@ public class CursoDAO {
                     curso.setIdProfesor(resultado.getInt("idProfesor"));
                     curso.setNombreCompletoProfesor(resultado.getString("nombrecompleto"));
                     curso.setNrc(resultado.getInt("NRC"));
-                    curso.setBloque(resultado.getInt("bloque"));
-                    curso.setSeccion(resultado.getString("seccion"));
                     curso.setCupo(resultado.getInt("cupo"));
                     cursoConsulta.add(curso);
                 }
@@ -100,16 +98,14 @@ public class CursoDAO {
         if (conexionBD != null) {
             try {
                 String sentencia = "INSERT INTO Curso (idExperienciaEducativa, " + 
-                        "idPeriodo, idProfesor, NRC, bloque, seccion, cupo) " +
-                        "VALUES (?,?,?,?,?,?,?)";
+                        "idPeriodo, idProfesor, NRC, cupo) " +
+                        "VALUES (?,?,?,?,?)";
                 PreparedStatement prepararSentencia =  conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setInt(1, nuevoCurso.getIdExperienciaEducativa());
                 prepararSentencia.setInt(2, nuevoCurso.getIdPeriodo());
                 prepararSentencia.setInt(3, nuevoCurso.getIdProfesor());
                 prepararSentencia.setInt(4, nuevoCurso.getNrc());
-                prepararSentencia.setInt(5, nuevoCurso.getBloque());
-                prepararSentencia.setString(6, nuevoCurso.getSeccion());
-                prepararSentencia.setInt(7, nuevoCurso.getCupo());
+                prepararSentencia.setInt(5, nuevoCurso.getCupo());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;
@@ -129,17 +125,15 @@ public class CursoDAO {
         if (conexionBD != null) {
             try {
                 String sentencia = "UPDATE Curso SET idExperienciaEducativa = ?, idPeriodo = ?, " + 
-                        "idProfesor = ?, NRC = ?, bloque = ?, seccion = ?, cupo = ? " +
+                        "idProfesor = ?, NRC = ?, cupo = ? " +
                         "WHERE idCurso = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setInt(1, cursoEdicion.getIdExperienciaEducativa());
                 prepararSentencia.setInt(2, cursoEdicion.getIdPeriodo());
                 prepararSentencia.setInt(3, cursoEdicion.getIdProfesor());
                 prepararSentencia.setInt(4, cursoEdicion.getNrc());
-                prepararSentencia.setInt(5, cursoEdicion.getBloque());
-                prepararSentencia.setString(6, cursoEdicion.getSeccion());
-                prepararSentencia.setInt(7, cursoEdicion.getCupo());
-                prepararSentencia.setInt(8, cursoEdicion.getIdCurso());
+                prepararSentencia.setInt(5, cursoEdicion.getCupo());
+                prepararSentencia.setInt(6, cursoEdicion.getIdCurso());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;
