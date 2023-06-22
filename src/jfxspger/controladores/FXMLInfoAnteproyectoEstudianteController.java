@@ -63,7 +63,7 @@ public class FXMLInfoAnteproyectoEstudianteController extends FXMLPrincipalEstud
     @FXML
     private Label lbEstado;
     @FXML
-    private TextArea taFechaCreacion;
+    private Label lbFecha;
     private Anteproyecto anteproyecto;
     
     @Override
@@ -118,7 +118,7 @@ public class FXMLInfoAnteproyectoEstudianteController extends FXMLPrincipalEstud
         taLgac.setText(String.valueOf(anteproyecto.getLgac()));
         taDuracionAproximada.setText(anteproyecto.getDuracionAproximada());
         lbEstado.setText(anteproyecto.getEstado());
-        taFechaCreacion.setText(anteproyecto.getFechaCreacion());
+        lbFecha.setText(anteproyecto.getFechaCreacion());
     }
     
     private void cambiarColorEstado() {
