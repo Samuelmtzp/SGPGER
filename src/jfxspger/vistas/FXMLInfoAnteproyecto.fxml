@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -10,7 +15,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLInfoAnteproyectoController">
+<AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLInfoAnteproyectoController">
    <children>
       <Pane prefHeight="100.0" prefWidth="1920.0" style="-fx-background-color: #343838;">
          <children>
@@ -241,6 +246,18 @@
                               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../recursos/back.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnRechazar" layoutX="889.0" layoutY="918.0" mnemonicParsing="false" onAction="#clicRechazarAnteproyecto" prefHeight="67.0" prefWidth="306.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" text="Rechazar anteproyecto" visible="false" AnchorPane.bottomAnchor="115.0" AnchorPane.leftAnchor="889.0" AnchorPane.rightAnchor="420.0" AnchorPane.topAnchor="918.0">
+                           <font>
+                              <Font name="System Bold Italic" size="19.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="53.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../recursos/contract.png" />
                                  </image>
                               </ImageView>
                            </graphic>
