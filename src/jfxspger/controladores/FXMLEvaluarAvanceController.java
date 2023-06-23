@@ -5,60 +5,44 @@
 */
 package jfxspger.controladores;
 
-import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import jfxspger.modelo.dao.ActividadDAO;
 import jfxspger.modelo.dao.CalificacionDAO;
 import jfxspger.modelo.dao.DocumentoDAO;
 import jfxspger.modelo.pojo.Actividad;
 import jfxspger.modelo.pojo.Calificacion;
+import jfxspger.modelo.pojo.CalificacionRespuesta;
 import jfxspger.modelo.pojo.Documento;
 import jfxspger.modelo.pojo.DocumentoRespuesta;
-import jfxspger.modelo.pojo.Entrega;
 import jfxspger.modelo.pojo.Estudiante;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
 
-public class FXMLEvaluarAvanceController extends FXMLPrincipalAcademicoController implements Initializable {
+public class FXMLEvaluarAvanceController extends FXMLPrincipalAcademicoController {
 
-    @FXML
-    private Label lbTitulo;
-    @FXML
-    private Button btnAnteproyectos;
-    @FXML
-    private Button btnPropuestas;
-    @FXML
-    private Button btnEstudiantes;
-    @FXML
-    private Button btnRevisiones;
     private Estudiante estudiante;
-    private Entrega entrega;
     private Actividad actividadEntrega;
-    @FXML
-    private Label lbDescActividad;
     @FXML
     private Label lbTituloActividad;
     @FXML
@@ -66,76 +50,75 @@ public class FXMLEvaluarAvanceController extends FXMLPrincipalAcademicoControlle
     @FXML
     private Label lbFechaFin;
     @FXML
-    private TableView<Documento> tvEntregas;
-    @FXML
     private TableColumn cNombreDocumento;
     @FXML
-    private TableColumn cFechaEntrega;
+    private TextField tfCalificacion;
     @FXML
-    private TextField tfCalif;
+    private TableView<Documento> tvDocumentos;
     @FXML
-    private TextField tfComent;
-    private Calificacion calificacion;
-    private ObservableList<Documento> documentos;
-    private int idActividad;
-    private int idEstado;
-    String estiloError = "-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 2;";
-    String estiloNormal = "-fx-border-width: 0;";
-    private double calific;
-    @FXML
-    private Button bEliminarEval;
+    private TextArea taComentarios;
     private boolean esEdicion;
-    private int idCalificacion;
+    private ObservableList<Documento> documentos;
+    private final int ESTADO_CALIFICADA = 2;
+    @FXML
+    private TextArea taDescripcion;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTablaEntregas();
     }
     
-    public void inicializarDetalles(boolean esEdicion, Estudiante estudiante, Actividad actividadEntrega){
+    public void inicializarDetalles(boolean esEdicion, Estudiante estudiante, 
+            Actividad actividadEntrega) {
         this.esEdicion = esEdicion;
         this.estudiante = estudiante;
         this.actividadEntrega = actividadEntrega;
-        idActividad = actividadEntrega.getIdActividad();
-        idEstado = 2;
         cargarInformacionEntregas(actividadEntrega.getIdActividad());
         lbTituloActividad.setText(actividadEntrega.getTitulo());
-        lbDescActividad.setText(actividadEntrega.getDescripcion());
+        taDescripcion.setText(actividadEntrega.getDescripcion());
         lbFechaInicio.setText(actividadEntrega.getFechaInicio());
         lbFechaFin.setText(actividadEntrega.getFechaFin());
-        bEliminarEval.setVisible(false);
-        if(esEdicion){
-            tfCalif.setText(Double.toString(actividadEntrega.getCalificacion()));
-            tfComent.setText(this.actividadEntrega.getCommentCalif());
-            bEliminarEval.setVisible(true);
+        if (esEdicion) {
+//            tfCalificacion.setText(Double.toString(actividadEntrega.getCalificacion()));
+//            taComentarios.setText(this.actividadEntrega.getCommentCalif());
+            cargarDatosRevision();
         }
         
     }
     
+    private void cargarDatosRevision() {
+        CalificacionRespuesta calificacionRespuesta = CalificacionDAO.obtenerInformacionCalificacionPorActividad(
+                actividadEntrega.getIdActividad());
+        switch (calificacionRespuesta.getCodigoRespuesta()) {
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Sin conexión", 
+                        "Lo sentimos, por el momento no hay conexión", 
+                        Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
+                        "Hubo un error al cargar la información. Por favor intente más tarde", 
+                        Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                if (!calificacionRespuesta.getCalificaciones().isEmpty()){
+                    Calificacion calificacion = calificacionRespuesta.getCalificaciones().get(0);
+                    taComentarios.setText(calificacion.getComentario());
+                    tfCalificacion.setText(String.valueOf(calificacion.getCalificacion()));
+                }
+                break;
+        }    
+    }
+    
     private void configurarTablaEntregas(){
         cNombreDocumento.setCellValueFactory(new PropertyValueFactory("nombre"));
-        cFechaEntrega.setCellValueFactory(new PropertyValueFactory("fechaEntrega"));
-        tvEntregas.widthProperty().addListener(new ChangeListener<Number>(){
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, 
-                    Number newValue) {
-                TableHeaderRow header = (TableHeaderRow) tvEntregas.lookup("TableHeaderRow");
-                header.reorderingProperty().addListener(new ChangeListener<Boolean>(){
-                    @Override
-                    public void changed(ObservableValue<? extends Boolean> observable, 
-                            Boolean oldValue, Boolean newValue) {
-                        header.setReordering(false);
-                    }
-                });
-            }
-        });        
     }    
     
     private void cargarInformacionEntregas(int idActividad){
-            
         documentos = FXCollections.observableArrayList();
-            DocumentoRespuesta respuestaBD = DocumentoDAO.obtenerInformacionArchivoPorActividad(idActividad);
-        switch(respuestaBD.getCodigoRespuesta()){
+        DocumentoRespuesta respuestaBD = DocumentoDAO.
+                obtenerInformacionArchivosDeEntregaActualDeActividad(idActividad);
+        switch (respuestaBD.getCodigoRespuesta()) {
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Sin conexión", 
                         "Lo sentimos, por el momento no hay conexión", 
@@ -148,7 +131,7 @@ public class FXMLEvaluarAvanceController extends FXMLPrincipalAcademicoControlle
                 break;
             case Constantes.OPERACION_EXITOSA:
                 documentos.addAll(respuestaBD.getDocumentos());
-                tvEntregas.setItems(documentos);                
+                tvDocumentos.setItems(documentos);                
                 break;
         }    
     }
@@ -158,10 +141,9 @@ public class FXMLEvaluarAvanceController extends FXMLPrincipalAcademicoControlle
         boolean cerrarVentana = Utilidades.mostrarDialogoConfirmacion(
                 "Regresar a ventana anterior", 
                 "“¿Está seguro de que desea regresar? La información ingresada no se guardará.");
-            if(cerrarVentana){
-                regresarAvances();
-            }
-        
+        if(cerrarVentana){
+            regresarAvances();
+        }
     }
 
     @FXML
@@ -172,38 +154,33 @@ public class FXMLEvaluarAvanceController extends FXMLPrincipalAcademicoControlle
     private void validarCampos(){
         establecerEstiloNormal();
         boolean datosValidos = true;        
-        String calif = tfCalif.getText().trim();
-        String comen = tfComent.getText().trim();
+        String puntaje = tfCalificacion.getText().trim();
+        String comentarios = taComentarios.getText().trim();
+        double puntajeConvertido = 0;
         
-        if(calif.isEmpty()){
-            tfCalif.setStyle(estiloError);
+        if (puntaje.isEmpty()) {
+            tfCalificacion.setStyle(Constantes.estiloError);
             datosValidos = false;
-        }
-        
-        if(comen.isEmpty()){
-            tfComent.setStyle(estiloError);
-            datosValidos = false;
-        }
-        
-        try{
-            calific = Double.parseDouble(calif);
-            if (calific < 0 || calific > 10) {
-                tfCalif.setStyle(estiloError);
-                datosValidos=false;
+        } else {
+            puntajeConvertido = Double.parseDouble(puntaje);
+            if (puntajeConvertido < 0 || puntajeConvertido > 10) {
+                tfCalificacion.setStyle(Constantes.estiloError);
+                datosValidos = false;
             }
-        }catch(NumberFormatException e){
-            tfCalif.setStyle(estiloError);
-            datosValidos=false;
-        }                                
+        }
         
+        if (comentarios.isEmpty()) {
+            taComentarios.setStyle(Constantes.estiloError);
+            datosValidos = false;
+        }
         
-        if(datosValidos){
+        if (datosValidos) {
             Calificacion calificacion = new Calificacion();
-            calificacion.setCalificacion(calific);
-            calificacion.setComentario(comen);
-            calificacion.setIdActividad(idActividad);
+            calificacion.setCalificacion(puntajeConvertido);
+            calificacion.setComentario(comentarios);
+            calificacion.setIdActividad(actividadEntrega.getIdActividad());
             
-            if(esEdicion){
+            if (esEdicion) {
                 calificacion.setIdCalificacion(actividadEntrega.getIdCalificacion());
                 modificarCalificacion(calificacion);
             } else {
@@ -214,9 +191,9 @@ public class FXMLEvaluarAvanceController extends FXMLPrincipalAcademicoControlle
                 
     }
     
-    private void registrarCalificacion(Calificacion nuevaCalificacion){
+    private void registrarCalificacion(Calificacion nuevaCalificacion) {
         int codigoRespuesta = CalificacionDAO.guardarCalificacion(nuevaCalificacion);
-        switch(codigoRespuesta){
+        switch (codigoRespuesta) {
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Sin conexión", 
                         "Lo sentimos, por el momento no hay conexión", Alert.AlertType.ERROR);
@@ -227,12 +204,12 @@ public class FXMLEvaluarAvanceController extends FXMLPrincipalAcademicoControlle
                         Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:                
-                actualizaEstadoActividad(idEstado, idActividad);
+                actualizaEstadoActividad(ESTADO_CALIFICADA, actividadEntrega.getIdActividad());
                 break;
         }
     }
     
-    private void actualizaEstadoActividad(int idEstado, int idActividad){
+    private void actualizaEstadoActividad(int idEstado, int idActividad) {
         int codigoRespuesta = ActividadDAO.actualizarEstadoActividad(idEstado, idActividad);
         switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
@@ -241,7 +218,8 @@ public class FXMLEvaluarAvanceController extends FXMLPrincipalAcademicoControlle
                 break;
             case Constantes.ERROR_CONSULTA:
                 Utilidades.mostrarDialogoSimple("Error al actualizar el estado de la actividad", 
-                        "Hubo un error al actualizar el estado de la actividad. Por favor intente más tarde", 
+                        "Hubo un error al actualizar el estado de la actividad. "
+                        + "Por favor intente más tarde", 
                         Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
@@ -249,13 +227,11 @@ public class FXMLEvaluarAvanceController extends FXMLPrincipalAcademicoControlle
                         "Operacion realizada correctamente.", 
                         Alert.AlertType.INFORMATION);
                 regresarAvances();
-                
                 break;
         }
     }
     
-    private void modificarCalificacion(Calificacion calificacion){
-        System.out.println(calificacion.toString());
+    private void modificarCalificacion(Calificacion calificacion) {
         int codigoRespuesta = CalificacionDAO.modificarCalificacion(calificacion);
         switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
@@ -267,19 +243,19 @@ public class FXMLEvaluarAvanceController extends FXMLPrincipalAcademicoControlle
                         "Hubo un error al modificar la calificacion. Por favor intente más tarde", 
                         Alert.AlertType.WARNING);
                 break;
-            case Constantes.OPERACION_EXITOSA:                
-                actualizaEstadoActividad(idEstado, idActividad);
+//            case Constantes.OPERACION_EXITOSA:                
+//                actualizaEstadoActividad(idEstado, idActividad);
                 
-                break;
+//                break;
         }
     }
     
     private void establecerEstiloNormal(){
-        tfCalif.setStyle(estiloNormal);
-        tfComent.setStyle(estiloNormal);
+        tfCalificacion.setStyle(Constantes.estiloNormal);
+        taComentarios.setStyle(Constantes.estiloNormal);
     }
     
-    private void regresarAvances(){
+    private void regresarAvances() {
         try {
             FXMLLoader accesoControlador = new FXMLLoader(jfxspger.JFXSPGER.
                     class.getResource("vistas/FXMLAvancesEstudiante.fxml"));        
@@ -289,7 +265,7 @@ public class FXMLEvaluarAvanceController extends FXMLPrincipalAcademicoControlle
             avances.inicializarEntregas(estudiante);
             
             Scene sceneAvances = new Scene(vista);
-            Stage escenarioAvances = (Stage) tfCalif.getScene().getWindow();
+            Stage escenarioAvances = (Stage) lbTitulo.getScene().getWindow();
             escenarioAvances.setScene(sceneAvances);
             escenarioAvances.setTitle("Avances de estudiante");            
             escenarioAvances.show();
@@ -300,7 +276,7 @@ public class FXMLEvaluarAvanceController extends FXMLPrincipalAcademicoControlle
 
     @FXML
     private void clicBtnAbrirArchivo(ActionEvent event) {
-        Documento documentoSeleccionado = tvEntregas.getSelectionModel().getSelectedItem();
+        Documento documentoSeleccionado = tvDocumentos.getSelectionModel().getSelectedItem();
         if (documentoSeleccionado != null) {
             File archivo = guardarDocumentoTemporal(documentoSeleccionado);
             if (archivo != null) {
@@ -321,7 +297,9 @@ public class FXMLEvaluarAvanceController extends FXMLPrincipalAcademicoControlle
         try {
             Desktop.getDesktop().open(archivo);
         } catch (IOException e) {
-            Utilidades.mostrarDialogoSimple("Error al abrir el archivo", "Hubo un error al abrir el archivo. Por favor intentelo más tarde.", Alert.AlertType.ERROR);
+            Utilidades.mostrarDialogoSimple("Error al abrir el archivo", 
+                    "Hubo un error al abrir el archivo. Por favor intentelo más tarde.", 
+                    Alert.AlertType.ERROR);
         }
     }
 
@@ -343,38 +321,13 @@ public class FXMLEvaluarAvanceController extends FXMLPrincipalAcademicoControlle
         return null;
         }
     }
-
-    @FXML
-    private void clicBtnEliminarEvaluacion(ActionEvent event) {
-        boolean eliminarAct = Utilidades.mostrarDialogoConfirmacion(
-                "Eliminar calificacion", 
-                "¿Estás seguro que deseas eliminar la calificacion asignada?");
-        
-        if(eliminarAct){
-            idEstado = 1;
-            idCalificacion = actividadEntrega.getIdCalificacion();
-            eliminarCalificacion(idCalificacion, idEstado);
-        }
-    }
     
-    private void eliminarCalificacion (int idCalificacion,int idEstado){
-        int codigoRespuesta = CalificacionDAO.eliminarCalificacion(idCalificacion);                
-        switch(codigoRespuesta){
-            case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Sin conexión", 
-                        "Lo sentimos, por el momento no hay conexión", 
-                        Alert.AlertType.ERROR);
-                break;
-            case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error al eliminar", 
-                        "Hubo un error al eliminar la calificacion. Por favor intente más tarde", 
-                        Alert.AlertType.WARNING);
-                break;
-            case Constantes.OPERACION_EXITOSA:
-                actualizaEstadoActividad(idEstado, idActividad);
-                break;
-        }        
-    }   
+    @FXML
+    private void permitirInputSoloNumeros(KeyEvent event) {
+        String entrada = event.getCharacter();
+        if (!".0123456789".contains(entrada)) 
+            event.consume();
+    }
 
 }
 

@@ -117,7 +117,7 @@
             </ImageView>
          </children>
       </Pane>
-      <Button layoutX="1610.0" layoutY="908.0" mnemonicParsing="false" onAction="#clicBtnGuardar" prefHeight="71.0" prefWidth="253.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Realizar entrega" textFill="WHITE">
+      <Button layoutX="1610.0" layoutY="908.0" mnemonicParsing="false" onAction="#clicBtnRealizarEntrega" prefHeight="71.0" prefWidth="253.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Realizar entrega" textFill="WHITE">
          <effect>
             <DropShadow blurType="ONE_PASS_BOX" />
          </effect>
@@ -125,12 +125,12 @@
             <Font name="System Bold" size="25.0" />
          </font>
       </Button>
-      <Label layoutX="1522.0" layoutY="401.0" text="FECHA DE FIN">
+      <Label layoutX="1024.0" layoutY="257.0" text="FECHA DE FIN">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <Label layoutX="1499.0" layoutY="257.0" text="FECHA DE INICIO">
+      <Label layoutX="704.0" layoutY="257.0" text="FECHA DE INICIO">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
@@ -145,17 +145,17 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <Label fx:id="lbFechaInicio" layoutX="1471.0" layoutY="306.0" prefHeight="45.0" prefWidth="300.0" text="Fecha inicio">
+      <Label fx:id="lbFechaInicio" layoutX="704.0" layoutY="326.0" prefHeight="45.0" prefWidth="300.0" text="Fecha inicio">
          <font>
             <Font size="22.0" />
          </font>
       </Label>
-      <Label fx:id="lbFechaFin" layoutX="1471.0" layoutY="454.0" prefHeight="45.0" prefWidth="300.0" text="Fecha fin">
+      <Label fx:id="lbFechaFin" layoutX="1024.0" layoutY="326.0" prefHeight="45.0" prefWidth="300.0" text="Fecha fin">
          <font>
             <Font size="22.0" />
          </font>
       </Label>
-      <Button layoutX="1671.0" layoutY="781.0" mnemonicParsing="false" onAction="#clicBtnCargarArchivo" prefHeight="46.0" prefWidth="198.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Subir archivo" textFill="WHITE">
+      <Button layoutX="1671.0" layoutY="781.0" mnemonicParsing="false" onAction="#clicBtnSubirArchivo" prefHeight="46.0" prefWidth="198.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Subir archivo" textFill="WHITE">
          <effect>
             <DropShadow blurType="ONE_PASS_BOX" />
          </effect>
@@ -163,22 +163,19 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </Button>
-      <Label fx:id="lbActividad" layoutX="352.0" layoutY="911.0" prefHeight="45.0" prefWidth="300.0" textAlignment="CENTER">
-         <font>
-            <Font size="22.0" />
-         </font>
-      </Label>
       <ScrollPane layoutX="1412.0" layoutY="525.0" prefHeight="239.0" prefWidth="457.0">
          <content>
-            <TableView fx:id="tvEntregas" prefHeight="237.0" prefWidth="455.0">
+            <TableView fx:id="tvArchivos" prefHeight="237.0" prefWidth="455.0">
               <columns>
-                <TableColumn fx:id="cNombreDocumento" prefWidth="269.0" text="Nombre del documento" />
-                <TableColumn fx:id="cFechaEntrega" prefWidth="185.0" text="Fecha de entrega" />
+                <TableColumn fx:id="cNombreDocumento" prefWidth="269.0" text="Nombre de archivo" />
               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
             </TableView>
          </content>
       </ScrollPane>
-      <Button fx:id="bEliminarDocumento" layoutX="1425.0" layoutY="781.0" mnemonicParsing="false" onAction="#clicBtnEliminarEntrega" prefHeight="46.0" prefWidth="215.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" text="Remover archivo" textFill="WHITE">
+      <Button layoutX="1425.0" layoutY="781.0" mnemonicParsing="false" onAction="#clicBtnRemoverArchivo" prefHeight="46.0" prefWidth="215.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" text="Remover archivo" textFill="WHITE">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
@@ -188,25 +185,30 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <Label fx:id="lbCalif" layoutX="1471.0" layoutY="177.0" prefHeight="45.0" prefWidth="300.0">
+      <Label fx:id="lbCalificacion" layoutX="1351.0" layoutY="326.0" prefHeight="45.0" prefWidth="300.0">
          <font>
             <Font size="22.0" />
          </font>
       </Label>
-      <Label layoutX="1540.0" layoutY="122.0" text="Calificacion">
+      <Label layoutX="1351.0" layoutY="257.0" text="Calificacion">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <TextArea fx:id="lbDescActividad" editable="false" layoutX="396.0" layoutY="549.0" prefHeight="142.0" prefWidth="883.0" wrapText="true">
+      <TextArea fx:id="taDescripcion" editable="false" layoutX="396.0" layoutY="549.0" prefHeight="142.0" prefWidth="883.0" wrapText="true">
          <font>
             <Font size="20.0" />
          </font>
       </TextArea>
-      <TextArea fx:id="lbComentRev" editable="false" layoutX="397.0" layoutY="804.0" prefHeight="179.0" prefWidth="880.0" wrapText="true">
+      <TextArea fx:id="taComentariosRevision" editable="false" layoutX="394.0" layoutY="804.0" prefHeight="179.0" prefWidth="883.0" wrapText="true">
          <font>
             <Font size="20.0" />
          </font>
       </TextArea>
+      <Label layoutX="1564.0" layoutY="464.0" text="ARCHIVOS">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

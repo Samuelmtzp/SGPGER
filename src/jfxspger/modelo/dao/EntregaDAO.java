@@ -152,19 +152,16 @@ public class EntregaDAO {
         return respuesta;
     }
     
-    public static EntregaRespuesta guardarEntrega(Entrega nuevaEntrega) {
+    public static EntregaRespuesta guardarEntrega(int idActividad) {
         EntregaRespuesta respuesta = new EntregaRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
-                String sentencia = "INSERT INTO Entrega (idActividad, " + 
-                        "fechaEntrega, fechaCreacion) " +
-                        "VALUES (?,?,?)";
+                String sentencia = "INSERT INTO Entrega (idActividad, fechaEntrega) " +
+                        "VALUES (?, CURRENT_TIMESTAMP())";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia, 
                                 Statement.RETURN_GENERATED_KEYS);
-                prepararSentencia.setInt(1, nuevaEntrega.getIdActividad());
-                prepararSentencia.setString(2, nuevaEntrega.getFechaEntrega());
-                prepararSentencia.setString(3, nuevaEntrega.getFechaCreacion());
+                prepararSentencia.setInt(1, idActividad);
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 if (filasAfectadas == 1) {
                     respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
@@ -177,37 +174,10 @@ public class EntregaDAO {
                     respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
                 conexionBD.close();
             } catch (SQLException e) {
-                e.printStackTrace();
                 respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
             }
         } else {
             respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
-        }
-        return respuesta;
-    }
-    
-    public static int modificarEntrega(Entrega entregaEdicion) {
-        int respuesta;
-        Connection conexionBD = ConexionBD.abrirConexionBD();
-        if (conexionBD != null) {
-            try {
-                String sentencia = "UPDATE Entrega SET idActividad = ?, " + 
-                        "fechaEntrega = ?, fechaCreacion = ?" +
-                        "WHERE idEntrega = ?";
-                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
-                prepararSentencia.setInt(1, entregaEdicion.getIdActividad());
-                prepararSentencia.setString(2, entregaEdicion.getFechaEntrega());
-                prepararSentencia.setString(3, entregaEdicion.getFechaCreacion());
-                prepararSentencia.setInt(4, entregaEdicion.getIdEntrega());
-                int filasAfectadas = prepararSentencia.executeUpdate();
-                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
-                        Constantes.ERROR_CONSULTA;
-                conexionBD.close();
-            } catch (SQLException e) {
-                respuesta = Constantes.ERROR_CONSULTA;
-            }
-        } else {
-            respuesta = Constantes.ERROR_CONEXION;
         }
         return respuesta;
     }
