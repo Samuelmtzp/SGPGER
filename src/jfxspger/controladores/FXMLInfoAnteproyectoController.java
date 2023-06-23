@@ -145,11 +145,22 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
            String fecha = tiempo.toString();
            revisionAnteproyecto.setFechaRevision(fecha); 
         if(esValido){
-            registrarRevision(revisionAnteproyecto);
             if(boton==1){
-                actualizarEstadoDisponibleAnteproyecto(anteproyecto.getIdAnteproyecto());
+                boolean validar = Utilidades.mostrarDialogoConfirmacion(
+                    "Validar anteproyecto", 
+                    "¿Estás seguro de que deseas validar el anteproyecto?");
+                if(validar){
+                   registrarRevision(revisionAnteproyecto);
+                   actualizarEstadoDisponibleAnteproyecto(anteproyecto.getIdAnteproyecto());
+                }
             }else{
-                actualizarEstadoRechazadoAnteproyecto(anteproyecto.getIdAnteproyecto());
+                boolean rechazar = Utilidades.mostrarDialogoConfirmacion(
+                    "Rechazar anteproyecto", 
+                    "¿Estás seguro de que deseas rechazar el anteproyecto?");
+                if(rechazar){
+                   registrarRevision(revisionAnteproyecto);
+                   actualizarEstadoRechazadoAnteproyecto(anteproyecto.getIdAnteproyecto());
+                }
             }
         }
     }
@@ -328,7 +339,7 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
     @FXML
     private void clicRechazarAnteproyecto(ActionEvent event) {
         int boton=0;
-         validarRegistro(boton);
+          validarRegistro(boton);
     }
 
 }

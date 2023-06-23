@@ -112,7 +112,8 @@ public class FXMLAsignarEstudiantesAnteproyectoController extends FXMLPrincipalA
                 break;
             case Constantes.ERROR_CONSULTA:
                     Utilidades.mostrarDialogoSimple("Error al cargar los datos", 
-                    "Hubo un error al cargar la información, por favor inténtelo más tarde", 
+                    "Hubo un error al cargar la información de los estudiantes disponibles, "
+                            + "por favor inténtelo más tarde", 
                     Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
@@ -137,7 +138,6 @@ public class FXMLAsignarEstudiantesAnteproyectoController extends FXMLPrincipalA
             int posicionEstudianteDisponible = tvAlumnosDisponibles.
                     getSelectionModel().getSelectedIndex();
             if (posicionEstudianteDisponible != -1) {
-                Usuario usarioprueba =  tvAlumnosDisponibles.getSelectionModel().getSelectedItem();
                 Estudiante estudianteEnAnteproyectoRegistro = new Estudiante();
                 estudianteEnAnteproyectoRegistro.setIdAnteproyecto(anteproyecto.
                         getIdAnteproyecto());
@@ -212,7 +212,7 @@ public class FXMLAsignarEstudiantesAnteproyectoController extends FXMLPrincipalA
             }
         } else
             Utilidades.mostrarDialogoSimple("Selecciona un Alumno", 
-                   "Selecciona a un alumno en la tabla de alumnos asigandos", 
+                   "Selecciona a un alumno en la tabla de alumnos asignados", 
                    Alert.AlertType.WARNING);
     }
     
@@ -237,7 +237,8 @@ public class FXMLAsignarEstudiantesAnteproyectoController extends FXMLPrincipalA
                         Alert.AlertType.INFORMATION);
                 cargarDatosTablaEstudiantesAsignados(anteproyecto);
                 cargarDatosTablaEstudiantesDisponibles();
-                actualizarEliminarCantidadAlumnosAnteproyecto(anteproyecto.getIdAnteproyecto());
+                actualizarEliminarCantidadAlumnosAnteproyecto(
+                        anteproyecto.getIdAnteproyecto());
             break;
         }
     }
@@ -276,7 +277,7 @@ public class FXMLAsignarEstudiantesAnteproyectoController extends FXMLPrincipalA
                         Alert.AlertType.WARNING);
             break;
             case Constantes.OPERACION_EXITOSA:
-                actualizarEstadoDisponibleAnteproyecto(anteproyecto.getIdAnteproyecto());
+               actualizarEstadoDisponibleAnteproyecto(anteproyecto.getIdAnteproyecto());
             break;
         }
     }
@@ -285,13 +286,14 @@ public class FXMLAsignarEstudiantesAnteproyectoController extends FXMLPrincipalA
         int respuesta = AnteproyectoDAO.actualizarEstadoDisponibleAnteproyecto(idAnteproyecto);
         switch(respuesta) {
             case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Error de conexion", "El anteproyecto " + 
-                        "no pudo ser actualizado debido a un error de conexion.", 
+                Utilidades.mostrarDialogoSimple("Error de conexion", "El estado del "
+                        + "anteproyecto no pudo ser actualizado a disponible debido "
+                        + "a un error de conexion.", 
                         Alert.AlertType.ERROR);
             break;
             case Constantes.ERROR_CONSULTA:
             Utilidades.mostrarDialogoSimple("Error al actualizar anteproyecto",
-                        "No se puedo actualizar el anteproyecto,"
+                        "No se puedo actualizar el estado del anteproyecto a disponible,"
                         + "por favor inténtelo más tarde", 
                         Alert.AlertType.WARNING);
             break;
@@ -304,13 +306,14 @@ public class FXMLAsignarEstudiantesAnteproyectoController extends FXMLPrincipalA
         int respuesta = AnteproyectoDAO.actualizarEstadoNoDisponibleAnteproyecto(idAnteproyecto);
         switch(respuesta) {
             case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Error de conexion", "El anteproyecto " + 
-                        "no pudo ser actualizado debido a un error de conexion.", 
+                Utilidades.mostrarDialogoSimple("Error de conexion", "El estado del "
+                        + "anteproyecto no pudo ser actualizad a no disponible debido a "
+                        + "un error de conexion.", 
                         Alert.AlertType.ERROR);
             break;
             case Constantes.ERROR_CONSULTA:
             Utilidades.mostrarDialogoSimple("Error al actualizar anteproyecto",
-                        "No se puedo actualizar el anteproyecto,"
+                        "No se puedo actualizar el estado del anteproyecto a no disponible,"
                         + "por favor inténtelo más tarde", 
                         Alert.AlertType.WARNING);
             break;
