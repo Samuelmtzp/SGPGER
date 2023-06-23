@@ -35,6 +35,7 @@ public class AnteproyectoDAO {
                         + "duracionAproximada.IdDuracionAproximada, "
                         + "duracionAproximada.duracionAproximada, nombreTrabajo, requisitos, "
                         + "maximoAlumnosParticipantes, cantidadAlumnosParticipantes, "
+                        + "cantidadCodirectores, maximoCodirectores, "
                         + "descripcionProyectoInvestigacion, descripcionTrabajoRecepcional, "
                         + "resultadosEsperados, bibliografiaRecomendada, "
                         + "anteproyecto.fechaCreacion "
@@ -61,33 +62,46 @@ public class AnteproyectoDAO {
                 {
                     Anteproyecto anteproyecto = new Anteproyecto();
                     anteproyecto.setIdAnteproyecto(resultado.getInt("idAnteproyecto"));
-                    anteproyecto.setIdCuerpoAcademico(resultado.getInt("Anteproyecto.idCuerpoAcademico"));
-                    anteproyecto.setCuerpoAcademico(resultado.getString("CuerpoAcademico.nombre"));
+                    anteproyecto.setIdCuerpoAcademico(resultado.getInt(
+                            "Anteproyecto.idCuerpoAcademico"));
+                    anteproyecto.setCuerpoAcademico(resultado.getString(
+                            "CuerpoAcademico.nombre"));
                     anteproyecto.setIdDirector(resultado.getInt("idDirector"));
                     anteproyecto.setDirector(resultado.getString("directorNombre"));
                     anteproyecto.setIdEstado(resultado.getInt("idEstado"));
                     anteproyecto.setEstado(resultado.getString("estado"));
-                    anteproyecto.setIdModalidad(resultado.getInt("Anteproyecto.idModalidad"));
+                    anteproyecto.setIdModalidad(resultado.getInt(
+                            "Anteproyecto.idModalidad"));
                     anteproyecto.setModalidad(resultado.getString("Modalidad.modalidad"));
                     anteproyecto.setIdLgac(resultado.getInt("Anteproyecto.idLgac"));
                     anteproyecto.setLgac(resultado.getString("Lgac.nombre"));
                     anteproyecto.setProyectoInvestigacion(
                             resultado.getString("proyectoInvestigacion"));
-                    anteproyecto.setLineaInvestigacion(resultado.getString("lineaInvestigacion"));
-                    anteproyecto.setIdDuracionAproximada(resultado.getInt("idDuracionAproximada"));
-                    anteproyecto.setDuracionAproximada(resultado.getString("duracionAproximada"));
+                    anteproyecto.setLineaInvestigacion(resultado.getString(
+                            "lineaInvestigacion"));
+                    anteproyecto.setIdDuracionAproximada(resultado.getInt(
+                            "idDuracionAproximada"));
+                    anteproyecto.setDuracionAproximada(resultado.getString(
+                            "duracionAproximada"));
                     anteproyecto.setNombreTrabajo(resultado.getString("nombreTrabajo"));
                     anteproyecto.setRequisitos(resultado.getString("requisitos"));
-                    anteproyecto.setMaximoAlumnosParticipantes(resultado.getInt("maximoAlumnosParticipantes"));
+                    anteproyecto.setMaximoAlumnosParticipantes(
+                    resultado.getInt("maximoAlumnosParticipantes"));
                     anteproyecto.setCantidadAlumnosParticipantes(
-                            resultado.getInt("cantidadAlumnosParticipantes"));
+                 resultado.getInt("cantidadAlumnosParticipantes"));
+                    anteproyecto.setCantidadCodirectores(resultado.getInt(
+                            "cantidadCodirectores"));
+                    anteproyecto.setCantidadMaximaCodirectores(resultado.getInt(
+                            "maximoCodirectores"));
                     anteproyecto.setDescripcionProyectoInvestigacion(
-                            resultado.getString("descripcionProyectoInvestigacion"));
+                            resultado.getString(
+                                    "descripcionProyectoInvestigacion"));
                     anteproyecto.setDescripcionTrabajoRecepcional(
-                            resultado.getString("descripcionTrabajoRecepcional"));
-                    anteproyecto.setResultadosEsperados(resultado.getString("resultadosEsperados"));
+            resultado.getString("descripcionTrabajoRecepcional"));
+                    anteproyecto.setResultadosEsperados(resultado.getString(
+                            "resultadosEsperados"));
                     anteproyecto.setBibliografiaRecomendada(
-                            resultado.getString((String) "bibliografiaRecomendada"));
+                        resultado.getString((String) "bibliografiaRecomendada"));
                     anteproyecto.setFechaCreacion(Utilidades.convertirTimeStampAStringFecha(
                             resultado.getTimestamp("fechaCreacion")));
                     anteproyectoConsulta.add(anteproyecto);
@@ -119,6 +133,7 @@ public class AnteproyectoDAO {
                         + "duracionAproximada.IdDuracionAproximada, "
                         + "duracionAproximada.duracionAproximada, nombreTrabajo, requisitos, "
                         + "maximoAlumnosParticipantes, cantidadAlumnosParticipantes, "
+                        + "cantidadCodirectores, maximoCodirectores, "
                         + "descripcionProyectoInvestigacion, descripcionTrabajoRecepcional, "
                         + "resultadosEsperados, bibliografiaRecomendada, "
                         + "anteproyecto.fechaCreacion "
@@ -169,6 +184,8 @@ public class AnteproyectoDAO {
                             "maximoAlumnosParticipantes"));
                     anteproyecto.setCantidadAlumnosParticipantes(
                             resultado.getInt("cantidadAlumnosParticipantes"));
+                    anteproyecto.setCantidadCodirectores(resultado.getInt("cantidadCodirectores"));
+                    anteproyecto.setCantidadMaximaCodirectores(resultado.getInt("maximoCodirectores"));
                     anteproyecto.setDescripcionProyectoInvestigacion(
                             resultado.getString("descripcionProyectoInvestigacion"));
                     anteproyecto.setDescripcionTrabajoRecepcional(
@@ -208,6 +225,7 @@ public class AnteproyectoDAO {
                         + "duracionAproximada.IdDuracionAproximada, "
                         + "duracionAproximada.duracionAproximada, nombreTrabajo, requisitos, "
                         + "maximoAlumnosParticipantes, cantidadAlumnosParticipantes, "
+                        + "cantidadCodirectores, maximoCodirectores, "
                         + "descripcionProyectoInvestigacion, descripcionTrabajoRecepcional, "
                         + "resultadosEsperados, bibliografiaRecomendada, "
                         + "anteproyecto.fechaCreacion "
@@ -258,6 +276,8 @@ public class AnteproyectoDAO {
                             getInt("maximoAlumnosParticipantes"));
                     anteproyecto.setCantidadAlumnosParticipantes(
                             resultado.getInt("cantidadAlumnosParticipantes"));
+                    anteproyecto.setCantidadCodirectores(resultado.getInt("cantidadCodirectores"));
+                    anteproyecto.setCantidadMaximaCodirectores(resultado.getInt("maximoCodirectores"));
                     anteproyecto.setDescripcionProyectoInvestigacion(
                             resultado.getString("descripcionProyectoInvestigacion"));
                     anteproyecto.setDescripcionTrabajoRecepcional(
@@ -297,6 +317,7 @@ public class AnteproyectoDAO {
                         + "duracionAproximada.IdDuracionAproximada, "
                         + "duracionAproximada.duracionAproximada, nombreTrabajo, requisitos, "
                         + "maximoAlumnosParticipantes, cantidadAlumnosParticipantes, "
+                        + "cantidadCodirectores, maximoCodirectores, "
                         + "descripcionProyectoInvestigacion, descripcionTrabajoRecepcional, "
                         + "resultadosEsperados, bibliografiaRecomendada, "
                         + "anteproyecto.fechaCreacion "
@@ -348,6 +369,8 @@ public class AnteproyectoDAO {
                             getInt("maximoAlumnosParticipantes"));
                     anteproyecto.setCantidadAlumnosParticipantes(
                             resultado.getInt("cantidadAlumnosParticipantes"));
+                    anteproyecto.setCantidadCodirectores(resultado.getInt("cantidadCodirectores"));
+                    anteproyecto.setCantidadMaximaCodirectores(resultado.getInt("maximoCodirectores"));
                     anteproyecto.setDescripcionProyectoInvestigacion(
                             resultado.getString("descripcionProyectoInvestigacion"));
                     anteproyecto.setDescripcionTrabajoRecepcional(
@@ -381,8 +404,9 @@ public class AnteproyectoDAO {
                         "lineaInvestigacion, idDuracionAproximada, nombreTrabajo, " + 
                         "requisitos, maximoAlumnosParticipantes, cantidadAlumnosParticipantes, " + 
                         "descripcionProyectoInvestigacion, descripcionTrabajoRecepcional, "+ 
-                        "resultadosEsperados, bibliografiaRecomendada, fechaCreacion) " +
-                        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP())";
+                        "resultadosEsperados, bibliografiaRecomendada, fechaCreacion, " +
+                        "cantidadCodirectores, maximoCodirectores) " +
+                        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP(),0,2)";
 
                 PreparedStatement prepararSentencia =  conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setInt(1, nuevoAnteproyecto.getIdCuerpoAcademico());
@@ -481,13 +505,35 @@ public class AnteproyectoDAO {
         return respuesta;
     }
     
-     public static int incrementarContadorAlumnosEnAnteproyecto(int idAnteproyecto) {
+    public static int incrementarContadorAlumnosEnAnteproyecto(int idAnteproyecto) {
         int respuesta;
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
                 String sentencia = "UPDATE anteproyecto SET cantidadAlumnosParticipantes = "
                         + "cantidadAlumnosParticipantes + 1 WHERE idAnteproyecto = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt(1, idAnteproyecto);
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
+                        Constantes.ERROR_CONSULTA;
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta = Constantes.ERROR_CONSULTA;
+            }
+        } else {
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
+      public static int incrementarContadorCodirectoresEnAnteproyecto(int idAnteproyecto) {
+        int respuesta;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null) {
+            try {
+                String sentencia = "UPDATE anteproyecto SET cantidadCodirectores = "
+                        + "cantidadCodirectores + 1 WHERE idAnteproyecto = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setInt(1, idAnteproyecto);
                 int filasAfectadas = prepararSentencia.executeUpdate();
@@ -510,6 +556,28 @@ public class AnteproyectoDAO {
             try {
                 String sentencia = "UPDATE anteproyecto SET cantidadAlumnosParticipantes = "
                         + "cantidadAlumnosParticipantes - 1 WHERE idAnteproyecto = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt(1, idAnteproyecto);
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
+                        Constantes.ERROR_CONSULTA;
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta = Constantes.ERROR_CONSULTA;
+            }
+        } else {
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
+    public static int decrementarContadorCodirectoresEnAnteproyecto(int idAnteproyecto) {
+        int respuesta;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null) {
+            try {
+                String sentencia = "UPDATE anteproyecto SET cantidadCodirectores = "
+                        + "cantidadCodirectores - 1 WHERE idAnteproyecto = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setInt(1, idAnteproyecto);
                 int filasAfectadas = prepararSentencia.executeUpdate();
@@ -591,7 +659,8 @@ public class AnteproyectoDAO {
         return respuesta;
     }
     
-    public static AnteproyectoRespuesta obtenerInformacionAnteproyectoConValidacionPendiente(int idCuerpoAcademico) {
+    public static AnteproyectoRespuesta obtenerInformacionAnteproyectoConValidacionPendiente(
+            int idCuerpoAcademico) {
         AnteproyectoRespuesta respuesta = new AnteproyectoRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);

@@ -81,14 +81,6 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     private Label lbTitulo;
     @FXML
     private Button btnCodirectores;
-    @FXML
-    private Button btnAnteproyectos;
-    @FXML
-    private Button btnPropuestas;
-    @FXML
-    private Button btnEstudiantes;
-    @FXML
-    private Button btnRevisiones;
    
 
     @Override
@@ -302,6 +294,24 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
         
     }
     
+    private void irAsignarCodirectores(Anteproyecto anteproyecto){
+        try{
+            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.
+                    JFXSPGER.class.getResource("/jfxspger/vistas/FXMLAsignarCodirectores.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLAsignarCodirectoresController formulario = accesoControlador.getController();
+            Scene sceneFormulario = new Scene(vista);
+            Stage escenarioPrincipal = (Stage) lbTitulo.getScene().getWindow();
+            escenarioPrincipal.setTitle("Informacion de anteproyecto");
+            escenarioPrincipal.setScene(sceneFormulario);
+            formulario.inicializarInformacion(anteproyecto);
+        }catch(IOException e){
+            Utilidades.mostrarDialogoSimple("Error", 
+                    "No se puede mostrar la pantalla de informacion de anteproyecto", 
+                    Alert.AlertType.ERROR);  
+        }
+    }
+    
     private void configurarBusquedaTabla() {
         if (!anteproyectos.isEmpty()) {
             FilteredList<Anteproyecto> filtradoAnteproyecto = 
@@ -418,10 +428,10 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
         Anteproyecto anteproyectoSeleccionado = tvAnteproyecto.getSelectionModel().getSelectedItem();
             int pos = tvAnteproyecto.getSelectionModel().getSelectedIndex();
             if(pos != -1){
-                //irAsignarCodirectores(anteproyectoSeleccionado);
+                irAsignarCodirectores(anteproyectoSeleccionado);
             }else{
                 Utilidades.mostrarDialogoSimple("Selecciona un anteproyecto", 
-              "Selecciona el registro en la tabla del anteproyecto para asignar estudiantes", 
+              "Selecciona el registro en la tabla del anteproyecto para asignar codirectore", 
                  Alert.AlertType.WARNING);
             }
     }

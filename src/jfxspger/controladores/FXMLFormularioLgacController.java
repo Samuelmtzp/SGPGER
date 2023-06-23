@@ -149,7 +149,7 @@ public class FXMLFormularioLgacController extends FXMLPrincipalAdministradorCont
         switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Error de conexion", 
-                        "La LGAC no pudo ser guardadp debido a un error en su conexión...", 
+                        "La LGAC no pudo ser guardada debido a un error en su conexión...", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
@@ -199,7 +199,8 @@ public class FXMLFormularioLgacController extends FXMLPrincipalAdministradorCont
                 break;
             case Constantes.ERROR_CONSULTA:
                 Utilidades.mostrarDialogoSimple("Error de consulta", 
-                        "Por el momento no se pudo obtener la informacion", 
+                        "Por el momento no se pudo obtener la informacion "
+                                + "de los cuerpos academicos", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.OPERACION_EXITOSA:

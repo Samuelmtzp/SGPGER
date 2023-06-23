@@ -622,7 +622,7 @@ public class UsuarioDAO {
         if (conexionBD != null) {
             try {
                 String consulta = "SELECT usuario.idUsuario, usuario.nombre, "
-                        + "usuario.apellidoPaterno, usuario.apellidoMaterno "
+                        + "usuario.apellidoPaterno, usuario.apellidoMaterno,Academico.idAcademico "
                         + "FROM Usuario "
                         + "INNER JOIN Academico "
                         + "ON Usuario.idUsuario = Academico.idUsuario "
@@ -640,6 +640,53 @@ public class UsuarioDAO {
                     usuario.setNombre(resultado.getString("nombre"));
                     usuario.setApellidoPaterno(resultado.getString("apellidoPaterno"));
                     usuario.setApellidoMaterno(resultado.getString("apellidoMaterno"));
+                    usuario.setIdAcademico(resultado.getInt("idAcademico"));
+                    usuariosConsulta.add(usuario);
+                }
+                respuesta.setUsuarios(usuariosConsulta);
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+            }
+        } else {
+            respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return respuesta;
+    }
+    
+    public static UsuarioRespuesta consultarAcademicosDisponible(int idAnteproyecto){
+        UsuarioRespuesta respuesta = new UsuarioRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+        if (conexionBD != null) {
+            try {
+                String consulta = "SELECT usuario.idUsuario, usuario.nombre, " +
+                                  "usuario.apellidoPaterno, usuario.apellidoMaterno, " +
+                                  "academico.idAcademico " +
+                                  "FROM usuario " +
+                                  "INNER JOIN academico ON academico.idUsuario = usuario.idUsuario " +
+                                  "INNER JOIN anteproyecto " +
+                                  "ON anteproyecto.idDirector != academico.idAcademico " +
+                                  "LEFT JOIN anteproyecto_codirector ON " +
+                                  "anteproyecto_codirector.idCodirector = academico.idAcademico " +
+                                  "AND anteproyecto_codirector.idAnteproyecto = " +
+                                  "anteproyecto.idAnteproyecto " +
+                                  "WHERE anteproyecto.idAnteproyecto = ? " +
+                                  "AND anteproyecto.idCuerpoAcademico " +
+                                  "= academico.idCuerpoAcademico " +
+                                  "AND anteproyecto_codirector.idCodirector IS NULL";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setInt(1, idAnteproyecto);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList<Usuario> usuariosConsulta = new ArrayList();
+                while (resultado.next())
+                {
+                    Usuario usuario = new Usuario();
+                    usuario.setIdUsuario(resultado.getInt("idUsuario"));
+                    usuario.setNombre(resultado.getString("nombre"));
+                    usuario.setApellidoPaterno(resultado.getString("apellidoPaterno"));
+                    usuario.setApellidoMaterno(resultado.getString("apellidoMaterno"));
+                    usuario.setIdAcademico(resultado.getInt("academico.idAcademico"));
                     usuariosConsulta.add(usuario);
                 }
                 respuesta.setUsuarios(usuariosConsulta);

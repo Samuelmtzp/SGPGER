@@ -85,14 +85,6 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
     private ComboBox<DuracionAprox> cbDuracionAprox;
     @FXML
     private Label lbCuerpoAcademico;
-    @FXML
-    private Button btnAnteproyectos;
-    @FXML
-    private Button btnPropuestas;
-    @FXML
-    private Button btnEstudiantes;
-    @FXML
-    private Button btnRevisiones;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -124,6 +116,8 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
             if(cuerpoAcademico.get(i).getIdCuerpoAcademico()== 
                     SingletonUsuario.getInstancia().getUsuario().getIdcuerpoAcademico()){
                 lbCuerpoAcademico.setText(cuerpoAcademico.get(i).getNombre());
+            }else{
+                lbCuerpoAcademico.setText("");
             }
         }
         
@@ -394,7 +388,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
                 break;
             case Constantes.ERROR_CONSULTA:
                 Utilidades.mostrarDialogoSimple("Error de consulta", 
-                        "Por el momento no se pudo obtener la informacion del cuerpo academico", 
+                     "Por el momento no se pudo obtener la informacion del cuerpo academico", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.OPERACION_EXITOSA:
@@ -414,7 +408,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
                 break;
             case Constantes.ERROR_CONSULTA:
                 Utilidades.mostrarDialogoSimple("Error de consulta", 
-                        "Por el momento no se pudo obtener la informacion", 
+                        "Por el momento no se pudo obtener la informacion de la modalidad", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.OPERACION_EXITOSA:
@@ -436,7 +430,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
                 break;
             case Constantes.ERROR_CONSULTA:
                 Utilidades.mostrarDialogoSimple("Error de consulta", 
-                        "Por el momento no se pudo obtener la informacion", 
+                        "Por el momento no se pudo obtener la informacion del estado", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.OPERACION_EXITOSA:
@@ -456,7 +450,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
                 break;
             case Constantes.ERROR_CONSULTA:
                 Utilidades.mostrarDialogoSimple("Error de consulta", 
-                        "Por el momento no se pudo obtener la informacion", 
+                        "Por el momento no se pudo obtener la informacion de la duracion", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.OPERACION_EXITOSA:
@@ -528,7 +522,7 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
                 return i; 
             }
         }
-        return 0;
+        return -1;
     }
     
         

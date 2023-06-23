@@ -31,6 +31,8 @@ public class Anteproyecto {
     private String resultadosEsperados;
     private String bibliografiaRecomendada;
     private String fechaCreacion;
+    private int cantidadMaximaCodirectores;
+    private int cantidadCodirectores;
 
     public Anteproyecto() {
     }
@@ -42,7 +44,8 @@ public class Anteproyecto {
             String nombreTrabajo, String requisitos, int cantidadAlumnosParticipantes, 
             int maximoAlumnosParticipantes, String descripcionProyectoInvestigacion, 
             String descripcionTrabajoRecepcional, String resultadosEsperados, 
-            String bibliografiaRecomendada, String fechaCreacion) {
+            String bibliografiaRecomendada, String fechaCreacion, int cantidadMaximaCodirectores,
+            int cantidadCodirectores) {
         this.idAnteproyecto = idAnteproyecto;
         this.idCuerpoAcademico = idCuerpoAcademico;
         this.cuerpoAcademico = cuerpoAcademico;
@@ -67,6 +70,8 @@ public class Anteproyecto {
         this.resultadosEsperados = resultadosEsperados;
         this.bibliografiaRecomendada = bibliografiaRecomendada;
         this.fechaCreacion = fechaCreacion;
+        this.cantidadMaximaCodirectores=cantidadMaximaCodirectores;
+        this.cantidadCodirectores=cantidadCodirectores;
     }
 
     public int getIdAnteproyecto() {
@@ -261,6 +266,22 @@ public class Anteproyecto {
         this.fechaCreacion = fechaCreacion;
     }
 
+    public int getCantidadMaximaCodirectores() {
+        return cantidadMaximaCodirectores;
+    }
+
+    public void setCantidadMaximaCodirectores(int cantidadMaximaCodirectores) {
+        this.cantidadMaximaCodirectores = cantidadMaximaCodirectores;
+    }
+
+    public int getCantidadCodirectores() {
+        return cantidadCodirectores;
+    }
+
+    public void setCantidadCodirectores(int cantidadCodirectores) {
+        this.cantidadCodirectores = cantidadCodirectores;
+    }
+
     @Override
     public String toString() {
         return "Anteproyecto{" + "idAnteproyecto=" + idAnteproyecto + ", idCuerpoAcademico=" + 
@@ -276,7 +297,9 @@ public class Anteproyecto {
                 ", descripcionProyectoInvestigacion=" + descripcionProyectoInvestigacion + 
                 ", descripcionTrabajoRecepcional=" + descripcionTrabajoRecepcional + 
                 ", resultadosEsperados=" + resultadosEsperados + ", bibliografiaRecomendada=" + 
-                bibliografiaRecomendada + ", fechaCreacion=" + fechaCreacion + '}';
+                bibliografiaRecomendada + ", fechaCreacion=" + fechaCreacion + ", "
+                + "cantidadMaximaCodirectores=" + cantidadMaximaCodirectores + ", "
+                + "cantidadCodirectores=" + cantidadCodirectores +'}';
     }
 
 }
