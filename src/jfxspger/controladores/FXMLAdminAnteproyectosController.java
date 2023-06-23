@@ -68,8 +68,8 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     private ObservableList<Anteproyecto> anteproyectos;
     private final String ESTADO_VALIDACION_PENDIENTE = "Validación pendiente";
     private final String ESTADO_DISPONIBLE = "Disponible";
-    private final String ESTADO_NO_DISPONIBLE = "No disponible";
     private final String ESTADO_RECHAZADO = "Rechazado";
+    private final String ESTADO_NO_DISPONIBLE = "No disponible";
     @FXML
     private Button btnCrearAnteproyecto;
     @FXML
@@ -80,6 +80,8 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     private Button btnAgregarEstudiantes;
     @FXML
     private Button btnCodirectores;
+    @FXML
+    private Label lbTitulo;
    
 
     @Override
@@ -309,17 +311,17 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     private void irAsignarCodirectores(Anteproyecto anteproyecto){
         try{
             FXMLLoader accesoControlador = new FXMLLoader(jfxspger.
-                    JFXSPGER.class.getResource("/jfxspger/vistas/FXMLAsignarCodirectores.fxml"));
+                    JFXSPGER.class.getResource("/jfxspger/vistas/FXMLAsignarCodirectores1.fxml"));
             Parent vista = accesoControlador.load();
-            FXMLAsignarCodirectoresController formulario = accesoControlador.getController();
+            FXMLAsignarCodirectores1Controller formulario = accesoControlador.getController();
             Scene sceneFormulario = new Scene(vista);
             Stage escenarioPrincipal = (Stage) lbTitulo.getScene().getWindow();
             escenarioPrincipal.setTitle("Informacion de anteproyecto");
             escenarioPrincipal.setScene(sceneFormulario);
-            formulario.inicializarInformacion(anteproyecto);
+            formulario.inicializarInformacion(anteproyecto);           
         }catch(IOException e){
             Utilidades.mostrarDialogoSimple("Error", 
-                    "No se puede mostrar la pantalla de informacion de anteproyecto", 
+                    "No se puede mostrar la pantalla de asignar codirectores", 
                     Alert.AlertType.ERROR);  
         }
     }
