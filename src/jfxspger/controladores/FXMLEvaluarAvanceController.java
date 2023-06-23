@@ -11,10 +11,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -33,10 +29,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.web.WebView;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import jfxspger.modelo.dao.ActividadDAO;
 import jfxspger.modelo.dao.CalificacionDAO;
 import jfxspger.modelo.dao.DocumentoDAO;
 import jfxspger.modelo.pojo.Actividad;
@@ -84,26 +78,37 @@ public class FXMLEvaluarAvanceController extends FXMLPrincipalAcademicoControlle
     private Calificacion calificacion;
     private ObservableList<Documento> documentos;
     private int idActividad;
+    private int idEstado;
     String estiloError = "-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 2;";
     String estiloNormal = "-fx-border-width: 0;";
     private double calific;
     @FXML
     private Button bEliminarEval;
+    private boolean esEdicion;
+    private int idCalificacion;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTablaEntregas();
     }
     
-    public void inicializarDetalles(Estudiante estudiante, Actividad actividadEntrega){
+    public void inicializarDetalles(boolean esEdicion, Estudiante estudiante, Actividad actividadEntrega){
+        this.esEdicion = esEdicion;
         this.estudiante = estudiante;
         this.actividadEntrega = actividadEntrega;
         idActividad = actividadEntrega.getIdActividad();
+        idEstado = 2;
         cargarInformacionEntregas(actividadEntrega.getIdActividad());
         lbTituloActividad.setText(actividadEntrega.getTitulo());
         lbDescActividad.setText(actividadEntrega.getDescripcion());
         lbFechaInicio.setText(actividadEntrega.getFechaInicio());
         lbFechaFin.setText(actividadEntrega.getFechaFin());
+        bEliminarEval.setVisible(false);
+        if(esEdicion){
+            tfCalif.setText(Double.toString(actividadEntrega.getCalificacion()));
+            tfComent.setText(this.actividadEntrega.getCommentCalif());
+            bEliminarEval.setVisible(true);
+        }
         
     }
     
@@ -198,12 +203,18 @@ public class FXMLEvaluarAvanceController extends FXMLPrincipalAcademicoControlle
             calificacion.setComentario(comen);
             calificacion.setIdActividad(idActividad);
             
-            registrarCalificacion(calificacion);
+            if(esEdicion){
+                calificacion.setIdCalificacion(actividadEntrega.getIdCalificacion());
+                modificarCalificacion(calificacion);
+            } else {
+                registrarCalificacion(calificacion);
+            }
+            
         }
                 
     }
     
-    private void registrarCalificacion(Calificacion nuevaCalificacion){        
+    private void registrarCalificacion(Calificacion nuevaCalificacion){
         int codigoRespuesta = CalificacionDAO.guardarCalificacion(nuevaCalificacion);
         switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
@@ -215,11 +226,49 @@ public class FXMLEvaluarAvanceController extends FXMLPrincipalAcademicoControlle
                         "Hubo un error al registrar la calificacion. Por favor intente más tarde", 
                         Alert.AlertType.WARNING);
                 break;
+            case Constantes.OPERACION_EXITOSA:                
+                actualizaEstadoActividad(idEstado, idActividad);
+                break;
+        }
+    }
+    
+    private void actualizaEstadoActividad(int idEstado, int idActividad){
+        int codigoRespuesta = ActividadDAO.actualizarEstadoActividad(idEstado, idActividad);
+        switch(codigoRespuesta){
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Sin conexión", 
+                        "Lo sentimos, por el momento no hay conexión", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                Utilidades.mostrarDialogoSimple("Error al actualizar el estado de la actividad", 
+                        "Hubo un error al actualizar el estado de la actividad. Por favor intente más tarde", 
+                        Alert.AlertType.WARNING);
+                break;
             case Constantes.OPERACION_EXITOSA:
-                Utilidades.mostrarDialogoSimple("Calificacion registrada", 
-                        "Actividad calificada correctamente", 
+                Utilidades.mostrarDialogoSimple("Operacion realizada", 
+                        "Operacion realizada correctamente.", 
                         Alert.AlertType.INFORMATION);
                 regresarAvances();
+                
+                break;
+        }
+    }
+    
+    private void modificarCalificacion(Calificacion calificacion){
+        System.out.println(calificacion.toString());
+        int codigoRespuesta = CalificacionDAO.modificarCalificacion(calificacion);
+        switch(codigoRespuesta){
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Sin conexión", 
+                        "Lo sentimos, por el momento no hay conexión", Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                Utilidades.mostrarDialogoSimple("Error al modificar la calificacion", 
+                        "Hubo un error al modificar la calificacion. Por favor intente más tarde", 
+                        Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:                
+                actualizaEstadoActividad(idEstado, idActividad);
                 
                 break;
         }
@@ -272,7 +321,7 @@ public class FXMLEvaluarAvanceController extends FXMLPrincipalAcademicoControlle
         try {
             Desktop.getDesktop().open(archivo);
         } catch (IOException e) {
-            System.out.println("Error al abrir el archivo: " + e.getMessage());
+            Utilidades.mostrarDialogoSimple("Error al abrir el archivo", "Hubo un error al abrir el archivo. Por favor intentelo más tarde.", Alert.AlertType.ERROR);
         }
     }
 
@@ -297,7 +346,35 @@ public class FXMLEvaluarAvanceController extends FXMLPrincipalAcademicoControlle
 
     @FXML
     private void clicBtnEliminarEvaluacion(ActionEvent event) {
+        boolean eliminarAct = Utilidades.mostrarDialogoConfirmacion(
+                "Eliminar calificacion", 
+                "¿Estás seguro que deseas eliminar la calificacion asignada?");
+        
+        if(eliminarAct){
+            idEstado = 1;
+            idCalificacion = actividadEntrega.getIdCalificacion();
+            eliminarCalificacion(idCalificacion, idEstado);
+        }
     }
+    
+    private void eliminarCalificacion (int idCalificacion,int idEstado){
+        int codigoRespuesta = CalificacionDAO.eliminarCalificacion(idCalificacion);                
+        switch(codigoRespuesta){
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Sin conexión", 
+                        "Lo sentimos, por el momento no hay conexión", 
+                        Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                Utilidades.mostrarDialogoSimple("Error al eliminar", 
+                        "Hubo un error al eliminar la calificacion. Por favor intente más tarde", 
+                        Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                actualizaEstadoActividad(idEstado, idActividad);
+                break;
+        }        
+    }   
 
 }
 

@@ -28,17 +28,18 @@
       </Pane>
       <TableView fx:id="tvActividades" layoutX="353.0" layoutY="230.0" prefHeight="739.0" prefWidth="1528.0" style="-fx-background-color: lightgray;">
         <columns>
-          <TableColumn fx:id="cNombreActividad" prefWidth="669.0" text="Titulo de actividad" />
-          <TableColumn fx:id="cFechaCreacion" prefWidth="400.0" text="Fecha de creación" />
-            <TableColumn fx:id="cFechaIncio" prefWidth="231.0" text="Fecha de inicio" />
-            <TableColumn fx:id="cFechaFin" prefWidth="231.0" text="Fecha de fin" />
+          <TableColumn fx:id="cNombreActividad" prefWidth="735.0" text="Titulo de actividad" />
+            <TableColumn fx:id="cFechaIncio" prefWidth="225.0" text="Fecha de inicio" />
+            <TableColumn fx:id="cFechaFin" prefWidth="182.0" text="Fecha de fin" />
+          <TableColumn fx:id="cCalificacion" prefWidth="202.0" text="Calificacion" />
+            <TableColumn fx:id="cEstado" prefWidth="183.0" text="Estado" />
         </columns>
       </TableView>
-      <Button layoutX="594.0" layoutY="997.0" mnemonicParsing="false" onAction="#clicBtnProgramarActividad" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Programar actividad" textFill="WHITE">
+      <Button layoutX="1061.0" layoutY="134.0" mnemonicParsing="false" onAction="#clicBtnProgramarActividad" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Programar actividad" textFill="WHITE">
          <font>
             <Font name="System Bold" size="22.0" />
          </font></Button>
-      <Button layoutX="1414.0" layoutY="997.0" mnemonicParsing="false" onAction="#clicBtnModificarActividad" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Modificar actividad" textFill="WHITE">
+      <Button layoutX="1382.0" layoutY="134.0" mnemonicParsing="false" onAction="#clicBtnModificarActividad" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Modificar actividad" textFill="WHITE">
          <font>
             <Font name="System Bold" size="22.0" />
          </font></Button>

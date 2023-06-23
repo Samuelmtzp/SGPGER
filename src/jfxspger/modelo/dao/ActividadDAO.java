@@ -26,8 +26,9 @@ public class ActividadDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT a.*, e.idEntrega, e.fechaEntrega, c.idCalificacion, c.calificacion " +
+                String consulta = "SELECT a.*, e.idEntrega, e.fechaEntrega, ea.idEstadoActividad, ea.estado, c.idCalificacion, c.calificacion, c.comentario " +
                                     "FROM actividad a " +
+                                    "INNER JOIN estadoActividad ea ON a.idEstado = ea.idEstadoActividad " +
                                     "LEFT JOIN entrega e ON a.idActividad = e.idActividad " +
                                     "LEFT JOIN calificacion c ON a.idActividad = c.idActividad " +
                                     "WHERE a.idEstudiante = ?;";
@@ -44,9 +45,19 @@ public class ActividadDAO {
                     actividad.setFechaCreacion(Utilidades.convertirTimeStampAStringFechaHora((resultado.getTimestamp("fechaCreacion"))));
                     actividad.setFechaInicio(Utilidades.convertirTimeStampAStringFechaHora((resultado.getTimestamp("fechaInicio"))));
                     actividad.setFechaFin(Utilidades.convertirTimeStampAStringFechaHora((resultado.getTimestamp("fechaFin"))));
-                    actividad.setDescripcion(resultado.getString("descripcion"));
-                    actividad.setFechaEntrega(resultado.getString("fechaEntrega"));
+                    actividad.setDescripcion(resultado.getString("descripcion"));                                       
                     actividad.setCalificacion(resultado.getDouble("calificacion"));
+                    actividad.setIdCalificacion(resultado.getInt("idCalificacion"));
+                    actividad.setIdEstado(resultado.getInt("idEstado"));
+                    actividad.setEstado(resultado.getString("estado"));
+                    actividad.setCommentCalif(resultado.getString("comentario"));
+                    
+                    if (resultado.getTimestamp("fechaEntrega") == null){
+                    actividad.setFechaEntrega("Sin entrega");
+                    } else {
+                    actividad.setFechaEntrega(Utilidades.convertirTimeStampAStringFechaHora(resultado.getTimestamp("fechaEntrega")));    
+                    }
+                    
                     actividadConsulta.add(actividad);
                 }
                 respuesta.setActividades(actividadConsulta);
@@ -67,9 +78,11 @@ public class ActividadDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT idActividad, titulo, fechaCreacion, fechaInicio, fechaFin, descripcion " +
-                                    "FROM actividad " +
-                                    "WHERE idEstudiante = ?;";
+                String consulta = "SELECT a.*, ea.idEstadoActividad, ea.estado, c.calificacion, c.comentario " +
+                                    "FROM actividad a " +
+                                    "INNER JOIN estadoActividad ea ON a.idEstado = ea.idEstadoActividad " +
+                                    "LEFT JOIN Calificacion c ON a.idActividad = c.idActividad " +
+                                    "WHERE a.idEstudiante = ?;";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idEstudiante);
                 ResultSet resultado = prepararSentencia.executeQuery();
@@ -83,6 +96,10 @@ public class ActividadDAO {
                     actividad.setFechaInicio(Utilidades.convertirTimeStampAStringFechaHora(resultado.getTimestamp("fechaInicio")));
                     actividad.setFechaFin(Utilidades.convertirTimeStampAStringFechaHora(resultado.getTimestamp("fechaFin")));
                     actividad.setDescripcion(resultado.getString("descripcion"));
+                    actividad.setIdEstado(resultado.getInt("idEstadoActividad"));
+                    actividad.setEstado(resultado.getString("estado"));
+                    actividad.setCalificacion(resultado.getDouble("calificacion"));
+                    actividad.setCommentCalif(resultado.getString("comentario"));
                     actividadConsulta.add(actividad);
                 }
                 respuesta.setActividades(actividadConsulta);
@@ -170,8 +187,8 @@ public class ActividadDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
-                String sentencia = "INSERT INTO actividad (idEstudiante, titulo, fechaCreacion, fechaInicio, fechaFin, descripcion) " +
-                        "VALUES (?,?,?,?,?,?)";
+                String sentencia = "INSERT INTO actividad (idEstudiante, titulo, fechaCreacion, fechaInicio, fechaFin, descripcion, idEstado) " +
+                        "VALUES (?,?,?,?,?,?, ?)";
                 PreparedStatement prepararSentencia =  conexionBD.prepareStatement(sentencia);
                 
                 prepararSentencia.setInt(1, nuevaActividad.getIdEstudiante());
@@ -180,6 +197,7 @@ public class ActividadDAO {
                 prepararSentencia.setString(4, nuevaActividad.getFechaInicio());
                 prepararSentencia.setString(5, nuevaActividad.getFechaFin());
                 prepararSentencia.setString(6, nuevaActividad.getDescripcion());
+                prepararSentencia.setInt(7, nuevaActividad.getIdEstado());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;
@@ -208,6 +226,30 @@ public class ActividadDAO {
                 prepararSentencia.setString(3, actividadEdicion.getFechaFin());
                 prepararSentencia.setString(4, actividadEdicion.getDescripcion());
                 prepararSentencia.setInt(5, actividadEdicion.getIdActividad());
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
+                        Constantes.ERROR_CONSULTA;
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta = Constantes.ERROR_CONSULTA;
+                e.printStackTrace();
+            }
+        } else {
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
+    public static int actualizarEstadoActividad(int idEstado, int idActividad) {
+        int respuesta;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null) {
+            try {
+                String sentencia = "UPDATE Actividad SET idEstado = ? " + 
+                        "WHERE idActividad = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setInt(1, idEstado);
+                prepararSentencia.setInt(2, idActividad);
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;

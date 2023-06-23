@@ -50,7 +50,7 @@ public class FXMLFormularioActividadController extends FXMLPrincipalEstudianteCo
     @FXML
     private Button bEliminar;
     
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
     private Actividad actividadEdicion;
     private Estudiante estudiante;
     private boolean esEdicion;
@@ -147,14 +147,14 @@ public class FXMLFormularioActividadController extends FXMLPrincipalEstudianteCo
     
     private void validarCampos(){
         establecerEstiloNormal();
-        boolean datosValidos = true;        
+        boolean datosValidos = true;
         String nomAct = tfNombreActividad.getText().trim();
         String desc = tfDescripcionActividad.getText().trim();
         LocalDate fechaInicio = dpFechaInicio.getValue();
         LocalDate fechaFin = dpFechaFin.getValue();
         LocalTime tiempoInicio = LocalTime.of(spHorasInicio.getValue(), 
                 spMinutosInicio.getValue());
-        LocalTime tiempoFin = LocalTime.of(spHorasFin.getValue(), spMinutosFin.getValue());        
+        LocalTime tiempoFin = LocalTime.of(spHorasFin.getValue(), spMinutosFin.getValue());
         
         if(nomAct.isEmpty()){
             tfNombreActividad.setStyle(Constantes.estiloError);
@@ -189,7 +189,8 @@ public class FXMLFormularioActividadController extends FXMLPrincipalEstudianteCo
             actividadValida.setTitulo(nomAct);
             actividadValida.setFechaInicio(fechaInicio.toString() + " " + tiempoInicio.toString());
             actividadValida.setFechaFin(fechaFin.toString() + " " + tiempoFin.toString());
-            actividadValida.setDescripcion(desc);            
+            actividadValida.setDescripcion(desc);
+            actividadValida.setIdEstado(1);
             
             if(esEdicion){
                 actividadValida.setIdActividad(actividadEdicion.getIdActividad());

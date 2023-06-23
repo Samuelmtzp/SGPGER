@@ -14,7 +14,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLInfoActividadController">
    <children>
-      <Label fx:id="lbDescActividad" layoutX="404.0" layoutY="580.0" prefHeight="45.0" prefWidth="300.0" text="Descripcion actividad">
+      <Label fx:id="lbDescActividad" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="400.0" layoutY="519.0" prefHeight="262.0" prefWidth="678.0" text="Descripcion actividad" wrapText="true">
          <font>
             <Font size="22.0" />
          </font>
@@ -139,7 +139,7 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <Label layoutX="404.0" layoutY="525.0" text="DESCRIPCION">
+      <Label layoutX="400.0" layoutY="464.0" text="DESCRIPCION">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
@@ -187,5 +187,25 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </Button>
+      <Label fx:id="lbComentRev" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="400.0" layoutY="889.0" prefHeight="89.0" prefWidth="653.0" wrapText="true">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="400.0" layoutY="820.0" text="COMENTARIOS DE REVISION">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbCalif" layoutX="1471.0" layoutY="177.0" prefHeight="45.0" prefWidth="300.0">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="1540.0" layoutY="122.0" text="Calificacion">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
