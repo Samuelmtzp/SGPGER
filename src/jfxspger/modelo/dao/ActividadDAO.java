@@ -10,7 +10,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import jfxspger.modelo.ConexionBD;
 import jfxspger.modelo.pojo.ActividadRespuesta;
@@ -26,12 +25,15 @@ public class ActividadDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT a.*, e.idEntrega, e.fechaEntrega, ea.idEstadoActividad, ea.estado, c.idCalificacion, c.calificacion, c.comentario " +
-                                    "FROM actividad a " +
-                                    "INNER JOIN estadoActividad ea ON a.idEstado = ea.idEstadoActividad " +
-                                    "LEFT JOIN entrega e ON a.idActividad = e.idActividad " +
-                                    "LEFT JOIN calificacion c ON a.idActividad = c.idActividad " +
-                                    "WHERE a.idEstudiante = ?;";
+                String consulta = "SELECT Actividad.idActividad, Actividad.idEstado, "
+                        + "Actividad.titulo, Actividad.fechaCreacion, Actividad.fechaInicio, "
+                        + "Actividad.fechaFin, Actividad.descripcion, EstadoActividad.estado "
+                        + "FROM actividad "
+                        + "INNER JOIN estadoactividad "
+                        + "ON Actividad.idEstado = EstadoActividad.idEstadoActividad "
+                        + "INNER JOIN estudiante "
+                        + "ON Actividad.idEstudiante = Estudiante.idEstudiante "
+                        + "WHERE Actividad.idEstudiante = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idEstudiante);
                 ResultSet resultado = prepararSentencia.executeQuery();
@@ -40,31 +42,25 @@ public class ActividadDAO {
                 {
                     Actividad actividad = new Actividad();
                     actividad.setIdActividad(resultado.getInt("idActividad"));
-                    actividad.setIdEntrega(resultado.getInt("idEntrega"));
-                    actividad.setTitulo(resultado.getString("titulo"));
-                    actividad.setFechaCreacion(Utilidades.convertirTimeStampAStringFechaHora((resultado.getTimestamp("fechaCreacion"))));
-                    actividad.setFechaInicio(Utilidades.convertirTimeStampAStringFechaHora((resultado.getTimestamp("fechaInicio"))));
-                    actividad.setFechaFin(Utilidades.convertirTimeStampAStringFechaHora((resultado.getTimestamp("fechaFin"))));
-                    actividad.setDescripcion(resultado.getString("descripcion"));                                       
-                    actividad.setCalificacion(resultado.getDouble("calificacion"));
-                    actividad.setIdCalificacion(resultado.getInt("idCalificacion"));
                     actividad.setIdEstado(resultado.getInt("idEstado"));
+                    actividad.setTitulo(resultado.getString("titulo"));
+                    actividad.setFechaCreacion(
+                            Utilidades.convertirTimeStampAStringFechaHora(
+                                    (resultado.getTimestamp("fechaCreacion"))));
+                    actividad.setFechaInicio(
+                            Utilidades.convertirTimeStampAStringFechaHora(
+                                    (resultado.getTimestamp("fechaInicio"))));
+                    actividad.setFechaFin(
+                            Utilidades.convertirTimeStampAStringFechaHora(
+                                    (resultado.getTimestamp("fechaFin"))));
+                    actividad.setDescripcion(resultado.getString("descripcion"));                                       
                     actividad.setEstado(resultado.getString("estado"));
-                    actividad.setCommentCalif(resultado.getString("comentario"));
-                    
-                    if (resultado.getTimestamp("fechaEntrega") == null){
-                    actividad.setFechaEntrega("Sin entrega");
-                    } else {
-                    actividad.setFechaEntrega(Utilidades.convertirTimeStampAStringFechaHora(resultado.getTimestamp("fechaEntrega")));    
-                    }
-                    
                     actividadConsulta.add(actividad);
                 }
                 respuesta.setActividades(actividadConsulta);
                 conexionBD.close();
             } catch (SQLException e) {
                 respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
-                e.printStackTrace();
             }
         } else {
             respuesta.setCodigoRespuesta(Constantes.ERROR_CONEXION);
@@ -78,11 +74,14 @@ public class ActividadDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT a.*, ea.idEstadoActividad, ea.estado, c.calificacion, c.comentario " +
-                                    "FROM actividad a " +
-                                    "INNER JOIN estadoActividad ea ON a.idEstado = ea.idEstadoActividad " +
-                                    "LEFT JOIN Calificacion c ON a.idActividad = c.idActividad " +
-                                    "WHERE a.idEstudiante = ?;";
+                String consulta = "SELECT a.*, ea.idEstadoActividad, ea.estado, c.calificacion, "
+                        + "c.comentario "
+                        + "FROM actividad a "
+                        + "INNER JOIN estadoActividad ea "
+                        + "ON a.idEstado = ea.idEstadoActividad "
+                        + "LEFT JOIN Calificacion c "
+                        + "ON a.idActividad = c.idActividad "
+                        + "WHERE a.idEstudiante = ?;";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idEstudiante);
                 ResultSet resultado = prepararSentencia.executeQuery();
@@ -113,8 +112,8 @@ public class ActividadDAO {
         }
         return respuesta;
     }
-    
-    public static Actividad obtenerDetallesActividad(int idActividad) {
+  
+  public static Actividad obtenerDetallesActividad(int idActividad) {
         ActividadRespuesta respuesta = new ActividadRespuesta();
         Actividad actividad = new Actividad();
         Connection conexionBD = ConexionBD.abrirConexionBD();

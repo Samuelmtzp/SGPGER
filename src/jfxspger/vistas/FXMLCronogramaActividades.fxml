@@ -35,7 +35,7 @@
             <TableColumn fx:id="cEstado" prefWidth="183.0" text="Estado" />
         </columns>
       </TableView>
-      <Button layoutX="1061.0" layoutY="134.0" mnemonicParsing="false" onAction="#clicBtnProgramarActividad" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Programar actividad" textFill="WHITE">
+      <Button layoutX="1061.0" layoutY="134.0" mnemonicParsing="false" onAction="#clicBtnProgramarActividad" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Programar actividad" textFill="WHITE">
          <font>
             <Font name="System Bold" size="22.0" />
          </font></Button>

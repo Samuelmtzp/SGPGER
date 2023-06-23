@@ -72,6 +72,10 @@ public class FXMLPrincipalEstudianteController implements Initializable {
 
     @FXML
     protected void clicIrCronograma(ActionEvent event) {        
+        irCronograma();
+    }
+    
+    protected void irCronograma() {
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.setScene(Utilidades.inicializarEscena(
                 "vistas/FXMLCronogramaActividades.fxml"));

@@ -15,7 +15,6 @@ import jfxspger.modelo.ConexionBD;
 import jfxspger.modelo.pojo.DocumentoRespuesta;
 import jfxspger.modelo.pojo.Documento;
 import jfxspger.utilidades.Constantes;
-import jfxspger.utilidades.Utilidades;
 
 public class DocumentoDAO {
     
@@ -38,7 +37,6 @@ public class DocumentoDAO {
                     archivo.setArchivoDocumento(resultado.getBytes("archivoDocumento"));
                     archivo.setNombre(resultado.getString("nombre"));
                     archivo.setIdEntrega(resultado.getInt("idEntrega"));
-                    archivo.setFechaEntrega(Utilidades.convertirTimeStampAStringFechaHora(resultado.getTimestamp("fechaEntrega")));
                     archivoConsulta.add(archivo);
                 }
                 respuesta.setDocumentos(archivoConsulta);
@@ -52,19 +50,26 @@ public class DocumentoDAO {
         return respuesta;
     }
     
-    public static DocumentoRespuesta obtenerInformacionArchivoPorActividad(int idActividad) {
+    public static DocumentoRespuesta obtenerInformacionArchivosDeEntregaActualDeActividad(
+            int idActividad) {
         DocumentoRespuesta respuesta = new DocumentoRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT a.idActividad, en.idEntrega, en.fechaEntrega, d.idDocumento, d.archivoDocumento, d.nombre " +
-                                    "FROM actividad a " +
-                                    "JOIN entrega en ON a.idActividad = en.idActividad " +
-                                    "JOIN Documento d ON en.idEntrega = d.idEntrega " +
-                                    "WHERE a.idActividad = ?;";
+                String consulta = "SELECT idDocumento, archivoDocumento, nombre, "
+                        + "Documento.idEntrega "
+                        + "FROM Documento "
+                        + "INNER JOIN Entrega "
+                        + "ON Documento.idEntrega = Entrega.idEntrega "
+                        + "WHERE Entrega.idActividad = ? "
+                        + "AND Entrega.idEntrega = "
+                        + "(SELECT MAX(idEntrega) "
+                        + "FROM Entrega "
+                        + "WHERE idActividad = ?)";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idActividad);
+                prepararSentencia.setInt(2, idActividad);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Documento> archivoConsulta = new ArrayList();
                 while (resultado.next())
@@ -73,8 +78,7 @@ public class DocumentoDAO {
                     archivo.setIdDocumento(resultado.getInt("idDocumento"));
                     archivo.setArchivoDocumento(resultado.getBytes("archivoDocumento"));
                     archivo.setNombre(resultado.getString("nombre"));
-                    archivo.setIdEntrega(resultado.getInt("idEntrega"));
-                    archivo.setFechaEntrega(Utilidades.convertirTimeStampAStringFechaHora(resultado.getTimestamp("fechaEntrega")));
+                    archivo.setIdEntrega(resultado.getInt("Documento.idEntrega"));
                     archivoConsulta.add(archivo);
                 }
                 respuesta.setDocumentos(archivoConsulta);
@@ -93,8 +97,7 @@ public class DocumentoDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
-                String sentencia = "INSERT INTO Documento (archivoDocumento, " + 
-                        "nombre, idEntrega) " +
+                String sentencia = "INSERT INTO Documento (archivoDocumento, nombre, idEntrega) " +
                         "VALUES (?,?,?)";
                 PreparedStatement prepararSentencia =  conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setBytes(1, nuevoArchivo.getArchivoDocumento());
@@ -106,7 +109,6 @@ public class DocumentoDAO {
                 conexionBD.close();
             } catch (SQLException e) {
                 respuesta = Constantes.ERROR_CONSULTA;
-                e.printStackTrace();
             }
         } else {
             respuesta = Constantes.ERROR_CONEXION;
@@ -120,13 +122,12 @@ public class DocumentoDAO {
         if (conexionBD != null) {
             try {
                 String sentencia = "UPDATE Documento SET archivoDocumento = ?, " + 
-                        "nombre = ?, idEntrega = ? " +
+                        "nombre = ?" +
                         "WHERE idDocumento = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setBytes(1, archivoEdicion.getArchivoDocumento());
                 prepararSentencia.setString(2, archivoEdicion.getNombre());
-                prepararSentencia.setInt(3, archivoEdicion.getIdEntrega());
-                prepararSentencia.setInt(4, archivoEdicion.getIdDocumento());
+                prepararSentencia.setInt(3, archivoEdicion.getIdDocumento());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;

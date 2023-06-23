@@ -5,12 +5,9 @@
 */
 package jfxspger.controladores;
 
-import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -36,8 +33,6 @@ public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoContr
     @FXML
     private Label lbNombreEstudiante;
     @FXML
-    private TableColumn cCalificacion;        
-    @FXML
     private TableView<Actividad> tvActividades;
     @FXML
     private TableColumn cNombreActividad;
@@ -45,8 +40,6 @@ public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoContr
     private TableColumn cFechaIncio;
     @FXML
     private TableColumn cFechaFin;
-    @FXML
-    private TableColumn cFechaEntrega;
     @FXML
     private TableColumn cEstado;
     private Estudiante estudiante;
@@ -67,27 +60,11 @@ public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoContr
         cargarInformacionCronograma();
     }
 
-        private void configurarTabla(){
+    private void configurarTabla() {
         cNombreActividad.setCellValueFactory(new PropertyValueFactory("titulo"));        
         cFechaIncio.setCellValueFactory(new PropertyValueFactory("fechaInicio"));
         cFechaFin.setCellValueFactory(new PropertyValueFactory("fechaFin"));
-        cFechaEntrega.setCellValueFactory(new PropertyValueFactory("fechaEntrega"));
-        cCalificacion.setCellValueFactory(new PropertyValueFactory("calificacion"));
         cEstado.setCellValueFactory(new PropertyValueFactory("estado"));
-                tvActividades.widthProperty().addListener(new ChangeListener<Number>(){
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, 
-                    Number newValue) {
-                TableHeaderRow header = (TableHeaderRow) tvActividades.lookup("TableHeaderRow");
-                header.reorderingProperty().addListener(new ChangeListener<Boolean>(){
-                    @Override
-                    public void changed(ObservableValue<? extends Boolean> observable, 
-                            Boolean oldValue, Boolean newValue) {
-                        header.setReordering(false);
-                    }
-                });
-            }
-        });
     }
     
     private void cargarInformacionCronograma(){
@@ -153,7 +130,6 @@ public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoContr
             escenarioPrincipal.setTitle("Evaluar entrega");
             escenarioPrincipal.setScene(sceneFormulario);            
         }catch(IOException e){
-            e.printStackTrace();
             Utilidades.mostrarDialogoSimple("Error", 
                     "No se puede mostrar la pantalla de informacion de anteproyecto", 
                     Alert.AlertType.ERROR);  
@@ -173,7 +149,6 @@ public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoContr
             escenarioPrincipal.setTitle("Evaluar entrega");
             escenarioPrincipal.setScene(sceneFormulario);            
         }catch(IOException e){
-            e.printStackTrace();
             Utilidades.mostrarDialogoSimple("Error", 
                     "No se puede mostrar la pantalla de informacion de anteproyecto", 
                     Alert.AlertType.ERROR);  
