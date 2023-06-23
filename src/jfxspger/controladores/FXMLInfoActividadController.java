@@ -67,6 +67,16 @@ public class FXMLInfoActividadController extends FXMLPrincipalEstudianteControll
     @FXML
     private Button bEliminarDocumento;
     private int idActividad;
+    @FXML
+    private Button btnAnteproyecto;
+    @FXML
+    private Button btnCronograma;
+    @FXML
+    private Button btnCursos;
+    @FXML
+    private Label lbComentRev;
+    @FXML
+    private Label lbCalif;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -118,21 +128,28 @@ public class FXMLInfoActividadController extends FXMLPrincipalEstudianteControll
     @FXML
     private void clicBtnCargarArchivo(ActionEvent event) {
         
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
-        LocalDateTime fechaFin = LocalDateTime.parse(actividadInformacion.getFechaFin(), formatter);
-        LocalDateTime fechaActual = LocalDateTime.now();
-        if(fechaActual.isBefore(fechaFin)){
-            FileChooser dialogoEntrega = new FileChooser();
-            dialogoEntrega.setTitle("Seleccione un archivo");
+        if(actividadInformacion.getIdEstado() == 1){
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+            LocalDateTime fechaFin = LocalDateTime.parse(actividadInformacion.getFechaFin(), formatter);
+            LocalDateTime fechaActual = LocalDateTime.now();
+            if(fechaActual.isBefore(fechaFin)){
+                FileChooser dialogoEntrega = new FileChooser();
+                dialogoEntrega.setTitle("Seleccione un archivo");
 
-            Stage escenarioBase = (Stage) lbTituloActividad.getScene().getWindow();
-            entregaActividad = dialogoEntrega.showOpenDialog(escenarioBase);
-            lbActividad.setText(entregaActividad.getName());
-        } else{
-            Utilidades.mostrarDialogoSimple("ACTIVIDAD FINALIZADA", 
-                    "La actividad ha finalizado. No se puede realizar entrega.", 
-                    Alert.AlertType.WARNING);
+                Stage escenarioBase = (Stage) lbTituloActividad.getScene().getWindow();
+                entregaActividad = dialogoEntrega.showOpenDialog(escenarioBase);
+                lbActividad.setText(entregaActividad.getName());
+            } else{
+                Utilidades.mostrarDialogoSimple("ACTIVIDAD FINALIZADA", 
+                        "La actividad ha finalizado. No se puede realizar entrega.", 
+                        Alert.AlertType.WARNING);
+            } 
+        } else {
+            Utilidades.mostrarDialogoSimple("ACTIVIDAD CALIFICADA", 
+                        "La actividad ha sido calificada. No se puede realizar la entrega.", 
+                        Alert.AlertType.WARNING);
         }
+            
     }  
 
     @FXML
@@ -145,11 +162,17 @@ public class FXMLInfoActividadController extends FXMLPrincipalEstudianteControll
         Documento documentoSeleccionado = tvEntregas.getSelectionModel().getSelectedItem();
         
         if(documentoSeleccionado != null){
-            boolean eliminarAct = Utilidades.mostrarDialogoConfirmacion("Eliminar entrega", 
-                "¿Estás seguro que deseas eliminar la entrega?");        
-            if(eliminarAct){
-                eliminarDocumento(documentoSeleccionado);
-            }
+            if(actividadInformacion.getIdEstado() == 1){
+                boolean eliminarAct = Utilidades.mostrarDialogoConfirmacion("Eliminar entrega", 
+                    "¿Estás seguro que deseas eliminar la entrega?");        
+                if(eliminarAct){
+                    eliminarDocumento(documentoSeleccionado);
+                }
+            } else {
+            Utilidades.mostrarDialogoSimple("ACTIVIDAD CALIFICADA", 
+                        "La actividad ha sido calificada. No se puedes modificar la entrega.", 
+                        Alert.AlertType.WARNING);
+                }                
         }else{
             Utilidades.mostrarDialogoSimple("Selecciona un documento", 
                     "Debes selecionar un documento para poder"
@@ -213,7 +236,13 @@ public class FXMLInfoActividadController extends FXMLPrincipalEstudianteControll
         lbTituloActividad.setText(actividadInformacion.getTitulo());
         lbDescActividad.setText(actividadInformacion.getDescripcion());
         lbFechaInicio.setText(actividadInformacion.getFechaInicio());
-        lbFechaFin.setText(actividadInformacion.getFechaFin());        
+        lbFechaFin.setText(actividadInformacion.getFechaFin());
+        
+        if(actividadInformacion.getIdEstado() == 2){
+            lbCalif.setText(Double.toString(actividadInformacion.getCalificacion()));
+            lbComentRev.setText(actividadInformacion.getCommentCalif());
+        }
+        
         if(entregaActividad != null){
         lbActividad.setText(entregaActividad.getName());    
         }                

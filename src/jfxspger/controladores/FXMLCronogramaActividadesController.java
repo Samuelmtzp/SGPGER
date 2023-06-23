@@ -45,7 +45,9 @@ public class FXMLCronogramaActividadesController extends FXMLPrincipalEstudiante
     @FXML
     private TableColumn cFechaFin;
     @FXML
-    private TableColumn cFechaCreacion;
+    private TableColumn cCalificacion;
+    @FXML
+    private TableColumn cEstado;
     @FXML
     private Button btnAnteproyecto;
     @FXML
@@ -55,7 +57,7 @@ public class FXMLCronogramaActividadesController extends FXMLPrincipalEstudiante
     @FXML
     private Label lbTitulo;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyy HH:mm:ss.S");
-    private ObservableList<Actividad> actividades;
+    private ObservableList<Actividad> actividades;    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -66,10 +68,11 @@ public class FXMLCronogramaActividadesController extends FXMLPrincipalEstudiante
     
     
     private void configurarTabla(){
-        cNombreActividad.setCellValueFactory(new PropertyValueFactory("titulo"));
-        cFechaCreacion.setCellValueFactory(new PropertyValueFactory("fechaCreacion"));
+        cNombreActividad.setCellValueFactory(new PropertyValueFactory("titulo"));        
         cFechaIncio.setCellValueFactory(new PropertyValueFactory("fechaInicio"));
         cFechaFin.setCellValueFactory(new PropertyValueFactory("fechaFin"));
+        cCalificacion.setCellValueFactory(new PropertyValueFactory("calificacion"));
+        cEstado.setCellValueFactory(new PropertyValueFactory("estado"));
                 tvActividades.widthProperty().addListener(new ChangeListener<Number>(){
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, 
@@ -158,7 +161,14 @@ public class FXMLCronogramaActividadesController extends FXMLPrincipalEstudiante
     private void clicBtnModificarActividad(ActionEvent event) {        
         Actividad actividadSeleccionada = tvActividades.getSelectionModel().getSelectedItem();
         if(actividadSeleccionada != null){
-            irFormulario(true,actividadSeleccionada);
+            if(actividadSeleccionada.getIdEstado() == 1){
+                irFormulario(true,actividadSeleccionada);
+            } else {
+                Utilidades.mostrarDialogoSimple("Actividad calificada", 
+                    "No puedes modificar una actividad "
+                    + "que ya ha sido calificada.", Alert.AlertType.WARNING);
+            }
+                
         }else{
             Utilidades.mostrarDialogoSimple("Selecciona una actividad", 
                     "Debes selecionar una activdad del cronograma para poder"

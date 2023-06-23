@@ -114,20 +114,19 @@ public class CalificacionDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
-                String sentencia = "UPDATE Calificacion SET idActividad = ?, " + 
-                        "calificacion = ?, comentario = ? " +
+                String sentencia = "UPDATE Calificacion SET calificacion = ?, comentario = ? " +                       
                         "WHERE idCalificacion = ?";
-                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
-                prepararSentencia.setInt(1, calificacionEdicion.getIdActividad());
-                prepararSentencia.setDouble(2, calificacionEdicion.getCalificacion());
-                prepararSentencia.setString(3, calificacionEdicion.getComentario());
-                prepararSentencia.setInt(4, calificacionEdicion.getIdCalificacion());
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);                
+                prepararSentencia.setDouble(1, calificacionEdicion.getCalificacion());
+                prepararSentencia.setString(2, calificacionEdicion.getComentario());
+                prepararSentencia.setInt(3, calificacionEdicion.getIdCalificacion());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;
                 conexionBD.close();
             } catch (SQLException e) {
                 respuesta = Constantes.ERROR_CONSULTA;
+                e.printStackTrace();
             }
         } else {
             respuesta = Constantes.ERROR_CONEXION;
@@ -149,6 +148,7 @@ public class CalificacionDAO {
                 conexionBD.close();
             } catch (SQLException e) {
                 respuesta = Constantes.ERROR_CONSULTA;
+                e.printStackTrace();
             }
         } else {
             respuesta = Constantes.ERROR_CONEXION;
