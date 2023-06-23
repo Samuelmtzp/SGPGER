@@ -1,8 +1,4 @@
-/*
-* Autor: Luis Angel ElizaLde Arroyo
-* Fecha de creación: 22/06/2023
-* Descripción: Clase encargada de asignar codirectores a un anteproyecto
-*/
+
 package jfxspger.controladores;
 
 import java.net.URL;
@@ -11,7 +7,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -27,10 +25,16 @@ import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
 
 
-public class FXMLAsignarCodirectoresController extends FXMLPrincipalAcademicoController {
+public class FXMLAsignarCodirectores1Controller extends FXMLPrincipalAcademicoController {
 
     @FXML
     private Label lbTitulo;
+    @FXML
+    private Button btnAnteproyectos;
+    @FXML
+    private Button btnPropuestas;
+    @FXML
+    private Button btnEstudiantes;
     @FXML
     private TableView<Usuario> tvAcademicosDisponibles;
     @FXML
@@ -39,7 +43,6 @@ public class FXMLAsignarCodirectoresController extends FXMLPrincipalAcademicoCon
     private TableColumn columApellidoPaternoDisponible;
     @FXML
     private TableColumn columApellidoMaternoDisponible;
-    
     @FXML
     private TableView<Usuario> tvCodirectoresAsignados;
     @FXML
@@ -48,21 +51,18 @@ public class FXMLAsignarCodirectoresController extends FXMLPrincipalAcademicoCon
     private TableColumn columApellidoPaternoAsignado;
     @FXML
     private TableColumn columApellidoMaternoAsignado;
-
+    
     private ObservableList <Usuario> academicosDisponibles;
     private ObservableList <Usuario> academicosAsignados;
   
     private Anteproyecto anteproyecto;
-  
-    
    
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         validarSeccionesPermitidas();
     }
-    
-      private void configurarTablas(){
+
+     private void configurarTablas(){
         columnNombreAsignado.setCellValueFactory(new PropertyValueFactory("nombre"));
         columApellidoPaternoAsignado.setCellValueFactory(
                 new PropertyValueFactory("apellidoPaterno"));
@@ -74,7 +74,7 @@ public class FXMLAsignarCodirectoresController extends FXMLPrincipalAcademicoCon
         columApellidoMaternoDisponible.setCellValueFactory(new PropertyValueFactory(
                 "apellidoMaterno"));
     }
-      
+     
     private void cargarDatosTablaCodirectoresAsignados(Anteproyecto anteproyectoAsignados) {
         academicosAsignados = FXCollections.observableArrayList();
         UsuarioRespuesta respuestaBD = UsuarioDAO.consultarCodirectoresEnAnteproyecto(
@@ -101,7 +101,7 @@ public class FXMLAsignarCodirectoresController extends FXMLPrincipalAcademicoCon
         }
     }
     
-     private void cargarDatosTablaAcademicosDisponibles(Anteproyecto anteproyectoDisponible){
+    private void cargarDatosTablaAcademicosDisponibles(Anteproyecto anteproyectoDisponible){
         academicosDisponibles = FXCollections.observableArrayList();
         UsuarioRespuesta respuestaBD = UsuarioDAO.consultarAcademicosDisponible(
                 anteproyectoDisponible.getIdAnteproyecto());
@@ -125,7 +125,7 @@ public class FXMLAsignarCodirectoresController extends FXMLPrincipalAcademicoCon
             }
         }
     }
-     
+    
      private void asignarAcademicoCodirector(Anteproyecto_Codirector nuevoAcademico_Anteproyecto) {
         int respuesta = 
               Anteproyecto_CodirectorDAO.guardarAcademico_Anteproyecto(nuevoAcademico_Anteproyecto);
@@ -154,7 +154,7 @@ public class FXMLAsignarCodirectoresController extends FXMLPrincipalAcademicoCon
         }
     }
      
-     private void eliminarCodirectorDeAnteproyecto(Anteproyecto_Codirector codirector) {
+    private void eliminarCodirectorDeAnteproyecto(Anteproyecto_Codirector codirector) {
         int respuesta = Anteproyecto_CodirectorDAO.eliminarAcademico_Anteproyecto(
               codirector.getIdAnteproyecto(), codirector.getIdCodirector());
         switch(respuesta) { 
@@ -179,16 +179,16 @@ public class FXMLAsignarCodirectoresController extends FXMLPrincipalAcademicoCon
                         anteproyecto.getIdAnteproyecto());
             break;
         }
-    } 
-     
-     public void inicializarInformacion(Anteproyecto anteproyectoSelected){
+    }
+    
+    public void inicializarInformacion(Anteproyecto anteproyectoSelected){
         this.anteproyecto=anteproyectoSelected;
         configurarTablas();
         cargarDatosTablaCodirectoresAsignados(anteproyectoSelected);
         cargarDatosTablaAcademicosDisponibles(anteproyectoSelected);
-    } 
-     
-     private void actualizarCantidadCodirectoresAnteproyecto(int idAnteproyecto) {
+    }
+    
+    private void actualizarCantidadCodirectoresAnteproyecto(int idAnteproyecto) {
       int respuesta = AnteproyectoDAO.incrementarContadorCodirectoresEnAnteproyecto(idAnteproyecto);
         switch(respuesta) {
             case Constantes.ERROR_CONEXION:
@@ -207,7 +207,7 @@ public class FXMLAsignarCodirectoresController extends FXMLPrincipalAcademicoCon
         }
     }
     
-     private void actualizarEliminarCantidadCodirectoresAnteproyecto(int idAnteproyecto) {
+    private void actualizarEliminarCantidadCodirectoresAnteproyecto(int idAnteproyecto) {
       int respuesta = AnteproyectoDAO.decrementarContadorCodirectoresEnAnteproyecto(idAnteproyecto);
         switch(respuesta) {
             case Constantes.ERROR_CONEXION:
@@ -229,7 +229,7 @@ public class FXMLAsignarCodirectoresController extends FXMLPrincipalAcademicoCon
 
     @FXML
     private void clicBtnAsignarEstudiantes(ActionEvent event) {
-        if(anteproyecto.getCantidadCodirectores() < anteproyecto.getCantidadMaximaCodirectores()){ 
+          if(anteproyecto.getCantidadCodirectores() < anteproyecto.getCantidadMaximaCodirectores()){ 
              int posicionAcademicoDisponible = tvAcademicosDisponibles.
                     getSelectionModel().getSelectedIndex();
              if(posicionAcademicoDisponible!=-1){
@@ -255,7 +255,7 @@ public class FXMLAsignarCodirectoresController extends FXMLPrincipalAcademicoCon
 
     @FXML
     private void clicBtnQuitar(ActionEvent event) {
-          int posicionCodirector = tvCodirectoresAsignados.
+                int posicionCodirector = tvCodirectoresAsignados.
                     getSelectionModel().getSelectedIndex();
         if (posicionCodirector != -1) {
             Anteproyecto_Codirector codirector = new Anteproyecto_Codirector();
@@ -270,16 +270,15 @@ public class FXMLAsignarCodirectoresController extends FXMLPrincipalAcademicoCon
                 anteproyecto.setCantidadAlumnosParticipantes(
                         anteproyecto.getCantidadAlumnosParticipantes() - 1);  
             }
-        } else
+        } else{
             Utilidades.mostrarDialogoSimple("Selecciona un academico", 
                    "Selecciona a un academico en la tabla de academicos asignados", 
                    Alert.AlertType.WARNING);
-        
+        }
     }
 
     @FXML
     private void clicRegresar(ActionEvent event) {
-        clicIrAnteproyectos(event);
-    }
-
+         clicIrAnteproyectos(event);
+    } 
 }
