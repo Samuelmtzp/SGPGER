@@ -342,7 +342,7 @@ public class FXMLFormularioUsuarioController extends FXMLPrincipalAdministradorC
             datosValidos = false;
         } else {
             if (!esEdicion || (esEdicion && !username.equals(copiaUsuarioEdicion.getUsername()))) {
-                if (username.length() > 10) {
+                if (username.length() > 20) {
                     tfUsername.setStyle(Constantes.estiloError);
                     datosValidos = false;    
                 }

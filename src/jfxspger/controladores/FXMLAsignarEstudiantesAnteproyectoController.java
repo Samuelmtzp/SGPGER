@@ -53,8 +53,6 @@ public class FXMLAsignarEstudiantesAnteproyectoController extends FXMLPrincipalA
     private TableColumn columApellidoMaternoDisponible;
     @FXML
     private TableColumn columMatriculaDisponible;
-    @FXML
-    private Label lbTitulo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -333,5 +331,5 @@ public class FXMLAsignarEstudiantesAnteproyectoController extends FXMLPrincipalA
             clicIrAnteproyectos(event);
         }
     }
-   
+
 }

@@ -13,12 +13,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -32,8 +29,6 @@ import jfxspger.utilidades.Utilidades;
 
 public class FXMLAdminPropuestasAnteproyectosController extends FXMLPrincipalAcademicoController {
 
-    @FXML
-    private Label lbTitulo;
     @FXML
     private TableView<Anteproyecto> tvAnteproyecto;
     @FXML
@@ -49,14 +44,6 @@ public class FXMLAdminPropuestasAnteproyectosController extends FXMLPrincipalAca
     @FXML
     private TableColumn columEstado;
     private ObservableList<Anteproyecto> anteproyectos;
-    @FXML
-    private Button btnAnteproyectos;
-    @FXML
-    private Button btnPropuestas;
-    @FXML
-    private Button btnEstudiantes;
-    @FXML
-    private Button btnRevisiones;
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -114,7 +101,7 @@ public class FXMLAdminPropuestasAnteproyectosController extends FXMLPrincipalAca
             irInformacionAnteproyecto(true, anteproyectoSeleccionado);
         }else{
              Utilidades.mostrarDialogoSimple("Selección anteproyecto", 
-                    "Selecciona un anteproyecto para su validacion", 
+                    "Debe seleccionar un anteproyecto previamente", 
                     Alert.AlertType.INFORMATION);
         }
     }
@@ -137,5 +124,5 @@ public class FXMLAdminPropuestasAnteproyectosController extends FXMLPrincipalAca
         }
         
      }
-     
+
 }

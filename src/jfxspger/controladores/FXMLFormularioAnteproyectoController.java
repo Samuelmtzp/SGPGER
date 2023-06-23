@@ -20,7 +20,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import jfxspger.modelo.dao.AnteproyectoDAO;
 import jfxspger.modelo.dao.CuerpoAcademicoDAO;
 import jfxspger.modelo.dao.DuracionAproximadaDAO;
@@ -28,7 +27,6 @@ import jfxspger.modelo.dao.EstadoAnteproyectoDAO;
 import jfxspger.modelo.dao.LgacDAO;
 import jfxspger.modelo.dao.ModalidadDAO;
 import jfxspger.modelo.pojo.Anteproyecto;
-import jfxspger.modelo.pojo.Anteproyecto_Codirector;
 import jfxspger.modelo.pojo.CuerpoAcademico;
 import jfxspger.modelo.pojo.CuerpoAcademicoRespuesta;
 import jfxspger.modelo.pojo.DuracionAprox;
@@ -39,15 +37,12 @@ import jfxspger.modelo.pojo.Lgac;
 import jfxspger.modelo.pojo.LgacRespuesta;
 import jfxspger.modelo.pojo.Modalidad;
 import jfxspger.modelo.pojo.ModalidadRespuesta;
-import jfxspger.modelo.pojo.Usuario;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.SingletonUsuario;
 import jfxspger.utilidades.Utilidades;
 
 public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademicoController {
 
-    @FXML
-    private Label lbTitulo;
     @FXML
     private ComboBox<Modalidad> cbModalidad;
     @FXML
@@ -96,9 +91,6 @@ public class FXMLFormularioAnteproyectoController extends FXMLPrincipalAcademico
         cargarInformacionDuracion();
         cargarInformacionLGAC(SingletonUsuario.getInstancia().getUsuario().
                 getIdcuerpoAcademico());
-        //cargarInformacionAcademico(SingletonUsuario.getInstancia().getUsuario().
-                //getIdcuerpoAcademico());
-        
         
         tfCantidadAlumnos.textProperty().addListener(new ChangeListener<String>() {
             @Override

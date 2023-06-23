@@ -79,17 +79,7 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
     private Label lbFecha;
     private boolean esValidacion;
     @FXML
-    private Label lbTitulo;
-    @FXML
     private Button btnRechazar;
-    @FXML
-    private Button btnAnteproyectos;
-    @FXML
-    private Button btnPropuestas;
-    @FXML
-    private Button btnEstudiantes;
-    @FXML
-    private Button btnRevisiones;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

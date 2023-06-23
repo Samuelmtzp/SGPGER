@@ -12,30 +12,62 @@ public class Actividad {
     private int idEstudiante;
     private int idEntrega;
     private int idCalificacion;
+    private int idEstado;
+    private double calificacion;
     private String titulo;
     private String fechaCreacion;
     private String fechaInicio;
     private String fechaFin;
-    private String descripcion;
-    private double calificacion;
+    private String descripcion;    
     private String fechaEntrega;
+    private String commentCalif;
+    private String estado;
+    
 
     public Actividad() {
     }
 
-    public Actividad(int idActividad, int idEstudiante, int idEntrega, int idCalificacion, String titulo, String fechaCreacion, String fechaInicio, String fechaFin, String descripcion, double calificacion, String fechaEntrega) {
+    public Actividad(int idActividad, int idEstudiante, int idEntrega, int idCalificacion, int idEstado, double calificacion, String titulo, String fechaCreacion, String fechaInicio, String fechaFin, String descripcion, String fechaEntrega, String commentCalif, String estado) {
         this.idActividad = idActividad;
         this.idEstudiante = idEstudiante;
         this.idEntrega = idEntrega;
         this.idCalificacion = idCalificacion;
+        this.idEstado = idEstado;
+        this.calificacion = calificacion;
         this.titulo = titulo;
         this.fechaCreacion = fechaCreacion;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.descripcion = descripcion;
-        this.calificacion = calificacion;
         this.fechaEntrega = fechaEntrega;
+        this.commentCalif = commentCalif;
+        this.estado = estado;
     }
+
+    public int getIdEstado() {
+        return idEstado;
+    }
+
+    public void setIdEstado(int idEstado) {
+        this.idEstado = idEstado;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getCommentCalif() {
+        return commentCalif;
+    }
+
+    public void setCommentCalif(String commentCalif) {
+        this.commentCalif = commentCalif;
+    }
+    
 
     public int getIdCalificacion() {
         return idCalificacion;

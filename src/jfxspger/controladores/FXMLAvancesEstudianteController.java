@@ -5,56 +5,33 @@
 */
 package jfxspger.controladores;
 
-import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import jfxspger.modelo.dao.ActividadDAO;
-import jfxspger.modelo.dao.EntregaDAO;
-import jfxspger.modelo.dao.EstudianteDAO;
 import jfxspger.modelo.pojo.Actividad;
 import jfxspger.modelo.pojo.ActividadRespuesta;
-import jfxspger.modelo.pojo.Entrega;
-import jfxspger.modelo.pojo.EntregaRespuesta;
 import jfxspger.modelo.pojo.Estudiante;
-import jfxspger.modelo.pojo.EstudianteRespuesta;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
 
 public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoController {
 
     @FXML
-    private Label lbTitulo;
-    
-    @FXML
     private Label lbNombreEstudiante;
-    @FXML
-    private TableColumn cCalificacion;        
-    @FXML
-    private Button btnAnteproyectos;
-    @FXML
-    private Button btnPropuestas;
-    @FXML
-    private Button btnEstudiantes;
-    @FXML
-    private Button btnRevisiones;
     @FXML
     private TableView<Actividad> tvActividades;
     @FXML
@@ -64,12 +41,11 @@ public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoContr
     @FXML
     private TableColumn cFechaFin;
     @FXML
-    private TableColumn cFechaEntrega;
-    
+    private TableColumn cEstado;
     private Estudiante estudiante;
     private Actividad actividad;
     private ObservableList<Actividad> actividades;
-    private int idEstudiante;
+    private int idEstudiante;    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -79,30 +55,16 @@ public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoContr
     public void inicializarEntregas(Estudiante estudiante){
         this.estudiante = estudiante;
         idEstudiante = estudiante.getIdEstudiante();
-        lbNombreEstudiante.setText(estudiante.getNombre() + " " + estudiante.getApellidoPaterno() + " " + estudiante.getApellidoMaterno());        
+        lbNombreEstudiante.setText(estudiante.getNombre() + " " + estudiante.getApellidoPaterno() + 
+                " " + estudiante.getApellidoMaterno());        
         cargarInformacionCronograma();
     }
 
-        private void configurarTabla(){
+    private void configurarTabla() {
         cNombreActividad.setCellValueFactory(new PropertyValueFactory("titulo"));        
         cFechaIncio.setCellValueFactory(new PropertyValueFactory("fechaInicio"));
         cFechaFin.setCellValueFactory(new PropertyValueFactory("fechaFin"));
-        cFechaEntrega.setCellValueFactory(new PropertyValueFactory("fechaEntrega"));
-        cCalificacion.setCellValueFactory(new PropertyValueFactory("calificacion"));
-                tvActividades.widthProperty().addListener(new ChangeListener<Number>(){
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, 
-                    Number newValue) {
-                TableHeaderRow header = (TableHeaderRow) tvActividades.lookup("TableHeaderRow");
-                header.reorderingProperty().addListener(new ChangeListener<Boolean>(){
-                    @Override
-                    public void changed(ObservableValue<? extends Boolean> observable, 
-                            Boolean oldValue, Boolean newValue) {
-                        header.setReordering(false);
-                    }
-                });
-            }
-        });
+        cEstado.setCellValueFactory(new PropertyValueFactory("estado"));
     }
     
     private void cargarInformacionCronograma(){
@@ -139,8 +101,14 @@ public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoContr
     @FXML
     private void clicBtnEvaluarAvance(ActionEvent event) {
         Actividad actividadSeleccionada = tvActividades.getSelectionModel().getSelectedItem();
-        if(actividadSeleccionada != null){
-            evaluarAvance(actividadSeleccionada);
+        if(actividadSeleccionada != null){            
+            if (actividadSeleccionada.getIdEstado() == 1){
+                evaluarAvance(actividadSeleccionada);
+            } else
+            if(actividadSeleccionada.getIdEstado() == 2){
+                cargarAvance(actividadSeleccionada);
+            }
+                
         }else{
             Utilidades.mostrarDialogoSimple("Selecciona una actividad", 
                     "Debes selecionar una actividad para poder realizar la evaluacion"
@@ -149,20 +117,38 @@ public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoContr
         
     }
     
-    private void evaluarAvance(Actividad actividadSeleccionada){                
+    private void cargarAvance(Actividad actividadSeleccionada){
         try{
             FXMLLoader accesoControlador = new FXMLLoader(jfxspger.
                     JFXSPGER.class.getResource("/jfxspger/vistas/FXMLEvaluarAvance.fxml"));
             Parent vista = accesoControlador.load();
             FXMLEvaluarAvanceController avance = accesoControlador.getController();
-            avance.inicializarDetalles(estudiante, actividadSeleccionada);
+            avance.inicializarDetalles(true, estudiante, actividadSeleccionada);
             
             Scene sceneFormulario = new Scene(vista);
             Stage escenarioPrincipal = (Stage) lbTitulo.getScene().getWindow();
             escenarioPrincipal.setTitle("Evaluar entrega");
             escenarioPrincipal.setScene(sceneFormulario);            
         }catch(IOException e){
-            e.printStackTrace();
+            Utilidades.mostrarDialogoSimple("Error", 
+                    "No se puede mostrar la pantalla de informacion de anteproyecto", 
+                    Alert.AlertType.ERROR);  
+        }    
+    }
+    
+    private void evaluarAvance(Actividad actividadSeleccionada){                
+        try{
+            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.
+                    JFXSPGER.class.getResource("/jfxspger/vistas/FXMLEvaluarAvance.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLEvaluarAvanceController avance = accesoControlador.getController();
+            avance.inicializarDetalles(false, estudiante, actividadSeleccionada);
+            
+            Scene sceneFormulario = new Scene(vista);
+            Stage escenarioPrincipal = (Stage) lbTitulo.getScene().getWindow();
+            escenarioPrincipal.setTitle("Evaluar entrega");
+            escenarioPrincipal.setScene(sceneFormulario);            
+        }catch(IOException e){
             Utilidades.mostrarDialogoSimple("Error", 
                     "No se puede mostrar la pantalla de informacion de anteproyecto", 
                     Alert.AlertType.ERROR);  
