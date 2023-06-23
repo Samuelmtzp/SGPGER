@@ -145,7 +145,7 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
            String fecha = tiempo.toString();
            revisionAnteproyecto.setFechaRevision(fecha); 
         if(esValido){
-            if(boton==1){
+            if(boton==1){ 
                 boolean validar = Utilidades.mostrarDialogoConfirmacion(
                     "Validar anteproyecto", 
                     "¿Estás seguro de que deseas validar el anteproyecto?");
@@ -294,6 +294,9 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
                         Alert.AlertType.WARNING);
             break;
             case Constantes.OPERACION_EXITOSA:
+                 Utilidades.mostrarDialogoSimple("Validacion realizada", 
+                         "Anteproyecto aprobado correctamente",
+                        Alert.AlertType.INFORMATION);
                  salir();
             break;
         }
@@ -314,6 +317,9 @@ public class FXMLInfoAnteproyectoController extends FXMLPrincipalAcademicoContro
                         Alert.AlertType.WARNING);
             break;
             case Constantes.OPERACION_EXITOSA:
+                Utilidades.mostrarDialogoSimple("Rechazo realizada", 
+                         "Anteproyecto rechazado correctamente",
+                        Alert.AlertType.INFORMATION);
                  salir();
             break;
         }
