@@ -105,10 +105,11 @@
       <TableView fx:id="tvActividades" layoutX="363.0" layoutY="253.0" prefHeight="726.0" prefWidth="1528.0" style="-fx-background-color: lightgray;">
          <columns>
             <TableColumn fx:id="cNombreActividad" prefWidth="523.0" text="Titulo de actividad" />
-            <TableColumn fx:id="cFechaIncio" prefWidth="245.0" text="Fecha de inicio" />
-            <TableColumn fx:id="cFechaFin" prefWidth="209.0" text="Fecha de fin" />
-            <TableColumn fx:id="cFechaEntrega" prefWidth="327.0" text="Fecha de entrega" />
-            <TableColumn fx:id="cCalificacion" prefWidth="223.0" text="Calificacion" />
+            <TableColumn fx:id="cFechaIncio" prefWidth="218.0" text="Fecha de inicio" />
+            <TableColumn fx:id="cFechaFin" prefWidth="219.0" text="Fecha de fin" />
+            <TableColumn fx:id="cFechaEntrega" prefWidth="197.0" text="Fecha de entrega" />
+            <TableColumn fx:id="cCalificacion" prefWidth="115.0" text="Calificacion" />
+            <TableColumn fx:id="cEstado" prefWidth="255.0" text="Estado" />
          </columns>
       </TableView>
    </children>

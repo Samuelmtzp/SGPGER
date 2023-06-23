@@ -47,11 +47,12 @@ public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoContr
     private TableColumn cFechaFin;
     @FXML
     private TableColumn cFechaEntrega;
-    
+    @FXML
+    private TableColumn cEstado;
     private Estudiante estudiante;
     private Actividad actividad;
     private ObservableList<Actividad> actividades;
-    private int idEstudiante;
+    private int idEstudiante;    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -72,6 +73,7 @@ public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoContr
         cFechaFin.setCellValueFactory(new PropertyValueFactory("fechaFin"));
         cFechaEntrega.setCellValueFactory(new PropertyValueFactory("fechaEntrega"));
         cCalificacion.setCellValueFactory(new PropertyValueFactory("calificacion"));
+        cEstado.setCellValueFactory(new PropertyValueFactory("estado"));
                 tvActividades.widthProperty().addListener(new ChangeListener<Number>(){
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, 
@@ -122,8 +124,14 @@ public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoContr
     @FXML
     private void clicBtnEvaluarAvance(ActionEvent event) {
         Actividad actividadSeleccionada = tvActividades.getSelectionModel().getSelectedItem();
-        if(actividadSeleccionada != null){
-            evaluarAvance(actividadSeleccionada);
+        if(actividadSeleccionada != null){            
+            if (actividadSeleccionada.getIdEstado() == 1){
+                evaluarAvance(actividadSeleccionada);
+            } else
+            if(actividadSeleccionada.getIdEstado() == 2){
+                cargarAvance(actividadSeleccionada);
+            }
+                
         }else{
             Utilidades.mostrarDialogoSimple("Selecciona una actividad", 
                     "Debes selecionar una actividad para poder realizar la evaluacion"
@@ -132,13 +140,33 @@ public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoContr
         
     }
     
+    private void cargarAvance(Actividad actividadSeleccionada){
+        try{
+            FXMLLoader accesoControlador = new FXMLLoader(jfxspger.
+                    JFXSPGER.class.getResource("/jfxspger/vistas/FXMLEvaluarAvance.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLEvaluarAvanceController avance = accesoControlador.getController();
+            avance.inicializarDetalles(true, estudiante, actividadSeleccionada);
+            
+            Scene sceneFormulario = new Scene(vista);
+            Stage escenarioPrincipal = (Stage) lbTitulo.getScene().getWindow();
+            escenarioPrincipal.setTitle("Evaluar entrega");
+            escenarioPrincipal.setScene(sceneFormulario);            
+        }catch(IOException e){
+            e.printStackTrace();
+            Utilidades.mostrarDialogoSimple("Error", 
+                    "No se puede mostrar la pantalla de informacion de anteproyecto", 
+                    Alert.AlertType.ERROR);  
+        }    
+    }
+    
     private void evaluarAvance(Actividad actividadSeleccionada){                
         try{
             FXMLLoader accesoControlador = new FXMLLoader(jfxspger.
                     JFXSPGER.class.getResource("/jfxspger/vistas/FXMLEvaluarAvance.fxml"));
             Parent vista = accesoControlador.load();
             FXMLEvaluarAvanceController avance = accesoControlador.getController();
-            avance.inicializarDetalles(estudiante, actividadSeleccionada);
+            avance.inicializarDetalles(false, estudiante, actividadSeleccionada);
             
             Scene sceneFormulario = new Scene(vista);
             Stage escenarioPrincipal = (Stage) lbTitulo.getScene().getWindow();
