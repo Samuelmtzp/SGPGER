@@ -78,17 +78,7 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     @FXML
     private Button btnAgregarEstudiantes;
     @FXML
-    private Label lbTitulo;
-    @FXML
     private Button btnCodirectores;
-    @FXML
-    private Button btnAnteproyectos;
-    @FXML
-    private Button btnPropuestas;
-    @FXML
-    private Button btnEstudiantes;
-    @FXML
-    private Button btnRevisiones;
    
 
     @Override

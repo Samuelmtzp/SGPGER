@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -14,11 +15,6 @@
 
 <AnchorPane id="AnchorPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfxspger.controladores.FXMLInfoActividadController">
    <children>
-      <Label fx:id="lbDescActividad" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="400.0" layoutY="519.0" prefHeight="262.0" prefWidth="678.0" text="Descripcion actividad" wrapText="true">
-         <font>
-            <Font size="22.0" />
-         </font>
-      </Label>
       <Label fx:id="lbTituloActividad" layoutX="404.0" layoutY="326.0" prefHeight="45.0" prefWidth="300.0" text="Titulo actividad">
          <font>
             <Font size="22.0" />
@@ -121,12 +117,12 @@
             </ImageView>
          </children>
       </Pane>
-      <Button layoutX="1709.0" layoutY="989.0" mnemonicParsing="false" onAction="#clicBtnGuardar" prefHeight="51.0" prefWidth="143.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Guardar" textFill="WHITE">
+      <Button layoutX="1610.0" layoutY="908.0" mnemonicParsing="false" onAction="#clicBtnGuardar" prefHeight="71.0" prefWidth="253.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Realizar entrega" textFill="WHITE">
          <effect>
             <DropShadow blurType="ONE_PASS_BOX" />
          </effect>
          <font>
-            <Font name="System Bold" size="22.0" />
+            <Font name="System Bold" size="25.0" />
          </font>
       </Button>
       <Label layoutX="1522.0" layoutY="401.0" text="FECHA DE FIN">
@@ -159,7 +155,7 @@
             <Font size="22.0" />
          </font>
       </Label>
-      <Button layoutX="386.0" layoutY="989.0" mnemonicParsing="false" onAction="#clicBtnCargarArchivo" prefHeight="51.0" prefWidth="198.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Subir archivo" textFill="WHITE">
+      <Button layoutX="1671.0" layoutY="781.0" mnemonicParsing="false" onAction="#clicBtnCargarArchivo" prefHeight="46.0" prefWidth="198.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Subir archivo" textFill="WHITE">
          <effect>
             <DropShadow blurType="ONE_PASS_BOX" />
          </effect>
@@ -182,17 +178,12 @@
             </TableView>
          </content>
       </ScrollPane>
-      <Button fx:id="bEliminarDocumento" layoutX="1414.0" layoutY="781.0" mnemonicParsing="false" onAction="#clicBtnEliminarEntrega" prefHeight="23.0" prefWidth="115.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Eliminar" textFill="WHITE">
+      <Button fx:id="bEliminarDocumento" layoutX="1425.0" layoutY="781.0" mnemonicParsing="false" onAction="#clicBtnEliminarEntrega" prefHeight="46.0" prefWidth="215.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" text="Remover archivo" textFill="WHITE">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
       </Button>
-      <Label fx:id="lbComentRev" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="400.0" layoutY="889.0" prefHeight="89.0" prefWidth="653.0" wrapText="true">
-         <font>
-            <Font size="22.0" />
-         </font>
-      </Label>
-      <Label layoutX="400.0" layoutY="820.0" text="COMENTARIOS DE REVISION">
+      <Label layoutX="394.0" layoutY="740.0" prefHeight="46.0" prefWidth="472.0" text="COMENTARIOS DE REVISION">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
@@ -207,5 +198,15 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
+      <TextArea fx:id="lbDescActividad" editable="false" layoutX="396.0" layoutY="549.0" prefHeight="142.0" prefWidth="883.0" wrapText="true">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextArea>
+      <TextArea fx:id="lbComentRev" editable="false" layoutX="397.0" layoutY="804.0" prefHeight="179.0" prefWidth="880.0" wrapText="true">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextArea>
    </children>
 </AnchorPane>

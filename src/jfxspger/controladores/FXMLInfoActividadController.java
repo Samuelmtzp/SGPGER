@@ -106,7 +106,8 @@ public class FXMLInfoActividadController extends FXMLPrincipalEstudianteControll
         private void cargarInformacionEntregas(Actividad actividadInformacion){
             idActividad = actividadInformacion.getIdActividad();
         documentos = FXCollections.observableArrayList();
-            DocumentoRespuesta respuestaBD = DocumentoDAO.obtenerInformacionArchivoPorActividad(idActividad);
+            DocumentoRespuesta respuestaBD = DocumentoDAO.
+                    obtenerInformacionArchivoPorActividad(idActividad);
         switch(respuestaBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Sin conexión", 
@@ -130,7 +131,8 @@ public class FXMLInfoActividadController extends FXMLPrincipalEstudianteControll
         
         if(actividadInformacion.getIdEstado() == 1){
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-            LocalDateTime fechaFin = LocalDateTime.parse(actividadInformacion.getFechaFin(), formatter);
+            LocalDateTime fechaFin = LocalDateTime.parse(
+                    actividadInformacion.getFechaFin(), formatter);
             LocalDateTime fechaActual = LocalDateTime.now();
             if(fechaActual.isBefore(fechaFin)){
                 FileChooser dialogoEntrega = new FileChooser();
