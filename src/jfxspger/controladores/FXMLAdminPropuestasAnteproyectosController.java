@@ -101,7 +101,7 @@ public class FXMLAdminPropuestasAnteproyectosController extends FXMLPrincipalAca
             irInformacionAnteproyecto(true, anteproyectoSeleccionado);
         }else{
              Utilidades.mostrarDialogoSimple("Selección anteproyecto", 
-                    "Selecciona un anteproyecto para su validacion", 
+                    "Debe seleccionar un anteproyecto previamente", 
                     Alert.AlertType.INFORMATION);
         }
     }

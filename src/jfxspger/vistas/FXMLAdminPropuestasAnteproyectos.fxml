@@ -38,7 +38,7 @@
                   <TableColumn fx:id="columEstado" prefWidth="171.0" text="Estado" />
                </columns>
             </TableView>
-            <Button layoutX="1194.0" layoutY="158.0" mnemonicParsing="false" onAction="#clicValidarAnteproyecto" prefHeight="55.0" prefWidth="279.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Realizar validacion">
+            <Button layoutX="1143.0" layoutY="158.0" mnemonicParsing="false" onAction="#clicValidarAnteproyecto" prefHeight="55.0" prefWidth="330.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Consultar información">
                <graphic>
                   <ImageView fitHeight="41.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
                      <image>
