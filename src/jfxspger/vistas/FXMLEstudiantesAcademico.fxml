@@ -35,15 +35,6 @@
             <TableColumn fx:id="cNombreAnteproyecto" prefWidth="294.0" text="Anteproyecto" />
          </columns>
       </TableView>
-      <Button layoutX="379.0" layoutY="134.0" mnemonicParsing="false" onAction="#clicVentanaAnterior" prefHeight="55.0" prefWidth="74.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css">
-         <graphic>
-            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../recursos/back.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
       <Pane layoutY="100.0" prefHeight="980.0" prefWidth="300.0" style="-fx-background-color: #33AB5B;">
          <children>
             <Button fx:id="btnAnteproyectos" disable="true" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#clicIrAnteproyectos" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Anteproyectos" textFill="WHITE">
@@ -90,18 +81,6 @@
                   <ImageView fitHeight="52.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../recursos/cerrar-sesion.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="btnRevisiones" disable="true" layoutX="20.0" layoutY="396.0" mnemonicParsing="false" onAction="#clicIrRevisiones" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Revisiones" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../recursos/lupa.png" />
                      </image>
                   </ImageView>
                </graphic>

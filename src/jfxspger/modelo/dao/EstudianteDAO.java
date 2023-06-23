@@ -51,20 +51,29 @@ public class EstudianteDAO {
         return respuesta;
     }
     
-    public static EstudianteRespuesta obtenerInformacionEstudiantes() {
+    public static EstudianteRespuesta obtenerInformacionEstudiantesDeProfesor(int idProfesor) {
         EstudianteRespuesta respuesta = new EstudianteRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT u.nombre, u.apellidoPaterno, u.apellidoMaterno, "
-                        + "e.matricula, e.idEstudiante, a.nombreTrabajo "
-                        + "FROM usuario u "
-                        + "JOIN estudiante e "
-                        + "ON u.idUsuario = e.idUsuario "
-                        + "JOIN anteproyecto a "
-                        + "ON e.idAnteproyecto = a.idAnteproyecto;";
+                String consulta = "SELECT DISTINCT nombre, apellidoPaterno, apellidoMaterno, "
+                        + "Estudiante.matricula, Estudiante.idEstudiante, "
+                        + "IF(Estudiante.idAnteproyecto IS NULL, \"Sin anteproyecto\" , "
+                        + "Anteproyecto.nombreTrabajo) nombreTrabajo "
+                        + "FROM usuario "
+                        + "INNER JOIN Estudiante "
+                        + "ON Usuario.idUsuario = Estudiante.idUsuario "
+                        + "INNER JOIN Anteproyecto "
+                        + "ON Estudiante.idAnteproyecto = Anteproyecto.idAnteproyecto "
+                        + "OR Estudiante.idAnteproyecto IS NULL "
+                        + "INNER JOIN estudiante_curso "
+                        + "ON estudiante_curso.idEstudiante = Estudiante.idEstudiante "
+                        + "INNER JOIN curso "
+                        + "ON curso.idCurso = estudiante_curso.idCurso "
+                        + "WHERE idProfesor = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);                
+                prepararSentencia.setInt(1, idProfesor);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 
                 ArrayList<Estudiante> estudianteConsulta = new ArrayList();

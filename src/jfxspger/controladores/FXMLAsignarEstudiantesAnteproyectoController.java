@@ -12,12 +12,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import jfxspger.modelo.dao.AnteproyectoDAO;
 import jfxspger.modelo.dao.EstudianteDAO;
 import jfxspger.modelo.pojo.Usuario;
@@ -55,8 +53,6 @@ public class FXMLAsignarEstudiantesAnteproyectoController extends FXMLPrincipalA
     private TableColumn columApellidoMaternoDisponible;
     @FXML
     private TableColumn columMatriculaDisponible;
-    @FXML
-    private Label lbTitulo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -332,5 +328,5 @@ public class FXMLAsignarEstudiantesAnteproyectoController extends FXMLPrincipalA
             clicIrAnteproyectos(event);
         }
     }
-   
+
 }

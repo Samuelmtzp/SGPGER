@@ -14,7 +14,7 @@
    <children>
       <Pane prefHeight="100.0" prefWidth="1920.0" style="-fx-background-color: #343838;">
          <children>
-            <Label fx:id="lTitulo" layoutX="698.0" layoutY="13.0" prefHeight="73.0" prefWidth="524.0" text="Avances anteproyecto" textFill="WHITE">
+            <Label fx:id="lbTitulo" layoutX="698.0" layoutY="13.0" prefHeight="73.0" prefWidth="524.0" text="Avances anteproyecto" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="50.0" />
                </font>
@@ -97,18 +97,6 @@
                   <ImageView fitHeight="52.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../recursos/cerrar-sesion.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="btnRevisiones" disable="true" layoutX="21.0" layoutY="396.0" mnemonicParsing="false" onAction="#clicIrRevisiones" prefHeight="100.0" prefWidth="260.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Revisiones" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="118.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../recursos/lupa.png" />
                      </image>
                   </ImageView>
                </graphic>

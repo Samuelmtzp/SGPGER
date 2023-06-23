@@ -27,8 +27,6 @@ public class FXMLPrincipalAcademicoController implements Initializable {
     protected Button btnPropuestas;
     @FXML
     protected Button btnEstudiantes;
-    @FXML
-    protected Button btnRevisiones;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -87,7 +85,6 @@ public class FXMLPrincipalAcademicoController implements Initializable {
         escenarioBase.show();
     }
 
-    @FXML
     protected void clicIrRevisiones(ActionEvent event) {
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.setScene(
@@ -103,7 +100,6 @@ public class FXMLPrincipalAcademicoController implements Initializable {
         if (esDirector()) {
             btnAnteproyectos.setDisable(false);
             btnEstudiantes.setDisable(false);
-            btnRevisiones.setDisable(false);
         }
         if (esCodirector()) {
             btnAnteproyectos.setDisable(false);

@@ -16,45 +16,27 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import jfxspger.modelo.dao.ActividadDAO;
-import jfxspger.modelo.dao.EntregaDAO;
-import jfxspger.modelo.dao.EstudianteDAO;
 import jfxspger.modelo.pojo.Actividad;
 import jfxspger.modelo.pojo.ActividadRespuesta;
-import jfxspger.modelo.pojo.Entrega;
-import jfxspger.modelo.pojo.EntregaRespuesta;
 import jfxspger.modelo.pojo.Estudiante;
-import jfxspger.modelo.pojo.EstudianteRespuesta;
 import jfxspger.utilidades.Constantes;
 import jfxspger.utilidades.Utilidades;
 
 public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoController {
 
     @FXML
-    private Label lbTitulo;
-    
-    @FXML
     private Label lbNombreEstudiante;
     @FXML
     private TableColumn cCalificacion;        
-    @FXML
-    private Button btnAnteproyectos;
-    @FXML
-    private Button btnPropuestas;
-    @FXML
-    private Button btnEstudiantes;
-    @FXML
-    private Button btnRevisiones;
     @FXML
     private TableView<Actividad> tvActividades;
     @FXML
@@ -80,7 +62,8 @@ public class FXMLAvancesEstudianteController extends FXMLPrincipalAcademicoContr
     public void inicializarEntregas(Estudiante estudiante){
         this.estudiante = estudiante;
         idEstudiante = estudiante.getIdEstudiante();
-        lbNombreEstudiante.setText(estudiante.getNombre() + " " + estudiante.getApellidoPaterno() + " " + estudiante.getApellidoMaterno());        
+        lbNombreEstudiante.setText(estudiante.getNombre() + " " + estudiante.getApellidoPaterno() + 
+                " " + estudiante.getApellidoMaterno());        
         cargarInformacionCronograma();
     }
 

@@ -19,6 +19,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -33,8 +34,6 @@ import jfxspger.utilidades.Utilidades;
 
 public class FXMLAnteproyectoAvancesController extends FXMLPrincipalAcademicoController {
 
-    @FXML
-    private Label lTitulo;
     @FXML
     private TableColumn cTituloActividad;
     @FXML
@@ -66,7 +65,7 @@ public class FXMLAnteproyectoAvancesController extends FXMLPrincipalAcademicoCon
             Parent vista = accesoControlador.load();
             FXMLInfoAnteproyectoController formulario = accesoControlador.getController();
             Scene sceneFormulario = new Scene(vista);
-            Stage escenarioPrincipal = (Stage) lTitulo.getScene().getWindow();
+            Stage escenarioPrincipal = (Stage) lbTitulo.getScene().getWindow();
             escenarioPrincipal.setTitle("Informacion de anteproyecto");
             escenarioPrincipal.setScene(sceneFormulario);
             formulario.inicializarInformacion(false,anteproyecto);
@@ -117,5 +116,5 @@ public class FXMLAnteproyectoAvancesController extends FXMLPrincipalAcademicoCon
                 break;
         }    
      }
-    
+
 }
