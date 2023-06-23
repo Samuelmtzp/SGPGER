@@ -69,6 +69,7 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
     private final String ESTADO_VALIDACION_PENDIENTE = "Validación pendiente";
     private final String ESTADO_DISPONIBLE = "Disponible";
     private final String ESTADO_NO_DISPONIBLE = "No disponible";
+    private final String ESTADO_RECHAZADO = "Rechazado";
     @FXML
     private Button btnCrearAnteproyecto;
     @FXML
@@ -108,8 +109,15 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
                                 newValue.getIdAnteproyecto())) && newValue.getEstado().equals(
                                         ESTADO_DISPONIBLE)){
                     btnAgregarEstudiantes.setDisable(false);
-                } else {
                     deshabilitarBotonesEdicionAnteproyecto();
+                } else if((SingletonUsuario.getInstancia().getUsuario().getIdAcademico() ==
+                        newValue.getIdDirector()) && newValue.getEstado().equals(
+                                        ESTADO_RECHAZADO)){
+                    habilitarBotonesEdicionAnteproyecto();
+                }
+                else {
+                    deshabilitarBotonesEdicionAnteproyecto();
+                    btnAgregarEstudiantes.setDisable(true);
                 }
             }
         });
@@ -121,10 +129,16 @@ public class FXMLAdminAnteproyectosController extends FXMLPrincipalAcademicoCont
         }
     }
     
+    private void habilitarBotonesEdicionAnteproyecto(){
+        btnModificarAnteproyecto.setDisable(false);
+        btnEliminarAnteproyecto.setDisable(false);
+        btnCodirectores.setDisable(false);
+    }
+    
     private void deshabilitarBotonesEdicionAnteproyecto() {
-        btnAgregarEstudiantes.setDisable(true);
         btnModificarAnteproyecto.setDisable(true);
         btnEliminarAnteproyecto.setDisable(true);
+        btnCodirectores.setDisable(true);
     }
     
     private void configurarTabla(){
