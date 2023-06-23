@@ -100,7 +100,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="1647.0" layoutY="999.0" mnemonicParsing="false" onAction="#clicBtnCalificar" prefHeight="51.0" prefWidth="215.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Calificar entrega" textFill="WHITE">
+      <Button layoutX="1644.0" layoutY="911.0" mnemonicParsing="false" onAction="#clicBtnCalificar" prefHeight="51.0" prefWidth="215.0" styleClass="buttonRegistrar" stylesheets="@../css/estilos.css" text="Calificar entrega" textFill="WHITE">
          <effect>
             <DropShadow blurType="ONE_PASS_BOX" />
          </effect>
@@ -165,7 +165,7 @@
          </font>
       </Label>
       <TextField fx:id="tfComent" layoutX="423.0" layoutY="798.0" prefHeight="45.0" prefWidth="653.0" />
-      <Button fx:id="bEliminarEval" layoutX="406.0" layoutY="914.0" mnemonicParsing="false" onAction="#clicBtnEliminarEvaluacion" prefHeight="46.0" prefWidth="243.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Eliminar evaluacion" textFill="WHITE">
+      <Button fx:id="bEliminarEval" layoutX="1371.0" layoutY="909.0" mnemonicParsing="false" onAction="#clicBtnEliminarEvaluacion" prefHeight="55.0" prefWidth="243.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Eliminar evaluacion" textFill="WHITE">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
